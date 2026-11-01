@@ -452,7 +452,7 @@ flowchart LR
 
 - **Carga perezosa:** mapas y datos externos esperan a que su sección se acerque a la pantalla (`Radio.onceVisible`, 300 px antes).
 - **Animaciones solo en pantalla:** dial, lecciones y cascada se paran fuera de la vista o con la pestaña oculta (`Radio.whileVisible`), y no se animan con "reducir movimiento".
-- **Consultas medidas:** avisos en directo cada 60 s y solo con la sección visible (HamQTH pide ≥ 15 s); datos solares al llegar y cada 15 min (pide ≥ 5 min).
+- **Consultas medidas:** avisos en directo cada 60 s, solo con la sección visible y la pestaña activa, y nunca dos en menos de 15 s (HamQTH pide ≥ 15 s); datos solares al llegar y cada 15 min (pide ≥ 5 min).
 - **Tipografías propias recortadas:** cuatro archivos WOFF2 (≈ 145 KB en total), solo latín; la de texto se precarga.
 - **Cada página carga solo sus módulos.** Sin frameworks: el JavaScript propio de la página más pesada son unas decenas de KB.
 - **Sin conexión:** tras la primera visita, CSS, JS y fuentes salen de la caché.

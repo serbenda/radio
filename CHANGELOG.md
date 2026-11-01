@@ -9,6 +9,10 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). C
 
 ### Arreglado
 - Cinco preguntas del examen con errores (sufijos Y y Z, "portable" frente a "portátil", autorización de menores) y diez con ambigüedades, explicaciones desactualizadas o estilo mejorable. La pregunta frecuente sobre menores, más precisa.
+- "Ahora en el aire" deja de consultar con la pestaña oculta, nunca consulta HamQTH antes de 15 s aunque se entre y salga de la sección, y muestra las frases aunque no cargue el mapa. Sus filtros indican cuál está pulsado a los lectores de pantalla.
+- Con "reducir movimiento" ya no queda ninguna animación (latido de los sonidos, medidor del contacto).
+- Quitados estilos sin uso.
+- `tools/check.mjs` ya no confunde comentarios con código.
 - **Grabaciones reales** (Escuchar): once audios grabados en el aire con licencia libre de Wikimedia Commons (llamada CQ, informe de señal, concurso, satélite, repetidores, balizas, señal horaria), con autor y licencia en cada uno.
 - **Instalable y sin conexión:** manifest, iconos y service worker. Tras la primera visita, el examen, el Morse, las lecciones y los contactos simulados funcionan sin cobertura. Página `offline.html` para lo que no está guardado.
 - **Guardar y recuperar tu progreso** en un archivo (Inicio), para cambiar de móvil o de navegador.

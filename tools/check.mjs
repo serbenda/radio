@@ -280,10 +280,11 @@ section('9. Instalable y sin conexión');
   const pagesOut = PAGES.map(p => './' + p.replace('index.html', '')).filter(p => !pre.includes(p));
   const jsOut = readdirSync(join(ROOT, 'js')).filter(f => f.endsWith('.js')).map(f => `./js/${f}`).filter(f => !pre.includes(f));
   expect(!pagesOut.length && !jsOut.length, `sw.js guarda las ${PAGES.length} páginas y todos los módulos${pagesOut.length || jsOut.length ? ' (faltan: ' + [...pagesOut, ...jsOut].join(', ') + ')' : ''}`);
-  // /const VERSION = '([^']+)'/  captura la versión de sw.js: "const VERSION = '2.2.0'" → '2.2.0'.
+  // /^const VERSION = '([^']+)'/m  captura la versión de sw.js: "const VERSION = '2.2.0'" → '2.2.0'.
+  //                              Solo al principio de una línea, para no leer ejemplos dentro de comentarios.
   // /^## \[([^\]]+)\]/m         primer título de versión del CHANGELOG: '## [2.2.0] · 1 de noviembre…' → '2.2.0'.
   //                              La bandera m hace que ^ signifique "principio de cualquier línea".
-  const v = (sw.match(/const VERSION = '([^']+)'/) || [])[1];
+  const v = (sw.match(/^const VERSION = '([^']+)'/m) || [])[1];
   const last = (read('CHANGELOG.md').match(/^## \[([^\]]+)\]/m) || [])[1];
   expect(v && v === last, `VERSION de sw.js (${v}) = última versión del CHANGELOG (${last})`);
 }
@@ -295,13 +296,19 @@ section('9. Instalable y sin conexión');
 // con ${…} que sea una de las expresiones internas de la lista. Ejemplo válido:
 //   Radio.track(`examen/simulacro-${pass ? 'apto' : 'no-apto'}`)
 // Si añades un hito con otra variable interna (nunca texto que escriba la persona), añádela a la lista.
-// Ojo: la regex también lee los comentarios de js/. En un comentario escribe "Radio.track" sin paréntesis,
-// o la comprobación tomará el texto del comentario como argumento y fallará.
+// Los comentarios se quitan antes de buscar (sinComentarios), así que en ellos se puede escribir Radio.track(…).
+/**
+ * Quita las líneas que son solo comentario (empiezan por //, /* o *). Basta para este proyecto porque
+ * los comentarios siempre van en líneas propias (regla de CONTRIBUTING.md).
+ * @param {string} src Código fuente.
+ * @returns {string} El código sin esas líneas.
+ */
+const sinComentarios = src => src.split('\n').filter(l => !/^\s*(\/\/|\/\*|\*)/.test(l)).join('\n');
 section('10. Métricas');
 {
   const bad = [];
   for (const f of readdirSync(join(ROOT, 'js')).filter(f => f.endsWith('.js'))) {
-    for (const m of read(`js/${f}`).matchAll(/Radio\.track\(([^;]*?)\);/g)) {
+    for (const m of sinComentarios(read(`js/${f}`)).matchAll(/Radio\.track\(([^;]*?)\);/g)) {
       const arg = m[1];
       // Solo literales o plantillas con variables internas conocidas (escenario, id de lección, nivel, semana, apto).
       if (!/^['`][a-z0-9\/\-]*(\$\{(scenario|current\.id|st\.level|wi \+ 1|pass \? 'apto' : 'no-apto')\}[a-z0-9\/\-]*)*['`]$/.test(arg)) bad.push(`${f}: ${arg}`);

@@ -25,41 +25,40 @@
  * 12. Morse y fonético .......... salidas de texto, juego de opciones (.opt) y glosario en lista.
  * 13. Pasos ..................... lista numerada .steps.
  * 14. Emergencias ............... franja destacada en tonos cálidos.
- * 15. Test ...................... .quiz-*: no se ha encontrado ninguna página ni módulo que use estas
- *                                 clases (búsqueda del 1 nov 2026); se pueden borrar tras comprobarlo.
- * 16. FAQ ....................... preguntas frecuentes con <details>.
- * 17. Pie ....................... <footer> común.
- * 18. Móvil ..................... puntos de corte generales (860 px y 480 px) y "reducir movimiento".
- * 19. Señal animada y ondas ..... onda del dial y ondas concéntricas alrededor del receptor.
- * 20. Simulador de QSO .......... formulario, radio, conversación, opciones y QSL (+ "Línea gris" del mapa de emisoras).
- * 21. Escucha guiada ............ tarjeta del WebSDR y fichas .chip (se reutilizan en otras secciones).
- * 22. ¿Qué es este sonido? ...... cascada (waterfall) y tarjetas de sonido.
- * 23. Lecciones ................. pestañas, lienzo, niveles y preguntas de cada lección.
- * 24. Propagación en directo .... frase y semáforo de bandas (.pb good/fair/bad), mapa de la MUF.
- * 25. Glosario emergente ........ palabras marcadas (abbr.term) y bocadillo (.term-tip).
- * 26. Simulador de examen ....... termómetro, barras por tema, tarjetas y resultado del simulacro.
- * 27. Entrenador Koch ........... pantalla y teclado de letras.
- * 28. Trámite ................... cifras del trámite (.facts) y lista de comprobación (.checklist).
- * 29. Tu primer mes ............. barra, semanas, insignias y aviso flotante (.toast).
- * 30. Ahora en el aire .......... mapa y frases del DX cluster.
- * 31. ISS ....................... posición y pases de la ISS (+ puntos de corte de 960 y 560 px).
- * 32. Radioclubes y calendario .. mapa de secciones, marcadores numerados y citas del año.
- * 33. Familias .................. autotest "¿Es para mí?", costes (.costs) y bloque para familias (.parents).
- * 34. Hispanoamérica ............ tabla de países con desplazamiento horizontal propio (.table-wrap).
+ * 15. FAQ ....................... preguntas frecuentes con <details>.
+ * 16. Pie ....................... <footer> común.
+ * 17. Móvil ..................... puntos de corte generales (860 px y 480 px) y "reducir movimiento".
+ * 18. Señal animada y ondas ..... onda del dial y ondas concéntricas alrededor del receptor.
+ * 19. Simulador de QSO .......... formulario, radio, conversación, opciones y QSL (+ "Línea gris" del mapa de emisoras).
+ * 20. Escucha guiada ............ tarjeta del WebSDR y fichas .chip (se reutilizan en otras secciones).
+ * 21. ¿Qué es este sonido? ...... cascada (waterfall) y tarjetas de sonido.
+ * 22. Lecciones ................. pestañas, lienzo, niveles y preguntas de cada lección.
+ * 23. Propagación en directo .... frase y semáforo de bandas (.pb good/fair/bad), mapa de la MUF.
+ * 24. Glosario emergente ........ palabras marcadas (abbr.term) y bocadillo (.term-tip).
+ * 25. Simulador de examen ....... termómetro, barras por tema, tarjetas y resultado del simulacro.
+ * 26. Entrenador Koch ........... pantalla y teclado de letras.
+ * 27. Trámite ................... cifras del trámite (.facts) y lista de comprobación (.checklist).
+ * 28. Tu primer mes ............. barra, semanas, insignias y aviso flotante (.toast).
+ * 29. Ahora en el aire .......... mapa y frases del DX cluster.
+ * 30. ISS ....................... posición y pases de la ISS (+ puntos de corte de 960 y 560 px).
+ * 31. Radioclubes y calendario .. mapa de secciones, marcadores numerados y citas del año.
+ * 32. Familias .................. autotest "¿Es para mí?", costes (.costs) y bloque para familias (.parents).
+ * 33. Hispanoamérica ............ tabla de países con desplazamiento horizontal propio (.table-wrap).
  *     — Bloque "Páginas" (añadido con la versión multipágina) —
- * 35. Accesibilidad ............. "Saltar al contenido", texto solo para lectores de pantalla y foco visible.
- * 36. Menú: página actual ....... enlace del menú con aria-current="page".
- * 37. Cabecera de cada página ... .page-head e índice "En esta página" (.toc).
- * 38. Siguiente página .......... enlace grande al final de cada página.
- * 39. Tarjetas de la portada .... .page-cards hacia cada página.
- * 40. Estados pulsados .......... aria-pressed="true" con el mismo aspecto que .on.
- * 41. Propagación: bandas botón . los .pb como botones con explicación desplegable.
- * 42. Receptores alternativos ... nota bajo la escucha guiada.
- * 43. CB-27, PMR446 y qué radio comprar  tablas legales y de modelos.
- * 44. Avisar de errores ......... enlaces "Avísanos" y "¿Crees que esta pregunta tiene un error?".
- * 45. Guardar y recuperar progreso  bloque de copia de seguridad de la portada.
- * 46. Grabaciones reales ........ tarjetas de audio de Wikimedia Commons.
- * 47. Aviso sin JavaScript ...... mensaje de <noscript>.
+ * 34. Accesibilidad ............. "Saltar al contenido", texto solo para lectores de pantalla y foco visible.
+ * 35. Menú: página actual ....... enlace del menú con aria-current="page".
+ * 36. Cabecera de cada página ... .page-head e índice "En esta página" (.toc).
+ * 37. Siguiente página .......... enlace grande al final de cada página.
+ * 38. Tarjetas de la portada .... .page-cards hacia cada página.
+ * 39. Estados pulsados .......... aria-pressed="true" con el mismo aspecto que .on.
+ * 40. Propagación: bandas botón . los .pb como botones con explicación desplegable.
+ * 41. Receptores alternativos ... nota bajo la escucha guiada.
+ * 42. CB-27, PMR446 y qué radio comprar  tablas legales y de modelos.
+ * 43. Avisar de errores ......... enlaces "Avísanos" y "¿Crees que esta pregunta tiene un error?".
+ * 44. Guardar y recuperar progreso  bloque de copia de seguridad de la portada.
+ * 45. Grabaciones reales ........ tarjetas de audio de Wikimedia Commons.
+ * 46. Aviso sin JavaScript ...... mensaje de <noscript>.
+ * 47. Movimiento reducido ....... con "reducir movimiento", ninguna animación ni transición dura.
  *
  * CAPAS (z-index), de abajo arriba:
  *   -1    ondas del receptor (.receiver::before/::after), detrás del contenido de la tarjeta.
@@ -84,14 +83,14 @@
  *
  * MOVIMIENTO: con "reducir movimiento" activado en el sistema (prefers-reduced-motion: reduce) se
  *   desactivan el desplazamiento suave, el ecualizador del reproductor y las ondas del receptor (secciones
- *   18 y 19). Los lienzos animados los controla JavaScript con Radio.reducedMotion (js/core.js).
- *   Quedan sin desactivar aquí, a 1 nov 2026: el latido de .sound-card.on (pulse), el medidor del QSO
- *   (smeter) y las transiciones cortas de botones, tarjetas y .toast.
+ *   17 y 18), y la sección 47 anula cualquier otra animación o transición (latido de los sonidos,
+ *   medidor del QSO, botones, .toast). Los lienzos animados los controla JavaScript con
+ *   Radio.reducedMotion (js/core.js).
  *
  * FOCO: todo elemento enfocable muestra un contorno de 2 px en --accent al usar el teclado
- *   (:focus-visible, sección 35). Los campos de formulario lo muestran también al hacer clic
+ *   (:focus-visible, sección 34). Los campos de formulario lo muestran también al hacer clic
  *   (select:focus, input:focus en Emisoras). Casos especiales: abbr.term (Glosario emergente) y el
- *   selector de archivo oculto de la copia de seguridad, cuyo contorno se dibuja en su etiqueta (sección 45).
+ *   selector de archivo oculto de la copia de seguridad, cuyo contorno se dibuja en su etiqueta (sección 44).
  * ========================================================= */
 /* ---------- Tipografías (alojadas en fonts/, licencia OFL) ----------
    Recortadas a latín + latín extendido y a los pesos que se usan (ver docs/ESTILOS.md#tipografías).
@@ -378,14 +377,6 @@ select:focus, input:focus { outline: 2px solid var(--accent); outline-offset: 1p
   background: linear-gradient(120deg, #3a1d14, #231e17); border: 1px solid #5a2d1f;
 }
 .band-strip .section-head p { color: #e0d6d2; max-width: 760px; }
-
-/* ---------- Test ---------- */
-.quiz { max-width: 760px; }
-.quiz-n { font: .8rem var(--mono); color: var(--muted); margin: 0 0 6px; }
-.quiz-opts { display: grid; gap: 10px; margin: 14px 0; }
-.quiz-why { color: var(--muted); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; min-height: 40px; }
-.quiz-end { text-align: center; padding: 20px; }
-.quiz-end .big { font: 800 3.4rem var(--serif); color: var(--accent); margin: 0; }
 
 /* ---------- FAQ ---------- */
 .faq { display: grid; gap: 10px; max-width: 860px; }
@@ -861,3 +852,11 @@ footer .report { font-size: .88rem; }
 
 /* ---------- Aviso sin JavaScript ---------- */
 .noscript { margin: 16px auto; max-width: 1100px; padding: 12px 16px; border: 1px solid var(--hot); border-radius: var(--radius); color: var(--hot); }
+
+/* ---------- Movimiento reducido ----------
+   Red de seguridad: si el sistema pide "reducir movimiento", ninguna animación ni transición dura
+   (incluidas las que se añadan en el futuro). Se usa .01ms y no "none" para que los eventos
+   animationend/transitionend sigan llegando si algún script los espera. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

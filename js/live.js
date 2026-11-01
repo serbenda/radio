@@ -2,16 +2,14 @@
  * live.js · "Ahora en el aire": avisos (spots) del DX cluster en directo.
  *
  * Página: Escuchar (#ahora). Necesita: #liveMap, #liveStories, #liveBands, #liveSummary, #liveStatus. Depende de: Leaflet.
- *   Leaflet (global L, desde cdnjs) se carga antes que este archivo. Ojo: si Leaflet no ha cargado, el mapa no
- *   se crea y render() falla al limpiar la capa; el error lo recoge load() y la sección muestra solo el
- *   mensaje de "No se han podido cargar los avisos". Usa Radio solo para Radio.emit.
+ *   Leaflet (global L, desde cdnjs) se carga antes que este archivo. Si Leaflet no ha cargado, no hay mapa,
+ *   pero las frases, los filtros y el resumen se pintan igual. Usa Radio.emit y Radio.whileVisible.
  *
  * Datos: https://www.hamqth.com/api/v2/spots?limit=100&include=locations (CORS abierto, sin clave).
  * HamQTH pide no consultar más de una vez cada 15 s y citar la fuente: aquí se consulta cada 60 s y SOLO
- * mientras la sección está cerca de la pantalla (IntersectionObserver con 200 px de margen); la atribución sale
- * en el mapa y bajo él. Al salir de la sección se para el temporizador. Con la pestaña oculta no se para
- * expresamente (el navegador solo ralentiza los temporizadores). Ojo: cada vez que la sección vuelve a
- * acercarse se consulta al momento, así que entrar y salir deprisa puede consultar más de una vez por minuto.
+ * mientras la sección está en pantalla y la pestaña visible (Radio.whileVisible); la atribución sale
+ * en el mapa y bajo él. Al salir de la sección o al ocultar la pestaña se para el temporizador. Al volver se
+ * consulta al momento, pero load() nunca repite antes de 15 s, así que entrar y salir deprisa no supera el límite.
  * Cada aviso se cuenta como una frase en español (país traducido, modo en palabras, distancia por haversine)
  * y lleva un enlace para escucharlo en el WebSDR de Twente si es de onda corta.
  * Logro: Radio.emit('live') al filtrar por banda o abrir un aviso.
@@ -27,7 +25,7 @@
  *  - Añadir una banda o cambiar su color: BANDCOL (clave como la da HamQTH, p. ej. '60M'). Solo salen botones
  *    de filtro para las bandas que están en BANDCOL, en su mismo orden.
  *  - Cambiar cuántos avisos se cuentan como frase: `list.slice(0, 7)` en render().
- *  - Cambiar el ritmo de consulta: el 60000 (ms) del IntersectionObserver del final. Nunca menos de 15000.
+ *  - Cambiar el ritmo de consulta: el 60000 (ms) del final. Nunca menos de 15000 (el mínimo de load()).
  */
 (() => {
   'use strict';
@@ -171,8 +169,9 @@
    */
   function render() {
     const list = spots.filter(s => filter === 'all' || s.band === filter);
-    layer.clearLayers();
-    list.forEach(s => {
+    // Sin Leaflet (cdnjs caído o bloqueado) no hay mapa: se pintan igualmente las frases y los filtros.
+    if (layer) layer.clearLayers();
+    if (layer) list.forEach(s => {
       const a = locs[s.spotter], b = locs[s.dxcall];
       if (!a || !b) return;
       const c = BANDCOL[s.band] || '#9c9ea6';
@@ -188,8 +187,8 @@
     const order = Object.keys(BANDCOL);
     bands.sort((x, y) => order.indexOf(x) - order.indexOf(y));
     // El botón activo lleva la clase "on". `b` viene de una lista fija (BANDCOL), por eso no se escapa.
-    $('liveBands').innerHTML = `<button class="chip${filter === 'all' ? ' on' : ''}" data-b="all">Todas</button>` +
-      bands.map(b => `<button class="chip${filter === b ? ' on' : ''}" data-b="${b}"><i class="sw" style="background:${BANDCOL[b]}"></i>${bandName(b)}</button>`).join('');
+    $('liveBands').innerHTML = `<button type="button" class="chip${filter === 'all' ? ' on' : ''}" data-b="all" aria-pressed="${filter === 'all'}">Todas</button>` +
+      bands.map(b => `<button type="button" class="chip${filter === b ? ' on' : ''}" data-b="${b}" aria-pressed="${filter === b}"><i class="sw" style="background:${BANDCOL[b]}" aria-hidden="true"></i>${bandName(b)}</button>`).join('');
     $('liveSummary').innerHTML = `En los últimos minutos se han publicado <b>${list.length}</b> avisos${filter === 'all' ? '' : ` en ${bandName(filter)}`}, con estaciones de <b>${conts}</b> continente${conts === 1 ? '' : 's'}.`;
   }
 
@@ -200,7 +199,12 @@
    * Efectos: `spots`, `locs`, todo lo que pinta render() y #liveStatus (hora de la última actualización
    *   o mensaje de error). Si falla, no borra los avisos anteriores; el siguiente intento es al cabo de un minuto.
    */
+  let last = 0;
   async function load() {
+    // HamQTH pide no consultar más de una vez cada 15 s: al entrar y salir deprisa de la sección
+    // (o al volver a la pestaña) se reutilizan los avisos que ya hay.
+    if (Date.now() - last < 15000) return;
+    last = Date.now();
     try {
       const r = await fetch(API);
       const d = await r.json();
@@ -226,13 +230,12 @@
   $('liveStories').addEventListener('click', e => { if (e.target.closest('.ls-go')) Radio.emit('live', 'escuchar'); });
 
   /* ---------- Arranque y parada según la visibilidad de la sección ---------- */
-  // Al acercarse la sección (200 px antes): crea el mapa la primera vez, consulta y arranca el temporizador
-  // de 60 s. Al alejarse: para el temporizador. Así no se consulta HamQTH mientras la sección está lejos de la vista.
-  const io = new IntersectionObserver(es => {
-    const on = es.some(e => e.isIntersecting);
-    if (on && !map && typeof L !== 'undefined') initMap();
-    if (on && !timer) { load(); timer = setInterval(load, 60000); }
-    if (!on && timer) { clearInterval(timer); timer = null; }
-  }, { rootMargin: '200px' });
-  io.observe($('ahora'));
+  // Mientras la sección está en pantalla y la pestaña visible (Radio.whileVisible): crea el mapa la primera
+  // vez, consulta y repite cada 60 s. Al dejar de verse o al ocultar la pestaña, se para el temporizador.
+  // Así no se consulta HamQTH si nadie está mirando. load() además impide repetir antes de 15 s.
+  Radio.whileVisible($('ahora'), () => {
+    if (!map && typeof L !== 'undefined') initMap();
+    load();
+    timer = setInterval(load, 60000);
+  }, () => { clearInterval(timer); timer = null; });
 })();
