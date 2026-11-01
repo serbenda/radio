@@ -30,6 +30,8 @@
  * Accesibilidad: los dibujos son aria-hidden; lo que muestran se dice en texto en .lesson-readout (aria-live),
  *   así que un lector de pantalla oye el resultado al mover los controles. Pestañas y niveles usan aria-pressed.
  *
+ * Textos visibles: en castellano e inglés con Radio.t(es, en) (ver docs/IDIOMAS.md).
+ *
  * Cómo modificarlo:
  *  - Cambiar textos o preguntas: en LESSONS (campos explicados encima). Los textos de niveles admiten HTML.
  *  - Añadir una lección: una entrada nueva en LESSONS con un `id` único y una función con ese mismo nombre en
@@ -42,6 +44,7 @@
   if (!document.getElementById('como-funciona')) return; // esta página no tiene la sección
   /* ---------- Utilidades locales ---------- */
   const $ = id => document.getElementById(id);
+  const { t } = Radio;
   /**
    * Escapa texto para meterlo en HTML (& < > " '). Se usa con las preguntas y respuestas del test.
    * @param {*} s Valor a escapar (se convierte a texto).
@@ -80,55 +83,67 @@
    */
   const LESSONS = [
     {
-      id: 'onda', title: 'La onda', icon: '〰️',
+      id: 'onda', title: t('La onda', 'The wave'), icon: '〰️',
       levels: [
-        'La radio viaja como las olas en un estanque, pero invisibles y a la velocidad de la luz. Cuantas más olas por segundo, más “aguda” es la onda y más cortas son.',
-        'El número de olas por segundo es la <b>frecuencia</b> (en megahercios, MHz). La distancia entre dos crestas es la <b>longitud de onda</b>. Por eso las bandas se llaman “40 metros” o “2 metros”: es el tamaño de su onda.',
-        'Longitud de onda (m) ≈ 300 / frecuencia (MHz). A 7 MHz: 300 / 7 ≈ 43 m. Las frecuencias bajas rodean obstáculos y rebotan en la ionosfera; las altas viajan en línea recta, como la luz.',
+        t('La radio viaja como las olas en un estanque, pero invisibles y a la velocidad de la luz. Cuantas más olas por segundo, más “aguda” es la onda y más cortas son.',
+          'Radio travels like ripples on a pond, but invisible and at the speed of light. The more ripples per second, the “higher” the wave and the shorter they are.'),
+        t('El número de olas por segundo es la <b>frecuencia</b> (en megahercios, MHz). La distancia entre dos crestas es la <b>longitud de onda</b>. Por eso las bandas se llaman “40 metros” o “2 metros”: es el tamaño de su onda.',
+          'The number of ripples per second is the <b>frequency</b> (in megahertz, MHz). The distance between two crests is the <b>wavelength</b>. That is why bands are called “40 metres” or “2 metres”: it is the size of their wave.'),
+        t('Longitud de onda (m) ≈ 300 / frecuencia (MHz). A 7 MHz: 300 / 7 ≈ 43 m. Las frecuencias bajas rodean obstáculos y rebotan en la ionosfera; las altas viajan en línea recta, como la luz.',
+          'Wavelength (m) ≈ 300 / frequency (MHz). At 7 MHz: 300 / 7 ≈ 43 m. Low frequencies bend around obstacles and bounce off the ionosphere; high ones travel in a straight line, like light.'),
       ],
       quiz: [
-        { q: '¿Qué mide la frecuencia?', a: ['Cuántas ondas pasan por segundo', 'Lo fuerte que es la señal', 'La distancia a la emisora'], ok: 0 },
-        { q: 'Si la frecuencia sube, la longitud de onda…', a: ['También sube', 'Baja', 'No cambia'], ok: 1 },
-        { q: '¿Por qué la banda de 7 MHz se llama “40 metros”?', a: ['Porque llega a 40 km', 'Porque su onda mide unos 40 m', 'Porque usa antenas de 40 m de alto'], ok: 1 },
+        { q: t('¿Qué mide la frecuencia?', 'What does frequency measure?'), a: [t('Cuántas ondas pasan por segundo', 'How many waves pass each second'), t('Lo fuerte que es la señal', 'How strong the signal is'), t('La distancia a la emisora', 'The distance to the station')], ok: 0 },
+        { q: t('Si la frecuencia sube, la longitud de onda…', 'If the frequency goes up, the wavelength…'), a: [t('También sube', 'Goes up too'), t('Baja', 'Goes down'), t('No cambia', 'Does not change')], ok: 1 },
+        { q: t('¿Por qué la banda de 7 MHz se llama “40 metros”?', 'Why is the 7 MHz band called “40 metres”?'), a: [t('Porque llega a 40 km', 'Because it reaches 40 km'), t('Porque su onda mide unos 40 m', 'Because its wave is about 40 m long'), t('Porque usa antenas de 40 m de alto', 'Because it uses 40 m tall antennas')], ok: 1 },
       ],
     },
     {
-      id: 'antena', title: 'La antena', icon: '📡',
+      id: 'antena', title: t('La antena', 'The antenna'), icon: '📡',
       levels: [
-        'Una antena es un cable que “lanza” y “atrapa” ondas. Funciona mejor cuando su tamaño encaja con la onda, como una cuerda de guitarra con su nota.',
-        'La antena más sencilla es el <b>dipolo</b>: dos cables iguales en línea, alimentados por el centro. En total mide la mitad de la longitud de onda. Para 40 m, unos 20 metros de punta a punta.',
-        'Largo del dipolo (m) ≈ 143 / f (MHz), algo menos que λ/2 por el efecto de los extremos. En el centro presenta unos 50-75 Ω, lo que encaja con el cable coaxial. Por eso las bandas altas permiten antenas pequeñas y direccionales.',
+        t('Una antena es un cable que “lanza” y “atrapa” ondas. Funciona mejor cuando su tamaño encaja con la onda, como una cuerda de guitarra con su nota.',
+          'An antenna is a wire that “throws” and “catches” waves. It works best when its size matches the wave, like a guitar string and its note.'),
+        t('La antena más sencilla es el <b>dipolo</b>: dos cables iguales en línea, alimentados por el centro. En total mide la mitad de la longitud de onda. Para 40 m, unos 20 metros de punta a punta.',
+          'The simplest antenna is the <b>dipole</b>: two equal wires in a line, fed in the centre. In total it is half a wavelength long. For 40 m, about 20 metres from end to end.'),
+        t('Largo del dipolo (m) ≈ 143 / f (MHz), algo menos que λ/2 por el efecto de los extremos. En el centro presenta unos 50-75 Ω, lo que encaja con el cable coaxial. Por eso las bandas altas permiten antenas pequeñas y direccionales.',
+          'Dipole length (m) ≈ 143 / f (MHz), a little less than λ/2 because of the end effect. At the centre it shows about 50-75 Ω, which matches coaxial cable. That is why the high bands allow small, directional antennas.'),
       ],
       quiz: [
-        { q: '¿Cuánto mide, en total, un dipolo?', a: ['Media longitud de onda', 'Una longitud de onda entera', 'Siempre 1 metro'], ok: 0 },
-        { q: '¿Para qué banda es más pequeña la antena?', a: ['80 m', '40 m', '2 m'], ok: 2 },
-        { q: '¿Por dónde se conecta el cable a un dipolo?', a: ['Por un extremo', 'Por el centro', 'Por los dos extremos'], ok: 1 },
+        { q: t('¿Cuánto mide, en total, un dipolo?', 'How long is a dipole in total?'), a: [t('Media longitud de onda', 'Half a wavelength'), t('Una longitud de onda entera', 'A whole wavelength'), t('Siempre 1 metro', 'Always 1 metre')], ok: 0 },
+        { q: t('¿Para qué banda es más pequeña la antena?', 'For which band is the antenna smallest?'), a: ['80 m', '40 m', '2 m'], ok: 2 },
+        { q: t('¿Por dónde se conecta el cable a un dipolo?', 'Where is the cable connected to a dipole?'), a: [t('Por un extremo', 'At one end'), t('Por el centro', 'In the centre'), t('Por los dos extremos', 'At both ends')], ok: 1 },
       ],
     },
     {
-      id: 'ionosfera', title: 'La ionosfera', icon: '🌍',
+      id: 'ionosfera', title: t('La ionosfera', 'The ionosphere'), icon: '🌍',
       levels: [
-        'Muy arriba, el Sol carga el aire de electricidad. Esa capa, la <b>ionosfera</b>, hace de espejo para algunas ondas: rebotan y caen a miles de kilómetros.',
-        'De día aparece una capa baja (la D) que se “come” las frecuencias bajas; de noche desaparece y las bandas bajas llegan lejos. Las frecuencias altas solo rebotan si el Sol está activo; si no, se escapan al espacio.',
-        'La reflexión depende de la frecuencia crítica de la capa F y del ángulo. La máxima frecuencia utilizable (MUF) sube de día y con el flujo solar. Por encima de la MUF la onda atraviesa la ionosfera; la capa D absorbe más cuanto más baja es la frecuencia.',
+        t('Muy arriba, el Sol carga el aire de electricidad. Esa capa, la <b>ionosfera</b>, hace de espejo para algunas ondas: rebotan y caen a miles de kilómetros.',
+          'High up, the Sun charges the air with electricity. That layer, the <b>ionosphere</b>, acts as a mirror for some waves: they bounce and come down thousands of kilometres away.'),
+        t('De día aparece una capa baja (la D) que se “come” las frecuencias bajas; de noche desaparece y las bandas bajas llegan lejos. Las frecuencias altas solo rebotan si el Sol está activo; si no, se escapan al espacio.',
+          'By day a low layer (the D layer) appears and “eats” the low frequencies; at night it disappears and the low bands reach far. High frequencies only bounce if the Sun is active; if not, they escape into space.'),
+        t('La reflexión depende de la frecuencia crítica de la capa F y del ángulo. La máxima frecuencia utilizable (MUF) sube de día y con el flujo solar. Por encima de la MUF la onda atraviesa la ionosfera; la capa D absorbe más cuanto más baja es la frecuencia.',
+          'Reflection depends on the critical frequency of the F layer and on the angle. The maximum usable frequency (MUF) rises by day and with the solar flux. Above the MUF the wave goes through the ionosphere; the D layer absorbs more the lower the frequency.'),
       ],
       quiz: [
-        { q: '¿Qué hace la capa D durante el día?', a: ['Refleja todo', 'Absorbe las frecuencias bajas', 'Desaparece'], ok: 1 },
-        { q: 'Si una onda va por encima de la MUF…', a: ['Rebota más lejos', 'Se escapa al espacio', 'Se oye más fuerte'], ok: 1 },
-        { q: '¿Cuándo suelen funcionar mejor 80 y 40 m?', a: ['De noche', 'A mediodía', 'Nunca'], ok: 0 },
+        { q: t('¿Qué hace la capa D durante el día?', 'What does the D layer do during the day?'), a: [t('Refleja todo', 'Reflects everything'), t('Absorbe las frecuencias bajas', 'Absorbs the low frequencies'), t('Desaparece', 'Disappears')], ok: 1 },
+        { q: t('Si una onda va por encima de la MUF…', 'If a wave is above the MUF…'), a: [t('Rebota más lejos', 'It bounces further'), t('Se escapa al espacio', 'It escapes into space'), t('Se oye más fuerte', 'It sounds louder')], ok: 1 },
+        { q: t('¿Cuándo suelen funcionar mejor 80 y 40 m?', 'When do 80 and 40 m usually work best?'), a: [t('De noche', 'At night'), t('A mediodía', 'At midday'), t('Nunca', 'Never')], ok: 0 },
       ],
     },
     {
-      id: 'modos', title: 'Cómo viaja tu voz', icon: '🎙️',
+      id: 'modos', title: t('Cómo viaja tu voz', 'How your voice travels'), icon: '🎙️',
       levels: [
-        'La onda de radio es como un camión vacío: para que lleve tu voz hay que “cargarla”. Hay varias formas de hacerlo y cada una suena distinta.',
-        'En <b>AM</b> cambia la fuerza de la onda; en <b>FM</b>, su frecuencia (la de los walkies). En <b>CW</b> se enciende y apaga para hacer Morse. La <b>BLU</b> (SSB), la favorita en onda corta, solo envía la parte útil de la voz y llega más lejos con la misma potencia.',
-        'AM gasta dos tercios de la potencia en la portadora. SSB suprime la portadora y una banda lateral: ocupa unos 2,7 kHz y concentra la energía. FM es inmune a parte del ruido pero necesita más ancho de banda. CW cabe en menos de 200 Hz: máxima eficiencia.',
+        t('La onda de radio es como un camión vacío: para que lleve tu voz hay que “cargarla”. Hay varias formas de hacerlo y cada una suena distinta.',
+          'A radio wave is like an empty lorry: to carry your voice it has to be “loaded”. There are several ways to do it and each one sounds different.'),
+        t('En <b>AM</b> cambia la fuerza de la onda; en <b>FM</b>, su frecuencia (la de los walkies). En <b>CW</b> se enciende y apaga para hacer Morse. La <b>BLU</b> (SSB), la favorita en onda corta, solo envía la parte útil de la voz y llega más lejos con la misma potencia.',
+          'In <b>AM</b> the strength of the wave changes; in <b>FM</b>, its frequency (the one walkie-talkies use). In <b>CW</b> it is switched on and off to send Morse. <b>SSB</b> (single sideband), the favourite on short wave, only sends the useful part of the voice and reaches further with the same power.'),
+        t('AM gasta dos tercios de la potencia en la portadora. SSB suprime la portadora y una banda lateral: ocupa unos 2,7 kHz y concentra la energía. FM es inmune a parte del ruido pero necesita más ancho de banda. CW cabe en menos de 200 Hz: máxima eficiencia.',
+          'AM spends two thirds of its power on the carrier. SSB removes the carrier and one sideband: it takes up about 2.7 kHz and concentrates the energy. FM ignores some of the noise but needs more bandwidth. CW fits in less than 200 Hz: maximum efficiency.'),
       ],
       quiz: [
-        { q: '¿Qué cambia en FM?', a: ['La fuerza de la onda', 'La frecuencia de la onda', 'Nada'], ok: 1 },
-        { q: '¿Qué modo de voz se usa más en onda corta?', a: ['FM', 'BLU (SSB)', 'Televisión'], ok: 1 },
-        { q: '¿Cuál ocupa menos espacio en el dial?', a: ['CW (Morse)', 'AM', 'FM'], ok: 0 },
+        { q: t('¿Qué cambia en FM?', 'What changes in FM?'), a: [t('La fuerza de la onda', 'The strength of the wave'), t('La frecuencia de la onda', 'The frequency of the wave'), t('Nada', 'Nothing')], ok: 1 },
+        { q: t('¿Qué modo de voz se usa más en onda corta?', 'Which voice mode is used most on short wave?'), a: ['FM', t('BLU (SSB)', 'SSB'), t('Televisión', 'Television')], ok: 1 },
+        { q: t('¿Cuál ocupa menos espacio en el dial?', 'Which one takes up the least space on the dial?'), a: [t('CW (Morse)', 'CW (Morse)'), 'AM', 'FM'], ok: 0 },
       ],
     },
   ];
@@ -185,17 +200,17 @@
      */
     onda(box) {
       box.innerHTML = `<canvas class="lesson-canvas" aria-hidden="true"></canvas>
-        <label class="inline">Frecuencia <input type="range" id="lwF" min="0" max="1000" value="400"> <b id="lwFv"></b></label>
+        <label class="inline">${t('Frecuencia', 'Frequency')} <input type="range" id="lwF" min="0" max="1000" value="400"> <b id="lwFv"></b></label>
         <p class="lesson-readout" id="lwOut" aria-live="polite"></p>`;
-      const c = box.querySelector('canvas'); let t = 0, run = false;
+      const c = box.querySelector('canvas'); let ph = 0, run = false;
       // El deslizador va de 0 a 1000 y se convierte en frecuencia con escala logarítmica entre 1,8 y 450 MHz:
       // f = 1,8 · (450/1,8)^(valor/1000). Así 160 m y 70 cm caben en el mismo recorrido con la misma precisión.
       const freq = () => 1.8 * Math.pow(450 / 1.8, $('lwF').value / 1000);
       // Comparación de la longitud de onda (en metros) con algo conocido.
-      const compare = l => l > 100 ? 'más que un campo de fútbol' : l > 30 ? 'como un edificio de 10 plantas' : l > 8 ? 'como un autobús' : l > 1.5 ? 'como una persona' : l > 0.3 ? 'como un plato' : 'como un móvil';
+      const compare = l => l > 100 ? t('más que un campo de fútbol', 'more than a football pitch') : l > 30 ? t('como un edificio de 10 plantas', 'like a 10-storey building') : l > 8 ? t('como un autobús', 'like a bus') : l > 1.5 ? t('como una persona', 'like a person') : l > 0.3 ? t('como un plato', 'like a plate') : t('como un móvil', 'like a mobile phone');
       /**
        * Dibuja un fotograma y actualiza los textos. Si la animación está en marcha, pide el siguiente.
-       * `t` desplaza la fase en cada fotograma para que la onda avance.
+       * `ph` desplaza la fase en cada fotograma para que la onda avance.
        */
       function frame() {
         const { g, w, h } = sizeCanvas(c), f = freq(), lam = 300 / f;
@@ -205,10 +220,10 @@
         g.clearRect(0, 0, w, h);
         g.strokeStyle = css('--line'); g.beginPath(); g.moveTo(0, h / 2); g.lineTo(w, h / 2); g.stroke();
         g.strokeStyle = css('--accent'); g.lineWidth = 2.5; g.beginPath();
-        for (let x = 0; x <= w; x += 2) { const y = h / 2 - Math.sin((x / w) * cycles * 2 * Math.PI - t) * (h * 0.36); x ? g.lineTo(x, y) : g.moveTo(x, y); }
-        g.stroke(); t += 0.06;
+        for (let x = 0; x <= w; x += 2) { const y = h / 2 - Math.sin((x / w) * cycles * 2 * Math.PI - ph) * (h * 0.36); x ? g.lineTo(x, y) : g.moveTo(x, y); }
+        g.stroke(); ph += 0.06;
         $('lwFv').textContent = f < 10 ? f.toFixed(2) + ' MHz' : f.toFixed(0) + ' MHz';
-        $('lwOut').innerHTML = `Longitud de onda: <b>${lam >= 10 ? lam.toFixed(0) : lam.toFixed(2)} m</b>, ${compare(lam)}.`;
+        $('lwOut').innerHTML = `${t('Longitud de onda', 'Wavelength')}: <b>${lam >= 10 ? lam.toFixed(0) : lam.toFixed(2)} m</b>, ${compare(lam)}.`;
         if (run && !Radio.reducedMotion) requestAnimationFrame(frame);
       }
       // Con la animación parada (fuera de pantalla o con movimiento reducido), se redibuja al mover el control.
@@ -246,12 +261,14 @@
           <line x1="${cx + 6}" y1="${y}" x2="${cx + half}" y2="${y}" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
           <rect x="${cx - 6}" y="${y - 6}" width="12" height="12" rx="2" fill="var(--hot)"/>
           <path d="M${cx} ${y + 6} V200" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 4"/>
-          <text x="${cx + 8}" y="150" fill="var(--muted)" font-size="12">cable coaxial</text>
+          <text x="${cx + 8}" y="150" fill="var(--muted)" font-size="12">${t('cable coaxial', 'coaxial cable')}</text>
           <text x="${cx}" y="${y - 16}" fill="var(--ink)" font-size="14" text-anchor="middle">${len >= 10 ? len.toFixed(1) : len.toFixed(2)} m</text>
           ${person < 200 ? `<g transform="translate(${cx + 120},${200 - person})" fill="var(--muted)"><circle cx="0" cy="${person * 0.08}" r="${person * 0.08}"/><rect x="${-person * 0.07}" y="${person * 0.17}" width="${person * 0.14}" height="${person * 0.83}" rx="${person * 0.05}"/></g>
-          <text x="${cx + 120}" y="215" fill="var(--muted)" font-size="11" text-anchor="middle">persona (1,75 m)</text>` : ''}
+          <text x="${cx + 120}" y="215" fill="var(--muted)" font-size="11" text-anchor="middle">${t('persona (1,75 m)', 'person (1.75 m)')}</text>` : ''}
           <line x1="0" y1="200" x2="600" y2="200" stroke="var(--line)"/>`;
-        $('laOut').innerHTML = `Un dipolo para <b>${name}</b> mide unos <b>${len >= 10 ? len.toFixed(1) : len.toFixed(2)} m</b> de punta a punta: dos brazos de ${(len / 2).toFixed(len >= 10 ? 1 : 2)} m.`;
+        const lenTxt = len >= 10 ? len.toFixed(1) : len.toFixed(2), armTxt = (len / 2).toFixed(len >= 10 ? 1 : 2);
+        $('laOut').innerHTML = t(`Un dipolo para <b>${name}</b> mide unos <b>${lenTxt} m</b> de punta a punta: dos brazos de ${armTxt} m.`,
+          `A dipole for <b>${name}</b> is about <b>${lenTxt} m</b> from end to end: two arms of ${armTxt} m.`);
         box.querySelectorAll('.chip').forEach(b => b.classList.toggle('on', +b.dataset.i === i));
       }
       // Un solo escuchador para los botones de banda (data-i = posición en `bands`).
@@ -276,7 +293,7 @@
       let fi = 1, day = new Date().getHours() >= 8 && new Date().getHours() < 19, sun = false;
       box.innerHTML = `<svg class="lesson-svg" viewBox="0 0 600 260" id="liSvg" aria-hidden="true"></svg>
         <div class="row"><div class="chips" id="liF">${freqs.map((b, i) => `<button class="chip" data-i="${i}">${b[0]}</button>`).join('')}</div>
-        <div class="chips"><button class="chip" id="liDay"></button><button class="chip" id="liSun">☀️ Sol muy activo</button></div></div>
+        <div class="chips"><button class="chip" id="liDay"></button><button class="chip" id="liSun">${t('☀️ Sol muy activo', '☀️ Very active Sun')}</button></div></div>
         <p class="lesson-readout" id="liOut" aria-live="polite"></p>`;
       /**
        * Calcula el caso (absorbida, escapa o rebota), dibuja el SVG y actualiza texto y botones.
@@ -291,26 +308,26 @@
         const hF = day ? 70 : 90; // altura de la capa F en el dibujo (menor y = más alto)
         let path, out;
         if (absorbed) {
-          path = 'M40 230 Q90 170 140 150'; out = 'De día la capa D se traga esta frecuencia: la señal se apaga antes de rebotar. Prueba de noche.';
+          path = 'M40 230 Q90 170 140 150'; out = t('De día la capa D se traga esta frecuencia: la señal se apaga antes de rebotar. Prueba de noche.', 'By day the D layer swallows this frequency: the signal fades before it can bounce. Try at night.');
         } else if (escapes) {
-          path = 'M40 230 Q200 120 300 20'; out = `Va por encima de la frecuencia máxima (≈${muf} MHz ahora): atraviesa la ionosfera y se pierde en el espacio.`;
+          path = 'M40 230 Q200 120 300 20'; out = t(`Va por encima de la frecuencia máxima (≈${muf} MHz ahora): atraviesa la ionosfera y se pierde en el espacio.`, `It is above the maximum frequency (≈${muf} MHz now): it goes through the ionosphere and is lost in space.`);
         } else {
           // Ancho del salto en px (160 + 22 px por MHz, hasta 520) y su distancia "real" a razón de 6 km por px:
           // por ejemplo 40 m (7,1 MHz) → 316 px → unos 1.900 km. Orientativo.
           const dist = Math.min(520, 160 + f * 22);
           path = `M40 230 L${40 + dist / 2} ${hF} L${40 + dist} 230`;
-          out = `Rebota en la capa F y cae a unos <b>${Math.round(dist * 6)} km</b>. Con varios saltos puede dar la vuelta al mundo.`;
+          out = t(`Rebota en la capa F y cae a unos <b>${Math.round(dist * 6)} km</b>. Con varios saltos puede dar la vuelta al mundo.`, `It bounces off the F layer and comes down about <b>${Math.round(dist * 6)} km</b> away. With several hops it can go round the world.`);
         }
         $('liSvg').innerHTML = `
           <rect x="0" y="${hF - 22}" width="600" height="30" fill="var(--accent)" opacity=".12"/>
-          <text x="590" y="${hF - 4}" fill="var(--muted)" font-size="12" text-anchor="end">capa F</text>
-          ${day ? `<rect x="0" y="150" width="600" height="20" fill="var(--hot)" opacity=".14"/><text x="590" y="164" fill="var(--muted)" font-size="12" text-anchor="end">capa D (solo de día)</text>` : ''}
+          <text x="590" y="${hF - 4}" fill="var(--muted)" font-size="12" text-anchor="end">${t('capa F', 'F layer')}</text>
+          ${day ? `<rect x="0" y="150" width="600" height="20" fill="var(--hot)" opacity=".14"/><text x="590" y="164" fill="var(--muted)" font-size="12" text-anchor="end">${t('capa D (solo de día)', 'D layer (daytime only)')}</text>` : ''}
           <path d="M0 238 Q300 222 600 238 L600 260 L0 260Z" fill="var(--panel)" stroke="var(--line)"/>
           <path d="${path}" fill="none" stroke="${absorbed ? 'var(--red)' : 'var(--accent)'}" stroke-width="3" stroke-dasharray="${absorbed ? '6 5' : 'none'}"/>
-          <circle cx="40" cy="230" r="6" fill="var(--hot)"/><text x="40" y="252" fill="var(--muted)" font-size="11" text-anchor="middle">tú</text>
-          <text x="20" y="24" fill="var(--ink)" font-size="13">${day ? '☀️ Día' : '🌙 Noche'} · ${freqs[fi][0]} (${f} MHz)</text>`;
+          <circle cx="40" cy="230" r="6" fill="var(--hot)"/><text x="40" y="252" fill="var(--muted)" font-size="11" text-anchor="middle">${t('tú', 'you')}</text>
+          <text x="20" y="24" fill="var(--ink)" font-size="13">${day ? t('☀️ Día', '☀️ Day') : t('🌙 Noche', '🌙 Night')} · ${freqs[fi][0]} (${f} MHz)</text>`;
         $('liOut').innerHTML = out;
-        $('liDay').textContent = day ? '🌙 Pasar a noche' : '☀️ Pasar a día';
+        $('liDay').textContent = day ? t('🌙 Pasar a noche', '🌙 Switch to night') : t('☀️ Pasar a día', '☀️ Switch to day');
         $('liSun').classList.toggle('on', sun);
         box.querySelectorAll('#liF .chip').forEach(b => b.classList.toggle('on', +b.dataset.i === fi));
       }
@@ -328,17 +345,17 @@
      */
     modos(box) {
       const modes = ['AM', 'FM', 'CW', 'SSB'];
-      // m = modo elegido (posición en `modes`), t = tiempo de la animación, run = animación en marcha.
-      let m = 0, t = 0, run = false;
+      // m = modo elegido (posición en `modes`), tm = tiempo de la animación, run = animación en marcha.
+      let m = 0, tm = 0, run = false;
       box.innerHTML = `<canvas class="lesson-canvas" aria-hidden="true"></canvas>
-        <div class="chips" id="lmM">${modes.map((x, i) => `<button class="chip${i ? '' : ' on'}" data-i="${i}">${x === 'SSB' ? 'BLU (SSB)' : x}</button>`).join('')}</div>
+        <div class="chips" id="lmM">${modes.map((x, i) => `<button class="chip${i ? '' : ' on'}" data-i="${i}">${x === 'SSB' ? t('BLU (SSB)', 'SSB') : x}</button>`).join('')}</div>
         <p class="lesson-readout" id="lmOut" aria-live="polite"></p>`;
       // Explicación de cada modo, en el mismo orden que `modes`.
       const text = [
-        'AM: la portadora sube y baja de fuerza siguiendo tu voz (la línea amarilla).',
-        'FM: la fuerza es constante; lo que cambia es lo apretadas que van las ondas.',
-        'CW: la portadora se enciende y se apaga. Eso es Morse.',
-        'BLU: no hay portadora fija; solo sale energía cuando hablas. Por eso llega más lejos.',
+        t('AM: la portadora sube y baja de fuerza siguiendo tu voz (la línea amarilla).', 'AM: the carrier gets stronger and weaker following your voice (the yellow line).'),
+        t('FM: la fuerza es constante; lo que cambia es lo apretadas que van las ondas.', 'FM: the strength stays the same; what changes is how tightly packed the waves are.'),
+        t('CW: la portadora se enciende y se apaga. Eso es Morse.', 'CW: the carrier is switched on and off. That is Morse.'),
+        t('BLU: no hay portadora fija; solo sale energía cuando hablas. Por eso llega más lejos.', 'SSB: there is no steady carrier; energy only goes out when you speak. That is why it reaches further.'),
       ];
       /**
        * Dibuja un fotograma: recorre el ancho píxel a píxel acumulando la fase de la portadora y aplicando
@@ -347,10 +364,10 @@
       function frame() {
         const { g, w, h } = sizeCanvas(c);
         g.clearRect(0, 0, w, h);
-        // voice(x): "voz" inventada, suma de dos senos lentos (valores entre −0,9 y 0,9) que se desplaza con t.
+        // voice(x): "voz" inventada, suma de dos senos lentos (valores entre −0,9 y 0,9) que se desplaza con tm.
         // key(x): manipulador Morse (1 = tono, 0 = silencio) con un patrón fijo de puntos y huecos que avanza.
-        const voice = x => Math.sin(x * 0.018 - t * 0.6) * 0.6 + Math.sin(x * 0.041 - t) * 0.3;
-        const key = x => ((Math.floor((x + t * 30) / 60) % 4) !== 3 && (Math.floor((x + t * 30) / 20) % 3) !== 2) ? 1 : 0;
+        const voice = x => Math.sin(x * 0.018 - tm * 0.6) * 0.6 + Math.sin(x * 0.041 - tm) * 0.3;
+        const key = x => ((Math.floor((x + tm * 30) / 60) % 4) !== 3 && (Math.floor((x + tm * 30) / 20) % 3) !== 2) ? 1 : 0;
         g.lineWidth = 1.6; g.strokeStyle = css('--accent'); g.beginPath();
         // Acumular la fase (en lugar de usar sin(f·x)) permite cambiar la frecuencia punto a punto sin saltos: así se ve la FM.
         let phase = 0;
@@ -363,7 +380,7 @@
           if (m === 2) a = key(x);
           if (m === 3) a = Math.max(0, voice(x)) * 1.1;
           phase += f;
-          const y = h / 2 - Math.sin(phase - t * 4) * a * h * 0.38;
+          const y = h / 2 - Math.sin(phase - tm * 4) * a * h * 0.38;
           x ? g.lineTo(x, y) : g.moveTo(x, y);
         }
         g.stroke();
@@ -373,7 +390,7 @@
           for (let x = 0; x <= w; x += 3) { const a = m === 0 ? 0.55 + 0.4 * voice(x) : Math.max(0, voice(x)) * 1.1; const y = h / 2 - a * h * 0.38; x ? g.lineTo(x, y) : g.moveTo(x, y); }
           g.stroke(); g.setLineDash([]);
         }
-        t += 0.05;
+        tm += 0.05;
         if (run && !Radio.reducedMotion) requestAnimationFrame(frame);
       }
       const c = box.querySelector('canvas');
@@ -418,7 +435,7 @@
    */
   function renderQuiz() {
     let hits = 0, answered = 0;
-    $('lessonQuiz').innerHTML = '<h3 class="lq-title">Comprueba que lo has pillado</h3>' + current.quiz.map((q, qi) =>
+    $('lessonQuiz').innerHTML = t('<h3 class="lq-title">Comprueba que lo has pillado</h3>', '<h3 class="lq-title">Check you have got it</h3>') + current.quiz.map((q, qi) =>
       `<div class="lq" data-q="${qi}"><p>${esc(q.q)}</p><div class="lq-opts">${q.a.map((a, ai) => `<button class="opt wide" data-a="${ai}">${esc(a)}</button>`).join('')}</div></div>`).join('') +
       '<p class="lq-result" id="lqResult"></p>';
     $('lessonQuiz').onclick = e => {
@@ -429,7 +446,7 @@
       box.querySelectorAll('.opt')[q.ok].classList.add('right');
       if (+b.dataset.a === q.ok) hits++; else b.classList.add('wrong');
       if (answered === current.quiz.length) {
-        $('lqResult').textContent = hits === 3 ? '¡Perfecto! Lección completada ✓' : `${hits} de 3. Sube un nivel de explicación y vuelve a probar.`;
+        $('lqResult').textContent = hits === 3 ? t('¡Perfecto! Lección completada ✓', 'Perfect! Lesson complete ✓') : t(`${hits} de 3. Sube un nivel de explicación y vuelve a probar.`, `${hits} out of 3. Move up a level of explanation and try again.`);
         if (hits === 3) { Radio.track(`leccion/${current.id}`); done[current.id] = true; store.set('radio.lessons', done); renderTabs(); document.dispatchEvent(new CustomEvent('radio:progress')); }
       }
     };

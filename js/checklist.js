@@ -15,6 +15,8 @@
  *   Claves actuales en el HTML: escuchar, club, estudio, solicitud, aprobado, autorizacion, seguro, estacion, qso.
  *   journey.js lee la clave "club" para el paso "Contacta con un radioclub"; backup.js la copia con el resto.
  *
+ * Textos visibles: en castellano e inglés con Radio.t(es, en) (los pasos están en el HTML de cada idioma).
+ *
  * Eventos: emite `radio:progress` en document cada vez que cambia una casilla.
  *
  * Cómo modificarlo:
@@ -24,7 +26,7 @@
  */
 (() => {
   'use strict';
-  const { $, store } = Radio;
+  const { $, store, t } = Radio;
   const list = $('checklist');
   if (!list) return;
 
@@ -38,7 +40,7 @@
    */
   const note = () => {
     const n = boxes.filter(b => b.checked).length;
-    $('checkNote').textContent = n === boxes.length ? '🎉 ¡Ya eres radioaficionado! 73.' : `${n} de ${boxes.length} pasos hechos. Se guarda en este navegador.`;
+    $('checkNote').textContent = n === boxes.length ? t('🎉 ¡Ya eres radioaficionado! 73.', '🎉 You’re a radio amateur now! 73.') : t(`${n} de ${boxes.length} pasos hechos. Se guarda en este navegador.`, `${n} of ${boxes.length} steps done. Saved in this browser.`);
   };
   // Al cargar: marca cada casilla según lo guardado (!! convierte "no existe" en false).
   // Al cambiar: guarda, actualiza el contador y avisa a journey.js con `radio:progress`.

@@ -15,22 +15,23 @@
  * Accesibilidad: se usan los controles nativos de <audio> (manejables con teclado) y cada uno lleva
  *   aria-label con el tipo y la descripción de la grabación.
  * No guarda nada en localStorage.
+ * Textos: los de la tarjeta van en los dos idiomas con Radio.t; `kind` y `text` ya llegan traducidos desde data.js.
  *
  * Cómo modificarlo:
  *  - Añadir una grabación: nueva entrada en RECORDINGS (data.js); la forma de cada campo está documentada allí.
- *  - Nueva licencia: añade su nombre corto y la URL de su texto en español a LIC.
+ *  - Nueva licencia: añade su nombre corto y la URL de su texto en español y en inglés a LIC.
  *  - Cambiar cómo se ve cada tarjeta: la plantilla de `list.innerHTML` (clases .rec, .rec-kind, .rec-credit en el CSS).
  */
 (() => {
   'use strict';
   const list = document.getElementById('recList');
   if (!list || typeof RECORDINGS === 'undefined') return;
-  const { esc } = Radio;
-  // Nombre corto de la licencia (campo `license` de RECORDINGS) → página de la licencia en español.
+  const { esc, t } = Radio;
+  // Nombre corto de la licencia (campo `license` de RECORDINGS) → página de la licencia en el idioma de la página.
   const LIC = {
-    'CC0': 'https://creativecommons.org/publicdomain/zero/1.0/deed.es',
-    'CC BY 4.0': 'https://creativecommons.org/licenses/by/4.0/deed.es',
-    'CC BY-SA 3.0': 'https://creativecommons.org/licenses/by-sa/3.0/deed.es',
+    'CC0': t('https://creativecommons.org/publicdomain/zero/1.0/deed.es', 'https://creativecommons.org/publicdomain/zero/1.0/deed.en'),
+    'CC BY 4.0': t('https://creativecommons.org/licenses/by/4.0/deed.es', 'https://creativecommons.org/licenses/by/4.0/deed.en'),
+    'CC BY-SA 3.0': t('https://creativecommons.org/licenses/by-sa/3.0/deed.es', 'https://creativecommons.org/licenses/by-sa/3.0/deed.en'),
   };
   // Commons publica también una versión MP3 de cada audio (para Safari en iPhone, que no siempre lee Ogg).
   /**
@@ -59,7 +60,7 @@
         <source src="${esc(r.src)}" type="audio/ogg">
         <source src="${esc(mp3(r.src))}" type="audio/mpeg">
       </audio>
-      <p class="rec-credit">Grabación: <a href="${page(r.file)}" target="_blank" rel="noopener">${esc(r.author)} en Wikimedia Commons</a> · <a href="${LIC[r.license] || '#'}" target="_blank" rel="noopener license">${esc(r.license)}</a></p>
+      <p class="rec-credit">${t('Grabación', 'Recording')}: <a href="${page(r.file)}" target="_blank" rel="noopener">${esc(r.author)} ${t('en', 'on')} Wikimedia Commons</a> · <a href="${LIC[r.license] || '#'}" target="_blank" rel="noopener license">${esc(r.license)}</a></p>
     </li>`).join('');
 
   /* ---------- Reproducción ---------- */
@@ -82,6 +83,6 @@
   list.addEventListener('error', e => {
     const el = e.target;
     if (el.tagName !== 'SOURCE' || el.nextElementSibling) return;
-    el.parentElement.insertAdjacentHTML('afterend', '<p class="note bad">No se ha podido cargar. Prueba desde la página del archivo.</p>');
+    el.parentElement.insertAdjacentHTML('afterend', `<p class="note bad">${t('No se ha podido cargar. Prueba desde la página del archivo.', 'It could not be loaded. Try from the file’s page.')}</p>`);
   }, true);
 })();

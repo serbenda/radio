@@ -25,6 +25,9 @@
  *   a mano, así que no caducan; se muestran los 6 próximos. Son orientativas: la web pide confirmarlas
  *   con el organizador.
  *
+ * Textos visibles: en castellano e inglés con Radio.t(es, en); fechas con Radio.locale. Los nombres de
+ *   provincias y secciones se quedan en castellano (nombres propios).
+ *
  * No guarda nada en localStorage ni emite eventos.
  *
  * Cómo modificarlo:
@@ -45,6 +48,7 @@
    * @returns {HTMLElement|null}
    */
   const $ = id => document.getElementById(id);
+  const { t, locale } = Radio;
   /**
    * Escapa los caracteres especiales de HTML. Los datos de las secciones vienen de la web de la URE,
    * así que todo lo que sale de URE_SECTIONS pasa por aquí antes de entrar en innerHTML.
@@ -98,9 +102,9 @@
     current = prov;
     $('clubProv').value = prov;
     const list = byProv[prov] || [];
-    $('clubList').innerHTML = `<h3>${esc(label(prov))} · ${list.length} ${list.length === 1 ? 'sección' : 'secciones'}</h3><ul>` + list.map(s =>
+    $('clubList').innerHTML = `<h3>${esc(label(prov))} · ${list.length} ${list.length === 1 ? t('sección', 'section') : t('secciones', 'sections')}</h3><ul>` + list.map(s =>
       `<li><b>${esc(s.name)}</b>${s.call ? ` <span class="call">${esc(s.call)}</span>` : ''}${s.web ? ` · <a href="${esc(s.web)}" target="_blank" rel="noopener">web</a>` : ''}</li>`).join('') +
-      `</ul><p class="note">Horarios y contacto de cada sección en la <a href="https://www.ure.es/secciones/" target="_blank" rel="noopener">web de la URE</a>.</p>`;
+      `</ul><p class="note">${t('Horarios y contacto de cada sección en la <a href="https://www.ure.es/secciones/" target="_blank" rel="noopener">web de la URE</a>.', 'Opening times and contact details for each section on the <a href="https://www.ure.es/secciones/" target="_blank" rel="noopener">URE website</a> (in Spanish).')}</p>`;
     if (map && PROV[prov]) map.setView(PROV[prov], 7);
   }
 
@@ -114,33 +118,33 @@
    */
   function initMap() {
     map = L.map('clubMap', { scrollWheelZoom: false }).setView([39.8, -3.5], 5);
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: 'Mapa &copy; Esri · Secciones: URE', maxZoom: 10 }).addTo(map);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: t('Mapa &copy; Esri · Secciones: URE', 'Map &copy; Esri · Sections: URE'), maxZoom: 10 }).addTo(map);
     provs.forEach(p => {
       if (!PROV[p]) return;
       const n = byProv[p].length;
       L.marker(PROV[p], { icon: L.divIcon({ className: 'club-pin', html: `<span>${n}</span>`, iconSize: [28, 28], iconAnchor: [14, 14] }) })
-        .bindTooltip(`${label(p)}: ${n} ${n === 1 ? 'sección' : 'secciones'}`).on('click', () => show(p)).addTo(map);
+        .bindTooltip(`${label(p)}: ${n} ${n === 1 ? t('sección', 'section') : t('secciones', 'sections')}`).on('click', () => show(p)).addTo(map);
     });
   }
 
   // Rellena el desplegable: una primera opción vacía y luego las provincias (value = nombre de los datos).
-  $('clubProv').innerHTML = '<option value="">Elige tu provincia</option>' + provs.map(p => `<option value="${esc(p)}">${esc(label(p))}</option>`).join('');
+  $('clubProv').innerHTML = `<option value="">${t('Elige tu provincia', 'Choose your province')}</option>` + provs.map(p => `<option value="${esc(p)}">${esc(label(p))}</option>`).join('');
   $('clubProv').addEventListener('change', e => { if (e.target.value) show(e.target.value); });
   // "La más cercana": si el navegador no tiene geolocalización, el botón no hace nada.
   // Opciones: espera como mucho 10 s (timeout) y acepta una posición de hace hasta 10 min (maximumAge).
   $('clubNear').addEventListener('click', () => {
     if (!navigator.geolocation) return;
-    $('clubNear').textContent = 'Buscando…';
+    $('clubNear').textContent = t('Buscando…', 'Searching…');
     navigator.geolocation.getCurrentPosition(pos => {
       const { latitude: la, longitude: lo } = pos.coords;
       // Distancia "plana" en grados (hipotenusa de las diferencias de latitud y longitud). No es la distancia
       // real, porque un grado de longitud mide menos que uno de latitud, pero basta para elegir la capital
       // más próxima dentro de España. Solo se consideran provincias con coordenadas.
       const near = provs.filter(p => PROV[p]).sort((a, b) => Math.hypot(PROV[a][0] - la, PROV[a][1] - lo) - Math.hypot(PROV[b][0] - la, PROV[b][1] - lo))[0];
-      show(near); $('clubNear').textContent = '📍 La más cercana';
-    }, () => { $('clubNear').textContent = '📍 No se pudo; elige tu provincia'; }, { timeout: 10000, maximumAge: 600000 });
+      show(near); $('clubNear').textContent = t('📍 La más cercana', '📍 The nearest one');
+    }, () => { $('clubNear').textContent = t('📍 No se pudo; elige tu provincia', '📍 Couldn’t locate you; choose your province'); }, { timeout: 10000, maximumAge: 600000 });
   });
-  $('clubCount').textContent = `${URE_SECTIONS.length} secciones de la URE en ${provs.length} provincias`;
+  $('clubCount').textContent = t(`${URE_SECTIONS.length} secciones de la URE en ${provs.length} provincias`, `${URE_SECTIONS.length} URE sections in ${provs.length} provinces`);
 
 
   /* ---------- Calendario ---------- */
@@ -154,7 +158,7 @@
    */
   const fullWeekends = (y, m) => { // sábados cuyo domingo cae en el mismo mes
     const out = [];
-    for (let d = 1; d <= 31; d++) { const t = new Date(y, m, d); if (t.getMonth() !== m) break; if (t.getDay() === 6 && new Date(y, m, d + 1).getMonth() === m) out.push(t); }
+    for (let d = 1; d <= 31; d++) { const dt = new Date(y, m, d); if (dt.getMonth() !== m) break; if (dt.getDay() === 6 && new Date(y, m, d + 1).getMonth() === m) out.push(dt); }
     return out;
   };
   // Eventos del año, definidos por REGLA (no por fecha) para que el calendario no caduque.
@@ -169,16 +173,16 @@
   //   all   true si dura todo el mes.
   // Los textos se insertan como HTML sin escapar: son textos fijos del repositorio.
   const RULES = [
-    { name: 'CQ WPX (voz)', m: 2, pick: w => w.at(-1), what: 'Concurso mundial: las bandas se llenan de estaciones de todo el planeta.', tip: 'Escucha en un receptor web: oirás decenas de países en una tarde.' },
-    { name: 'Día Mundial del Radioaficionado', m: 3, day: 18, what: 'Aniversario de la fundación de la IARU en 1925.', tip: 'Muchos radioclubes hacen jornadas de puertas abiertas.' },
-    { name: 'CQ WPX (Morse)', m: 4, pick: w => w.at(-1), what: 'El mismo concurso, en telegrafía.', tip: 'Ideal para practicar el oído con el entrenador Koch y luego escuchar de verdad.' },
-    { name: 'Field Day IARU (Morse)', m: 5, pick: w => w[0], what: 'Estaciones portátiles en el campo, con antenas montadas para la ocasión.', tip: 'Pregunta a tu radioclub si sale al campo: es la mejor forma de verlo de cerca.' },
-    { name: 'Campeonato Mundial IARU', m: 6, pick: w => w[1], what: 'Cada país tiene una estación especial de su asociación nacional.', tip: 'Busca estaciones españolas con indicativos especiales.' },
-    { name: 'Field Day IARU (voz)', m: 8, pick: w => w[0], what: 'Estaciones en el campo, esta vez en fonía.', tip: 'Buen día para visitar una estación portátil.' },
-    { name: 'JOTA-JOTI, Jamboree en el aire', m: 9, pick: w => w[2], what: 'Scouts de todo el mundo hablan por radio con ayuda de radioaficionados.', tip: 'Perfecto para ir con niños: muchos grupos scout lo organizan con un radioclub.' },
-    { name: 'CQ World Wide DX (voz)', m: 9, pick: w => w.at(-1), what: 'El concurso más grande del año.', tip: 'Escucha en 20 y 15 m de día: es casi imposible no oír otro continente.' },
-    { name: 'CQ World Wide DX (Morse)', m: 10, pick: w => w.at(-1), what: 'El gran concurso de telegrafía.', tip: 'Abre el receptor en 7.020 kHz y escucha el muro de Morse.' },
-    { name: 'YOTA Month', m: 11, all: true, what: 'Mes de los jóvenes radioaficionados: estaciones especiales con el sufijo YOTA.', tip: 'Busca indicativos acabados en YOTA en el mapa “Ahora en el aire”.' },
+    { name: t('CQ WPX (voz)', 'CQ WPX (SSB)'), m: 2, pick: w => w.at(-1), what: t('Concurso mundial: las bandas se llenan de estaciones de todo el planeta.', 'Worldwide contest: the bands fill up with stations from all over the planet.'), tip: t('Escucha en un receptor web: oirás decenas de países en una tarde.', 'Listen on a web receiver: you’ll hear dozens of countries in one afternoon.') },
+    { name: t('Día Mundial del Radioaficionado', 'World Amateur Radio Day'), m: 3, day: 18, what: t('Aniversario de la fundación de la IARU en 1925.', 'Anniversary of the founding of the IARU in 1925.'), tip: t('Muchos radioclubes hacen jornadas de puertas abiertas.', 'Many radio clubs hold open days.') },
+    { name: 'CQ WPX (Morse)', m: 4, pick: w => w.at(-1), what: t('El mismo concurso, en telegrafía.', 'The same contest, in Morse code.'), tip: t('Ideal para practicar el oído con el entrenador Koch y luego escuchar de verdad.', 'Ideal for training your ear with the Koch trainer and then listening for real.') },
+    { name: t('Field Day IARU (Morse)', 'IARU Field Day (Morse)'), m: 5, pick: w => w[0], what: t('Estaciones portátiles en el campo, con antenas montadas para la ocasión.', 'Portable stations out in the countryside, with aerials put up for the occasion.'), tip: t('Pregunta a tu radioclub si sale al campo: es la mejor forma de verlo de cerca.', 'Ask your radio club whether it goes out: it’s the best way to see it up close.') },
+    { name: t('Campeonato Mundial IARU', 'IARU HF World Championship'), m: 6, pick: w => w[1], what: t('Cada país tiene una estación especial de su asociación nacional.', 'Each country has a special station from its national society.'), tip: t('Busca estaciones españolas con indicativos especiales.', 'Look out for Spanish stations with special callsigns.') },
+    { name: t('Field Day IARU (voz)', 'IARU Field Day (voice)'), m: 8, pick: w => w[0], what: t('Estaciones en el campo, esta vez en fonía.', 'Stations out in the countryside, this time on voice.'), tip: t('Buen día para visitar una estación portátil.', 'A good day to visit a portable station.') },
+    { name: t('JOTA-JOTI, Jamboree en el aire', 'JOTA-JOTI, Jamboree on the Air'), m: 9, pick: w => w[2], what: t('Scouts de todo el mundo hablan por radio con ayuda de radioaficionados.', 'Scouts all over the world talk by radio with help from radio amateurs.'), tip: t('Perfecto para ir con niños: muchos grupos scout lo organizan con un radioclub.', 'Perfect for going with children: many scout groups organise it with a radio club.') },
+    { name: t('CQ World Wide DX (voz)', 'CQ World Wide DX (SSB)'), m: 9, pick: w => w.at(-1), what: t('El concurso más grande del año.', 'The biggest contest of the year.'), tip: t('Escucha en 20 y 15 m de día: es casi imposible no oír otro continente.', 'Listen on 20 and 15 m during the day: it’s almost impossible not to hear another continent.') },
+    { name: 'CQ World Wide DX (Morse)', m: 10, pick: w => w.at(-1), what: t('El gran concurso de telegrafía.', 'The big Morse code contest.'), tip: t('Abre el receptor en 7.020 kHz y escucha el muro de Morse.', 'Tune the receiver to 7020 kHz and listen to the wall of Morse.') },
+    { name: 'YOTA Month', m: 11, all: true, what: t('Mes de los jóvenes radioaficionados: estaciones especiales con el sufijo YOTA.', 'Month of young radio amateurs: special stations with the YOTA suffix.'), tip: t('Busca indicativos acabados en YOTA en el mapa “Ahora en el aire”.', 'Look for callsigns ending in YOTA on the “On the air now” map.') },
   ];
   /**
    * Calcula las fechas de todos los eventos para este año y el siguiente y devuelve los 6 próximos.
@@ -204,19 +208,19 @@
   /* ---------- Calendario: pintar ---------- */
 
   /**
-   * Fecha en español, sin año: "18 de abril".
+   * Fecha en el idioma de la página, sin año: "18 de abril" / "18 April".
    * @param {Date} d
    * @returns {string}
    */
-  const fmtD = d => d.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' });
+  const fmtD = d => d.toLocaleDateString(locale, { day: 'numeric', month: 'long' });
   $('calList').innerHTML = upcoming().map(e => {
     // "¡ahora!": el evento está en curso. `end` es la medianoche del último día, así que se le suma un día
     // (864e5 ms = 24 h) para incluir ese día completo.
     // Texto de la fecha: "Todo diciembre", "18 de abril" (un día) o "25-26 de octubre" (fin de semana; nunca
     // cruza de mes porque solo se usan fines de semana completos).
     const now = new Date(), on = now >= e.start && now <= new Date(e.end.getTime() + 864e5);
-    const when = e.all ? `Todo ${e.start.toLocaleDateString('es-ES', { month: 'long' })}` : +e.start === +e.end ? fmtD(e.start) : `${e.start.getDate()}-${fmtD(e.end)}`;
-    return `<li class="${on ? 'on' : ''}"><span class="cal-date">${when} ${e.start.getFullYear()}${on ? ' · ¡ahora!' : ''}</span><b>${e.name}</b><p>${e.what}</p><small>👉 ${e.tip}</small></li>`;
+    const when = e.all ? t(`Todo ${e.start.toLocaleDateString(locale, { month: 'long' })}`, `All of ${e.start.toLocaleDateString(locale, { month: 'long' })}`) : +e.start === +e.end ? fmtD(e.start) : `${e.start.getDate()}-${fmtD(e.end)}`;
+    return `<li class="${on ? 'on' : ''}"><span class="cal-date">${when} ${e.start.getFullYear()}${on ? t(' · ¡ahora!', ' · now on!') : ''}</span><b>${e.name}</b><p>${e.what}</p><small>👉 ${e.tip}</small></li>`;
   }).join('');
 
   /* ---------- Carga perezosa del mapa ---------- */
