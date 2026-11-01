@@ -54,8 +54,8 @@ Qué se ha aplicado, por qué, y qué limitaciones conocidas quedan.
 ## Limitaciones conocidas
 
 - **El banco del examen no lo ha revisado un radioaficionado con licencia.** Antes de recomendarlo para estudiar en serio conviene una revisión externa (por ejemplo, de un radioclub).
-- **Los sonidos son sintéticos.** Faltan grabaciones reales, sobre todo de voz en banda lateral, que es lo que más se oye.
-- **El progreso vive en un solo navegador.** Si se borra o se cambia de dispositivo, se pierde. No hay exportación.
+- **Las grabaciones reales dependen de Wikimedia Commons** y son en inglés o alemán: no hay grabaciones libres de radioaficionados españoles. Los sonidos de la cascada siguen siendo sintéticos.
+- **El progreso vive en un solo navegador.** Se puede guardar en un archivo y recuperarlo, pero no se sincroniza solo entre dispositivos.
 - **Dependencia de servicios gratuitos de terceros** (HamQTH, CelesTrak, Esri, Radio Browser, WebSDR de Twente). Cada sección muestra un mensaje si su servicio falla, pero no hay alternativa automática.
 - **Datos que caducan:** las secciones de la URE y las tasas son una foto del 1 de noviembre de 2026; el calendario se calcula con reglas, no con fechas confirmadas.
 - **El mapa de radioclubes sitúa cada provincia en su capital**, no cada sección en su local.

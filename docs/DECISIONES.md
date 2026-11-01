@@ -4,6 +4,30 @@ Las decisiones de diseño importantes, con su contexto y sus consecuencias, para
 
 ---
 
+## D14 · Avisos de errores con formularios de GitHub (1 nov 2026)
+
+**Contexto.** El contenido (examen, tasas, CB-27, modelos de radio) caduca o puede tener errores, y quien mejor los detecta son radioaficionados con licencia que no tienen por qué saber usar GitHub.
+
+**Decisión.** Formularios de incidencia (`.github/ISSUE_TEMPLATE/`) para pregunta del examen, error de contenido y sugerencia. La web abre el formulario ya rellenado: el pie pone la página actual y cada pregunta del examen pone su identificador (`Radio.report`).
+
+**Consecuencias.** Hace falta una cuenta de GitHub para avisar. Las incidencias llegan etiquetadas (`examen`, `contenido`, `idea`) y con la fuente pedida, así que revisarlas es rápido.
+
+## D13 · Métricas de hitos, no de personas (1 nov 2026)
+
+**Contexto.** Contar visitas no dice si la web cumple su objetivo (que alguien pase de curioso a radioaficionado). Hace falta saber cuánta gente termina un contacto, aprueba un simulacro o gana una insignia.
+
+**Decisión.** `Radio.track(hito)` envía a GoatCounter un evento con un **nombre fijo** (`qso/concurso`, `examen/simulacro-apto`, `insignia/semana-2`…). Nunca lleva texto que escriba la persona ni identificadores. Sin cookies, igual que las visitas. `tools/check.mjs` falla si un `Radio.track` usa un nombre que no sea fijo. Lista completa en [PRIVACIDAD.md](PRIVACIDAD.md#métricas-de-hitos).
+
+**Consecuencias.** Se puede medir el embudo (escuchar → practicar → examen) sin datos personales. Si GoatCounter está bloqueado, no se cuenta nada y la web funciona igual.
+
+## D12 · Instalable y sin conexión con un service worker propio (1 nov 2026)
+
+**Contexto.** Quien estudia el examen o el Morse lo hace en el móvil, a menudo en el transporte y sin cobertura. Además, el progreso vive en un solo navegador.
+
+**Decisión.** `manifest.webmanifest` + `sw.js` escrito a mano (sin Workbox, coherente con D10). Páginas: primero la red y, sin ella, la copia guardada. CSS, JS, iconos y librerías: copia guardada y actualización en segundo plano. Datos en directo (emisoras, avisos, ISS, propagación, mapas, audio, métricas): nunca se guardan, porque enseñar datos viejos como "en directo" engañaría. Además, botones para guardar y recuperar el progreso en un archivo (`backup.js`).
+
+**Consecuencias.** Examen, Morse, lecciones, contactos simulados y textos funcionan sin conexión tras la primera visita. Al publicar hay que subir `VERSION` en `sw.js` (lo vigila `tools/check.mjs` comparándola con el CHANGELOG); si no, la gente seguiría con los archivos viejos hasta la siguiente actualización en segundo plano.
+
 ## D11 · Varias páginas en lugar de una sola (1 nov 2026)
 
 **Contexto.** La web había crecido a 21 secciones y unas 24 pantallas de alto. El estudio de webs de radioafición señalaba como defecto principal de las demás webs "un menú enorme, no un camino", y la propia web estaba cayendo en lo mismo.
@@ -52,7 +76,7 @@ Las decisiones de diseño importantes, con su contexto y sus consecuencias, para
 
 **Decisión.** Escribir preguntas propias a partir del temario oficial (anexo II de la Orden IET/1311/2013), cada una con explicación y, en normativa, con el artículo.
 
-**Consecuencias.** Banco pequeño (68 preguntas) que necesita revisión de un radioaficionado con licencia y crecer con el tiempo.
+**Consecuencias.** Banco inicial de 68 preguntas, ampliado a 169 en la versión 2.2.0 con una revisión independiente contra la Orden. Sigue necesitando la revisión de un radioaficionado con licencia (para eso están los formularios de aviso, D14).
 
 ## D04 · Cajas de Leitner y separar estudiar de medir (1 nov 2026)
 

@@ -15,6 +15,9 @@
  *  6. Datos: banco del examen, secciones de la URE, bandas y escucha guiada bien formados.
  *  7. Enlaces de "Tu primer mes" (journey.js) que apuntan a páginas y secciones que existen.
  *  8. sitemap.xml incluye todas las páginas.
+ *  9. Modo sin conexión: manifest e iconos válidos, sw.js guarda todas las páginas y módulos, y su
+ *     VERSION coincide con la última del CHANGELOG (si no, los navegadores no renuevan la caché).
+ * 10. Métricas: cada Radio.track() usa un nombre de hito fijo (sin datos que escriba la persona).
  */
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname, resolve, relative } from 'node:path';
@@ -138,6 +141,39 @@ section('8. sitemap.xml');
   const sm = read('sitemap.xml');
   const missing = PAGES.map(p => 'https://bendi.dev/radio/' + p.replace('index.html', '')).filter(u => !sm.includes(`<loc>${u}</loc>`));
   expect(!missing.length, `incluye las ${PAGES.length} páginas${missing.length ? ' (faltan: ' + missing.join(', ') + ')' : ''}`);
+}
+
+section('9. Instalable y sin conexión');
+{
+  let man = null;
+  try { man = JSON.parse(read('manifest.webmanifest')); } catch (e) { /* inválido */ }
+  expect(man && man.name && man.start_url && man.icons && man.icons.length >= 2, 'manifest.webmanifest es JSON válido con nombre, inicio e iconos');
+  const icons = man ? man.icons.map(i => i.src).filter(src => !existsSync(join(ROOT, src))) : ['?'];
+  expect(!icons.length, `iconos del manifest existen${icons.length ? ' (faltan: ' + icons.join(', ') + ')' : ''}`);
+  expect(PAGES.every(p => /rel="manifest"/.test(html[p])), 'todas las páginas enlazan el manifest');
+  const sw = read('sw.js');
+  const pre = [...sw.matchAll(/'(\.\/[^']*)'/g)].map(m => m[1]);
+  const missingFiles = pre.filter(f => !existsSync(join(ROOT, f.endsWith('/') ? f + 'index.html' : f)));
+  expect(!missingFiles.length, `sw.js: todo lo de PRECACHE existe${missingFiles.length ? ' (faltan: ' + missingFiles.join(', ') + ')' : ''}`);
+  const pagesOut = PAGES.map(p => './' + p.replace('index.html', '')).filter(p => !pre.includes(p));
+  const jsOut = readdirSync(join(ROOT, 'js')).filter(f => f.endsWith('.js')).map(f => `./js/${f}`).filter(f => !pre.includes(f));
+  expect(!pagesOut.length && !jsOut.length, `sw.js guarda las ${PAGES.length} páginas y todos los módulos${pagesOut.length || jsOut.length ? ' (faltan: ' + [...pagesOut, ...jsOut].join(', ') + ')' : ''}`);
+  const v = (sw.match(/const VERSION = '([^']+)'/) || [])[1];
+  const last = (read('CHANGELOG.md').match(/^## \[([^\]]+)\]/m) || [])[1];
+  expect(v && v === last, `VERSION de sw.js (${v}) = última versión del CHANGELOG (${last})`);
+}
+
+section('10. Métricas');
+{
+  const bad = [];
+  for (const f of readdirSync(join(ROOT, 'js')).filter(f => f.endsWith('.js'))) {
+    for (const m of read(`js/${f}`).matchAll(/Radio\.track\(([^;]*?)\);/g)) {
+      const arg = m[1];
+      // Solo literales o plantillas con variables internas conocidas (escenario, id de lección, nivel, semana, apto).
+      if (!/^['`][a-z0-9\/\-]*(\$\{(scenario|current\.id|st\.level|wi \+ 1|pass \? 'apto' : 'no-apto')\}[a-z0-9\/\-]*)*['`]$/.test(arg)) bad.push(`${f}: ${arg}`);
+    }
+  }
+  expect(!bad.length, `hitos con nombres fijos${bad.length ? ' (revisar: ' + bad.join(' | ') + ')' : ''}`);
 }
 
 console.log(`\n${failures ? '✗' : '✓'} ${checks - failures} de ${checks} comprobaciones correctas${failures ? `, ${failures} fallan` : ''}.`);

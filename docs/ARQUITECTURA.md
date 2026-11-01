@@ -71,6 +71,8 @@ Todas las páginas cargan los scripts al final del `<body>` (sin `defer` ni mód
 | `Radio.whileVisible(el, on, off)` | Arrancar y parar animaciones según se vean y la pestaña esté activa |
 | `Radio.onceVisible(el, cb)` | Carga perezosa |
 | `Radio.reducedMotion` | Respetar "reducir movimiento" del sistema |
+| `Radio.report(plantilla, campos, título)` | URL de un formulario de GitHub ya rellenado |
+| `Radio.track(hito)` | Contar un hito en GoatCounter (nombre fijo, sin datos personales) |
 
 ## Comunicación entre módulos: eventos
 
@@ -129,10 +131,23 @@ Todo en `localStorage`, con prefijo `radio.`. Nada sale del navegador. Detalle y
 | CelesTrak + satellite.js | Órbita de la ISS | Entender |
 | Esri (teselas) + Leaflet | Mapas | Escuchar, Entender, Empezar |
 | WebSDR de Twente | Receptor real (enlace) | Escuchar |
+| Wikimedia Commons | Grabaciones reales | Escuchar |
 | Google Fonts, cdnjs | Tipografías y librerías | Todas |
 | GoatCounter | Visitas | Todas |
 
 Endpoints, límites, atribución y qué pasa si fallan: [DATOS.md](DATOS.md).
+
+## Sin conexión
+
+`core.js` registra `sw.js` (solo por HTTP/HTTPS). El service worker guarda al instalarse las seis páginas, el CSS, todos los módulos y los iconos.
+
+| Petición | Estrategia | Por qué |
+| --- | --- | --- |
+| Páginas propias | Red primero, copia si no hay red, `offline.html` si no hay copia | Ver siempre la última versión |
+| CSS, JS, imágenes propias, cdnjs, Google Fonts | Copia al momento y actualización en segundo plano | Rapidez; cambian poco |
+| Datos en directo, audio, teselas, métricas | Siempre red, nunca se guardan | No enseñar datos viejos como actuales |
+
+Las cachés se llaman `radio-<VERSION>`; al activarse una versión nueva se borran las anteriores.
 
 ## Rendimiento
 

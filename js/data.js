@@ -97,3 +97,31 @@ const RECEIVERS = [
   { name: 'Lista de todos los WebSDR del mundo', url: 'http://websdr.org/' },
   { name: 'Mapa de receptores KiwiSDR', url: 'http://rx.linkfanel.net/' },
 ];
+
+// Grabaciones reales con licencia libre (Wikimedia Commons). Se enlazan, no se copian al repositorio.
+// Licencias y autores comprobados en Commons el 1 nov 2026. Cómo añadir más: docs/CONTENIDO.md#grabaciones-reales
+const COMMONS = 'https://upload.wikimedia.org/wikipedia/commons/';
+const RECORDINGS = [
+  { file: 'CQ de DG2RBH.ogg', src: COMMONS + '8/85/CQ_de_DG2RBH.ogg', secs: 5, kind: 'Voz', author: 'Dickbrettbohrer', license: 'CC0',
+    text: 'Una estación alemana lanza una llamada general (CQ) en la banda de 80 m. Así empieza casi todo contacto.' },
+  { file: 'VA2HET de LZ2AA.ogg', src: COMMONS + '0/03/VA2HET_de_LZ2AA.ogg', secs: 6, kind: 'Voz', author: 'Dickbrettbohrer', license: 'CC0',
+    text: 'Una estación búlgara da a una canadiense el informe de cómo la recibe (RS), en la banda de 20 m.' },
+  { file: 'Ham Contest Exchange.ogg', src: COMMONS + 'd/d5/Ham_Contest_Exchange.ogg', secs: 26, kind: 'Voz', author: 'Meisam', license: 'CC0',
+    text: 'Un intercambio típico de concurso: informe de señal y número de serie, rápido y sin charla.' },
+  { file: 'WB6ACU.ogg', src: COMMONS + '9/92/WB6ACU.ogg', secs: 75, kind: 'Voz', author: 'LuckyLouie', license: 'CC BY-SA 3.0',
+    text: 'Una estación estadounidense en la banda de 75 m, grabada en el aire. Así suena la banda lateral de verdad, con su ruido.' },
+  { file: 'AO-7 SSB.ogg', src: COMMONS + '5/57/AO-7_SSB.ogg', secs: 30, kind: 'Satélite', author: 'Arusch', license: 'CC BY-SA 3.0',
+    text: 'Dos radioaficionados (WA9WUA y NZ3M) empiezan un contacto a través de OSCAR 7, un satélite lanzado en 1974 que sigue funcionando.' },
+  { file: 'Sr1g.ogg', src: COMMONS + '2/23/Sr1g.ogg', secs: 12, kind: 'Repetidor', author: 'Lubicz', license: 'CC BY-SA 3.0',
+    text: 'La voz del repetidor SR1G de Kołobrzeg (Polonia) identificándose.' },
+  { file: 'Echolink-DB0BHV-GB3IR.ogg', src: COMMONS + 'b/b1/Echolink-DB0BHV-GB3IR.ogg', secs: 63, kind: 'Repetidor', author: 'doco', license: 'CC BY 4.0',
+    text: 'Un repetidor alemán se abre con un tono de 1.750 Hz y se enlaza por internet (EchoLink) con uno británico.' },
+  { file: 'SK6RUD.ogg', src: COMMONS + '2/20/SK6RUD.ogg', secs: 7, kind: 'Señal débil', author: 'HBD20', license: 'CC BY-SA 3.0',
+    text: 'Una estación sueca oída en los Países Bajos en 10,133 MHz (banda de 30 m) emitiendo con solo medio vatio.' },
+  { file: 'NCDXF beacons.ogg', src: COMMONS + '9/95/NCDXF_beacons.ogg', secs: 20, kind: 'Baliza', author: 'Cqdx', license: 'CC0',
+    text: 'Las balizas OH2B (Finlandia) y CS3B (Madeira) en 14,100 MHz: indicativo y rayas cada vez más débiles.' },
+  { file: '2013-03-31 1948z RWM Time Signal.ogg', src: COMMONS + 'a/a5/2013-03-31_1948z_RWM_Time_Signal.ogg', secs: 31, kind: 'Hora', author: 'Samslipknot', license: 'CC0',
+    text: 'La señal horaria rusa RWM recibida en onda corta: pitidos exactos cada segundo.' },
+  { file: 'BBC without carrier recovery.ogg', src: COMMONS + '9/9e/BBC_without_carrier_recovery.ogg', secs: 10, kind: 'Radiodifusión', author: 'Cqdx', license: 'CC BY-SA 3.0',
+    text: 'La BBC en onda corta, grabada en el aire. No es radioafición, pero es lo primero que muchos oyen al girar el dial.' },
+];

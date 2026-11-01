@@ -16,7 +16,8 @@ Las comprobaciones de CORS se hicieron desde `https://bendi.dev` el **1 de novie
 | [Leaflet](https://leafletjs.com) 1.9.4 | Mapas | — | cdnjs | Licencia BSD-2 | Atribución en el mapa | La sección muestra el listado sin mapa |
 | [Esri World Dark Gray](https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer) | Teselas del mapa | No | No hace falta | Atribución obligatoria | "Mapa © Esri…" en cada mapa | Mapa sin fondo; datos visibles |
 | [WebSDR de Twente](http://websdr.ewi.utwente.nl:8901/) | Receptor real | No | Solo enlace | — | Enlace con `?tune=<kHz><modo>` | Receptores alternativos debajo |
-| [GoatCounter](https://www.goatcounter.com/) | Visitas | No | — | — | Script `async`, sin cookies | La web funciona igual |
+| [GoatCounter](https://www.goatcounter.com/) | Visitas y hitos | No | — | — | Script `async`, sin cookies; hitos con nombre fijo (`Radio.track`) | La web funciona igual |
+| [Wikimedia Commons](https://commons.wikimedia.org/) | Grabaciones reales | No | No hace falta (`<audio>`) | Atribuir autor y licencia | Autor, enlace y licencia en cada tarjeta; `preload="none"` | Mensaje bajo el reproductor |
 | Google Fonts | Tipografías | No | — | — | `display=swap` | Fuentes del sistema |
 
 ## Detalle por servicio
@@ -67,4 +68,5 @@ Las comprobaciones de CORS se hicieron desde `https://bendi.dev` el **1 de novie
 | Bandas (`js/data.js`) | Planes de banda IARU Región 1, aproximados | 1 nov 2026 | Si cambia la normativa |
 | CB-27 y PMR446 (`empezar/#cb27`) | [Ministerio: uso común del espectro](https://digital.gob.es/telecomunicaciones-infraestructuras-digitales/areas-interes/espectro-radioelectrico/informacion-general/uso-espectro-radioelectrico/comun) y [Orden IET/614/2015](https://www.boe.es/buscar/doc.php?id=BOE-A-2015-3864) (nota UN-3 del CNAF); PMR446 según la decisión ECC (15)05 | 1 nov 2026 | Si cambia el CNAF |
 | Qué radio comprar (`empezar/#equipo`) | Comparativas de [Electronics Notes](https://www.electronics-notes.com/store-shop/ham-radio-reviews/baofeng-uv5r-vs-quansheng-uvk5-vs-tidradio-tdh3.php) y [OneSDR](https://www.onesdr.com/the-worlds-most-popular-cheap-radio-is-illegal/); precios orientativos | 1 nov 2026 | Revisar modelos y precios cada seis meses |
+| Grabaciones (`js/data.js`, `RECORDINGS`) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/Category:Audio_files_of_amateur_radio): licencia y autor de cada archivo | 1 nov 2026 | [CONTENIDO.md](CONTENIDO.md#grabaciones-reales) |
 | Calendario (`js/clubs.js`) | Reglas habituales de cada evento | — | Se calcula solo; revisar las reglas si un organizador las cambia |

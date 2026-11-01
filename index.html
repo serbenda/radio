@@ -22,7 +22,9 @@
   <meta name="twitter:title" content="Radio · Descubre la radioafición">
   <meta name="twitter:description" content="Iniciación a la radioafición en español: escucha emisoras de todo el mundo, aprende cómo funciona la radio, practica tu primer contacto y prepara el examen.">
   <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📻</text></svg>">
+  <link rel="icon" href="./img/favicon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+  <link rel="manifest" href="./manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -100,6 +102,15 @@
           <div class="row"><button class="btn small" id="journeyShare" hidden>📤 Compartir mi progreso</button><button class="btn small ghost" id="journeyReset">Empezar de cero</button></div>
         </div>
         <div class="weeks" id="weeks"></div>
+        <div class="backup" id="backup">
+          <p><b>¿Cambias de móvil o de navegador?</b> Tu progreso solo vive en este navegador. Guárdalo en un archivo y recupéralo donde quieras.</p>
+          <div class="row">
+            <button class="btn small ghost" id="backupSave" type="button">💾 Guardar mi progreso</button>
+            <label class="btn small ghost" for="backupLoad">📂 Recuperar progreso</label>
+            <input type="file" id="backupLoad" accept="application/json,.json" class="sr-only">
+          </div>
+          <p class="note" id="backupNote" role="status"></p>
+        </div>
       </div>
     </section>
     <!-- PÁGINAS -->
@@ -122,12 +133,14 @@
   <footer>
     <p><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button></p>
     <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">código y fuentes de datos</a> · 73!</p>
+    <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">¿Ves un error o algo desactualizado? Avísanos</a></p>
   </footer>
 
   <script src="./js/core.js"></script>
   <script src="./js/data.js"></script>
   <script src="./js/journey.js"></script>
   <script src="./js/dial.js"></script>
+  <script src="./js/backup.js"></script>
   <script src="./js/glossary.js"></script>
   <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>

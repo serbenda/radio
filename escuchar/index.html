@@ -22,7 +22,9 @@
   <meta name="twitter:title" content="Escuchar · Radio">
   <meta name="twitter:description" content="Escucha emisoras de todo el mundo en un mapa, receptores de onda corta en directo, quién está hablando ahora y los sonidos típicos de la radio.">
   <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📻</text></svg>">
+  <link rel="icon" href="../img/favicon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -49,7 +51,7 @@
       <p class="kicker">Paso 1</p>
       <h1>Escuchar</h1>
       <p class="lead">Antes de transmitir, todo radioaficionado empieza escuchando. Aquí oyes emisoras de todo el mundo, radioaficionados en directo y aprendes a reconocer cada sonido.</p>
-      <nav class="toc" aria-label="En esta página"><a href="#emisoras">Emisoras de todo el mundo en un mapa</a> · <a href="#directo">Receptores abiertos en directo</a> · <a href="#ahora">Ahora en el aire</a> · <a href="#sonidos">¿Qué es este sonido?</a></nav>
+      <nav class="toc" aria-label="En esta página"><a href="#emisoras">Emisoras de todo el mundo en un mapa</a> · <a href="#directo">Receptores abiertos en directo</a> · <a href="#ahora">Ahora en el aire</a> · <a href="#sonidos">¿Qué es este sonido?</a> · <a href="#grabaciones">Grabaciones reales</a></nav>
     </header>
 
     <!-- EMISORAS -->
@@ -186,6 +188,11 @@
           <div class="sound-info card" id="soundInfo"><p class="note">Los sonidos se generan en tu navegador imitando los reales. Después, búscalos en un receptor de verdad con el botón que aparece aquí.</p></div>
         </div>
       </div>
+      <div class="recs" id="grabaciones">
+        <h3>Y así suenan de verdad</h3>
+        <p>Los sonidos de arriba son imitaciones limpias. En el aire hay ruido, desvanecimientos y voces que se pisan. Estas son grabaciones reales con licencia libre: escúchalas y compara.</p>
+        <ul class="rec-list" id="recList"></ul>
+      </div>
     </section>
 
     <nav class="next-page" aria-label="Siguiente paso"><a href="../entender/">Siguiente: Entender cómo funciona →</a></nav>
@@ -194,6 +201,7 @@
   <footer>
     <p><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button></p>
     <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">código y fuentes de datos</a> · 73!</p>
+    <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">¿Ves un error o algo desactualizado? Avísanos</a></p>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -205,6 +213,7 @@
   <script src="../js/live.js"></script>
   <script src="../js/morse.js"></script>
   <script src="../js/sounds.js"></script>
+  <script src="../js/recordings.js"></script>
   <script src="../js/glossary.js"></script>
   <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>

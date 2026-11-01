@@ -85,6 +85,7 @@
     const recentOk = st.recent.length >= 10 && st.recent.filter(Boolean).length >= 9;
     if (st.level < ORDER.length && recentOk && nh.length >= 5 && nh.filter(x => x.ok).length >= 4) {
       st.level++; st.recent = [];
+      if (st.level % 5 === 0) Radio.track(`morse/letras-${st.level}`);
       $('kochFeedback').innerHTML += ` · 🎉 Nueva letra: <b>${ORDER[st.level - 1]}</b>`;
       document.dispatchEvent(new CustomEvent('radio:progress'));
     }

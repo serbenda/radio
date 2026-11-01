@@ -264,7 +264,7 @@
       if (+b.dataset.a === q.ok) hits++; else b.classList.add('wrong');
       if (answered === current.quiz.length) {
         $('lqResult').textContent = hits === 3 ? '¡Perfecto! Lección completada ✓' : `${hits} de 3. Sube un nivel de explicación y vuelve a probar.`;
-        if (hits === 3) { done[current.id] = true; store.set('radio.lessons', done); renderTabs(); document.dispatchEvent(new CustomEvent('radio:progress')); }
+        if (hits === 3) { Radio.track(`leccion/${current.id}`); done[current.id] = true; store.set('radio.lessons', done); renderTabs(); document.dispatchEvent(new CustomEvent('radio:progress')); }
       }
     };
   }

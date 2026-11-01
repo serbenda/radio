@@ -1,0 +1,49 @@
+name: Error en una pregunta del examen
+description: Una pregunta del simulador tiene la respuesta, la explicación o el enunciado mal.
+title: "[Examen] Pregunta "
+labels: ["examen", "contenido"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por ayudar a que el simulador sea fiable. Si eres radioaficionado con licencia o formador, tu revisión vale oro.
+  - type: input
+    id: pregunta
+    attributes:
+      label: Pregunta
+      description: Se rellena sola si vienes desde el botón de la pregunta.
+      placeholder: "e12"
+    validations:
+      required: true
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: ¿Qué está mal?
+      options:
+        - La respuesta marcada como correcta
+        - La explicación
+        - El enunciado o las opciones
+        - Está desactualizada (cambió la normativa)
+        - Otra cosa
+    validations:
+      required: true
+  - type: textarea
+    id: detalle
+    attributes:
+      label: Explicación
+      description: Qué debería decir y por qué.
+    validations:
+      required: true
+  - type: input
+    id: fuente
+    attributes:
+      label: Fuente
+      description: Artículo del reglamento, libro o enlace que lo respalda (si lo tienes).
+  - type: dropdown
+    id: perfil
+    attributes:
+      label: ¿Eres radioaficionado con licencia?
+      options:
+        - "Sí"
+        - "No"
+        - Prefiero no decirlo

@@ -87,7 +87,7 @@
       const ok = w.tasks.map(t => t.done());
       total += ok.length; done += ok.filter(Boolean).length;
       const full = ok.every(Boolean);
-      if (full && !st.badges[wi]) { st.badges[wi] = Date.now(); save(); celebrate(w.badge); }
+      if (full && !st.badges[wi]) { st.badges[wi] = Date.now(); save(); celebrate(w.badge); Radio.track(`insignia/semana-${wi + 1}`); }
       return `<div class="week${full ? ' full' : ''}">
         <h3>${w.name}</h3>
         <ul>${w.tasks.map((t, i) => `<li class="${ok[i] ? 'ok' : ''}"><span class="tick" aria-hidden="true">${ok[i] ? '✓' : ''}</span><a href="${url(t.href)}">${t.text}<span class="sr-only">${ok[i] ? ' (hecho)' : ' (pendiente)'}</span></a>${!ok[i] && t.prog ? `<small>${t.prog()}</small>` : ''}</li>`).join('')}</ul>

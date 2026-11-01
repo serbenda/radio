@@ -255,6 +255,7 @@
   }
 
   function finish(text, qsl) {
+    Radio.track(`qso/${scenario}`);
     stopNoise();
     $('qsoOnAir').textContent = qsl ? 'QSO COMPLETO' : 'EJERCICIO HECHO';
     add('info', text + (qsl ? ' Te ha llegado su tarjeta QSL.' : ''));
@@ -338,6 +339,7 @@
   $('qslDownload').addEventListener('click', () => {
     const a = document.createElement('a');
     a.download = `QSL_${dx.call}_${me.call}.png`;
+    Radio.track('qsl/descargada');
     a.href = $('qslCanvas').toDataURL('image/png');
     a.click();
   });

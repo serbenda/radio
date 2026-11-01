@@ -4,7 +4,7 @@
  * Página: Escuchar (#sonidos). Necesita: #waterfall (canvas), #soundGrid, #soundInfo, #soundNow, #soundStop.
  * Depende de: morse.js (tabla Morse.CODE para el Morse y la baliza).
  *
- * Los ocho sonidos se SINTETIZAN con Web Audio imitando los reales (no son grabaciones):
+ * Los ocho sonidos se SINTETIZAN con Web Audio imitando los reales (las grabaciones reales están en recordings.js):
  *   cw (Morse), ft8 (8-FSK, 6,25 Hz entre tonos, símbolos de 0,16 s), rtty (dos tonos a 170 Hz, 45,45 baudios),
  *   beacon (baliza NCDXF: indicativo + 4 rayas a 100/10/1/0,1 W), pips (señal horaria),
  *   tuning (portadora que se desplaza), qrn (estática con chasquidos), buzz (armónicos cada 100 Hz).

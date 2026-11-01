@@ -81,7 +81,29 @@
     io.observe(el);
   }
 
-  window.Radio = { $, esc, store, emit, url, root, reducedMotion, whileVisible, onceVisible };
+  /**
+   * Enlace a un formulario de GitHub ya rellenado para avisar de un error.
+   * plantilla: 'pregunta-examen' | 'error-contenido' | 'sugerencia'; campos: { idDelCampo: valor }.
+   * Los ids de los campos están en .github/ISSUE_TEMPLATE/*.yml. No se envía nada personal.
+   */
+  const REPO = 'https://github.com/serbenda/radio';
+  function report(plantilla, campos = {}, titulo = '') {
+    const q = new URLSearchParams({ template: `${plantilla}.yml`, ...campos });
+    if (titulo) q.set('title', titulo);
+    return `${REPO}/issues/new?${q}`;
+  }
+
+  /**
+   * Cuenta un hito en GoatCounter como evento "radio/<hito>" (p. ej. radio/qso/primero).
+   * Sin datos personales: solo el nombre del hito. Si GoatCounter no ha cargado o está bloqueado, no pasa nada.
+   * Lista de hitos: docs/PRIVACIDAD.md.
+   */
+  function track(hito) {
+    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: `radio/${hito}`, title: hito, event: true }); }
+    catch (e) { /* sin métricas */ }
+  }
+
+  window.Radio = { $, esc, store, emit, url, root, reducedMotion, whileVisible, onceVisible, report, track };
 
   /* ---------- Enlaces antiguos ---------- */
   // Hasta noviembre de 2026 todo estaba en una sola página: bendi.dev/radio/#ahora, #test…
@@ -110,6 +132,15 @@
   document.querySelectorAll('.top nav a[data-page]').forEach(a => {
     if (a.dataset.page === page) a.setAttribute('aria-current', 'page');
   });
+
+  // "¿Ves un error?": abre el formulario de GitHub con la página ya puesta.
+  const rep = $('reportLink');
+  if (rep) rep.href = report('error-contenido', { pagina: location.origin + location.pathname + location.hash }, `[Web] ${document.title}`);
+
+  // Instalable y sin conexión: registra sw.js (solo por HTTPS o localhost; en file:// no existe).
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    addEventListener('load', () => navigator.serviceWorker.register(`${root}sw.js`, { scope: root }).catch(() => { /* sin modo offline */ }));
+  }
 
   // Compartir la web: menú nativo en móvil; en ordenador copia el enlace.
   const share = $('shareSite');

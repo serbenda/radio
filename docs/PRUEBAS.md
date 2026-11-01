@@ -18,6 +18,8 @@ No necesita instalar nada (Node 18 o superior). Se ejecuta también en GitHub Ac
 | 6 | Datos | Preguntas sin id único, sin explicación, con respuesta fuera de rango u opciones repetidas; menos de 30 por parte; secciones de radioclub mal formadas o con datos personales; bandas desordenadas; sintonías mal escritas |
 | 7 | "Tu primer mes" | Pasos que enlazan a páginas o secciones que no existen |
 | 8 | sitemap.xml | Páginas que faltan |
+| 9 | Instalable y sin conexión | Manifest inválido o con iconos que no existen, páginas sin `rel="manifest"`, archivos de `sw.js` que no existen, páginas o módulos que `sw.js` no guarda, `VERSION` distinta de la última del CHANGELOG |
+| 10 | Métricas | `Radio.track()` con un nombre que no sea fijo (podría acabar enviando algo que escribe la persona) |
 
 Prueba de que funciona: si se rompe a propósito un enlace del menú y un paso de la ruta, el script marca 3 fallos y sale con código 1.
 
@@ -28,6 +30,16 @@ python3 -m http.server 8000
 ```
 
 y abre <http://localhost:8000/>. También funciona abriendo `index.html` directamente, salvo lo que depende de servicios externos si no hay conexión.
+
+### Probar el modo sin conexión
+
+El service worker solo funciona por `http://localhost` o HTTPS, y su alcance es la carpeta donde está. Para probarlo como en `bendi.dev/radio/`:
+
+```bash
+mkdir -p /tmp/srv && ln -sfn "$PWD" /tmp/srv/radio && cd /tmp/srv && python3 -m http.server 8000
+```
+
+Abre <http://localhost:8000/radio/>, recarga una vez, y en las herramientas del navegador (Aplicación → Service workers) marca "Sin conexión": las seis páginas deben abrirse y una dirección inventada debe mostrar "Sin propagación". Tras cambiar archivos, sube `VERSION` en `sw.js` o marca "Update on reload".
 
 ## Lista de comprobación manual antes de fusionar
 

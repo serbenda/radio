@@ -663,3 +663,25 @@ h3.sub-small { margin: 18px 0 8px; font-size: 1rem; }
 .tips ol { padding-left: 20px; display: grid; gap: 8px; color: #d4d5db; }
 #equipo .table-wrap { margin-bottom: 8px; }
 .cmp td:nth-child(2) { font-family: var(--sans); color: var(--ink); }
+
+/* ---------- Avisar de errores ---------- */
+footer .report { font-size: .88rem; }
+.ex-report { margin-left: 12px; font-size: .85rem; color: var(--muted); }
+
+/* ---------- Guardar y recuperar progreso ---------- */
+.backup { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+.backup p { margin: 0 0 10px; color: #d4d5db; }
+.backup label.btn { cursor: pointer; }
+.backup input:focus-visible + *, .backup label:focus-within { outline: 2px solid var(--accent); }
+#backupNote.bad { color: var(--hot); }
+
+/* ---------- Grabaciones reales (escuchar/#grabaciones) ---------- */
+.recs { margin-top: 2.5rem; }
+.recs h3 { margin-bottom: .3rem; }
+.rec-list { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.rec { display: flex; flex-direction: column; gap: .5rem; margin: 0; }
+.rec p { margin: 0; }
+.rec-kind { font-family: 'IBM Plex Mono', monospace; font-size: .8rem; color: var(--accent, #8be0c2); text-transform: uppercase; letter-spacing: .06em; }
+.rec audio { width: 100%; margin-top: auto; }
+.rec-credit { font-size: .8rem; color: var(--muted, #9c9ea6); }
+.note.bad { color: var(--red); }
