@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://*.api.radio-browser.info https://www.hamqth.com https://celestrak.org https://serbenda.goatcounter.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Radio · Discover amateur radio</title>
+  <meta name="description" content="A beginner's guide to amateur radio: listen to stations from all over the world, learn how radio works, practise your first contact and prepare for the exam.">
+  <meta name="radio-root" content="../">
+  <meta name="theme-color" content="#111214">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="radio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="canonical" href="https://bendi.dev/radio/en/">
+  <link rel="alternate" hreflang="es" href="https://bendi.dev/radio/">
+  <link rel="alternate" hreflang="en" href="https://bendi.dev/radio/en/">
+  <link rel="alternate" hreflang="x-default" href="https://bendi.dev/radio/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="radio · bendi.dev">
+  <meta property="og:title" content="Radio · Discover amateur radio">
+  <meta property="og:description" content="A beginner's guide to amateur radio: listen to stations from all over the world, learn how radio works, practise your first contact and prepare for the exam.">
+  <meta property="og:url" content="https://bendi.dev/radio/en/">
+  <meta property="og:image" content="https://bendi.dev/radio/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A radio dial with a signal and the words: There are thousands of voices on the air. Listen to them.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Radio · Discover amateur radio">
+  <meta name="twitter:description" content="A beginner's guide to amateur radio: listen to stations from all over the world, learn how radio works, practise your first contact and prepare for the exam.">
+  <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
+  <link rel="icon" href="../img/favicon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preload" href="../fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="inicio">
+  <a class="skip" href="#contenido">Skip to content</a>
+  <header class="top">
+    <a class="brand" href="./" aria-label="radio, go to the home page">📻 <span>radio</span></a>
+    <nav aria-label="Main">
+      <a href="./" data-page="inicio">Home</a>
+      <a href="./listen/" data-page="escuchar">Listen</a>
+      <a href="./understand/" data-page="entender">Understand</a>
+      <a href="./practice/" data-page="practicar">Practice</a>
+      <a href="./exam/" data-page="examen">Exam</a>
+      <a href="./start/" data-page="empezar">Get started</a>
+    </nav>
+    <a class="lang-switch" id="langSwitch" href="../" hreflang="es" lang="es" title="Leer esta página en castellano" aria-label="Versión en castellano de esta página">ES</a>
+    <div class="utc" title="Radio amateurs always use UTC time"><small>UTC</small> <span id="utc">--:--</span></div>
+  </header>
+
+  <main id="contenido">
+    <noscript><p class="noscript">You can read the text without JavaScript, but the dial, maps, sounds, Morse, contacts and exam all need it. Turn it on to use them.</p></noscript>
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+      <div class="hero-text">
+        <p class="kicker">For anyone who has never touched a radio</p>
+        <h1>There are thousands of voices on the air.<br><em>Right now.</em></h1>
+        <p class="lead">Amateur radio is the hobby of talking by radio to people all over the planet, with no internet or operator in between. This site shows you how to listen to it, understand it and, if you get hooked, take the plunge.</p>
+        <div class="hero-cta">
+          <a class="btn" href="listen/">Listen to something now</a>
+          <a class="btn ghost" href="start/">How to get started</a>
+        </div>
+      </div>
+      <div class="receiver" aria-label="Interactive dial" data-noglossary>
+        <div class="dial">
+          <svg class="wave" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true"><path id="wavePath"></path></svg>
+          <div class="dial-scale" id="dialScale"></div>
+          <div class="dial-needle" id="dialNeedle"></div>
+        </div>
+        <div class="receiver-row">
+          <div class="readout"><span id="dialFreq">7.100</span> MHz</div>
+          <div class="readout small" id="dialBand">40 m · at night, all of Europe</div>
+        </div>
+        <input type="range" id="dialKnob" min="0" max="1000" value="380" aria-label="Tune">
+        <p class="hint">Move the dial: each band behaves differently depending on the time of day and the sun.</p>
+      </div>
+    </section>
+    <!-- QUÉ ES -->
+    <section class="intro" aria-labelledby="queEs">
+      <h2 class="sr-only" id="queEs">What amateur radio is</h2>
+      <div class="cards three">
+        <article class="card">
+          <h3>🌍 Talk to the world</h3>
+          <p>With an antenna on your balcony you can reach Japan, Argentina or a base in Antarctica. Shortwaves bounce off the ionosphere and travel right round the planet.</p>
+        </article>
+        <article class="card">
+          <h3>🛠️ Build and experiment</h3>
+          <p>Home-made antennas, soldering kits, software-defined radios, satellites, weather balloons… It's an electronics lab with a licence to transmit.</p>
+        </article>
+        <article class="card">
+          <h3>🚨 Help out when everything else fails</h3>
+          <p>When the networks go down in a flash flood (DANA), an earthquake or a blackout, radio amateurs keep communicating. That's why the hobby exists and is protected by law.</p>
+        </article>
+      </div>
+    </section>
+    <!-- TU PRIMER MES -->
+    <section id="mes">
+      <div class="section-head">
+        <p class="kicker">Your route</p>
+        <h2>Your first month on the radio</h2>
+        <p>Four weeks, from listening for the first time to being ready for the exam. Steps tick themselves off as you use the site, and each completed week earns you a badge. Everything is saved in your browser, with no sign-up.</p>
+      </div>
+      <div class="journey card">
+        <div class="journey-top">
+          <div class="bar" role="progressbar" aria-label="Progress through your first month" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="journeyBar"></i></div>
+          <p id="journeyMeta"></p>
+          <div class="row"><button class="btn small" id="journeyShare" hidden>📤 Share my progress</button><button class="btn small ghost" id="journeyReset">Start from scratch</button></div>
+        </div>
+        <div class="weeks" id="weeks"></div>
+        <div class="backup" id="backup">
+          <p><b>Changing phone or browser?</b> Your progress only lives in this browser. Save it to a file and restore it wherever you like.</p>
+          <div class="row">
+            <button class="btn small ghost" id="backupSave" type="button">💾 Save my progress</button>
+            <label class="btn small ghost" for="backupLoad">📂 Restore progress</label>
+            <input type="file" id="backupLoad" accept="application/json,.json" class="sr-only">
+          </div>
+          <p class="note" id="backupNote" role="status"></p>
+        </div>
+      </div>
+    </section>
+    <!-- PÁGINAS -->
+    <section id="paginas">
+      <div class="section-head">
+        <p class="kicker">Where to begin</p>
+        <h2>Five steps, at your own pace</h2>
+        <p>You can follow the order or jump to whatever appeals most. Your route above ticks itself off as you go.</p>
+      </div>
+      <ol class="page-cards">
+        <li><a href="listen/"><span class="n">1</span><b>Listen</b><span>Stations from around the world, live receivers, who's talking now and what each sound is.</span></a></li>
+        <li><a href="understand/"><span class="n">2</span><b>Understand</b><span>Interactive lessons, bands, today's propagation and the Space Station.</span></a></li>
+        <li><a href="practice/"><span class="n">3</span><b>Practise</b><span>Morse, how to talk on the radio and simulated contacts with a QSL card.</span></a></li>
+        <li><a href="exam/"><span class="n">4</span><b>Prepare for the exam</b><span>Flashcards that bring back what you get wrong, and a mock exam just like the real one.</span></a></li>
+        <li><a href="start/"><span class="n">5</span><b>Take the plunge</b><span>The paperwork, your radio club, the calendar and a guide for families.</span></a></li>
+      </ol>
+    </section>
+    <!-- INSTALAR -->
+    <section id="instalar">
+      <div class="section-head">
+        <p class="kicker">Keep it in your pocket</p>
+        <h2>Install it like an app</h2>
+        <p>One tap and it's on your home screen, full screen and <strong>offline</strong>: the exam, Morse, lessons and simulated contacts all work on the Underground or out in the countryside. No app store, no sign-up and it takes up almost no space.</p>
+      </div>
+      <div class="install card">
+        <div class="install-top">
+          <p class="install-status" id="installStatus" role="status">Choose your device and follow the steps.</p>
+          <button class="btn" id="installNow" type="button" hidden>📲 Install now</button>
+        </div>
+        <div class="install-os">
+          <details data-os="android">
+            <summary><span aria-hidden="true">🤖</span> Android</summary>
+            <ol>
+              <li>Open <b>bendi.dev/radio</b> in <b>Chrome</b> (or Edge, Samsung Internet).</li>
+              <li>Tap <b>Install now</b> above. If it doesn't appear, open the <b>⋮</b> menu → <b>Install app</b> (or <b>Add to Home screen</b>).</li>
+              <li>Confirm with <b>Install</b>. The 📻 icon will appear with your apps.</li>
+            </ol>
+          </details>
+          <details data-os="ios">
+            <summary><span aria-hidden="true">📱</span> iPhone and iPad</summary>
+            <ol>
+              <li>Open <b>bendi.dev/radio</b> in <b>Safari</b> (on iOS 16.4 or later, Chrome works too).</li>
+              <li>Tap the <b>Share</b> button <svg class="ios-share" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M8 10H6a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1h-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> (at the bottom on iPhone, at the top on iPad).</li>
+              <li>Scroll down and choose <b>Add to Home Screen</b>. Keep the name “radio” and tap <b>Add</b>.</li>
+            </ol>
+            <p class="note">Apple doesn't allow a direct install button, which is why you have to do it from Share.</p>
+          </details>
+          <details data-os="desktop">
+            <summary><span aria-hidden="true">💻</span> Computer</summary>
+            <ol>
+              <li>In <b>Chrome</b> or <b>Edge</b>, click <b>Install now</b> or the install icon in the address bar.</li>
+              <li>In <b>Safari</b> (macOS Sonoma or later): <b>File</b> menu → <b>Add to Dock</b>.</li>
+            </ol>
+          </details>
+        </div>
+      </div>
+    </section>
+    <!-- APOYA -->
+    <section id="apoya" aria-labelledby="apoyaTitulo">
+      <div class="sponsor-card">
+        <div class="sponsor-art" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><circle class="ring r1" cx="60" cy="60" r="22"/><circle class="ring r2" cx="60" cy="60" r="38"/><circle class="ring r3" cx="60" cy="60" r="54"/><path class="heart" d="M60 78s-20-11.5-20-25.5A10.5 10.5 0 0 1 60 46a10.5 10.5 0 0 1 20 6.5C80 66.5 60 78 60 78z"/></svg>
+        </div>
+        <div class="sponsor-body">
+          <p class="kicker">Made with care, no adverts</p>
+          <h2 id="apoyaTitulo">Got hooked on radio?</h2>
+          <p>This site is free, with no adverts, no sign-up and no tracking, and it will stay that way. If you've found it useful, you can help keep it going and growing.</p>
+          <ul class="sponsor-goals">
+            <li><span aria-hidden="true">📝</span> More exam questions, checked against the law</li>
+            <li><span aria-hidden="true">🎧</span> Real recordings of radio amateurs speaking Spanish</li>
+            <li><span aria-hidden="true">🛰️</span> New lessons, simulated contacts and satellites</li>
+          </ul>
+          <div class="row sponsor-actions">
+            <a class="btn sponsor-btn" id="sponsorMain" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span aria-hidden="true">💚</span> Support on GitHub Sponsors</a>
+            <a class="btn ghost" href="https://github.com/serbenda/radio" target="_blank" rel="noopener"><span aria-hidden="true">⭐</span> Give it a star</a>
+          </div>
+          <p class="note">No budget? Sharing it with someone who might enjoy it or <a href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">reporting a mistake</a> helps enormously too. 73!</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="footer-actions"><button class="btn ghost small" id="shareSite" type="button">📤 Share this site</button> <button class="btn small" id="installApp" type="button" hidden>📲 Install the app</button></p>
+    <p>📻 radio · a project by <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">code and data sources</a> · 73! <small>(“best regards” in radio slang)</small></p>
+    <p class="sponsor"><a class="sponsor-pill" id="sponsorLink" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span class="beat" aria-hidden="true">💚</span> Find it useful? <b>Support the project</b> on GitHub Sponsors</a></p>
+    <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">Spotted a mistake or something out of date? Let us know</a></p>
+  </footer>
+
+  <script src="../js/core.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/journey.js"></script>
+  <script src="../js/dial.js"></script>
+  <script src="../js/backup.js"></script>
+  <script src="../js/install.js"></script>
+  <script src="../js/glossary.js"></script>
+  <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

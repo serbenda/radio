@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://*.api.radio-browser.info https://www.hamqth.com https://celestrak.org https://serbenda.goatcounter.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Listen · Radio</title>
+  <meta name="description" content="Listen to stations from all over the world on a map, live shortwave receivers, who is talking right now and the typical sounds of the radio.">
+  <meta name="radio-root" content="../../">
+  <meta name="theme-color" content="#111214">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="radio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="canonical" href="https://bendi.dev/radio/en/listen/">
+  <link rel="alternate" hreflang="es" href="https://bendi.dev/radio/escuchar/">
+  <link rel="alternate" hreflang="en" href="https://bendi.dev/radio/en/listen/">
+  <link rel="alternate" hreflang="x-default" href="https://bendi.dev/radio/escuchar/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="radio · bendi.dev">
+  <meta property="og:title" content="Listen · Radio">
+  <meta property="og:description" content="Listen to stations from all over the world on a map, live shortwave receivers, who is talking right now and the typical sounds of the radio.">
+  <meta property="og:url" content="https://bendi.dev/radio/en/listen/">
+  <meta property="og:image" content="https://bendi.dev/radio/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A radio dial with a signal and the words: There are thousands of voices on the air. Listen to them.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Listen · Radio">
+  <meta name="twitter:description" content="Listen to stations from all over the world on a map, live shortwave receivers, who is talking right now and the typical sounds of the radio.">
+  <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
+  <link rel="icon" href="../../img/favicon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="preload" href="../../fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-page="escuchar">
+  <a class="skip" href="#contenido">Skip to content</a>
+  <header class="top">
+    <a class="brand" href="../" aria-label="radio, go to the home page">📻 <span>radio</span></a>
+    <nav aria-label="Main">
+      <a href="../" data-page="inicio">Home</a>
+      <a href="../listen/" data-page="escuchar">Listen</a>
+      <a href="../understand/" data-page="entender">Understand</a>
+      <a href="../practice/" data-page="practicar">Practice</a>
+      <a href="../exam/" data-page="examen">Exam</a>
+      <a href="../start/" data-page="empezar">Get started</a>
+    </nav>
+    <a class="lang-switch" id="langSwitch" href="../../escuchar/" hreflang="es" lang="es" title="Leer esta página en castellano" aria-label="Versión en castellano de esta página">ES</a>
+    <div class="utc" title="Radio amateurs always use UTC time"><small>UTC</small> <span id="utc">--:--</span></div>
+  </header>
+
+  <main id="contenido">
+    <noscript><p class="noscript">You can read the text without JavaScript, but the dial, maps, sounds, Morse, contacts and exam all need it. Turn it on to use them.</p></noscript>
+    <header class="page-head">
+      <p class="kicker">Step 1</p>
+      <h1>Listen</h1>
+      <p class="lead">Before transmitting, every radio amateur starts by listening. Here you can hear stations from all over the world and radio amateurs live, and learn to recognise each sound.</p>
+      <nav class="toc" aria-label="On this page"><a href="#emisoras">Stations from around the world on a map</a> · <a href="#directo">Open receivers, live</a> · <a href="#ahora">On the air now</a> · <a href="#sonidos">What's that sound?</a> · <a href="#grabaciones">Real recordings</a></nav>
+    </header>
+
+    <!-- EMISORAS -->
+    <section id="emisoras">
+      <div class="section-head">
+        <p class="kicker">Step 1 · Listen</p>
+        <h2>Stations from around the world on a map</h2>
+        <p>Before transmitting, every radio amateur starts by listening. Here you have thousands of real stations: tap a dot on the map and it plays.</p>
+      </div>
+      <div class="station-tools">
+        <label>Country
+          <select id="country">
+            <option value="ES" selected>Spain</option>
+            <option value="PT">Portugal</option>
+            <option value="FR">France</option>
+            <option value="IT">Italy</option>
+            <option value="DE">Germany</option>
+            <option value="GB">United Kingdom</option>
+            <option value="US">United States</option>
+            <option value="MX">Mexico</option>
+            <option value="AR">Argentina</option>
+            <option value="JP">Japan</option>
+            <option value="BR">Brazil</option>
+            <option value="">The whole world</option>
+          </select>
+        </label>
+        <label class="grow">Search
+          <input type="search" id="stationSearch" placeholder="jazz, news, flamenco, station name…">
+        </label>
+        <button class="btn small" id="randomStation">🎲 Surprise me</button>
+      </div>
+      <div class="map-wrap">
+        <div id="map" role="region" aria-label="Map of stations"></div>
+        <div class="station-list" role="region" aria-label="List of stations">
+          <div class="status" id="stationStatus">Loading stations…</div>
+          <ul id="stationList"></ul>
+        </div>
+      </div>
+      <div class="player" id="player" hidden>
+        <button class="play" id="playBtn" aria-label="Pause">⏸</button>
+        <div class="now">
+          <strong id="nowName">—</strong>
+          <span id="nowMeta">—</span>
+        </div>
+        <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8" aria-label="Volume">
+      </div>
+      <p class="note greyline-note"><span class="swatch"></span> The dark area is where it's night right now. Along the <strong>grey line</strong>, the border between day and night, shortwave travels especially far. It updates live.</p>
+      <p class="note">Data from the free <a href="https://www.radio-browser.info" target="_blank" rel="noopener">Radio Browser</a> directory. These are internet broadcast stations: the first step to catching the bug. The real radio-amateur stuff comes right after, in “Open receivers, live”.</p>
+    </section>
+    <!-- EN DIRECTO -->
+    <section id="directo">
+      <div class="section-head">
+        <p class="kicker">Step 2 · Hear real radio amateurs</p>
+        <h2>Open receivers, live</h2>
+        <p>There are receivers connected to big antennas that anyone can control from their browser. Nothing to install, no licence needed. Try the 40-metre band in the late afternoon or evening: you'll hear people chatting from half of Europe.</p>
+      </div>
+      <div class="guided card" id="guided">
+        <div class="guided-now">
+          <p class="kicker">Guided listening · <span id="guidedWhen">now</span></p>
+          <h3 id="guidedTitle">Voices on 40 m</h3>
+          <p id="guidedText">—</p>
+          <a class="btn" id="guidedGo" href="#" target="_blank" rel="noopener">🎧 Open the receiver, already tuned</a>
+        </div>
+        <div class="guided-more">
+          <p class="guided-label">Or try something else:</p>
+          <div class="guided-presets" id="guidedPresets"></div>
+          <p class="guided-alt">Slow or not loading? Try another receiver: <span id="guidedAlt"></span></p>
+          <ol class="guided-tips">
+            <li>A real receiver in the Netherlands opens, already on the right frequency.</li>
+            <li>If you can't hear anything, click anywhere on the page: the browser won't play audio until you touch something.</li>
+            <li>Click on the waterfall (the coloured strip) near the bright lines: each one is someone transmitting.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="cards">
+        <a class="card link" href="http://websdr.ewi.utwente.nl:8901/" target="_blank" rel="noopener">
+          <span class="tag">The classic</span>
+          <h3>University of Twente WebSDR</h3>
+          <p>A receiver in the Netherlands that covers the whole of shortwave at once. Click on the waterfall and listen. Plenty of people got hooked here.</p>
+          <span class="go">Open →</span>
+        </a>
+        <a class="card link" href="http://rx.linkfanel.net/" target="_blank" rel="noopener">
+          <span class="tag">All over the world</span>
+          <h3>KiwiSDR receiver map</h3>
+          <p>Hundreds of receivers spread across the planet. Pick one in Australia or Canada and listen to what can be heard there.</p>
+          <span class="go">Open →</span>
+        </a>
+        <a class="card link" href="https://pskreporter.info/pskmap.html" target="_blank" rel="noopener">
+          <span class="tag">See instead of hear</span>
+          <h3>PSK Reporter</h3>
+          <p>A live map of who is receiving whom on digital modes. You can literally watch a band “open up”.</p>
+          <span class="go">Open →</span>
+        </a>
+        <a class="card link" href="https://www.ariss.org/" target="_blank" rel="noopener">
+          <span class="tag">From space</span>
+          <h3>Radio on the Space Station</h3>
+          <p>The ISS carries an amateur radio station. Schools arrange contacts with the astronauts, and you can listen in from home.</p>
+          <span class="go">Open →</span>
+        </a>
+      </div>
+    </section>
+    <!-- AHORA EN EL AIRE -->
+    <section id="ahora">
+      <div class="section-head">
+        <p class="kicker">Live</p>
+        <h2>On the air now</h2>
+        <p>When one radio amateur hears another, they often post it online: it's called a <strong>spot</strong>, a heads-up. Together they make a living map of who is talking to whom all over the world, right now. Each line is a signal that has crossed countries or oceans.</p>
+      </div>
+      <p class="live-summary" id="liveSummary">Loading spots…</p>
+      <div class="chips live-bands" id="liveBands"></div>
+      <div class="live-wrap">
+        <div id="liveMap" role="region" aria-label="Map of live spots"></div>
+        <ol class="live-stories" id="liveStories"></ol>
+      </div>
+      <p class="note" id="liveStatus"></p>
+    </section>
+    <!-- SONIDOS -->
+    <section id="sonidos">
+      <div class="section-head">
+        <p class="kicker">Learn to recognise them</p>
+        <h2>What's that sound?</h2>
+        <p>When you first listen to the radio, it all sounds like beeps and noise. Each sound has its own shape on the <strong>waterfall</strong>, the coloured graph on receivers. Tap one: you'll hear it and see how it's drawn.</p>
+      </div>
+      <div class="sounds">
+        <div class="wf card">
+          <div class="wf-head"><span id="soundNow">Choose a sound to hear and see it</span><button class="btn small ghost" id="soundStop">■ Stop</button></div>
+          <canvas id="waterfall" width="640" height="220" aria-label="Waterfall: spectrogram of the sound that's playing"></canvas>
+          <div class="wf-axis" aria-hidden="true"><span>0 Hz</span><span>1,000</span><span>2,000</span><span>3,000 Hz</span></div>
+          <p class="note">Time falls downwards and pitch goes from low (left) to high (right). Just like on a real receiver.</p>
+        </div>
+        <div>
+          <div class="sound-grid" id="soundGrid"></div>
+          <div class="sound-info card" id="soundInfo"><p class="note">The sounds are generated in your browser, imitating the real ones. Afterwards, look for them on a real receiver with the button that appears here.</p></div>
+        </div>
+      </div>
+      <div class="recs" id="grabaciones">
+        <h3>And this is how they really sound</h3>
+        <p>The sounds above are clean imitations. On the air there's noise, fading and voices talking over each other. These are real, freely licensed recordings: listen and compare.</p>
+        <ul class="rec-list" id="recList"></ul>
+      </div>
+    </section>
+
+    <nav class="next-page" aria-label="Next step"><a href="../understand/">Next: Understand how it works →</a></nav>
+  </main>
+
+  <footer>
+    <p class="footer-actions"><button class="btn ghost small" id="shareSite" type="button">📤 Share this site</button> <button class="btn small" id="installApp" type="button" hidden>📲 Install the app</button></p>
+    <p>📻 radio · a project by <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">code and data sources</a> · 73! <small>(“best regards” in radio slang)</small></p>
+    <p class="sponsor"><a class="sponsor-pill" id="sponsorLink" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span class="beat" aria-hidden="true">💚</span> Find it useful? <b>Support the project</b> on GitHub Sponsors</a></p>
+    <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">Spotted a mistake or something out of date? Let us know</a></p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="../../js/core.js"></script>
+  <script src="../../js/data.js"></script>
+  <script src="../../js/journey.js"></script>
+  <script src="../../js/stations.js"></script>
+  <script src="../../js/guided.js"></script>
+  <script src="../../js/live.js"></script>
+  <script src="../../js/morse.js"></script>
+  <script src="../../js/sounds.js"></script>
+  <script src="../../js/recordings.js"></script>
+  <script src="../../js/install.js"></script>
+  <script src="../../js/glossary.js"></script>
+  <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
