@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://*.api.radio-browser.info https://www.hamqth.com https://celestrak.org https://serbenda.goatcounter.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Practice · Radio</title>
+  <meta name="description" content="Learn Morse with the Koch method, the phonetic alphabet and Q codes, and practise simulated radio contacts with your own QSL card.">
+  <meta name="radio-root" content="../../">
+  <meta name="theme-color" content="#111214">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="radio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="canonical" href="https://bendi.dev/radio/en/practice/">
+  <link rel="alternate" hreflang="es" href="https://bendi.dev/radio/practicar/">
+  <link rel="alternate" hreflang="en" href="https://bendi.dev/radio/en/practice/">
+  <link rel="alternate" hreflang="x-default" href="https://bendi.dev/radio/practicar/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="radio · bendi.dev">
+  <meta property="og:title" content="Practice · Radio">
+  <meta property="og:description" content="Learn Morse with the Koch method, the phonetic alphabet and Q codes, and practise simulated radio contacts with your own QSL card.">
+  <meta property="og:url" content="https://bendi.dev/radio/en/practice/">
+  <meta property="og:image" content="https://bendi.dev/radio/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A radio dial with a signal and the text: There are thousands of voices in the air. Listen to them.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Practice · Radio">
+  <meta name="twitter:description" content="Learn Morse with the Koch method, the phonetic alphabet and Q codes, and practise simulated radio contacts with your own QSL card.">
+  <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
+  <link rel="icon" href="../../img/favicon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="preload" href="../../fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-page="practicar">
+  <a class="skip" href="#contenido">Skip to content</a>
+  <header class="top">
+    <a class="brand" href="../" aria-label="radio, go to the home page">📻 <span>radio</span></a>
+    <nav aria-label="Main">
+      <a href="../" data-page="inicio">Home</a>
+      <a href="../listen/" data-page="escuchar">Listen</a>
+      <a href="../understand/" data-page="entender">Understand</a>
+      <a href="../practice/" data-page="practicar">Practice</a>
+      <a href="../exam/" data-page="examen">Exam</a>
+      <a href="../start/" data-page="empezar">Get started</a>
+    </nav>
+    <a class="lang-switch" id="langSwitch" href="../../practicar/" hreflang="es" lang="es" title="Leer esta página en castellano" aria-label="Versión en castellano de esta página">ES</a>
+    <div class="utc" title="Radio amateurs always use UTC time"><small>UTC</small> <span id="utc">--:--</span></div>
+  </header>
+
+  <main id="contenido">
+    <noscript><p class="noscript">You can read the text without JavaScript, but the dial, maps, sounds, Morse, contacts and exam need it. Turn it on to use them.</p></noscript>
+    <header class="page-head">
+      <p class="kicker">Step 3</p>
+      <h1>Practice</h1>
+      <p class="lead">Morse, how people talk on the radio, and simulated contacts to lose your nerves before you go on the air.</p>
+      <nav class="toc" aria-label="On this page"><a href="#morse">Morse: radio’s oldest language</a> · <a href="#jerga">Spelling, Q codes and slang</a> · <a href="#qso">Make your first contact</a></nav>
+    </header>
+
+    <!-- MORSE -->
+    <section id="morse">
+      <div class="section-head">
+        <p class="kicker">Have a go</p>
+        <h2>Morse: radio’s oldest language</h2>
+        <p>It’s no longer required for the licence, but it’s still alive because it gets through where voice can’t. Type something and listen to it, or put your ear to the test.</p>
+      </div>
+      <div class="cards two">
+        <div class="card">
+          <h3>Translator</h3>
+          <input type="text" id="morseIn" maxlength="60" value="CQ CQ DE EA4" aria-label="Text to Morse">
+          <div class="morse-out" id="morseOut"></div>
+          <div class="row">
+            <button class="btn small" id="morsePlay">▶ Listen</button>
+            <label class="inline">Speed <input type="range" id="wpm" min="8" max="30" value="15"> <span id="wpmVal">15</span> wpm</label>
+          </div>
+        </div>
+        <div class="card koch">
+          <h3>Koch trainer</h3>
+          <p>The method telegraphists learn with: you hear letters at real speed, start with two, and a new one unlocks once you’ve mastered the previous ones. Answer with your keyboard or by tapping the letter.</p>
+          <button class="btn" id="kochStart">🎧 Start training</button>
+          <div id="kochBoard" hidden>
+            <div class="koch-screen"><span class="koch-prompt" id="kochPrompt">?</span><button class="btn small ghost" id="kochRepeat">🔁 Repeat</button></div>
+            <p class="koch-feedback" id="kochFeedback" aria-live="polite"></p>
+            <div class="koch-keys" id="kochKeys"></div>
+          </div>
+          <p class="note" id="kochStats"></p>
+          <p class="note">Tip: 15 minutes a day is worth more than two hours on a Sunday. Don’t count dots and dashes: learn the sound of each letter.</p>
+        </div>
+      </div>
+    </section>
+    <!-- JERGA -->
+    <section id="jerga">
+      <div class="section-head">
+        <p class="kicker">Talk like a radio amateur</p>
+        <h2>Spelling, Q codes and slang</h2>
+      </div>
+      <div class="cards two">
+        <div class="card">
+          <h3>Spell your name</h3>
+          <p>On the radio, “B” and “P” sound the same. That’s why the international phonetic alphabet is used.</p>
+          <input type="text" id="phoneticIn" maxlength="40" placeholder="Type your name" aria-label="Text to spell out">
+          <div class="phonetic-out" id="phoneticOut"></div>
+        </div>
+        <div class="card">
+          <h3>What you’ll hear</h3>
+          <dl class="glossary" id="glossary"></dl>
+        </div>
+      </div>
+    </section>
+    <!-- PRIMER CONTACTO -->
+    <section id="qso">
+      <div class="section-head">
+        <p class="kicker">Simulator</p>
+        <h2>Make your first contact</h2>
+        <p>Every newcomer’s fear: “what do I say?”. Here you practise complete contacts with virtual stations, with no pressure: your first chat, a contest, a nature park, an emergency net or the Space Station. At the end you get your QSL card.</p>
+      </div>
+      <div class="qso">
+        <form class="qso-setup card" id="qsoSetup">
+          <label>Your name <input type="text" id="qsoName" maxlength="20" placeholder="Bendi" required></label>
+          <label>Your town or city <input type="text" id="qsoCity" maxlength="24" placeholder="Madrid" required></label>
+          <label>Your practice call sign <input type="text" id="qsoCall" maxlength="8" placeholder="EA4ABC" required></label>
+          <label class="wide">Type of contact
+            <select id="qsoScenario">
+              <option value="primero">🎙️ My first contact (a chat with another country)</option>
+              <option value="concurso">🏁 Contest: quick, just the essentials</option>
+              <option value="pota">🌲 Hunt a nature park (POTA)</option>
+              <option value="emergencia">🚨 Emergency net exercise</option>
+              <option value="iss">🛰️ The Space Station passes overhead</option>
+            </select>
+          </label>
+          <label class="check"><input type="checkbox" id="qsoVoice" checked> Hear the other station</label>
+          <button class="btn" type="submit">🎙️ Go on the air</button>
+          <p class="note">In Spain, call signs start with EA, EB, EC… followed by a zone number (4 = central Spain). This one is made up, just for practice.</p>
+        </form>
+        <div class="qso-radio card" id="qsoRadio" hidden>
+          <div class="qso-head">
+            <span class="onair" id="qsoOnAir">ON AIR</span>
+            <span class="qso-freq" id="qsoFreq">7.145 MHz · LSB</span>
+            <span class="qso-meter" aria-hidden="true"><i id="qsoMeter"></i></span>
+          </div>
+          <ol class="qso-log" id="qsoLog" aria-live="polite"></ol>
+          <div class="qso-choices" id="qsoChoices"></div>
+        </div>
+        <div class="qso-qsl card" id="qsoQsl" hidden>
+          <canvas id="qslCanvas" width="900" height="560" aria-label="Your QSL card"></canvas>
+          <div class="row">
+            <button class="btn" id="qslShare" hidden>📤 Share my QSL</button>
+            <button class="btn" id="qslDownload">⬇️ Download my QSL</button>
+            <button class="btn ghost" id="qsoAgain">Another contact</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="next-page" aria-label="Next step"><a href="../exam/">Next: Prepare for the exam →</a></nav>
+  </main>
+
+  <footer>
+    <p class="footer-actions"><button class="btn ghost small" id="shareSite" type="button">📤 Share this site</button> <button class="btn small" id="installApp" type="button" hidden>📲 Install the app</button></p>
+    <p>📻 radio · a project by <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">code and data sources</a> · 73! <small>(“best regards” in radio slang)</small></p>
+    <p class="sponsor"><a class="sponsor-pill" id="sponsorLink" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span class="beat" aria-hidden="true">💚</span> Find it useful? <b>Support the project</b> on GitHub Sponsors</a></p>
+    <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">Spotted a mistake or something out of date? Let us know</a></p>
+  </footer>
+
+  <script src="../../js/core.js"></script>
+  <script src="../../js/data.js"></script>
+  <script src="../../js/journey.js"></script>
+  <script src="../../js/morse.js"></script>
+  <script src="../../js/morse-ui.js"></script>
+  <script src="../../js/koch.js"></script>
+  <script src="../../js/jargon.js"></script>
+  <script src="../../js/qso.js"></script>
+  <script src="../../js/install.js"></script>
+  <script src="../../js/glossary.js"></script>
+  <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
