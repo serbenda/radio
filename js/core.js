@@ -250,6 +250,8 @@
   // "Apoya el proyecto": cuenta cuántas personas abren la página de GitHub Sponsors (hito sin datos personales).
   const sponsor = $('sponsorLink');
   if (sponsor) sponsor.addEventListener('click', () => track('apoyo/sponsors'));
+  const sponsorMain = $('sponsorMain');
+  if (sponsorMain) sponsorMain.addEventListener('click', () => track('apoyo/sponsors-portada'));
 
   // Instalable y sin conexión: registra sw.js (solo por HTTPS o localhost; en file:// no existe).
   // Se espera al evento load para no competir con la carga de la página. El scope es la raíz del sitio,

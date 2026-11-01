@@ -48,6 +48,13 @@ Desplázate hasta el final antes de ejecutarlo (los mapas y datos se cargan al a
 
 Además, revisa a mano: recorrer cada página solo con el tabulador (el foco siempre visible), zoom al 200 % sin que se corte nada, y un lector de pantalla (VoiceOver en Mac/iPhone, TalkBack en Android, NVDA en Windows) en la portada y el examen.
 
+## Probar la instalación
+
+- **Chrome de ordenador:** F12 → Aplicación → Manifest: sin errores, con icono y capturas. Aparece el icono de instalar en la barra de direcciones y el botón "Instalar la app" en el pie.
+- **Android (Chrome):** abre la web y espera unos segundos: aparece "Instalar la app" en el pie. Al pulsarlo sale la ventana con las capturas. Tras instalar, se abre a pantalla completa y funciona en modo avión.
+- **iPhone (Safari):** el botón del pie lleva a la portada con los pasos de iPhone abiertos. Compartir → Añadir a pantalla de inicio. Al abrirla desde el icono, la portada debe decir "Ya la estás usando instalada".
+- Automático: `tools/check.mjs` §9 comprueba el manifest, iconos, capturas y que todas las páginas lo enlazan. Última comprobación con Chromium: sin errores de instalabilidad.
+
 ## Comprobar la Content-Security-Policy
 
 Abre cada página con la consola abierta, desplázate hasta el final y usa sus funciones (reproducir una emisora, abrir un aviso, calcular pases de la ISS, ver el mapa de clubes). No debe aparecer ningún mensaje **"Refused to … because it violates the following Content Security Policy directive"**. Si aparece, falta un dominio en la CSP ([GUIA.md](GUIA.md#añadir-un-servicio-externo)).

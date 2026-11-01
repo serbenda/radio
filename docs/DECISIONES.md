@@ -4,6 +4,14 @@ Las decisiones de diseño importantes, con su contexto y sus consecuencias, para
 
 ---
 
+## D18 · Instalar la app: botón propio y pasos por sistema (1 nov 2026)
+
+**Contexto.** La web ya era instalable (D12), pero casi nadie sabe que una web se puede instalar, y cada sistema lo hace distinto: Android y Chrome/Edge ofrecen una ventana de instalación (`beforeinstallprompt`); iPhone e iPad no la tienen y solo se instala desde Compartir → Añadir a pantalla de inicio.
+
+**Decisión.** `install.js` en todas las páginas: guarda `beforeinstallprompt` y muestra "Instalar la app" en el pie (y "Instalar ahora" en la portada), que abre la ventana del sistema; en iPhone/iPad el botón lleva a la sección `#instalar` de la portada, que abre sola los pasos del sistema detectado, con el icono de Compartir dibujado. Si ya se usa instalada, no se ofrece. El manifest lleva capturas (móvil y ancha) para la ventana de instalación enriquecida de Android, y las páginas, metadatos `apple-mobile-web-app-*` para el nombre y la barra de estado en iPhone. No se publica en tiendas (Play Store, App Store): no hace falta para usarla y exigiría cuentas, revisiones y empaquetado.
+
+**Consecuencias.** Se mide si se instala (hitos `instalar/aceptada`, `instalar/rechazada`, `instalar/hecha`). Si cambia mucho el diseño, conviene regenerar las capturas `img/captura-*.png` (sus dimensiones deben coincidir con `sizes` del manifest). Si algún día se quiere estar en Google Play, la vía es empaquetar esta misma web como TWA con Bubblewrap.
+
 ## D17 · Licencias: MIT para el código y CC BY-SA 4.0 para el contenido (1 nov 2026)
 
 **Contexto.** Sin licencia, nadie puede reutilizar legalmente nada del repositorio, ni siquiera un radioclub que quiera usar las preguntas en un curso. El código y el contenido tienen necesidades distintas.

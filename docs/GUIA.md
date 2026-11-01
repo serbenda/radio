@@ -43,6 +43,7 @@ y, si vas a publicar, los pasos de [Publicar una versión](#publicar-una-versió
 - [Un enlace externo se ha roto](#un-enlace-externo-se-ha-roto)
 - [Un servicio externo ha dejado de funcionar](#un-servicio-externo-ha-dejado-de-funcionar)
 - [Ver las visitas y los hitos](#ver-las-visitas-y-los-hitos)
+- [Actualizar las capturas de la app](#actualizar-las-capturas-de-la-app)
 
 ---
 
@@ -340,3 +341,11 @@ Cada sección muestra un mensaje si su servicio falla, así que la web no se rom
 Panel de GoatCounter: <https://serbenda.goatcounter.com>. Las páginas aparecen como `/radio/…` y los hitos como eventos `radio/qso/…`, `radio/examen/…`, `radio/insignia/…` (lista completa en [PRIVACIDAD.md](PRIVACIDAD.md#métricas-de-hitos)).
 
 Preguntas útiles: ¿qué porcentaje de quien entra a Practicar termina un contacto? ¿Cuántos simulacros acaban en APTO? ¿En qué semana de "Tu primer mes" se abandona?
+
+### Actualizar las capturas de la app
+
+Las capturas de `img/captura-*.png` salen en la ventana de instalación de Android. Si el diseño cambia mucho:
+
+1. Abre la web en el modo móvil del navegador a **390 × 844** con escala 2 (resultado: 780 × 1688 px) y captura la portada y el examen; en ordenador, **1280 × 800**.
+2. Guárdalas con el mismo nombre en `img/`. Si cambian las dimensiones, cambia `sizes` en `manifest.webmanifest`.
+3. Sube `VERSION` en `sw.js`.

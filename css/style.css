@@ -58,7 +58,8 @@
  * 44. Guardar y recuperar progreso  bloque de copia de seguridad de la portada.
  * 45. Grabaciones reales ........ tarjetas de audio de Wikimedia Commons.
  * 46. Aviso sin JavaScript ...... mensaje de <noscript>.
- * 47. Movimiento reducido ....... con "reducir movimiento", ninguna animación ni transición dura.
+ * 47. Instalar y apoyar ......... pasos para instalar la app y tarjeta de GitHub Sponsors (+ pie).
+ * 48. Movimiento reducido ....... con "reducir movimiento", ninguna animación ni transición dura.
  *
  * CAPAS (z-index), de abajo arriba:
  *   -1    ondas del receptor (.receiver::before/::after), detrás del contenido de la tarjeta.
@@ -83,7 +84,7 @@
  *
  * MOVIMIENTO: con "reducir movimiento" activado en el sistema (prefers-reduced-motion: reduce) se
  *   desactivan el desplazamiento suave, el ecualizador del reproductor y las ondas del receptor (secciones
- *   17 y 18), y la sección 47 anula cualquier otra animación o transición (latido de los sonidos,
+ *   17 y 18), y la sección 48 anula cualquier otra animación o transición (latido de los sonidos,
  *   medidor del QSO, botones, .toast). Los lienzos animados los controla JavaScript con
  *   Radio.reducedMotion (js/core.js).
  *
@@ -853,6 +854,53 @@ footer .report, footer .sponsor { font-size: .88rem; }
 
 /* ---------- Aviso sin JavaScript ---------- */
 .noscript { margin: 16px auto; max-width: 1100px; padding: 12px 16px; border: 1px solid var(--hot); border-radius: var(--radius); color: var(--hot); }
+
+/* ---------- Instalar la app y apoyar el proyecto ----------
+   #instalar: estado, botón "Instalar ahora" y pasos por sistema en <details> (install.js abre el del
+   sistema que se está usando). #apoya: tarjeta de GitHub Sponsors con un corazón que late entre ondas
+   (como una señal de radio) y la píldora del pie. El rosa #ea4aaa es el color de marca de GitHub Sponsors. */
+.install-top { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.install-status { margin: 0; color: var(--ink); font-weight: 500; }
+.install-os { display: grid; gap: 10px; }
+.install-os details { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+.install-os details[open] { border-color: var(--accent); }
+.install-os summary { cursor: pointer; font-weight: 600; }
+.install-os ol { margin: 10px 0 4px; padding-left: 22px; display: grid; gap: 6px; color: #d4d5db; }
+.ios-share { width: 1.15em; height: 1.15em; vertical-align: -.2em; color: #6cc5ff; }
+
+.sponsor-card {
+  position: relative; overflow: hidden; display: grid; grid-template-columns: 200px 1fr; gap: 32px; align-items: center;
+  padding: 36px; border-radius: 24px; border: 1px solid #ea4aaa55;
+  background: radial-gradient(120% 140% at 0% 0%, #ea4aaa1f, transparent 55%), radial-gradient(120% 140% at 100% 100%, #8be0c21a, transparent 55%), var(--panel);
+}
+.sponsor-art svg { width: 100%; height: auto; display: block; }
+.sponsor-art .ring { fill: none; stroke: #ea4aaa; stroke-width: 1.5; opacity: 0; transform-origin: 60px 60px; animation: sponsorWave 3s ease-out infinite; }
+.sponsor-art .r2 { animation-delay: 1s; }
+.sponsor-art .r3 { animation-delay: 2s; }
+.sponsor-art .heart { fill: #ea4aaa; transform-origin: 60px 62px; animation: sponsorBeat 1.6s ease-in-out infinite; filter: drop-shadow(0 0 10px #ea4aaa88); }
+@keyframes sponsorWave { 0% { opacity: .9; transform: scale(.6); } 100% { opacity: 0; transform: scale(1.15); } }
+@keyframes sponsorBeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.14); } 30% { transform: scale(1); } 45% { transform: scale(1.08); } }
+.sponsor-body h2 { margin-top: 0; }
+.sponsor-goals { list-style: none; padding: 0; margin: 16px 0 22px; display: grid; gap: 8px; }
+.sponsor-goals li { display: flex; gap: 10px; align-items: baseline; color: #d4d5db; }
+.sponsor-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+/* Texto oscuro sobre rosa: 5,3 : 1 de contraste (el blanco solo daría 3,5 y no llega a AA). */
+.btn.sponsor-btn { background: #ea4aaa; color: #1d0a16; }
+.btn.sponsor-btn:hover { box-shadow: 0 6px 24px #ea4aaa55; }
+@media (max-width: 700px) {
+  .sponsor-card { grid-template-columns: 1fr; padding: 24px; gap: 8px; text-align: left; }
+  .sponsor-art { width: 120px; }
+}
+
+/* Pie: botones en fila y píldora de "Apoya el proyecto". */
+.footer-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.sponsor-pill {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px;
+  border: 1px solid #ea4aaa66; background: #ea4aaa14; color: #f5c6e4; text-decoration: none;
+  transition: background .2s, border-color .2s;
+}
+.sponsor-pill:hover { background: #ea4aaa26; border-color: #ea4aaa; color: #fff; }
+.sponsor-pill .beat { display: inline-block; animation: sponsorBeat 1.6s ease-in-out infinite; }
 
 /* ---------- Movimiento reducido ----------
    Red de seguridad: si el sistema pide "reducir movimiento", ninguna animación ni transición dura

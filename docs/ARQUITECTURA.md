@@ -128,14 +128,14 @@ flowchart LR
 
 | Página | Ruta | Secciones (`id`) | Módulos que carga |
 | --- | --- | --- | --- |
-| Inicio | `/` | `inicio`, `mes`, `paginas` (+ `backup` dentro de `mes`) | dial, backup |
+| Inicio | `/` | `inicio`, `mes`, `paginas`, `instalar`, `apoya` (+ `backup` dentro de `mes`) | dial, backup |
 | Escuchar | `/escuchar/` | `emisoras`, `directo`, `ahora`, `sonidos` (+ `grabaciones`) | stations, guided, live, morse, sounds, recordings |
 | Entender | `/entender/` | `como-funciona`, `bandas`, `propagacion`, `iss` | lessons, bands, propagation, iss |
 | Practicar | `/practicar/` | `morse`, `jerga`, `qso` | morse, morse-ui, koch, jargon, qso |
 | Examen | `/examen/` | `test` | exam-data, exam |
 | Empezar | `/empezar/` | `empezar`, `cb27`, `equipo`, `clubes`, `familias`, `hispanoamerica`, `emergencias`, `faq` | clubs-data, clubs, family, checklist, faq |
 
-Todas cargan además `core.js`, `data.js`, `journey.js` y `glossary.js`.
+Todas cargan además `core.js`, `data.js`, `journey.js`, `install.js` y `glossary.js`.
 
 ### Plantilla común de cada página
 
@@ -385,6 +385,22 @@ stateDiagram-v2
     radio-* de versiones anteriores
   end note
 ```
+
+### Instalar la app
+
+```mermaid
+flowchart TD
+  A[install.js al cargar] --> B{¿Ya instalada?<br/>display-mode: standalone}
+  B -- Sí --> Z[No ofrece nada]
+  B -- No --> C{¿Sistema?}
+  C -- Android · Chrome · Edge --> D[Espera beforeinstallprompt] --> E[Muestra Instalar la app] --> F[prompt: ventana del sistema<br/>con icono y capturas del manifest]
+  C -- iPhone · iPad --> G[Botón lleva a #instalar] --> H[Pasos: Compartir → Añadir a pantalla de inicio]
+  C -- Otros --> I[Pasos del ordenador en la portada]
+  F --> J[appinstalled → icono 📻 con las apps]
+  H --> J
+```
+
+Requisitos para que Android y Chrome ofrezcan instalar (se cumplen; compruébalo en las herramientas del navegador → Aplicación → Manifest): HTTPS, `manifest.webmanifest` con nombre, `start_url`, `display: standalone` e iconos de 192 y 512 px, y un service worker con `fetch`. iPhone usa `apple-touch-icon` y las etiquetas `apple-mobile-web-app-*` del `<head>`.
 
 **Regla de oro:** cada vez que publiques un cambio en cualquier archivo de la web, sube `VERSION` en `sw.js` (y añade la versión al CHANGELOG). Si no, quien ya tenga la web guardada seguirá viendo CSS y JS viejos hasta la siguiente visita. `tools/check.mjs` falla si `VERSION` no coincide con la última versión del CHANGELOG.
 

@@ -18,12 +18,14 @@ Una web estática, sin registro, sin cookies y que funciona sin conexión, que a
 
 | Paso | Página | Qué hay |
 | --- | --- | --- |
-| — | [Inicio](https://bendi.dev/radio/) | Dial de onda corta, qué es la radioafición y **Tu primer mes**: 4 semanas, 14 pasos que se marcan solos e insignias. Guardar y recuperar el progreso |
+| — | [Inicio](https://bendi.dev/radio/) | Dial de onda corta, qué es la radioafición y **Tu primer mes**: 4 semanas, 14 pasos que se marcan solos e insignias. Guardar y recuperar el progreso, instalar la app y apoyar el proyecto |
 | 1 | [Escuchar](https://bendi.dev/radio/escuchar/) | Mapa de emisoras con reproductor, escucha guiada en un receptor real, **Ahora en el aire** (quién habla con quién, en directo), **¿Qué es este sonido?** con cascada y 11 grabaciones reales |
 | 2 | [Entender](https://bendi.dev/radio/entender/) | Cuatro lecciones interactivas en tres niveles, bandas, propagación de hoy en lenguaje llano y pases de la ISS sobre tu ciudad |
 | 3 | [Practicar](https://bendi.dev/radio/practicar/) | Entrenador de Morse con método Koch, alfabeto fonético y jerga, y cinco contactos simulados con tarjeta QSL |
 | 4 | [Examen](https://bendi.dev/radio/examen/) | 169 preguntas revisadas contra la Orden IET/1311/2013, tarjetas que repiten lo que fallas y simulacro como el real |
 | 5 | [Empezar](https://bendi.dev/radio/empezar/) | El trámite en cifras, CB-27 y walkies, qué radio comprar (y qué es legal), radioclubes de la URE, calendario, familias e Hispanoamérica |
+
+📲 **Se instala como una app** en Android, iPhone, iPad y ordenador (botón "Instalar la app" del pie o pasos en la [portada](https://bendi.dev/radio/#instalar)) y funciona sin conexión.
 
 <table>
   <tr>
@@ -65,7 +67,7 @@ flowchart LR
 
 - **HTML, CSS y JavaScript sin frameworks ni compilación.** Un módulo por funcionalidad; se comunican con eventos.
 - **Sin servidor propio:** datos en directo de APIs públicas con CORS; el progreso se queda en el navegador.
-- **Instalable y sin conexión** con un service worker propio.
+- **Instalable en Android, iPhone y ordenador** y **sin conexión**, con un service worker propio.
 - **Accesible:** auditada con axe (WCAG 2.2 AA), contraste ≥ 6:1, teclado y lector de pantalla.
 - **Segura:** Content-Security-Policy, integridad (SRI) de librerías, todo texto externo escapado.
 - **Privada:** sin cookies, tipografías propias, métricas sin datos personales.
@@ -133,11 +135,24 @@ Normas completas en [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Detalle en [docs/DATOS.md](docs/DATOS.md).
 
-## Apoya el proyecto
+## 💚 Apoya el proyecto
 
-La web es gratuita, sin publicidad y sin registro, y lo seguirá siendo. Si te ha sido útil y quieres ayudar a mantenerla (y a que crezca: más preguntas, más grabaciones, más lecciones), puedes apoyarla en **[GitHub Sponsors](https://github.com/sponsors/serbenda)** 💚.
+<p align="center">
+  <a href="https://github.com/sponsors/serbenda"><img src="https://img.shields.io/badge/Apoya_la_radio-GitHub_Sponsors-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="Apoya el proyecto en GitHub Sponsors"></a>
+  &nbsp;
+  <a href="https://github.com/serbenda/radio"><img src="https://img.shields.io/github/stars/serbenda/radio?style=for-the-badge&logo=github&label=Estrellas&color=8be0c2" alt="Estrellas en GitHub"></a>
+</p>
 
-También ayuda mucho, y es gratis: [avisar de errores](https://github.com/serbenda/radio/issues/new/choose), compartir la web con quien pueda engancharse a la radio o darle una ⭐ al repositorio.
+La web es **gratuita, sin publicidad, sin registro y sin rastrear a nadie**, y lo seguirá siendo. Si te ha sido útil, tu apoyo sirve para:
+
+| | Para qué |
+| :-: | --- |
+| 📝 | Más preguntas del examen, revisadas con la ley delante |
+| 🎧 | Grabaciones reales de radioaficionados en español |
+| 🛰️ | Nuevas lecciones, contactos simulados y satélites |
+| 🛠️ | Mantener los datos al día (tasas, radioclubes, enlaces) |
+
+**¿Sin presupuesto?** También ayuda muchísimo, y es gratis: [avisar de un error](https://github.com/serbenda/radio/issues/new/choose), compartir la web con quien pueda engancharse a la radio o darle una ⭐ al repositorio. 73!
 
 ## Licencia
 
@@ -149,4 +164,4 @@ También ayuda mucho, y es gratis: [avisar de errores](https://github.com/serben
 
 © 2026 Sergio Santiago Bendaña Quesada
 
-73!
+73! 📻 *(«saludos cordiales» en jerga de radio)*

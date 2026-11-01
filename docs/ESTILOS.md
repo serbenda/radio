@@ -26,6 +26,7 @@ Definidos en `:root` al principio de `style.css`.
 | `--hot` | `#ffd27a` | Destacado: reloj UTC, aciertos, avisos | **13,2 : 1** |
 | `--red` | `#ff6b5a` | Errores, aguja del dial | **6,7 : 1** |
 | `--vhf` | `#6cc5ff` | Bandas de VHF/UHF en gráficos | **9,9 : 1** |
+| (sin variable) | `#ea4aaa` | Rosa de marca de GitHub Sponsors, solo en "Apoya el proyecto". El botón lleva texto oscuro `#1d0a16` (5,3 : 1) | — |
 
 Texto oscuro sobre botón menta (`#0f1714` sobre `--accent`): **11,7 : 1**. Sobre `--panel` el peor caso es `--red` con 6,1 : 1. WCAG AA pide 4,5 : 1 para texto normal y 3 : 1 para texto grande.
 

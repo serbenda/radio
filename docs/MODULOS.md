@@ -21,7 +21,7 @@ flowchart LR
   end
   J[journey.js]
   G[glossary.js]
-  CORE --> J & G
+  CORE --> J & G & INS[install.js]
   CORE --> DIAL[dial.js] & BK[backup.js]
   CORE --> ST[stations.js] & GU[guided.js] & LI[live.js] & SO[sounds.js] & RE[recordings.js]
   CORE --> LE[lessons.js] & BA[bands.js] & PR[propagation.js] & IS[iss.js]
@@ -78,6 +78,7 @@ flowchart LR
 | --- | --- | --- | --- | --- |
 | `journey.js` | `#weeks` (solo pinta en la portada) | Registra logros en cualquier página y pinta "Tu primer mes" | `radio.journey` | Escucha `radio:event`, `radio:qso`, `radio:mock`, `radio:progress`; emite `websdr` al pulsar enlaces a receptores |
 | `glossary.js` | `main > section` | Marca la jerga y muestra el bocadillo | — | — |
+| `install.js` | `#installApp` (pie) y `#instalar` (portada) | Botón "Instalar la app" con la ventana del sistema (Android, Chrome, Edge) o pasos de iPhone/iPad | — | Hitos `instalar/*` |
 
 ### Inicio
 

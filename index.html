@@ -9,6 +9,10 @@
   <meta name="description" content="Iniciación a la radioafición en español: escucha emisoras de todo el mundo, aprende cómo funciona la radio, practica tu primer contacto y prepara el examen.">
   <meta name="radio-root" content="./">
   <meta name="theme-color" content="#111214">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="radio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="canonical" href="https://bendi.dev/radio/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
@@ -130,12 +134,75 @@
         <li><a href="empezar/"><span class="n">5</span><b>Dar el salto</b><span>El trámite, tu radioclub, el calendario y guía para familias.</span></a></li>
       </ol>
     </section>
+    <!-- INSTALAR -->
+    <section id="instalar">
+      <div class="section-head">
+        <p class="kicker">Llévala en el bolsillo</p>
+        <h2>Instálala como una app</h2>
+        <p>Un toque y la tienes en la pantalla de inicio, a pantalla completa y <strong>sin conexión</strong>: el examen, el Morse, las lecciones y los contactos simulados funcionan en el metro o en el campo. Sin tienda de aplicaciones, sin registrarte y sin ocupar casi nada.</p>
+      </div>
+      <div class="install card">
+        <div class="install-top">
+          <p class="install-status" id="installStatus" role="status">Elige tu dispositivo y sigue los pasos.</p>
+          <button class="btn" id="installNow" type="button" hidden>📲 Instalar ahora</button>
+        </div>
+        <div class="install-os">
+          <details data-os="android">
+            <summary><span aria-hidden="true">🤖</span> Android</summary>
+            <ol>
+              <li>Abre <b>bendi.dev/radio</b> con <b>Chrome</b> (o Edge, Samsung Internet).</li>
+              <li>Pulsa <b>Instalar ahora</b> aquí arriba. Si no aparece, abre el menú <b>⋮</b> → <b>Instalar aplicación</b> (o <b>Añadir a pantalla de inicio</b>).</li>
+              <li>Confirma con <b>Instalar</b>. El icono 📻 aparecerá con tus apps.</li>
+            </ol>
+          </details>
+          <details data-os="ios">
+            <summary><span aria-hidden="true">📱</span> iPhone y iPad</summary>
+            <ol>
+              <li>Abre <b>bendi.dev/radio</b> con <b>Safari</b> (en iOS 16.4 o posterior también vale Chrome).</li>
+              <li>Pulsa el botón <b>Compartir</b> <svg class="ios-share" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M8 10H6a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1h-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> (abajo en el iPhone, arriba en el iPad).</li>
+              <li>Baja y elige <b>Añadir a pantalla de inicio</b>. Deja el nombre «radio» y pulsa <b>Añadir</b>.</li>
+            </ol>
+            <p class="note">Apple no permite un botón de instalación directa: por eso hay que hacerlo desde Compartir.</p>
+          </details>
+          <details data-os="desktop">
+            <summary><span aria-hidden="true">💻</span> Ordenador</summary>
+            <ol>
+              <li>En <b>Chrome</b> o <b>Edge</b>, pulsa <b>Instalar ahora</b> o el icono de instalar en la barra de direcciones.</li>
+              <li>En <b>Safari</b> (macOS Sonoma o posterior): menú <b>Archivo</b> → <b>Añadir al Dock</b>.</li>
+            </ol>
+          </details>
+        </div>
+      </div>
+    </section>
+    <!-- APOYA -->
+    <section id="apoya" aria-labelledby="apoyaTitulo">
+      <div class="sponsor-card">
+        <div class="sponsor-art" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><circle class="ring r1" cx="60" cy="60" r="22"/><circle class="ring r2" cx="60" cy="60" r="38"/><circle class="ring r3" cx="60" cy="60" r="54"/><path class="heart" d="M60 78s-20-11.5-20-25.5A10.5 10.5 0 0 1 60 46a10.5 10.5 0 0 1 20 6.5C80 66.5 60 78 60 78z"/></svg>
+        </div>
+        <div class="sponsor-body">
+          <p class="kicker">Hecha con cariño, sin anuncios</p>
+          <h2 id="apoyaTitulo">¿Te ha enganchado la radio?</h2>
+          <p>Esta web es gratuita, sin publicidad, sin registro y sin rastrearte, y lo seguirá siendo. Si te ha sido útil, puedes ayudar a mantenerla y a que crezca.</p>
+          <ul class="sponsor-goals">
+            <li><span aria-hidden="true">📝</span> Más preguntas del examen, revisadas con la ley delante</li>
+            <li><span aria-hidden="true">🎧</span> Grabaciones reales de radioaficionados en español</li>
+            <li><span aria-hidden="true">🛰️</span> Nuevas lecciones, contactos simulados y satélites</li>
+          </ul>
+          <div class="row sponsor-actions">
+            <a class="btn sponsor-btn" id="sponsorMain" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span aria-hidden="true">💚</span> Apoyar en GitHub Sponsors</a>
+            <a class="btn ghost" href="https://github.com/serbenda/radio" target="_blank" rel="noopener"><span aria-hidden="true">⭐</span> Dar una estrella</a>
+          </div>
+          <p class="note">¿Sin presupuesto? Compartirla con alguien a quien le pueda gustar o <a href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">avisar de un error</a> también ayuda muchísimo. 73!</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <p><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button></p>
-    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">código y fuentes de datos</a> · 73!</p>
-    <p class="sponsor"><a id="sponsorLink" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener">💚 ¿Te es útil? Apoya el proyecto en GitHub Sponsors</a></p>
+    <p class="footer-actions"><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button> <button class="btn small" id="installApp" type="button" hidden>📲 Instalar la app</button></p>
+    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">código y fuentes de datos</a> · 73! <small>(«saludos» en jerga de radio)</small></p>
+    <p class="sponsor"><a class="sponsor-pill" id="sponsorLink" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span class="beat" aria-hidden="true">💚</span> ¿Te es útil? <b>Apoya el proyecto</b> en GitHub Sponsors</a></p>
     <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">¿Ves un error o algo desactualizado? Avísanos</a></p>
   </footer>
 
@@ -144,6 +211,7 @@
   <script src="./js/journey.js"></script>
   <script src="./js/dial.js"></script>
   <script src="./js/backup.js"></script>
+  <script src="./js/install.js"></script>
   <script src="./js/glossary.js"></script>
   <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>

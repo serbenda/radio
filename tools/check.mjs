@@ -268,8 +268,9 @@ section('9. Instalable y sin conexión');
   let man = null;
   try { man = JSON.parse(read('manifest.webmanifest')); } catch (e) { /* inválido */ }
   expect(man && man.name && man.start_url && man.icons && man.icons.length >= 2, 'manifest.webmanifest es JSON válido con nombre, inicio e iconos');
-  const icons = man ? man.icons.map(i => i.src).filter(src => !existsSync(join(ROOT, src))) : ['?'];
-  expect(!icons.length, `iconos del manifest existen${icons.length ? ' (faltan: ' + icons.join(', ') + ')' : ''}`);
+  // Iconos y capturas (las capturas salen en la ventana de instalación de Android).
+  const icons = man ? [...man.icons, ...(man.screenshots || [])].map(i => i.src).filter(src => !existsSync(join(ROOT, src))) : ['?'];
+  expect(!icons.length, `iconos y capturas del manifest existen${icons.length ? ' (faltan: ' + icons.join(', ') + ')' : ''}`);
   expect(PAGES.every(p => /rel="manifest"/.test(html[p])), 'todas las páginas enlazan el manifest');
   const sw = read('sw.js');
   // /'(\.\/[^']*)'/g: toda cadena entre comillas simples que empiece por './' en sw.js (la lista PRECACHE).
