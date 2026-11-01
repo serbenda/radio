@@ -550,3 +550,47 @@ h3.sub { margin: 36px 0 14px; font: 800 1.4rem var(--serif); }
   #issMap { min-height: 300px; }
 }
 @media (max-width: 560px) { .weeks { grid-template-columns: 1fr; } }
+
+/* ---------- Radioclubes y calendario ---------- */
+.clubs { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
+#clubMap { height: 440px; border-radius: var(--radius); border: 1px solid var(--line); background: #0b0c0e; }
+.club-side select { flex: 1; min-width: 180px; width: auto; }
+.club-side h3 { margin: 16px 0 8px; }
+.club-side ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; max-height: 280px; overflow-y: auto; }
+.club-side li { background: var(--bg2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; font-size: .92rem; }
+.club-side .call { font: 600 .82rem var(--mono); color: var(--accent); }
+.club-pin { display: grid; place-items: center; }
+.club-pin span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #0f1714; font: 700 .8rem var(--mono); box-shadow: 0 0 0 4px #8be0c233; cursor: pointer; }
+.cal { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.cal li { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+.cal li.on { border-color: var(--hot); }
+.cal-date { display: block; font: 600 .8rem var(--mono); color: var(--accent); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.cal li.on .cal-date { color: var(--hot); }
+.cal p { margin: 4px 0; color: #d4d5db; font-size: .92rem; }
+.cal small { color: var(--muted); }
+
+/* ---------- Familias ---------- */
+.fq { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.fq p { margin: 0; font-size: .95rem; }
+.fq-btns { display: flex; gap: 6px; flex: none; }
+#fitResult { margin-top: 12px; }
+#fitResult li { margin-bottom: 6px; color: #d4d5db; }
+.fit-big { font: 800 1.3rem var(--serif); color: var(--accent); margin: 8px 0; }
+.costs { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.costs li { display: grid; grid-template-columns: 136px 1fr; gap: 10px; align-items: baseline; }
+.costs b { font: 700 1.05rem var(--mono); color: var(--accent); }
+.costs span { color: #d4d5db; font-size: .92rem; }
+.parents { margin-top: 18px; }
+.parents-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.parents-grid p { margin: 4px 0 0; color: #d4d5db; font-size: .92rem; }
+
+/* ---------- Hispanoamérica ---------- */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+.countries { width: 100%; border-collapse: collapse; font-size: .93rem; }
+.countries th, .countries td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.countries th { font: 600 .75rem var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; background: #0b0c0e; }
+.countries td:nth-child(2) { font-family: var(--mono); color: var(--accent); }
+.countries tr:last-child td { border-bottom: 0; }
+
+@media (max-width: 860px) { .clubs { grid-template-columns: 1fr; } #clubMap { height: 320px; } }
+html, body { overflow-x: clip; }
