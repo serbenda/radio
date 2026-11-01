@@ -33,6 +33,44 @@
     }).addTo(map);
     L.tileLayer(esri + 'World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', { maxZoom: 16 }).addTo(map);
     layer = L.layerGroup().addTo(map);
+    drawNight();
+    setInterval(drawNight, 60000);
+  }
+
+  // ---- Línea gris: zona de noche calculada con la posición del Sol ----
+  let night = null;
+  function subsolar(date) {
+    const rad = Math.PI / 180;
+    const n = date.getTime() / 86400000 + 2440587.5 - 2451545.0; // días desde J2000
+    const Lm = (280.460 + 0.9856474 * n) % 360;
+    const g = ((357.528 + 0.9856003 * n) % 360) * rad;
+    const lambda = (Lm + 1.915 * Math.sin(g) + 0.020 * Math.sin(2 * g)) * rad;
+    const eps = (23.439 - 0.0000004 * n) * rad;
+    const dec = Math.asin(Math.sin(eps) * Math.sin(lambda));
+    const ra = Math.atan2(Math.cos(eps) * Math.sin(lambda), Math.cos(lambda)) / rad;
+    const gmst = ((18.697374558 + 24.06570982441908 * n) % 24) * 15;
+    let lon = ra - gmst;
+    lon = ((lon + 540) % 360) - 180;
+    return { lat: dec / rad, lon };
+  }
+  function drawNight() {
+    if (!map) return;
+    const sun = subsolar(new Date());
+    const rad = Math.PI / 180;
+    const tanDec = Math.tan((Math.abs(sun.lat) < 0.01 ? 0.01 : sun.lat) * rad);
+    const pts = [];
+    for (let lon = -540; lon <= 540; lon += 2) {
+      const lat = Math.atan(-Math.cos((lon - sun.lon) * rad) / tanDec) / rad;
+      pts.push([lat, lon]);
+    }
+    const pole = sun.lat > 0 ? -85 : 85; // la noche cubre el polo contrario al Sol
+    pts.push([pole, 540], [pole, -540]);
+    if (night) night.setLatLngs(pts);
+    else night = L.polygon(pts, {
+      stroke: true, color: '#8be0c2', weight: 1, opacity: 0.35,
+      fillColor: '#000', fillOpacity: 0.38, interactive: false,
+    }).addTo(map);
+    night.bringToBack();
   }
 
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
