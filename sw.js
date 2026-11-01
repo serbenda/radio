@@ -5,7 +5,7 @@
  *  - Al instalarse guarda las 6 páginas, el CSS, todos los módulos JS y los iconos (PRECACHE).
  *  - Páginas (navegación): primero la red, para ver siempre la última versión; si no hay red,
  *    la copia guardada; si tampoco hay copia, offline.html.
- *  - CSS, JS e imágenes propios y librerías de cdnjs / Google Fonts: se sirve la copia guardada
+ *  - CSS, JS, tipografías e imágenes propios y librerías de cdnjs: se sirve la copia guardada
  *    al momento y se actualiza en segundo plano (stale-while-revalidate).
  *  - Datos en directo (Radio Browser, HamQTH, CelesTrak, KC2G, teselas, audio, GoatCounter):
  *    NUNCA se guardan; van siempre a la red. Mostrar datos viejos como "en directo" sería mentir.
@@ -19,13 +19,14 @@ const PRECACHE = [
   './', './escuchar/', './entender/', './practicar/', './examen/', './empezar/', './offline.html',
   './css/style.css', './manifest.webmanifest',
   './img/icono-192.png', './img/icono-512.png', './img/favicon-64.png',
+  './fonts/fraunces.woff2', './fonts/ibm-plex-sans.woff2', './fonts/ibm-plex-mono-400.woff2', './fonts/ibm-plex-mono-600.woff2',
   './js/core.js', './js/data.js', './js/journey.js', './js/glossary.js', './js/backup.js',
   './js/dial.js', './js/guided.js', './js/bands.js', './js/stations.js', './js/live.js', './js/sounds.js', './js/recordings.js',
   './js/lessons.js', './js/propagation.js', './js/iss.js', './js/morse.js', './js/morse-ui.js', './js/koch.js',
   './js/jargon.js', './js/qso.js', './js/exam-data.js', './js/exam.js', './js/checklist.js',
   './js/clubs-data.js', './js/clubs.js', './js/family.js', './js/faq.js',
 ];
-const STATIC_HOSTS = ['cdnjs.cloudflare.com', 'fonts.googleapis.com', 'fonts.gstatic.com'];
+const STATIC_HOSTS = ['cdnjs.cloudflare.com'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(PRECACHE)).then(() => self.skipWaiting()));

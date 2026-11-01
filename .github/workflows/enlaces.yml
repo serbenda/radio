@@ -1,0 +1,35 @@
+# Cada lunes comprueba los enlaces externos (tools/enlaces.mjs). Si hay alguno roto, abre un aviso
+# con la etiqueta "enlaces" (o actualiza el que ya esté abierto). Se puede lanzar a mano desde
+# la pestaña Actions → Enlaces externos → Run workflow. Detalle: docs/PRUEBAS.md
+name: Enlaces externos
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'   # lunes, 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  enlaces:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Comprobar enlaces
+        id: check
+        run: node tools/enlaces.mjs --md > informe.md
+        continue-on-error: true
+      - name: Abrir o actualizar el aviso
+        if: steps.check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create enlaces --color FBCA04 --description "Enlaces externos rotos" 2>/dev/null || true
+          n=$(gh issue list --label enlaces --state open --json number --jq '.[0].number')
+          if [ -n "$n" ]; then gh issue comment "$n" --body-file informe.md
+          else gh issue create --title "Enlaces externos rotos" --label enlaces --body-file informe.md; fi

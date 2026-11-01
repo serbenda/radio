@@ -42,7 +42,7 @@
     const wrongs = EXAM.filter(q => info(q.id).wrong > 0 && info(q.id).box < 2).length;
     $('examDash').innerHTML = `
       <div class="thermo">
-        ${[1, 2].map(p => { const r = p === 1 ? r1 : r2; return `<div class="th"><span>Parte ${p} · ${PARTS[p]}</span><div class="bar"><i style="width:${r}%"></i></div><b>${r}%</b></div>`; }).join('')}
+        ${[1, 2].map(p => { const r = p === 1 ? r1 : r2; return `<div class="th"><span>Parte ${p} · ${PARTS[p]}</span><div class="bar" role="progressbar" aria-label="Preparación de la parte ${p}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${r}"><i style="width:${r}%"></i></div><b>${r}%</b></div>`; }).join('')}
         <p class="th-verdict ${ready ? 'ok' : ''}">${ready ? '🎉 Estás listo: haz un simulacro para comprobarlo.' : 'Llega al 80 % en las dos partes estudiando con tarjetas; entonces haz el simulacro.'}</p>
       </div>
       <div class="topics">${topics.map(t => {
@@ -94,7 +94,7 @@
         st.q[q.id] = s; save();
         $('examStage').querySelectorAll('.opt').forEach(x => { x.disabled = true; if (+x.dataset.i === q.ok) x.classList.add('right'); });
         if (!ok) b.classList.add('wrong');
-        $('exWhy').innerHTML = `<p><b>${ok ? '✅ Correcto.' : '❌ No era esa.'}</b> ${esc(q.why)}</p><button class="btn small" id="exNext">Siguiente →</button> <a class="ex-report" href="${Radio.report('pregunta-examen', { pregunta: q.id }, `[Examen] Pregunta ${q.id}`)}" target="_blank" rel="noopener">¿Crees que esta pregunta tiene un error?</a>`;
+        $('exWhy').innerHTML = `<p><b>${ok ? '✅ Correcto.' : '❌ No era esa.'}</b> ${esc(q.why)}</p><button class="btn small" id="exNext">Siguiente →</button><a class="ex-report" href="${Radio.report('pregunta-examen', { pregunta: q.id }, `[Examen] Pregunta ${q.id}`)}" target="_blank" rel="noopener">¿Crees que esta pregunta tiene un error?</a>`;
         $('exNext').onclick = card; $('exNext').focus();
         if (questions === errPool && s.box >= 2) pool = pool.filter(x => x !== q);
         document.dispatchEvent(new CustomEvent('radio:progress'));
@@ -142,7 +142,7 @@
           <p class="note">Se aprueba con la mitad de aciertos en cada parte, como en el examen real.</p>
           <button class="btn" id="exDone">Volver al panel</button>
         </div>
-        ${wrong.length ? `<h4 class="ex-rev">Repasa tus fallos</h4><ol class="ex-wrong">${wrong.map(x => `<li><b>${esc(x.q.q)}</b><br>Correcta: ${esc(x.q.a[x.q.ok])}. <span>${esc(x.q.why)}</span></li>`).join('')}</ol>` : ''}`;
+        ${wrong.length ? `<h3 class="ex-rev">Repasa tus fallos</h3><ol class="ex-wrong">${wrong.map(x => `<li><b>${esc(x.q.q)}</b><br>Correcta: ${esc(x.q.a[x.q.ok])}. <span>${esc(x.q.why)}</span></li>`).join('')}</ol>` : ''}`;
       $('exDone').onclick = back;
       document.dispatchEvent(new CustomEvent('radio:progress'));
       document.dispatchEvent(new CustomEvent('radio:mock', { detail: { pass } }));

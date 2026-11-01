@@ -244,15 +244,15 @@
   /* ---------- Interfaz ---------- */
   function renderTabs() {
     $('lessonTabs').innerHTML = LESSONS.map(l =>
-      `<button class="lesson-tab${l === current ? ' on' : ''}" data-id="${l.id}">${l.icon} ${l.title}${done[l.id] ? ' <span class="tick">✓</span>' : ''}</button>`).join('');
+      `<button type="button" class="lesson-tab${l === current ? ' on' : ''}" data-id="${l.id}" aria-pressed="${l === current}">${l.icon} ${l.title}${done[l.id] ? ' <span class="tick">✓</span>' : ''}</button>`).join('');
   }
   function renderLevel() {
-    $('lessonLevels').querySelectorAll('button').forEach((b, i) => b.classList.toggle('on', i === level));
+    $('lessonLevels').querySelectorAll('button').forEach((b, i) => { b.classList.toggle('on', i === level); b.setAttribute('aria-pressed', String(i === level)); });
     $('lessonText').innerHTML = `<p>${current.levels[level]}</p>`;
   }
   function renderQuiz() {
     let hits = 0, answered = 0;
-    $('lessonQuiz').innerHTML = '<h4>Comprueba que lo has pillado</h4>' + current.quiz.map((q, qi) =>
+    $('lessonQuiz').innerHTML = '<h3 class="lq-title">Comprueba que lo has pillado</h3>' + current.quiz.map((q, qi) =>
       `<div class="lq" data-q="${qi}"><p>${esc(q.q)}</p><div class="lq-opts">${q.a.map((a, ai) => `<button class="opt wide" data-a="${ai}">${esc(a)}</button>`).join('')}</div></div>`).join('') +
       '<p class="lq-result" id="lqResult"></p>';
     $('lessonQuiz').onclick = e => {

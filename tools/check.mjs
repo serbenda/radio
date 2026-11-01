@@ -18,6 +18,8 @@
  *  9. Modo sin conexión: manifest e iconos válidos, sw.js guarda todas las páginas y módulos, y su
  *     VERSION coincide con la última del CHANGELOG (si no, los navegadores no renuevan la caché).
  * 10. Métricas: cada Radio.track() usa un nombre de hito fijo (sin datos que escriba la persona).
+ * 11. Seguridad: misma Content-Security-Policy en todas las páginas, librerías externas con versión fija,
+ *     con integridad (SRI), enlaces target="_blank" con rel="noopener", sin tipografías de terceros y tipografías propias presentes.
  */
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname, resolve, relative } from 'node:path';
@@ -174,6 +176,28 @@ section('10. Métricas');
     }
   }
   expect(!bad.length, `hitos con nombres fijos${bad.length ? ' (revisar: ' + bad.join(' | ') + ')' : ''}`);
+}
+
+section('11. Seguridad y recursos externos');
+{
+  const csp = p => (html[p].match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/) || [])[1];
+  const base = csp('index.html');
+  expect(base && PAGES.every(p => csp(p) === base), 'misma Content-Security-Policy en todas las páginas');
+  const unpinned = PAGES.flatMap(p => [...html[p].matchAll(/<(?:script|link)[^>]+(?:src|href)="(https:\/\/cdnjs[^"]+)"/g)].map(m => m[1]))
+    .filter(u => !/\/\d+\.\d+\.\d+\//.test(u));
+  expect(!unpinned.length, `librerías de cdnjs con versión fija${unpinned.length ? ' (sin versión: ' + unpinned.join(', ') + ')' : ''}`);
+  const noSri = PAGES.flatMap(p => [...html[p].matchAll(/<(?:script|link)[^>]+(?:src|href)="https:\/\/cdnjs[^>]+>/g)].map(m => m[0]))
+    .filter(t => !/integrity="sha(256|384|512)-[A-Za-z0-9+/=]+"/.test(t) || !/crossorigin="anonymous"/.test(t));
+  expect(!noSri.length, `librerías de cdnjs con integridad (SRI) y crossorigin${noSri.length ? ' (faltan: ' + noSri.length + ')' : ''}`);
+  const blank = [];
+  for (const f of [...PAGES, ...readdirSync(join(ROOT, 'js')).map(f => `js/${f}`)]) {
+    for (const m of read(f).matchAll(/<a\b[^>]*target="_blank"[^>]*>/g)) if (!/rel="[^"]*noopener/.test(m[0])) blank.push(`${f}: ${m[0].slice(0, 60)}`);
+  }
+  expect(!blank.length, `enlaces que abren pestaña nueva con rel="noopener"${blank.length ? ' (faltan: ' + blank.slice(0, 5).join(' | ') + ')' : ''}`);
+  expect(PAGES.every(p => !/fonts\.googleapis|fonts\.gstatic/.test(html[p])), 'sin tipografías de terceros (todas en fonts/)');
+  const faces = [...read('css/style.css').matchAll(/url\('\.\.\/(fonts\/[^']+)'\)/g)].map(m => m[1]);
+  const missing = faces.filter(f => !existsSync(join(ROOT, f)));
+  expect(faces.length >= 3 && !missing.length, `tipografías de @font-face presentes${missing.length ? ' (faltan: ' + missing.join(', ') + ')' : ''}`);
 }
 
 console.log(`\n${failures ? '✗' : '✓'} ${checks - failures} de ${checks} comprobaciones correctas${failures ? `, ${failures} fallan` : ''}.`);
