@@ -1,5 +1,21 @@
-// Mapa de emisoras con el directorio libre Radio Browser (https://www.radio-browser.info).
+/**
+ * stations.js · Mapa de emisoras de radiodifusión con reproductor y línea gris.
+ *
+ * Página: Escuchar (#emisoras). Necesita: #map, #country, #stationSearch, #randomStation, #stationList,
+ *   #stationStatus, #player, #playBtn, #nowName, #nowMeta, #volume. Depende de: Leaflet.
+ *
+ * Datos: API abierta de Radio Browser (https://www.radio-browser.info). Prueba varios servidores espejo
+ * (de1, de2, fi1, at1) y se queda con el primero que responde. Solo pide emisoras HTTPS (is_https=true)
+ * para evitar contenido mixto en GitHub Pages. Al reproducir llama a /json/url/<uuid>, que es la forma
+ * educada de contar la escucha en el directorio.
+ * Línea gris: zona de noche calculada con la posición del Sol (fórmulas aproximadas de NOAA),
+ * actualizada cada minuto.
+ * Carga perezosa: el mapa y los datos solo se piden cuando la sección se acerca a la pantalla.
+ * Logro: Radio.emit('station', uuid) al reproducir.
+ */
 (() => {
+  'use strict';
+  if (!document.getElementById('emisoras')) return; // esta página no tiene la sección
   const SERVERS = ['de1', 'de2', 'fi1', 'at1'].map(s => `https://${s}.api.radio-browser.info`);
   let server = null;
 
@@ -137,7 +153,7 @@
     $('nowName').textContent = s.name.trim();
     $('nowMeta').textContent = [s.state, s.country, tagsOf(s)].filter(Boolean).join(' · ');
     document.querySelectorAll('#stationList li').forEach(li => li.classList.toggle('on', li.dataset.uuid === s.stationuuid));
-    document.dispatchEvent(new CustomEvent('radio:event', { detail: { name: 'station', id: s.stationuuid } }));
+    Radio.emit('station', s.stationuuid);
     // cortesía con el directorio: cuenta la escucha
     if (server) fetch(`${server}/json/url/${s.stationuuid}`).catch(() => {});
   }

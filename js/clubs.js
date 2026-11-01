@@ -1,5 +1,17 @@
-// "Encuentra tu radioclub": mapa por provincias con las secciones de la URE, y calendario de citas del año.
+/**
+ * clubs.js · "Encuentra tu radioclub" y "Citas del año".
+ *
+ * Página: Empezar (#clubes). Necesita: #clubMap, #clubProv, #clubNear, #clubList, #clubCount, #calList.
+ * Depende de: Leaflet. Datos: URE_SECTIONS (clubs-data.js).
+ *
+ * Radioclubes: un marcador por provincia (en su capital, posición aproximada) con el número de secciones.
+ * "La más cercana" usa la ubicación del navegador solo para elegir la provincia; no se envía a ningún sitio.
+ * Calendario: fechas CALCULADAS con la regla de cada evento (p. ej. "último fin de semana completo de
+ * noviembre"); se muestran los 6 próximos. Son orientativas: la web pide confirmarlas con el organizador.
+ */
 (() => {
+  'use strict';
+  if (!document.getElementById('clubes')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 

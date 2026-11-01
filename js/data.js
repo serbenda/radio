@@ -1,4 +1,17 @@
-// Contenido estático de la web: bandas, jerga, alfabeto, test y FAQ.
+/**
+ * data.js · Contenido estático compartido (sin lógica). Se carga en todas las páginas, justo después de core.js.
+ *
+ *  BANDS        Bandas de radioaficionado (IARU Región 1, aproximadas): nombre, MHz, tipo, cuándo funciona y texto.
+ *  DIAL_BANDS   Las bandas de onda corta de BANDS, para el dial de la portada (dial.js).
+ *  PHONETIC     Alfabeto fonético internacional y números (jargon.js, qso.js).
+ *  GLOSSARY     Jerga básica para la lista de "Habla como un radioaficionado" (jargon.js).
+ *  FAQ          Preguntas frecuentes [pregunta, respuesta] (faq.js).
+ *  WEBSDR       URL base del WebSDR de Twente con ?tune= (guided.js, sounds.js).
+ *  LISTEN       Presets de la escucha guiada: tune = "<kHz><modo>", best = day | night | any (guided.js).
+ *  RECEIVERS    Receptores web alternativos (guided.js).
+ *
+ * Cómo añadir contenido: docs/CONTENIDO.md. tools/check.mjs valida BANDS y LISTEN.
+ */
 
 const BANDS = [
   { name: '160 m', from: 1.81, to: 2.0, kind: 'hf', when: 'Noche de invierno',
@@ -75,4 +88,10 @@ const LISTEN = [
     text: 'Un coro de pitidos que suben y bajan cada 15 segundos. Son ordenadores intercambiando contactos con señales tan débiles que el oído no las oye.' },
   { id: 'bc', title: 'Emisoras internacionales', tune: '9600am', chip: '📻 Onda corta', best: 'any',
     text: 'La banda de 31 m de radiodifusión: emisoras de otros países en idiomas de todo el mundo. Mueve la sintonía para ir saltando entre ellas.' },
+];
+
+// Receptores web alternativos por si el de Twente está saturado o caído
+const RECEIVERS = [
+  { name: 'Lista de todos los WebSDR del mundo', url: 'http://websdr.org/' },
+  { name: 'Mapa de receptores KiwiSDR', url: 'http://rx.linkfanel.net/' },
 ];

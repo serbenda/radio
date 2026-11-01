@@ -1,4 +1,12 @@
-// Glosario emergente: cada término de jerga se explica donde aparece (ratón, teclado o toque).
+/**
+ * glossary.js · Glosario emergente: la jerga se explica donde aparece.
+ *
+ * Páginas: todas. Debe cargarse el ÚLTIMO, cuando el resto de módulos ya han pintado su contenido.
+ * Marca con <abbr class="term"> la primera aparición de cada término en cada <section> de <main>,
+ * salvo dentro de enlaces, botones, títulos h1/h2, formularios, gráficos o elementos con [data-noglossary].
+ * El bocadillo sale al pasar el ratón, al enfocar con el teclado (tabindex=0) o al tocar en el móvil; Esc lo cierra.
+ * Términos ambiguos se dejan fuera a propósito (p. ej. USB: banda lateral o conector).
+ */
 (() => {
   const TERMS = [
     ['CQ', 'Llamada general: “¿alguien quiere hablar conmigo?”.'],

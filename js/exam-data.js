@@ -1,6 +1,18 @@
-// Banco de preguntas de práctica, escrito a partir del temario del anexo II de la Orden IET/1311/2013.
-// No son las preguntas oficiales: sirven para estudiar los mismos temas.
-// p: 1 = Electricidad y radioelectricidad · 2 = Normativa y operación
+/**
+ * exam-data.js · Banco de preguntas de práctica para el examen de radioaficionado en España.
+ *
+ * Escritas a partir del temario del anexo II de la Orden IET/1311/2013 (BOE-A-2013-7624).
+ * NO son las preguntas oficiales: sirven para estudiar los mismos temas. Las de normativa citan el artículo.
+ *
+ * Formato de cada pregunta:
+ *   id   identificador único y estable (no cambiarlo: el progreso guardado lo usa)
+ *   p    parte: 1 = Electricidad y radioelectricidad · 2 = Normativa y operación
+ *   t    tema (agrupa el dominio por tema)
+ *   q    enunciado · a: opciones (se barajan al mostrarse) · ok: índice de la correcta · why: explicación
+ *
+ * Reglas: cada parte necesita al menos 30 preguntas para el simulacro. tools/check.mjs lo valida.
+ * Cómo añadir preguntas: docs/CONTENIDO.md.
+ */
 const EXAM = [
   // ---------- Parte 1 · Electricidad ----------
   { id: 'e1', p: 1, t: 'Electricidad', q: 'Por una resistencia de 100 Ω circula 0,5 A. ¿Qué tensión hay entre sus extremos?', a: ['50 V', '200 V', '0,005 V', '100,5 V'], ok: 0, why: 'Ley de Ohm: V = I × R = 0,5 × 100 = 50 V.' },

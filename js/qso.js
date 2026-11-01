@@ -1,5 +1,22 @@
-// Simulador de primer contacto (QSO) con una estación virtual y tarjeta QSL descargable.
+/**
+ * qso.js · Contactos de radio simulados y tarjeta QSL.
+ *
+ * Página: Practicar (#qso). Necesita: #qsoSetup (formulario), #qsoScenario, #qsoRadio, #qsoLog, #qsoChoices,
+ *   #qsoQsl, #qslCanvas, #qslShare, #qslDownload, #qsoAgain. Datos: PHONETIC (data.js).
+ *
+ * Escenarios: primero (charla con una estación hispanohablante de otro país), concurso, pota (parque),
+ * emergencia (red dirigida, sin QSL) e iss (Estación Espacial, 145,800 MHz FM).
+ * En cada turno se elige qué transmitir entre tres opciones; las incorrectas explican por qué y permiten repetir.
+ * La otra estación habla con la voz del navegador (speechSynthesis) y un ruido de banda de fondo (Web Audio).
+ * Los indicativos de las estaciones virtuales se generan al azar en cada contacto.
+ *
+ * Tarjeta QSL: se dibuja en un <canvas> de 900 × 560 y se descarga como PNG o se comparte con la Web Share API
+ * (solo si el navegador permite compartir archivos).
+ * Evento: `radio:qso` ({ scenario }) al terminar, que journey.js registra. No guarda nada.
+ */
 (() => {
+  'use strict';
+  if (!document.getElementById('qso')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const pick = a => a[Math.floor(Math.random() * a.length)];

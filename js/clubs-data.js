@@ -1,5 +1,11 @@
-// Secciones locales de la URE: solo datos públicos de cada sección (nombre, provincia, indicativo y web).
-// Fuente: https://www.ure.es/secciones/ (consultado el 1 de noviembre de 2026).
+/**
+ * clubs-data.js · Secciones locales de la URE: [provincia, nombre, indicativo de la sección, web].
+ *
+ * Fuente: https://www.ure.es/secciones/ (consultado el 1 de noviembre de 2026).
+ * Privacidad: SOLO datos públicos de cada sección. La web de la URE también muestra nombres, teléfonos y
+ * correos de los presidentes: no se copian nunca (tools/check.mjs lo vigila).
+ * Cómo actualizarlo: docs/CONTENIDO.md.
+ */
 const URE_SECTIONS = [["Madrid","Alcorcón","EA4URA","https://ea4ura.es"],
   ["Madrid","Fuenlabrada","EA4RKF","https://ea4rkf.jimdofree.com/"],
   ["Madrid","Henares","","http://seccion.henares.ure.es/"],

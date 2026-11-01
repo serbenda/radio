@@ -1,6 +1,18 @@
-// "Ahora en el aire": avisos (spots) del DX cluster en tiempo real, en un mapa y contados como historias.
-// Datos de HamQTH.com (API abierta con CORS). Se consulta como mucho una vez por minuto.
+/**
+ * live.js · "Ahora en el aire": avisos (spots) del DX cluster en directo.
+ *
+ * Página: Escuchar (#ahora). Necesita: #liveMap, #liveStories, #liveBands, #liveSummary, #liveStatus. Depende de: Leaflet.
+ *
+ * Datos: https://www.hamqth.com/api/v2/spots?limit=100&include=locations (CORS abierto, sin clave).
+ * HamQTH pide no consultar más de una vez cada 15 s y citar la fuente: aquí se consulta cada 60 s y SOLO
+ * mientras la sección está en pantalla y la pestaña visible; la atribución sale en el mapa y bajo él.
+ * Cada aviso se cuenta como una frase en español (país traducido, modo en palabras, distancia por haversine)
+ * y lleva un enlace para escucharlo en el WebSDR de Twente si es de onda corta.
+ * Logro: Radio.emit('live') al filtrar por banda o abrir un aviso.
+ */
 (() => {
+  'use strict';
+  if (!document.getElementById('ahora')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
   const API = 'https://www.hamqth.com/api/v2/spots?limit=100&include=locations';
   const WEBSDR = 'http://websdr.ewi.utwente.nl:8901/?tune=';
@@ -92,14 +104,17 @@
       locs = {};
       (d.locations || []).forEach(l => { locs[l.call] = l; });
       render();
-      document.dispatchEvent(new CustomEvent('radio:event', { detail: { name: 'live', id: 'visto' } }));
       $('liveStatus').textContent = `Actualizado ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })} · se refresca cada minuto · datos de HamQTH.com`;
     } catch (e) {
       $('liveStatus').textContent = 'No se han podido cargar los avisos ahora mismo. Se volverá a intentar en un minuto.';
     }
   }
 
-  $('liveBands').addEventListener('click', e => { const b = e.target.closest('.chip'); if (b) { filter = b.dataset.b; render(); } });
+  $('liveBands').addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    filter = b.dataset.b; render(); Radio.emit('live', 'filtro');
+  });
+  $('liveStories').addEventListener('click', e => { if (e.target.closest('.ls-go')) Radio.emit('live', 'escuchar'); });
 
   const io = new IntersectionObserver(es => {
     const on = es.some(e => e.isIntersecting);
