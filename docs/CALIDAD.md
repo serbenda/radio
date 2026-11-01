@@ -23,6 +23,11 @@ Qué se ha aplicado, por qué, y qué limitaciones conocidas quedan.
 - Los lienzos decorativos llevan `aria-hidden="true"`; los textos que cambian, `aria-live="polite"`.
 - El semáforo de bandas no depende solo del color: cada banda dice "Abierta", "Floja" o "Cerrada".
 
+**Auditoría automática**
+- Las seis páginas se revisaron con [axe-core](https://github.com/dequelabs/axe-core) 4.10 (reglas WCAG 2.0, 2.1 y 2.2 A/AA y buenas prácticas), también con el examen abierto y un simulacro en marcha. Se corrigieron: barra de progreso sin `role`, orden de títulos en la portada y en lecciones, región de emisoras, grupo de niveles mal declarado como pestañas, tamaño del objetivo junto a "Siguiente", cabecera vacía de tabla y tablas desplazables sin foco. Cómo repetirla: [PRUEBAS.md](PRUEBAS.md#auditoría-de-accesibilidad).
+- Contraste de todos los colores de texto ≥ 6:1 sobre los fondos (tabla en [ESTILOS.md](ESTILOS.md#colores)).
+- Las tablas anchas son regiones con nombre y se pueden desplazar con el teclado (`tabindex="0"`).
+
 **Movimiento**
 - Con "reducir movimiento" activado en el sistema no se anima nada: los dibujos se pintan una vez.
 
@@ -36,14 +41,20 @@ Qué se ha aplicado, por qué, y qué limitaciones conocidas quedan.
 | Animaciones solo con la sección en pantalla y la pestaña visible | `Radio.whileVisible`: dial, lecciones |
 | La cascada se para 1,5 s después del último sonido | `sounds.js` |
 | Datos en directo solo mientras se ven y respetando los límites de cada API | `live.js` (60 s), `propagation.js` (15 min) |
-| Fuentes con `display=swap` y `preconnect` | `<head>` |
+| Tipografías propias recortadas a latín (≈ 145 KB en total), `font-display: swap` y precarga de la de texto | `fonts/`, `@font-face`, `<head>` |
+| Tras la primera visita, CSS, JS y fuentes salen de la caché del service worker | `sw.js` |
 
 ## Seguridad
 
 - Todo texto que viene de APIs o de lo que escribe la persona se **escapa** antes de insertarlo como HTML (`Radio.esc`).
+- **Content-Security-Policy** en las seis páginas: solo scripts propios, de cdnjs y de GoatCounter; conexiones solo a los servicios de datos; sin `object`, sin formularios, `base-uri` fijo (D16).
+- **Integridad (SRI)** y versión fija en las librerías de cdnjs.
+- Política de referer `strict-origin-when-cross-origin`.
 - Enlaces externos con `rel="noopener"`.
 - Sin `eval` ni HTML recibido de terceros.
-- El flujo de comprobaciones de GitHub Actions tiene permisos de solo lectura.
+- Los flujos de GitHub Actions tienen los permisos mínimos (lectura; el de enlaces, además, escribir avisos).
+- Todo lo anterior lo vigila `tools/check.mjs` §11. Detalle en [ARQUITECTURA.md §11](ARQUITECTURA.md#11-seguridad).
+- Limitación: GitHub Pages no permite cabeceras HTTP propias, así que no hay `frame-ancestors` ni HSTS propio (GitHub ya fuerza HTTPS).
 
 ## SEO y compartir
 

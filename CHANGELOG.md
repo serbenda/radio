@@ -14,10 +14,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). C
 - **Guardar y recuperar tu progreso** en un archivo (Inicio), para cambiar de móvil o de navegador.
 - **Avisar de errores:** formularios de GitHub para preguntas del examen, errores de contenido y sugerencias; el pie de cada página y cada pregunta del examen abren el formulario ya rellenado.
 - **Métricas de hitos** sin datos personales (contactos simulados, simulacros, insignias, lecciones, niveles de Morse) para saber si la web cumple su objetivo.
-- `tools/check.mjs`: comprobaciones del modo sin conexión y de las métricas (66 en total).
+- `tools/check.mjs`: comprobaciones del modo sin conexión, de las métricas y de seguridad.
+- **Buenas prácticas:** auditoría de accesibilidad con axe y sus arreglos; tipografías alojadas en la web (sin Google Fonts); Content-Security-Policy; integridad (SRI) de las librerías; aviso para quien navega sin JavaScript.
+- **Comprobación semanal de enlaces externos** (`tools/enlaces.mjs`) que abre un aviso si alguno se rompe.
+- **Documentación completa:** README renovado con capturas; índice de la documentación; cómo se construyó; arquitectura con diagramas; tutorial; guía de recetas; solución de problemas; estilos; glosario; guía de contribución y plantilla de pull request. Todo el código comentado función a función.
 
 ### Cambiado
 - Icono propio en lugar del emoji.
+- Las tipografías se sirven desde la propia web.
 
 ## [2.1.0] · 1 de noviembre de 2026 · CB-27 y qué radio comprar
 

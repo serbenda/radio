@@ -41,7 +41,8 @@ El nombre, la ciudad y el indicativo de prácticas que escribes en "Haz tu prime
 
 Al visitar la web, tu navegador se conecta a servicios de terceros, que como cualquier servidor ven tu dirección IP:
 
-- **Siempre:** Google Fonts (tipografías), cdnjs (librerías), GoatCounter (visitas).
+- **Siempre:** GoatCounter (visitas). Las tipografías están alojadas en la propia web: **no se hace ninguna petición a Google**.
+- **En páginas con mapas o la ISS:** cdnjs (librerías Leaflet y satellite.js).
 - **Según la página:** Radio Browser, HamQTH, KC2G, CelesTrak y Esri. La lista completa está en [DATOS.md](DATOS.md).
 - **Al reproducir una emisora**, el audio viene directamente del servidor de esa emisora.
 

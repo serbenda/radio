@@ -1,6 +1,44 @@
 # Módulos de JavaScript
 
-Referencia de cada archivo de `js/`. Cada archivo tiene además una cabecera con este mismo resumen.
+Referencia de cada archivo de `js/`. Cada archivo tiene además, por dentro, una cabecera con este resumen ampliado (qué necesita, qué guarda, qué eventos usa y **cómo modificarlo**) y un comentario JSDoc en cada función.
+
+## Mapa de dependencias
+
+Quién usa a quién. Las flechas continuas son dependencias de carga (el de la izquierda debe cargarse antes); las discontinuas, comunicación por eventos.
+
+```mermaid
+flowchart LR
+  subgraph Externas
+    LF[Leaflet]
+    SAT[satellite.js]
+  end
+  subgraph Núcleo
+    CORE[core.js<br/>Radio]
+    DATA[data.js]
+    MORSE[morse.js<br/>Morse]
+    EXD[exam-data.js<br/>EXAM]
+    CLD[clubs-data.js<br/>URE_SECTIONS]
+  end
+  J[journey.js]
+  G[glossary.js]
+  CORE --> J & G
+  CORE --> DIAL[dial.js] & BK[backup.js]
+  CORE --> ST[stations.js] & GU[guided.js] & LI[live.js] & SO[sounds.js] & RE[recordings.js]
+  CORE --> LE[lessons.js] & BA[bands.js] & PR[propagation.js] & IS[iss.js]
+  CORE --> MU[morse-ui.js] & KO[koch.js] & JA[jargon.js] & QS[qso.js]
+  CORE --> EX[exam.js] & CH[checklist.js] & CL[clubs.js] & FA[family.js] & FQ[faq.js]
+  DATA --> DIAL & GU & BA & JA & FQ & RE & QS
+  MORSE --> SO & MU & KO
+  EXD --> EX
+  CLD --> CL
+  LF --> ST & LI & IS & CL
+  SAT --> IS
+  ST & SO & RE & PR & LI & IS -. radio:event .-> J
+  QS -. radio:qso .-> J
+  EX -. radio:mock .-> J
+  LE & KO & EX & CH -. radio:progress .-> J
+```
+
 
 ## Convenciones
 
@@ -19,7 +57,7 @@ Referencia de cada archivo de `js/`. Cada archivo tiene además una cabecera con
 | Archivo | Qué hace | Globales que expone |
 | --- | --- | --- |
 | `core.js` | Utilidades compartidas, reloj UTC, menú activo, botón de compartir, enlace "Avísanos", métricas de hitos y registro del service worker | `Radio` |
-| `data.js` | Contenido estático: bandas, alfabeto, jerga, FAQ, escucha guiada, receptores | `BANDS`, `DIAL_BANDS`, `PHONETIC`, `GLOSSARY`, `FAQ`, `WEBSDR`, `LISTEN`, `RECEIVERS` |
+| `data.js` | Contenido estático: bandas, alfabeto, jerga, FAQ, escucha guiada, receptores, grabaciones reales | `BANDS`, `DIAL_BANDS`, `PHONETIC`, `GLOSSARY`, `FAQ`, `WEBSDR`, `LISTEN`, `RECEIVERS`, `COMMONS`, `RECORDINGS` |
 | `exam-data.js` | Banco de preguntas del examen | `EXAM` |
 | `clubs-data.js` | Secciones de la URE (datos públicos) | `URE_SECTIONS` |
 | `morse.js` | Tabla Morse, codificación y sonido | `Morse` |
@@ -28,7 +66,7 @@ Referencia de cada archivo de `js/`. Cada archivo tiene además una cabecera con
 
 | Archivo | Qué hace |
 | --- | --- |
-| `sw.js` | Service worker: guarda la web para usarla sin conexión (estrategia en [DECISIONES.md](DECISIONES.md), D12). Subir `VERSION` en cada versión |
+| `sw.js` | Service worker: guarda la web para usarla sin conexión (estrategia en [ARQUITECTURA.md §10](ARQUITECTURA.md#10-sin-conexión-service-worker)). Subir `VERSION` en cada versión |
 | `manifest.webmanifest` | Nombre, iconos (`img/`) y accesos directos para instalar la web |
 | `offline.html` | Lo que se ve sin conexión en una página que aún no se había visitado |
 
@@ -50,14 +88,13 @@ Referencia de cada archivo de `js/`. Cada archivo tiene además una cabecera con
 
 ### Escuchar
 
-`recordings.js` (`#recList`): grabaciones reales de Commons con atribución; una a la vez; emite `sound` al reproducir.
-
 | Archivo | Raíz | Qué hace | Externo | Eventos |
 | --- | --- | --- | --- | --- |
 | `stations.js` | `#emisoras` | Mapa de emisoras, buscador, reproductor y línea gris | Radio Browser, Leaflet, Esri | `station` |
 | `guided.js` | `#guided` | Escucha guiada en el WebSDR de Twente y receptores alternativos | WebSDR (enlace) | (`websdr` vía journey) |
 | `live.js` | `#ahora` | Avisos del DX cluster en directo, en mapa y como frases | HamQTH, Leaflet, Esri | `live` |
 | `sounds.js` | `#sonidos` | Ocho sonidos sintetizados con cascada en directo | — | `sound` |
+| `recordings.js` | `#recList` | Grabaciones reales con autor y licencia; una a la vez; Ogg con alternativa MP3 | Wikimedia Commons | `sound` |
 
 ### Entender
 
@@ -94,6 +131,8 @@ Referencia de cada archivo de `js/`. Cada archivo tiene además una cabecera con
 
 ## Cómo añadir un módulo nuevo
 
+Receta completa, con la plantilla de cabecera, en [GUIA.md](GUIA.md#añadir-un-módulo-de-javascript). Resumen:
+
 1. Crea `js/mi-modulo.js` con la cabecera de documentación (copia la de otro módulo) y la salvaguarda:
 
    ```js
@@ -107,7 +146,7 @@ Referencia de cada archivo de `js/`. Cada archivo tiene además una cabecera con
    ```
 
 2. Añade su `<section id="mi-seccion">` en la página que toque.
-3. Carga el script en esa página, después de `journey.js` y antes de `glossary.js`.
+3. Carga el script en esa página, después de `journey.js` y antes de `glossary.js`, y añádelo a `PRECACHE` en `sw.js`.
 4. Si debe contar para "Tu primer mes", emite `Radio.emit('nombre', id)` cuando la persona **haga** algo (no al cargar) y añade el paso en `journey.js`.
 5. Documenta el módulo en esta página y, si usa un servicio externo, en [DATOS.md](DATOS.md).
 6. Ejecuta `node tools/check.mjs`: avisará si el archivo no se usa en ninguna página o si un enlace está roto.

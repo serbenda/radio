@@ -37,7 +37,7 @@ Ninguna web acompaña a un novato de "¿qué es esto?" a su indicativo, y en esp
 
 ## Pendiente según el estudio
 
-- Grabaciones reales de voz, Morse y modos digitales.
+- ~~Grabaciones reales de voz, Morse y modos digitales.~~ Hecho en 2.2 (11 grabaciones de Wikimedia Commons). Faltan grabaciones en español.
 - Comunidad: un grupo en español (Telegram o Discord) enlazado desde la web.
-- Revisión del contenido por un radioclub o la URE.
-- Banco de preguntas más amplio.
+- Revisión del contenido por un radioclub o la URE (hay formularios de aviso desde 2.2).
+- ~~Banco de preguntas más amplio.~~ Hecho en 2.2 (169 preguntas con revisión independiente).

@@ -4,6 +4,22 @@ Las decisiones de diseño importantes, con su contexto y sus consecuencias, para
 
 ---
 
+## D16 · Content-Security-Policy e integridad de librerías (1 nov 2026)
+
+**Contexto.** La web carga scripts de cdnjs y GoatCounter y pide datos a cuatro servicios. Si uno de esos terceros fuera comprometido, o si se colara HTML con un `<script>`, podría ejecutarse código ajeno. GitHub Pages no permite configurar cabeceras HTTP.
+
+**Decisión.** Una Content-Security-Policy en `<meta>`, igual en las seis páginas, que solo permite scripts propios, de cdnjs y de GoatCounter, y conexiones a los cuatro servicios de datos. Las librerías de cdnjs llevan versión fija y atributo `integrity` (SHA-512) con `crossorigin="anonymous"`. Política de referer `strict-origin-when-cross-origin`.
+
+**Consecuencias.** Añadir un servicio o librería exige tocar la CSP de las seis páginas (si no, el navegador lo bloquea y lo dice en la consola). Para actualizar Leaflet o satellite.js hay que poner el nuevo hash de cdnjs. Lo vigila `tools/check.mjs` §11. `frame-ancestors` no se puede poner por `<meta>`: queda pendiente si algún día hay cabeceras.
+
+## D15 · Tipografías alojadas en el propio repositorio (1 nov 2026)
+
+**Contexto.** Las fuentes venían de Google Fonts: cada visita avisaba a Google (privacidad), dependía de un tercero y no funcionaba sin conexión.
+
+**Decisión.** Fraunces, IBM Plex Sans e IBM Plex Mono en `fonts/`, en WOFF2, recortadas a latín y latín extendido y a los pesos usados (variables donde se puede). Licencia SIL OFL incluida. `font-display: swap` y precarga de la fuente de texto.
+
+**Consecuencias.** ≈ 145 KB en total, cacheados por el service worker. Si se necesita un carácter fuera del recorte (por ejemplo, griego), hay que regenerar los archivos: ver [ESTILOS.md](ESTILOS.md#tipografías).
+
 ## D14 · Avisos de errores con formularios de GitHub (1 nov 2026)
 
 **Contexto.** El contenido (examen, tasas, CB-27, modelos de radio) caduca o puede tener errores, y quien mejor los detecta son radioaficionados con licencia que no tienen por qué saber usar GitHub.

@@ -10,7 +10,7 @@
 
 - [ ] `node tools/check.mjs` pasa en local
 - [ ] Probado en ordenador y en móvil (o modo móvil del navegador, 390 px)
-- [ ] Revisada la lista de [docs/PRUEBAS.md](../blob/main/docs/PRUEBAS.md#lista-de-comprobación-manual-antes-de-fusionar) de las páginas que toco
+- [ ] Revisada la lista de [docs/PRUEBAS.md](https://github.com/serbenda/radio/blob/main/docs/PRUEBAS.md#lista-de-comprobación-manual-antes-de-fusionar) de las páginas que toco
 
 ## Documentación
 

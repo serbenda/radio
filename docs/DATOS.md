@@ -12,13 +12,12 @@ Las comprobaciones de CORS se hicieron desde `https://bendi.dev` el **1 de novie
 | [HamQTH solar](https://www.hamqth.com/developers.php) | Datos solares | No | Sí (`*`) | Máx. 1 consulta / 5 min | Al llegar a la sección y luego cada 15 min | Mensaje "No se han podido cargar" |
 | [KC2G](https://prop.kc2g.com/) | Mapa de la MUF | No | No hace falta (`<img>`) | Citar | Enlace a KC2G bajo el mapa | Se oculta la tarjeta del mapa |
 | [CelesTrak](https://celestrak.org/) | Órbita de la ISS (TLE) | No | Sí | Uso razonable | Una descarga por visita | Mensaje "No se han podido descargar los datos" |
-| [satellite.js](https://github.com/shashwatak/satellite-js) 5.0.0 | Cálculo orbital (SGP4) | — | cdnjs | Licencia MIT | — | Mensaje "No se ha podido cargar el calculador" |
-| [Leaflet](https://leafletjs.com) 1.9.4 | Mapas | — | cdnjs | Licencia BSD-2 | Atribución en el mapa | La sección muestra el listado sin mapa |
+| [satellite.js](https://github.com/shashwatak/satellite-js) 5.0.0 | Cálculo orbital (SGP4) | — | cdnjs | Licencia MIT | Versión fija e `integrity` (SRI) | Mensaje "No se ha podido cargar el calculador" |
+| [Leaflet](https://leafletjs.com) 1.9.4 | Mapas | — | cdnjs | Licencia BSD-2 | Atribución en el mapa; versión fija e `integrity` (SRI) | La sección muestra el listado sin mapa |
 | [Esri World Dark Gray](https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer) | Teselas del mapa | No | No hace falta | Atribución obligatoria | "Mapa © Esri…" en cada mapa | Mapa sin fondo; datos visibles |
 | [WebSDR de Twente](http://websdr.ewi.utwente.nl:8901/) | Receptor real | No | Solo enlace | — | Enlace con `?tune=<kHz><modo>` | Receptores alternativos debajo |
 | [GoatCounter](https://www.goatcounter.com/) | Visitas y hitos | No | — | — | Script `async`, sin cookies; hitos con nombre fijo (`Radio.track`) | La web funciona igual |
 | [Wikimedia Commons](https://commons.wikimedia.org/) | Grabaciones reales | No | No hace falta (`<audio>`) | Atribuir autor y licencia | Autor, enlace y licencia en cada tarjeta; `preload="none"` | Mensaje bajo el reproductor |
-| Google Fonts | Tipografías | No | — | — | `display=swap` | Fuentes del sistema |
 
 ## Detalle por servicio
 
@@ -57,6 +56,17 @@ Las comprobaciones de CORS se hicieron desde `https://bendi.dev` el **1 de novie
 - Comprobado el 1 de noviembre de 2026: abre ya sintonizado.
 - Es HTTP, pero solo se enlaza (se abre en otra pestaña), así que no hay contenido mixto.
 - Alternativas que se ofrecen: la lista de todos los WebSDR (`websdr.org`) y el mapa de KiwiSDR.
+
+## Recursos alojados en el propio repositorio
+
+| Recurso | Origen | Licencia |
+| --- | --- | --- |
+| Tipografías (`fonts/`) | [Fraunces](https://github.com/undercasetype/Fraunces) e [IBM Plex](https://github.com/IBM/plex), desde [google/fonts](https://github.com/google/fonts), recortadas con `tools/fuentes.py` | SIL OFL 1.1 (`fonts/OFL-*.txt`) |
+| Iconos (`img/`) y `og.png` | Propios | Los del proyecto |
+
+## Política de seguridad de contenido
+
+Todos los dominios a los que la web se conecta deben estar en la Content-Security-Policy de las seis páginas: `script-src` (cdnjs, GoatCounter), `connect-src` (Radio Browser, HamQTH, CelesTrak, GoatCounter). Imágenes y audio admiten cualquier `https:` (teselas, KC2G, emisoras, Commons). Ver [ARQUITECTURA.md §11](ARQUITECTURA.md#11-seguridad).
 
 ## Datos guardados en el repositorio
 
