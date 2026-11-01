@@ -71,6 +71,8 @@ const FAQ = [
   ['¿Es muy difícil el examen?', 'Es asequible estudiando unas semanas. Hay electricidad básica, radio, normativa y operación. Los radioclubes suelen dar cursos de preparación.'],
   ['¿Es legal escuchar?', 'Escuchar las bandas de radioaficionado es libre. Para emitir necesitas la autorización y tu indicativo.'],
   ['¿Es cosa de mayores?', 'Hay mucha gente veterana, sí, pero también grupos juveniles muy activos (busca “YOTA”, Youngsters On The Air), satélites, drones, electrónica, programación de SDR… Es un hobby muy técnico y muy actual.'],
+  ['¿Puedo usar una Baofeng sin licencia?', 'Para escuchar, sí. Para transmitir, no: solo con licencia de radioaficionado y en las bandas de radioaficionado. No es un walkie PMR446 de uso libre, aunque pueda sintonizar esas frecuencias.'],
+  ['¿Y la CB-27? ¿Necesita licencia?', 'No. Desde 2015 la Banda Ciudadana es de uso común en España: basta un equipo homologado y respetar sus límites (40 canales, 4 W en FM y AM, 12 W en BLU).'],
   ['¿Mis vecinos van a oírme en la tele?', 'Con un equipo moderno, bien instalado y con potencias razonables, es muy raro. Parte del examen trata justo de evitar interferencias.'],
   ['¿Dónde encuentro gente?', 'En los radioclubes y secciones locales de la URE, en las redes (charlas programadas) de los repetidores de tu zona y en los mercadillos de radio, que son un planazo.'],
 ];

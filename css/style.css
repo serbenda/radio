@@ -649,3 +649,17 @@ button.pb:hover, button.pb[aria-expanded="true"] { border-color: var(--accent); 
 
 /* Receptores alternativos */
 .guided-alt { font-size: .88rem; color: var(--muted); margin: 0 0 12px; }
+
+/* ---------- CB-27, PMR446 y qué radio comprar ---------- */
+.cb-facts { padding-left: 18px; display: grid; gap: 6px; color: #d4d5db; }
+h3.sub-small { margin: 18px 0 8px; font-size: 1rem; }
+.cmp td:first-child, .legal td:first-child { color: var(--muted); }
+.cmp td, .legal td, .models td { white-space: normal; vertical-align: top; }
+.legal .yes { color: var(--accent); font-weight: 600; }
+.legal .no { color: var(--hot); font-weight: 600; }
+.models td:nth-child(2) { font-family: var(--sans); color: #d4d5db; }
+.models td:nth-child(4) { font-family: var(--mono); color: var(--accent); white-space: nowrap; }
+.baofeng, .tips { margin: 18px 0; }
+.tips ol { padding-left: 20px; display: grid; gap: 8px; color: #d4d5db; }
+#equipo .table-wrap { margin-bottom: 8px; }
+.cmp td:nth-child(2) { font-family: var(--sans); color: var(--ink); }

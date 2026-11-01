@@ -2,6 +2,13 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión corresponde a una pull request fusionada en `main`.
 
+## [2.1.0] · 1 de noviembre de 2026 · CB-27 y qué radio comprar
+
+### Añadido
+- **¿Y la CB-27 y los walkies?** (Empezar): la Banda Ciudadana como uso común sin licencia desde 2015 (40 canales, canal 9 de emergencias, 4 W en FM y AM, 12 W en BLU, antena de hasta 6 dB, prohibiciones), los walkies PMR446 y una tabla que compara PMR446, CB-27 y radioaficionado.
+- **Qué radio comprar (y qué es legal)** (Empezar): qué se puede hacer con y sin licencia, todo lo que hay que saber de las Baofeng, siete modelos para empezar con precio orientativo y recomendaciones según tu situación.
+- Dos preguntas frecuentes (Baofeng sin licencia, CB-27) y dos términos del glosario (CB-27, PMR446).
+
 ## [2.0.0] · 1 de noviembre de 2026 · Varias páginas y buenas prácticas
 
 ### Cambiado

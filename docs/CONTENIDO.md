@@ -105,6 +105,14 @@ Archivo: `js/clubs.js`, lista `RULES`. Cada evento se define por su regla, no po
 
 Si un organizador cambia la regla, cámbiala aquí.
 
+## CB-27, PMR446 y qué radio comprar
+
+En `empezar/index.html`, secciones `#cb27` y `#equipo`.
+
+- **Legalidad:** cualquier afirmación sobre qué se puede hacer sin licencia debe salir del CNAF (nota UN-3 para la CB-27) o de la web del Ministerio, con fecha de consulta.
+- **Modelos:** solo equipos que se vendan habitualmente en España, con su uso, si necesitan licencia, un precio orientativo en rango (nunca un precio exacto) y una línea de pros y contras. Sin enlaces de afiliación ni a tiendas concretas.
+- **Revisión:** precios y modelos cada seis meses; anota el mes en la nota bajo la tabla.
+
 ## Trámite y cifras
 
 En `empezar/index.html`, bloque "El trámite en cifras". Fuentes: [URE · obtener autorización](https://www.ure.es/obtener-autorizacion/) y la Orden IET/1311/2013. Revisa las tasas una vez al año.
