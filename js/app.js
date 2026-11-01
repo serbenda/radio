@@ -66,6 +66,24 @@
   $('dialKnob').value = Math.round(pos(7.1) * 1000);
   updateDial();
 
+
+  /* ---------- Escucha guiada ---------- */
+  const hour = new Date().getHours();
+  const isDaytime = hour >= 8 && hour < 18;
+  const recommended = LISTEN.find(l => l.best === (isDaytime ? 'day' : 'night'));
+  function showListen(l) {
+    $('guidedTitle').textContent = l.title;
+    $('guidedText').textContent = l.text;
+    $('guidedGo').href = WEBSDR + l.tune;
+    $('guidedWhen').textContent = l === recommended ? (isDaytime ? 'lo mejor a esta hora (de día)' : 'lo mejor a esta hora (de noche)') : 'tu elección';
+    $('guidedPresets').querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.id === l.id));
+  }
+  $('guidedPresets').innerHTML = LISTEN.map(l => `<button class="chip" data-id="${l.id}">${l.chip}</button>`).join('');
+  $('guidedPresets').addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (b) showListen(LISTEN.find(l => l.id === b.dataset.id));
+  });
+  showListen(recommended);
+
   /* ---------- Bandas ---------- */
   const bandsEl = $('bands');
   bandsEl.innerHTML = BANDS.map((b, i) =>
@@ -172,6 +190,15 @@
     });
   }
   renderQuiz();
+
+  /* ---------- Compartir la web ---------- */
+  $('shareSite').addEventListener('click', async () => {
+    const data = { title: 'Radio · Descubre la radioafición', text: 'Escucha emisoras de todo el mundo y haz tu primer contacto por radio 📻', url: 'https://bendi.dev/radio/' };
+    if (navigator.share) { try { await navigator.share(data); } catch (e) {} return; }
+    try { await navigator.clipboard.writeText(data.url); $('shareSite').textContent = '✅ Enlace copiado'; }
+    catch (e) { $('shareSite').textContent = data.url; }
+    setTimeout(() => { $('shareSite').textContent = '📤 Compartir esta web'; }, 2500);
+  });
 
   /* ---------- FAQ ---------- */
   $('faqList').innerHTML = FAQ.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('');

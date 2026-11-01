@@ -81,3 +81,18 @@ const FAQ = [
   ['¿Mis vecinos van a oírme en la tele?', 'Con un equipo moderno, bien instalado y con potencias razonables, es muy raro. Parte del examen trata justo de evitar interferencias.'],
   ['¿Dónde encuentro gente?', 'En los radioclubes y secciones locales de la URE, en las redes (charlas programadas) de los repetidores de tu zona y en los mercadillos de radio, que son un planazo.'],
 ];
+
+// Escucha guiada en el WebSDR de la Universidad de Twente (?tune=<kHz><modo>)
+const WEBSDR = 'http://websdr.ewi.utwente.nl:8901/?tune=';
+const LISTEN = [
+  { id: 'voz40', title: 'Voces en 40 m', tune: '7150lsb', chip: '🗣️ Voces 40 m', best: 'night',
+    text: 'Radioaficionados charlando desde media Europa. Las voces suenan algo “de pato” si no están bien centradas: mueve la sintonía un pelín hasta que se entiendan.' },
+  { id: 'voz20', title: 'Voces en 20 m', tune: '14200usb', chip: '🌍 Voces 20 m', best: 'day',
+    text: 'La banda del DX: con suerte oirás estaciones de América, Asia u Oriente Medio pasándose controles de señal muy rápidos.' },
+  { id: 'cw', title: 'Morse en 40 m', tune: '7020cw', chip: '📟 Morse', best: 'any',
+    text: 'Pitidos rapidísimos: es Morse de verdad. Fíjate si distingues un “CQ” (— · — ·  — — · —) o un “73” al final.' },
+  { id: 'ft8', title: 'Modo digital FT8', tune: '14074usb', chip: '🤖 Digital FT8', best: 'day',
+    text: 'Un coro de pitidos que suben y bajan cada 15 segundos. Son ordenadores intercambiando contactos con señales tan débiles que el oído no las oye.' },
+  { id: 'bc', title: 'Emisoras internacionales', tune: '9600am', chip: '📻 Onda corta', best: 'any',
+    text: 'La banda de 31 m de radiodifusión: emisoras de otros países en idiomas de todo el mundo. Mueve la sintonía para ir saltando entre ellas.' },
+];

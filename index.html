@@ -6,6 +6,21 @@
   <title>Radio · Descubre la radioafición</title>
   <meta name="description" content="Iniciación a la radioafición: escucha emisoras de todo el mundo, oye a radioaficionados en directo, aprende Morse y da tus primeros pasos.">
   <meta name="theme-color" content="#111214">
+  <link rel="canonical" href="https://bendi.dev/radio/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="radio · bendi.dev">
+  <meta property="og:title" content="Radio · Descubre la radioafición">
+  <meta property="og:description" content="Escucha emisoras de todo el mundo, oye a radioaficionados en directo, aprende Morse y haz tu primer contacto por radio.">
+  <meta property="og:url" content="https://bendi.dev/radio/">
+  <meta property="og:image" content="https://bendi.dev/radio/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dial de radio con una señal y el texto: Hay miles de voces en el aire. Escúchalas.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Radio · Descubre la radioafición">
+  <meta name="twitter:description" content="Emisoras de todo el mundo, receptores en directo, Morse y tu primer contacto por radio.">
+  <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📻</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,6 +144,23 @@
         <p class="kicker">Paso 2 · Oír a radioaficionados de verdad</p>
         <h2>Receptores abiertos en directo</h2>
         <p>Hay receptores conectados a grandes antenas que cualquiera puede manejar desde el navegador. Sin instalar nada, sin licencia. Prueba en la banda de 40 metros por la tarde-noche: oirás a gente charlando desde media Europa.</p>
+      </div>
+      <div class="guided card" id="guided">
+        <div class="guided-now">
+          <p class="kicker">Escucha guiada · <span id="guidedWhen">ahora</span></p>
+          <h3 id="guidedTitle">Voces en 40 m</h3>
+          <p id="guidedText">—</p>
+          <a class="btn" id="guidedGo" href="#" target="_blank" rel="noopener">🎧 Abrir el receptor ya sintonizado</a>
+        </div>
+        <div class="guided-more">
+          <p class="guided-label">O prueba otra cosa:</p>
+          <div class="guided-presets" id="guidedPresets"></div>
+          <ol class="guided-tips">
+            <li>Se abre un receptor real en Países Bajos, ya en la frecuencia buena.</li>
+            <li>Si no suena nada, haz clic en cualquier parte de la página: el navegador no deja sonar audio hasta que tocas algo.</li>
+            <li>Haz clic en la cascada (la franja de colores) cerca de las rayas brillantes: cada una es alguien transmitiendo.</li>
+          </ol>
+        </div>
       </div>
       <div class="cards">
         <a class="card link" href="http://websdr.ewi.utwente.nl:8901/" target="_blank" rel="noopener">
@@ -271,6 +303,7 @@
         <div class="qso-qsl card" id="qsoQsl" hidden>
           <canvas id="qslCanvas" width="900" height="560" aria-label="Tu tarjeta QSL"></canvas>
           <div class="row">
+            <button class="btn" id="qslShare" hidden>📤 Compartir mi QSL</button>
             <button class="btn" id="qslDownload">⬇️ Descargar mi QSL</button>
             <button class="btn ghost" id="qsoAgain">Otro contacto</button>
           </div>
@@ -357,6 +390,7 @@
   </main>
 
   <footer>
+    <p><button class="btn ghost small" id="shareSite">📤 Compartir esta web</button></p>
     <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · 73!</p>
   </footer>
 
