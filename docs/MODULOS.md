@@ -18,11 +18,19 @@ Referencia de cada archivo de `js/`. Cada archivo tiene además una cabecera con
 
 | Archivo | Qué hace | Globales que expone |
 | --- | --- | --- |
-| `core.js` | Utilidades compartidas, reloj UTC, menú activo, botón de compartir | `Radio` |
+| `core.js` | Utilidades compartidas, reloj UTC, menú activo, botón de compartir, enlace "Avísanos", métricas de hitos y registro del service worker | `Radio` |
 | `data.js` | Contenido estático: bandas, alfabeto, jerga, FAQ, escucha guiada, receptores | `BANDS`, `DIAL_BANDS`, `PHONETIC`, `GLOSSARY`, `FAQ`, `WEBSDR`, `LISTEN`, `RECEIVERS` |
 | `exam-data.js` | Banco de preguntas del examen | `EXAM` |
 | `clubs-data.js` | Secciones de la URE (datos públicos) | `URE_SECTIONS` |
 | `morse.js` | Tabla Morse, codificación y sonido | `Morse` |
+
+### Fuera de `js/`
+
+| Archivo | Qué hace |
+| --- | --- |
+| `sw.js` | Service worker: guarda la web para usarla sin conexión (estrategia en [DECISIONES.md](DECISIONES.md), D12). Subir `VERSION` en cada versión |
+| `manifest.webmanifest` | Nombre, iconos (`img/`) y accesos directos para instalar la web |
+| `offline.html` | Lo que se ve sin conexión en una página que aún no se había visitado |
 
 ## Módulos por página
 
@@ -37,9 +45,12 @@ Referencia de cada archivo de `js/`. Cada archivo tiene además una cabecera con
 
 | Archivo | Raíz | Qué hace |
 | --- | --- | --- |
+| `backup.js` | `#backup` | Guarda todo el progreso (`radio.*`) en un archivo JSON y lo recupera, con validación y confirmación |
 | `dial.js` | `#dialKnob` | Dial de onda corta con escala logarítmica, banda y comportamiento a esta hora; señal animada solo en pantalla |
 
 ### Escuchar
+
+`recordings.js` (`#recList`): grabaciones reales de Commons con atribución; una a la vez; emite `sound` al reproducir.
 
 | Archivo | Raíz | Qué hace | Externo | Eventos |
 | --- | --- | --- | --- | --- |

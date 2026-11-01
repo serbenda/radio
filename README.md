@@ -13,13 +13,13 @@ Una web estática, sin registro ni cookies, que acompaña a un novato en cinco p
 | Paso | Página | Qué hay |
 | --- | --- | --- |
 | — | [Inicio](https://bendi.dev/radio/) | Dial de onda corta, qué es la radioafición y **Tu primer mes**: 4 semanas, 14 pasos que se marcan solos e insignias |
-| 1 | [Escuchar](https://bendi.dev/radio/escuchar/) | Mapa de emisoras con reproductor, escucha guiada en un receptor real, **Ahora en el aire** (quién habla con quién, en directo) y **¿Qué es este sonido?** con cascada |
+| 1 | [Escuchar](https://bendi.dev/radio/escuchar/) | Mapa de emisoras con reproductor, escucha guiada en un receptor real, **Ahora en el aire** (quién habla con quién, en directo) **¿Qué es este sonido?** con cascada y grabaciones reales |
 | 2 | [Entender](https://bendi.dev/radio/entender/) | Cuatro lecciones interactivas en tres niveles, bandas, propagación de hoy en lenguaje llano y pases de la ISS sobre tu ciudad |
 | 3 | [Practicar](https://bendi.dev/radio/practicar/) | Entrenador de Morse con método Koch, alfabeto fonético y jerga, y cinco contactos simulados con tarjeta QSL |
 | 4 | [Examen](https://bendi.dev/radio/examen/) | Simulador del examen español con tarjetas adaptativas, explicaciones y simulacro de dos partes |
 | 5 | [Empezar](https://bendi.dev/radio/empezar/) | El trámite en cifras, lista de comprobación, radioclubes de la URE por provincia, calendario, familias e Hispanoamérica |
 
-Todo el progreso se guarda solo en el navegador de cada persona.
+Todo el progreso se guarda solo en el navegador de cada persona (y se puede guardar en un archivo). Se puede instalar en el móvil y funciona sin conexión.
 
 ## Probar en local
 
@@ -40,6 +40,10 @@ practicar/index.html       Paso 3
 examen/index.html          Paso 4
 empezar/index.html         Paso 5
 404.html                   Página de error
+offline.html               Lo que se ve sin conexión en una página no visitada
+sw.js                      Service worker: instalable y sin conexión
+manifest.webmanifest       Datos para instalar la web
+img/                       Iconos de la web instalada
 css/style.css              Estilos de todas las páginas
 js/                        Un módulo por funcionalidad (ver docs/MODULOS.md)
   core.js                  Núcleo común: objeto Radio (va el primero)
@@ -51,6 +55,7 @@ og.png                     Imagen para compartir (1200 × 630)
 sitemap.xml                Mapa del sitio
 tools/check.mjs            Comprobaciones automáticas
 .github/workflows/         GitHub Actions: comprobaciones en cada PR
+.github/ISSUE_TEMPLATE/    Formularios para avisar de errores
 docs/                      Documentación
 ```
 

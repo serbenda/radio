@@ -94,7 +94,7 @@
         st.q[q.id] = s; save();
         $('examStage').querySelectorAll('.opt').forEach(x => { x.disabled = true; if (+x.dataset.i === q.ok) x.classList.add('right'); });
         if (!ok) b.classList.add('wrong');
-        $('exWhy').innerHTML = `<p><b>${ok ? '✅ Correcto.' : '❌ No era esa.'}</b> ${esc(q.why)}</p><button class="btn small" id="exNext">Siguiente →</button>`;
+        $('exWhy').innerHTML = `<p><b>${ok ? '✅ Correcto.' : '❌ No era esa.'}</b> ${esc(q.why)}</p><button class="btn small" id="exNext">Siguiente →</button> <a class="ex-report" href="${Radio.report('pregunta-examen', { pregunta: q.id }, `[Examen] Pregunta ${q.id}`)}" target="_blank" rel="noopener">¿Crees que esta pregunta tiene un error?</a>`;
         $('exNext').onclick = card; $('exNext').focus();
         if (questions === errPool && s.box >= 2) pool = pool.filter(x => x !== q);
         document.dispatchEvent(new CustomEvent('radio:progress'));
@@ -146,6 +146,7 @@
       $('exDone').onclick = back;
       document.dispatchEvent(new CustomEvent('radio:progress'));
       document.dispatchEvent(new CustomEvent('radio:mock', { detail: { pass } }));
+      Radio.track(`examen/simulacro-${pass ? 'apto' : 'no-apto'}`);
     };
     show();
   }

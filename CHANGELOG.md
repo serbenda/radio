@@ -2,6 +2,20 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión corresponde a una pull request fusionada en `main`.
 
+## [2.2.0] · 1 de noviembre de 2026 · Más preguntas, sonidos reales y sin conexión
+
+### Añadido
+- **Examen:** el banco pasa de 68 a 169 preguntas (95 de la parte 1 y 74 de la parte 2), revisadas por separado contra la Orden IET/1311/2013.
+- **Grabaciones reales** (Escuchar): once audios grabados en el aire con licencia libre de Wikimedia Commons (llamada CQ, informe de señal, concurso, satélite, repetidores, balizas, señal horaria), con autor y licencia en cada uno.
+- **Instalable y sin conexión:** manifest, iconos y service worker. Tras la primera visita, el examen, el Morse, las lecciones y los contactos simulados funcionan sin cobertura. Página `offline.html` para lo que no está guardado.
+- **Guardar y recuperar tu progreso** en un archivo (Inicio), para cambiar de móvil o de navegador.
+- **Avisar de errores:** formularios de GitHub para preguntas del examen, errores de contenido y sugerencias; el pie de cada página y cada pregunta del examen abren el formulario ya rellenado.
+- **Métricas de hitos** sin datos personales (contactos simulados, simulacros, insignias, lecciones, niveles de Morse) para saber si la web cumple su objetivo.
+- `tools/check.mjs`: comprobaciones del modo sin conexión y de las métricas (66 en total).
+
+### Cambiado
+- Icono propio en lugar del emoji.
+
 ## [2.1.0] · 1 de noviembre de 2026 · CB-27 y qué radio comprar
 
 ### Añadido

@@ -14,6 +14,14 @@ Solo en `localStorage` de tu navegador, para que tu progreso siga ahí la próxi
 | `radio.exam` | Progreso de cada pregunta y mejor simulacro | Borrando los datos del sitio |
 | `radio.checklist` | Pasos marcados del trámite | Desmarcándolos o borrando los datos del sitio |
 
+### Guardar y recuperar tu progreso
+
+En la portada, "Guardar mi progreso" descarga un archivo `radio-progreso-AAAA-MM-DD.json` con todas las claves anteriores. Se genera en tu navegador y no pasa por ningún servidor. "Recuperar progreso" lo lee también en local, comprueba que es un archivo de esta web y pide confirmación antes de sustituir lo que haya.
+
+### Copia para usar sin conexión
+
+El service worker (`sw.js`) guarda en la caché del navegador las páginas, estilos, módulos e iconos de la web para que funcione sin conexión. Son archivos públicos de la web, no datos tuyos. Nunca guarda respuestas de servicios en directo. Se borra con los datos del sitio.
+
 En modo privado o con el almacenamiento bloqueado la web funciona igual, pero no recuerda nada (`Radio.store` captura el error).
 
 ## Ubicación
@@ -40,6 +48,26 @@ Al visitar la web, tu navegador se conecta a servicios de terceros, que como cua
 ## Visitas
 
 Las visitas se cuentan con [GoatCounter](https://www.goatcounter.com/), que no usa cookies ni guarda datos personales. Sirve para saber qué páginas se usan; los datos se ven en el panel de visitas de bendi.dev.
+
+## Métricas de hitos
+
+Además de las visitas, se cuentan algunos **hitos** como eventos de GoatCounter, para saber si la web consigue que la gente avance. Cada hito es solo un nombre fijo; nunca va con tu nombre, tu indicativo de prácticas, tus respuestas ni ningún identificador.
+
+| Evento | Cuándo |
+| --- | --- |
+| `radio/qso/<tipo>` | Terminas un contacto simulado (`primero`, `concurso`, `pota`, `emergencia`, `iss`) |
+| `radio/qsl/descargada` | Descargas tu tarjeta QSL |
+| `radio/leccion/<id>` | Completas una lección |
+| `radio/morse/letras-<n>` | Llegas a 5, 10, 15… letras en el entrenador Koch |
+| `radio/examen/simulacro-apto` o `-no-apto` | Terminas un simulacro |
+| `radio/insignia/semana-<n>` | Ganas una insignia de "Tu primer mes" |
+| `radio/progreso/guardar` o `/recuperar` | Usas la copia de tu progreso |
+
+Si bloqueas GoatCounter (por ejemplo, con un bloqueador de anuncios), no se cuenta nada y todo funciona igual.
+
+## Avisar de un error
+
+Los enlaces "Avísanos" y "¿Ves un error en esta pregunta?" abren un formulario de GitHub con la página o el identificador de la pregunta ya escritos. No se envía nada hasta que tú lo publicas, y lo que publiques en GitHub es público.
 
 ## Datos de terceros publicados en la web
 

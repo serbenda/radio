@@ -72,6 +72,18 @@ Archivo: `js/qso.js`.
 3. Termina con `finish(texto, conQSL)`.
 4. Prepara la estación, la banda y la frecuencia en `start()` y registra la función en el objeto que elige el escenario.
 
+## Grabaciones reales
+
+Lista `RECORDINGS` en `js/data.js`; la pinta `js/recordings.js` en `escuchar/#grabaciones`.
+
+1. Busca en [Wikimedia Commons](https://commons.wikimedia.org/wiki/Category:Audio_files_of_amateur_radio) un audio grabado en el aire.
+2. Comprueba en su página la licencia: solo **CC0, dominio público, CC BY o CC BY-SA**. Si la licencia es nueva, añade su enlace en `LIC` de `recordings.js`.
+3. Copia el nombre exacto del archivo (`file`), la URL directa de `upload.wikimedia.org` sin parámetros (`src`), la duración en segundos, el autor tal como aparece en Commons y la licencia.
+4. Escribe `text` en lenguaje llano: qué se oye y por qué interesa. No inventes detalles que no diga la descripción del archivo.
+5. Evita archivos de más de 2 MB y contenido religioso, político o comercial.
+
+El audio no se copia al repositorio: se enlaza a Commons. La atribución (autor, enlace a la página del archivo y licencia) la pone el módulo, como exigen CC BY y CC BY-SA.
+
 ## Glosario emergente
 
 Archivo: `js/glossary.js`, lista `TERMS`: `['término', 'definición']`. Añade `'i'` como tercer elemento para que no distinga mayúsculas. Evita términos ambiguos (por ejemplo "USB" puede ser la banda lateral o el conector).

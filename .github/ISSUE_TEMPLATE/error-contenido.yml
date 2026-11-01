@@ -1,0 +1,37 @@
+name: Error en la web
+description: Algo de la web es incorrecto, está desactualizado o no funciona.
+title: "[Web] "
+labels: ["contenido"]
+body:
+  - type: input
+    id: pagina
+    attributes:
+      label: Página
+      description: Se rellena sola si vienes desde el enlace del pie.
+      placeholder: "https://bendi.dev/radio/entender/"
+    validations:
+      required: true
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Tipo
+      options:
+        - Dato incorrecto o desactualizado
+        - Algo no funciona
+        - Texto confuso
+        - Problema de accesibilidad
+        - Otra cosa
+    validations:
+      required: true
+  - type: textarea
+    id: detalle
+    attributes:
+      label: Qué pasa
+      description: Qué has visto y qué esperabas. Si algo no funciona, di qué navegador y dispositivo usas.
+    validations:
+      required: true
+  - type: input
+    id: fuente
+    attributes:
+      label: Fuente
+      description: Si es un dato, de dónde sale el correcto.

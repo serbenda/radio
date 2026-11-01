@@ -1,0 +1,12 @@
+name: Sugerencia
+description: Una idea para mejorar la web.
+title: "[Idea] "
+labels: ["idea"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Tu idea
+      description: Qué añadirías o cambiarías y a quién ayudaría.
+    validations:
+      required: true
