@@ -6,6 +6,9 @@
 
 [![Comprobaciones](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml/badge.svg)](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml)
 [![Enlaces externos](https://github.com/serbenda/radio/actions/workflows/enlaces.yml/badge.svg)](https://github.com/serbenda/radio/actions/workflows/enlaces.yml)
+[![Licencia: MIT](https://img.shields.io/badge/c%C3%B3digo-MIT-8be0c2)](LICENSE)
+[![Contenido: CC BY-SA 4.0](https://img.shields.io/badge/contenido-CC%20BY--SA%204.0-8be0c2)](LICENSE-CONTENIDO.md)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/serbenda?label=apoya&logo=githubsponsors&color=ea4aaa)](https://github.com/sponsors/serbenda)
 
 ![Portada: dial de onda corta y el título "Hay miles de voces en el aire. Ahora mismo."](docs/img/inicio.png)
 
@@ -130,8 +133,20 @@ Normas completas en [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Detalle en [docs/DATOS.md](docs/DATOS.md).
 
+## Apoya el proyecto
+
+La web es gratuita, sin publicidad y sin registro, y lo seguirá siendo. Si te ha sido útil y quieres ayudar a mantenerla (y a que crezca: más preguntas, más grabaciones, más lecciones), puedes apoyarla en **[GitHub Sponsors](https://github.com/sponsors/serbenda)** 💚.
+
+También ayuda mucho, y es gratis: [avisar de errores](https://github.com/serbenda/radio/issues/new/choose), compartir la web con quien pueda engancharse a la radio o darle una ⭐ al repositorio.
+
 ## Licencia
 
-Pendiente de elegir. Hasta entonces, todos los derechos del código y los textos propios están reservados; los recursos de terceros mantienen sus licencias (tabla anterior).
+| Qué | Licencia |
+| --- | --- |
+| **Código** (HTML, CSS, JavaScript, herramientas) | [MIT](LICENSE) |
+| **Contenido** (textos, preguntas del examen, documentación, imágenes propias) | [CC BY-SA 4.0](LICENSE-CONTENIDO.md): puedes reutilizarlo citando la fuente y compartiendo igual |
+| Recursos de terceros (tipografías, librerías, grabaciones, datos) | Los suyos; detalle en [LICENSE-CONTENIDO.md](LICENSE-CONTENIDO.md#lo-que-no-es-de-este-proyecto-conserva-su-licencia) |
+
+© 2026 Sergio Santiago Bendaña Quesada
 
 73!

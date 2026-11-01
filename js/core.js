@@ -247,6 +247,10 @@
   const rep = $('reportLink');
   if (rep) rep.href = report('error-contenido', { pagina: location.origin + location.pathname + location.hash }, `[Web] ${document.title}`);
 
+  // "Apoya el proyecto": cuenta cuántas personas abren la página de GitHub Sponsors (hito sin datos personales).
+  const sponsor = $('sponsorLink');
+  if (sponsor) sponsor.addEventListener('click', () => track('apoyo/sponsors'));
+
   // Instalable y sin conexión: registra sw.js (solo por HTTPS o localhost; en file:// no existe).
   // Se espera al evento load para no competir con la carga de la página. El scope es la raíz del sitio,
   // de modo que el service worker controla las seis páginas.

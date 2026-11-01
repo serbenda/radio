@@ -103,10 +103,12 @@ radio/
 ├── .github/
 │   ├── workflows/            comprobaciones.yml (cada PR) y enlaces.yml (cada lunes)
 │   ├── ISSUE_TEMPLATE/       Formularios para avisar de errores
+│   ├── FUNDING.yml           Botón "Sponsor" (GitHub Sponsors)
 │   └── pull_request_template.md
 │
 ├── docs/                     Esta documentación (índice en docs/README.md)
 ├── README.md · CONTRIBUTING.md · CHANGELOG.md · .editorconfig
+├── LICENSE (MIT, código) · LICENSE-CONTENIDO.md (CC BY-SA 4.0, contenido)
 ```
 
 **Regla de las carpetas:** cada página es una carpeta con su `index.html`. Así las direcciones quedan limpias (`/radio/examen/` en vez de `/radio/examen.html`) y GitHub Pages las sirve sin configuración.

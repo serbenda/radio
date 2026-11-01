@@ -21,6 +21,8 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). C
 - `tools/check.mjs`: comprobaciones del modo sin conexión, de las métricas y de seguridad.
 - **Buenas prácticas:** auditoría de accesibilidad con axe y sus arreglos; tipografías alojadas en la web (sin Google Fonts); Content-Security-Policy; integridad (SRI) de las librerías; aviso para quien navega sin JavaScript.
 - **Comprobación semanal de enlaces externos** (`tools/enlaces.mjs`) que abre un aviso si alguno se rompe.
+- **Licencias:** MIT para el código y CC BY-SA 4.0 para textos, preguntas, documentación e imágenes propias.
+- **Apoya el proyecto:** enlace a GitHub Sponsors en el pie de cada página, en el README y botón "Sponsor" en el repositorio.
 - **Documentación completa:** README renovado con capturas; índice de la documentación; cómo se construyó; arquitectura con diagramas; tutorial; guía de recetas; solución de problemas; estilos; glosario; guía de contribución y plantilla de pull request. Todo el código comentado función a función.
 
 ### Cambiado

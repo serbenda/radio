@@ -59,6 +59,14 @@ Si solo cambias comentarios, `tools/solo-comentarios.sh` confirma que no has toc
 | Una decisión de diseño importante | Nueva entrada en [docs/DECISIONES.md](docs/DECISIONES.md) |
 | Cualquier cosa publicada | [CHANGELOG.md](CHANGELOG.md) |
 
+## Licencia de las contribuciones
+
+Al contribuir aceptas que tu código se publique bajo la licencia [MIT](LICENSE) y tus textos, preguntas e imágenes bajo [CC BY-SA 4.0](LICENSE-CONTENIDO.md), como el resto del proyecto. No copies contenido de otras webs o libros: escríbelo con tus palabras y cita la fuente.
+
+## Apoyar el proyecto
+
+Además de contribuir, se puede apoyar económicamente en [GitHub Sponsors](https://github.com/sponsors/serbenda). El botón "Sponsor" del repositorio sale de `.github/FUNDING.yml`.
+
 ## Datos personales
 
 Nunca se publican datos personales de terceros (por ejemplo, nombres, teléfonos o correos de responsables de radioclubes), aunque sean visibles en otra web. Las métricas solo cuentan hitos con nombres fijos. Detalle en [docs/PRIVACIDAD.md](docs/PRIVACIDAD.md).

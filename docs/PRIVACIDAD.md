@@ -63,6 +63,7 @@ Además de las visitas, se cuentan algunos **hitos** como eventos de GoatCounter
 | `radio/examen/simulacro-apto` o `-no-apto` | Terminas un simulacro |
 | `radio/insignia/semana-<n>` | Ganas una insignia de "Tu primer mes" |
 | `radio/progreso/guardar` o `/recuperar` | Usas la copia de tu progreso |
+| `radio/apoyo/sponsors` | Pulsas "Apoya el proyecto" en el pie (no se sabe si después apoyas ni quién eres) |
 
 Si bloqueas GoatCounter (por ejemplo, con un bloqueador de anuncios), no se cuenta nada y todo funciona igual.
 

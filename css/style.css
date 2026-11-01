@@ -54,7 +54,7 @@
  * 40. Propagación: bandas botón . los .pb como botones con explicación desplegable.
  * 41. Receptores alternativos ... nota bajo la escucha guiada.
  * 42. CB-27, PMR446 y qué radio comprar  tablas legales y de modelos.
- * 43. Avisar de errores ......... enlaces "Avísanos" y "¿Crees que esta pregunta tiene un error?".
+ * 43. Avisar de errores ......... enlaces "Avísanos", "¿Crees que esta pregunta tiene un error?" y "Apoya el proyecto".
  * 44. Guardar y recuperar progreso  bloque de copia de seguridad de la portada.
  * 45. Grabaciones reales ........ tarjetas de audio de Wikimedia Commons.
  * 46. Aviso sin JavaScript ...... mensaje de <noscript>.
@@ -828,7 +828,8 @@ h3.sub-small { margin: 18px 0 8px; font-size: 1rem; }
 .cmp td:nth-child(2) { font-family: var(--sans); color: var(--ink); }
 
 /* ---------- Avisar de errores ---------- */
-footer .report { font-size: .88rem; }
+/* Pie: "Apoya el proyecto" (GitHub Sponsors) y "Avísanos", en letra algo menor que el resto del pie. */
+footer .report, footer .sponsor { font-size: .88rem; }
 .ex-report { display: inline-block; margin-left: 16px; padding: 6px 0; font-size: .85rem; color: var(--muted); }
 
 /* ---------- Guardar y recuperar progreso ---------- */

@@ -106,6 +106,7 @@ Partiendo de una autoevaluación (8,5 sobre 10) se atacó todo lo que dependía 
 | Sin cobertura no funciona | Web instalable con service worker (D12) |
 | Los errores no llegan | Formularios de GitHub enlazados desde cada página y cada pregunta (D14) |
 | No se sabe si la web cumple su objetivo | Métricas de hitos sin datos personales (D13) |
+| Sin licencia ni forma de apoyar el proyecto | MIT para el código, CC BY-SA 4.0 para el contenido y GitHub Sponsors (D17) |
 | Buenas prácticas | Auditoría de accesibilidad con axe y arreglos; tipografías propias en vez de Google Fonts (D15); Content-Security-Policy e integridad de librerías (D16); comprobación semanal de enlaces; documentación del código función a función |
 
 ## 7. Lecciones aprendidas
@@ -124,5 +125,4 @@ Pendiente según el estudio y la autoevaluación (fuera del alcance del código)
 - Revisión del banco de preguntas por un radioaficionado con licencia o un radioclub.
 - Grabaciones de radioaficionados españoles con licencia libre (no existen en Commons).
 - Comunidad en español (grupo de Telegram o Discord) enlazada desde la web.
-- Elegir la licencia del repositorio.
 - Añadir `Sitemap: https://bendi.dev/radio/sitemap.xml` al `robots.txt` de `bendi.dev`.

@@ -4,6 +4,14 @@ Las decisiones de diseño importantes, con su contexto y sus consecuencias, para
 
 ---
 
+## D17 · Licencias: MIT para el código y CC BY-SA 4.0 para el contenido (1 nov 2026)
+
+**Contexto.** Sin licencia, nadie puede reutilizar legalmente nada del repositorio, ni siquiera un radioclub que quiera usar las preguntas en un curso. El código y el contenido tienen necesidades distintas.
+
+**Decisión.** Código bajo **MIT** (`LICENSE`): la más sencilla y extendida, permite reutilizarlo con solo mantener el aviso. Contenido (textos, preguntas, documentación, imágenes propias) bajo **CC BY-SA 4.0** (`LICENSE-CONTENIDO.md`): se puede reutilizar, también con fines comerciales, citando la fuente y compartiendo las mejoras con la misma licencia, como Wikipedia. Lo de terceros conserva su licencia (tabla en `LICENSE-CONTENIDO.md`). Además, enlace a **GitHub Sponsors** en el pie de cada página, en el README y en el botón del repositorio (`.github/FUNDING.yml`), sin publicidad ni muros de pago.
+
+**Consecuencias.** Las grabaciones CC BY-SA ya eran compatibles. Quien contribuya acepta esas licencias (CONTRIBUTING.md). El clic en "Apoya el proyecto" se cuenta como hito (`apoyo/sponsors`), sin datos personales.
+
 ## D16 · Content-Security-Policy e integridad de librerías (1 nov 2026)
 
 **Contexto.** La web carga scripts de cdnjs y GoatCounter y pide datos a cuatro servicios. Si uno de esos terceros fuera comprometido, o si se colara HTML con un `<script>`, podría ejecutarse código ajeno. GitHub Pages no permite configurar cabeceras HTTP.
