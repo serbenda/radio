@@ -34,9 +34,10 @@
     <nav>
       <a href="#emisoras">Emisoras</a>
       <a href="#directo">En directo</a>
-      <a href="#bandas">Bandas</a>
+      <a href="#sonidos">Sonidos</a>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#propagacion">Propagación</a>
       <a href="#morse">Morse</a>
-      <a href="#jerga">Jerga</a>
       <a href="#qso">Tu QSO</a>
       <a href="#empezar">Empezar</a>
       <a href="#test">Test</a>
@@ -190,6 +191,27 @@
       </div>
     </section>
 
+    <!-- SONIDOS -->
+    <section id="sonidos">
+      <div class="section-head">
+        <p class="kicker">Aprende a reconocerlos</p>
+        <h2>¿Qué es este sonido?</h2>
+        <p>Cuando escuchas la radio por primera vez todo parecen pitidos y ruido. Cada sonido tiene su forma en la <strong>cascada</strong>, el gráfico de colores de los receptores. Pulsa uno: lo oirás y verás cómo se dibuja.</p>
+      </div>
+      <div class="sounds">
+        <div class="wf card">
+          <div class="wf-head"><span id="soundNow">Elige un sonido para oírlo y verlo</span><button class="btn small ghost" id="soundStop">■ Parar</button></div>
+          <canvas id="waterfall" width="640" height="220" aria-label="Cascada: espectrograma del sonido que suena"></canvas>
+          <div class="wf-axis" aria-hidden="true"><span>0 Hz</span><span>1.000</span><span>2.000</span><span>3.000 Hz</span></div>
+          <p class="note">El tiempo cae hacia abajo y el tono va de grave (izquierda) a agudo (derecha). Igual que en un receptor de verdad.</p>
+        </div>
+        <div>
+          <div class="sound-grid" id="soundGrid"></div>
+          <div class="sound-info card" id="soundInfo"><p class="note">Los sonidos se generan en tu navegador imitando los reales. Después, búscalos en un receptor de verdad con el botón que aparece aquí.</p></div>
+        </div>
+      </div>
+    </section>
+
     <!-- BANDAS -->
     <section id="bandas">
       <div class="section-head">
@@ -202,6 +224,28 @@
       <p class="note">Rangos aproximados de la IARU Región 1 (Europa y África). Lo que puedes usar exactamente depende de tu autorización.</p>
     </section>
 
+    <!-- CÓMO FUNCIONA -->
+    <section id="como-funciona">
+      <div class="section-head">
+        <p class="kicker">Lecciones de 5 minutos</p>
+        <h2>Cómo funciona la radio</h2>
+        <p>Cuatro ideas que lo explican casi todo. Elige cuánto quieres profundizar: la misma lección contada para curiosos, para interesados o con la parte técnica.</p>
+      </div>
+      <div class="lesson card">
+        <div class="lesson-tabs" id="lessonTabs"></div>
+        <div class="lesson-body">
+          <div class="lesson-stage" id="lessonStage"></div>
+          <div class="lesson-side">
+            <div class="lesson-levels" id="lessonLevels" role="tablist">
+              <button data-l="0" class="on">🙂 Curioso</button><button data-l="1">🤓 Interesado</button><button data-l="2">🔧 Técnico</button>
+            </div>
+            <div class="lesson-text" id="lessonText" data-noglossary></div>
+            <div class="lesson-quiz" id="lessonQuiz"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- PROPAGACIÓN -->
     <section id="propagacion">
       <div class="section-head">
@@ -209,16 +253,22 @@
         <h2>¿Cómo está hoy la propagación?</h2>
         <p>El Sol manda. Con mucha actividad solar las bandas altas se “abren” y llegas lejísimos; con tormentas geomagnéticas todo se apaga. Los radioaficionados lo miran como quien mira el parte antes de salir al monte.</p>
       </div>
+      <div class="prop card">
+        <p class="prop-sentence" id="propSentence">Consultando el Sol…</p>
+        <div class="prop-bands" id="propBands"></div>
+        <p class="note" id="propMeta"></p>
+      </div>
       <div class="cards two">
-        <div class="card solar">
-          <img src="https://www.hamqsl.com/solar101vhf.php" alt="Datos solares y estado de las bandas en tiempo real" loading="lazy" width="460" height="250">
-          <p class="note">Panel en vivo de <a href="https://www.hamqsl.com/solar.html" target="_blank" rel="noopener">HamQSL (N0NBH)</a>. “Good” = la banda está abierta.</p>
+        <div class="card" id="mufWrap">
+          <h3>El mapa de la ionosfera, ahora</h3>
+          <img id="mufMap" alt="Mapa mundial de la máxima frecuencia utilizable en este momento" loading="lazy" width="1145" height="679">
+          <p class="note">Cada color es la frecuencia más alta (en MHz) que rebota en esa zona para un salto de 3.000 km. Donde pone 28 o más, la banda de 10 m está abierta. Mapa de <a href="https://prop.kc2g.com/" target="_blank" rel="noopener">KC2G</a>, actualizado cada 15 minutos.</p>
         </div>
         <div class="card">
           <h3>Cómo leerlo</h3>
           <dl class="glossary">
-            <dt>SFI (flujo solar)</dt><dd>Cuanto más alto, mejor van las bandas altas (20, 15, 10 m). Por encima de 150 es una fiesta.</dd>
-            <dt>K-index</dt><dd>Agitación del campo magnético. 0-2 tranquilo; 5 o más, tormenta: ruido y bandas cerradas.</dd>
+            <dt>Flujo solar</dt><dd>Cuanto más alto, mejor van las bandas altas (20, 15, 10 m). Por encima de 150 es una fiesta.</dd>
+            <dt>Índice K</dt><dd>Agitación del campo magnético. 0-2 tranquilo; 5 o más, tormenta: ruido y bandas cerradas.</dd>
             <dt>Día / Noche</dt><dd>De día funcionan las bandas altas; de noche las bajas (80 y 40 m). Por eso el dial de arriba cambia según la hora.</dd>
             <dt>Ciclo solar</dt><dd>El Sol tiene ciclos de unos 11 años. El ciclo 25 ha tenido su máximo hace poco: buen momento para empezar.</dd>
           </dl>
@@ -399,6 +449,10 @@
   <script src="js/stations.js"></script>
   <script src="js/morse.js"></script>
   <script src="js/qso.js"></script>
+  <script src="js/sounds.js"></script>
+  <script src="js/lessons.js"></script>
+  <script src="js/propagation.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/glossary.js"></script>
 </body>
 </html>

@@ -364,3 +364,72 @@ body { overflow-x: hidden; }
 .chip:hover, .chip.on { border-color: var(--accent); background: var(--accent-soft); }
 .guided-tips { margin: 0; padding-left: 20px; color: var(--muted); font-size: .9rem; display: grid; gap: 6px; }
 @media (max-width: 860px) { .guided { grid-template-columns: 1fr; padding: 22px; } }
+
+/* ---------- ¿Qué es este sonido? ---------- */
+.sounds { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; align-items: start; }
+.wf { padding: 16px; }
+.wf-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; font: 600 .9rem var(--mono); color: var(--accent); }
+#waterfall { width: 100%; height: 220px; display: block; border-radius: 8px; background: #111214; border: 1px solid var(--line); image-rendering: pixelated; }
+.wf-axis { display: flex; justify-content: space-between; font: .72rem var(--mono); color: var(--muted); margin-top: 4px; }
+.sound-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; }
+.sound-card { display: flex; align-items: center; gap: 10px; text-align: left; background: var(--panel); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font: 500 .95rem var(--sans); cursor: pointer; }
+.sound-card .ico { font-size: 1.3rem; }
+.sound-card:hover, .sound-card.on { border-color: var(--accent); background: var(--accent-soft); }
+.sound-card.on .ico { animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.2); } }
+.sound-info h3 { margin-bottom: .4em; }
+.sound-info .look { color: var(--accent); font-size: .95rem; }
+
+/* ---------- Lecciones ---------- */
+.lesson { padding: 0; overflow: hidden; }
+.lesson-tabs { display: flex; gap: 4px; padding: 10px 10px 0; border-bottom: 1px solid var(--line); overflow-x: auto; background: #0b0c0e; }
+.lesson-tab { background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted); padding: 10px 14px; font: 600 .95rem var(--sans); cursor: pointer; white-space: nowrap; }
+.lesson-tab.on { color: var(--ink); border-bottom-color: var(--accent); }
+.lesson-tab .tick { color: var(--accent); }
+.lesson-body { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; padding: 22px; }
+.lesson-stage { display: flex; flex-direction: column; gap: 12px; }
+.lesson-canvas { width: 100%; height: 200px; display: block; background: #0b0c0e; border: 1px solid var(--line); border-radius: 10px; }
+.lesson-svg { width: 100%; height: auto; display: block; background: #0b0c0e; border: 1px solid var(--line); border-radius: 10px; }
+.lesson-readout { margin: 0; color: #d4d5db; }
+.lesson-readout b { color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.lesson-levels { display: inline-flex; background: var(--bg2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; flex-wrap: wrap; }
+.lesson-levels button { background: none; border: 0; color: var(--muted); padding: 7px 14px; border-radius: 999px; font: 500 .9rem var(--sans); cursor: pointer; }
+.lesson-levels button.on { background: var(--accent); color: #0f1714; }
+.lesson-text { min-height: 120px; }
+.lesson-text p { color: #d4d5db; }
+.lesson-text b { color: var(--ink); }
+.lesson-quiz h4 { margin: 8px 0; font: 600 .8rem var(--mono); color: var(--hot); text-transform: uppercase; letter-spacing: .08em; }
+.lq p { margin: 10px 0 6px; font-weight: 500; }
+.lq-opts { display: grid; gap: 6px; }
+.lq .opt.wide { padding: 9px 12px; font-size: .92rem; }
+.lq-result { color: var(--accent); font-weight: 600; min-height: 1em; }
+
+/* ---------- Propagación en directo ---------- */
+.prop { margin-bottom: 18px; }
+.prop-sentence { font-size: 1.15rem; color: #d4d5db; margin-top: 0; }
+.prop-sentence b { color: var(--ink); }
+.prop-bands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.pb { display: grid; grid-template-columns: auto 1fr; column-gap: 8px; align-items: center; background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.pb .dot { width: 12px; height: 12px; border-radius: 50%; grid-row: span 2; }
+.pb b { font: 600 1rem var(--mono); }
+.pb span:not(.dot) { font-weight: 600; }
+.pb small { grid-column: 2; color: var(--muted); font-size: .8rem; }
+.pb.good .dot { background: var(--accent); box-shadow: 0 0 10px var(--accent); } .pb.good span:not(.dot) { color: var(--accent); }
+.pb.fair .dot { background: var(--hot); } .pb.fair span:not(.dot) { color: var(--hot); }
+.pb.bad .dot { background: var(--red); } .pb.bad span:not(.dot) { color: var(--red); }
+#mufWrap img { width: 100%; height: auto; border-radius: 8px; background: #fff; display: block; margin-bottom: 8px; }
+#mufWrap[hidden] { display: none; }
+
+/* ---------- Glosario emergente ---------- */
+abbr.term { text-decoration: underline dotted var(--accent); text-underline-offset: 3px; cursor: help; }
+abbr.term:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.term-tip { position: fixed; z-index: 2000; background: #1d1e23; color: #d4d5db; border: 1px solid var(--accent);
+  border-radius: 10px; padding: 10px 12px; font-size: .88rem; line-height: 1.45; box-shadow: 0 12px 30px #000a; pointer-events: none; }
+.term-tip b { color: var(--accent); margin-right: 4px; }
+
+@media (max-width: 860px) {
+  .sounds, .lesson-body { grid-template-columns: 1fr; }
+  .prop-bands { grid-template-columns: repeat(2, 1fr); }
+}
