@@ -34,16 +34,14 @@
     <nav>
       <a href="#mes">Tu mes</a>
       <a href="#emisoras">Emisoras</a>
-      <a href="#directo">En directo</a>
       <a href="#ahora">Ahora</a>
       <a href="#sonidos">Sonidos</a>
       <a href="#como-funciona">Cómo funciona</a>
-      <a href="#propagacion">Propagación</a>
       <a href="#iss">ISS</a>
       <a href="#morse">Morse</a>
       <a href="#qso">Tu QSO</a>
-      <a href="#empezar">Empezar</a>
       <a href="#test">Examen</a>
+      <a href="#clubes">Radioclubes</a>
     </nav>
     <div class="utc" title="Los radioaficionados siempre usan la hora UTC"><small>UTC</small> <span id="utc">--:--</span></div>
   </header>
@@ -514,6 +512,91 @@
       <p class="note">Los trámites oficiales están en la <a href="https://digital.gob.es/telecomunicaciones-infraestructuras-digitales/areas-interes/espectro-radioelectrico/radioaficionados-cb27/autorizaciones/autorizacion-administrativa-radioaficionado" target="_blank" rel="noopener">web del Ministerio para la Transformación Digital</a>. Comprueba siempre allí los requisitos vigentes.</p>
     </section>
 
+    <!-- RADIOCLUBES Y CALENDARIO -->
+    <section id="clubes">
+      <div class="section-head">
+        <p class="kicker">Pasa de la pantalla a la radio</p>
+        <h2>Encuentra tu radioclub</h2>
+        <p>La forma más rápida de aprender es con gente: en un radioclub te enseñan a montar la antena, preparan el examen contigo y, en sus actividades de divulgación, puedes probar a transmitir bajo supervisión aunque aún no tengas licencia. <span id="clubCount"></span>.</p>
+      </div>
+      <div class="clubs">
+        <div id="clubMap" role="region" aria-label="Mapa de secciones de la URE por provincia"></div>
+        <div class="card club-side">
+          <div class="row">
+            <select id="clubProv" aria-label="Provincia"></select>
+            <button class="btn small ghost" id="clubNear">📍 La más cercana</button>
+          </div>
+          <div id="clubList"><p class="note">Elige tu provincia o pulsa un número del mapa. Hay además muchos radioclubes independientes: pregunta en la sección más cercana.</p></div>
+        </div>
+      </div>
+
+      <h3 class="sub">Citas del año</h3>
+      <ol class="cal" id="calList"></ol>
+      <p class="note">Fechas calculadas con las reglas habituales de cada evento. Confírmalas en la web de cada organizador antes de planear nada.</p>
+    </section>
+
+    <!-- FAMILIAS Y JÓVENES -->
+    <section id="familias">
+      <div class="section-head">
+        <p class="kicker">Para familias, curiosos y jóvenes</p>
+        <h2>¿Es para mí?</h2>
+        <p>Cinco preguntas rápidas y te decimos por dónde empezar.</p>
+      </div>
+      <div class="cards two">
+        <div class="card fit">
+          <div id="fitQs"></div>
+          <div id="fitResult"></div>
+        </div>
+        <div class="card">
+          <h3>¿Cuánto cuesta?</h3>
+          <ol class="costs">
+            <li><b>0 €</b><span>Escuchar en receptores web y practicar en esta página.</span></li>
+            <li><b>~35 €</b><span>Un receptor SDR USB para escuchar desde tu ordenador.</span></li>
+            <li><b>~40-100 €</b><span>Un walkie bibanda, el primer equipo típico cuando tienes licencia.</span></li>
+            <li><b>desde ~100 €</b><span>Un equipo de onda corta de segunda mano.</span></li>
+            <li><b>~300 €</b><span>Una estación completa con antena.</span></li>
+          </ol>
+          <p class="note">Precios orientativos; los de equipo usado y estación completa, según el tríptico de iniciación de la URE. A esto se suman las tasas del examen y la autorización.</p>
+        </div>
+      </div>
+      <div class="card parents">
+        <h3>Para madres y padres</h3>
+        <div class="parents-grid">
+          <div><b>¿Puede tener licencia un menor?</b><p>Sí. El reglamento pide una autorización escrita de los padres o tutores, que asumen la responsabilidad.</p></div>
+          <div><b>¿Es seguro?</b><p>Todo lo que se dice por radio es público: cualquiera puede escucharlo. Por eso se da la ciudad, nunca la dirección, y no se habla de temas personales.</p></div>
+          <div><b>¿Y las antenas y la electricidad?</b><p>Montar antenas exteriores o tocar fuentes de alimentación debe hacerse con un adulto o en el radioclub. Es parte del examen.</p></div>
+          <div><b>¿Hay actividades para jóvenes?</b><p>Sí: el programa <a href="https://www.ham-yota.com/" target="_blank" rel="noopener">YOTA</a> organiza campamentos y el YOTA Month de diciembre para menores de 26, y el Jamboree en el aire con los scouts.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HISPANOAMÉRICA -->
+    <section id="hispanoamerica">
+      <div class="section-head">
+        <p class="kicker">Radioafición en español</p>
+        <h2>Si no estás en España</h2>
+        <p>Casi todo lo de esta web vale en cualquier país: escuchar, entender, el Morse y los contactos. Lo que cambia es el trámite. Estas son las referencias de cada país.</p>
+      </div>
+      <div class="table-wrap">
+        <table class="countries">
+          <thead><tr><th>País</th><th>Prefijo</th><th>Quién da la licencia</th><th>Asociación nacional (IARU)</th></tr></thead>
+          <tbody>
+            <tr><td>🇪🇸 España</td><td>EA</td><td><a href="https://digital.gob.es/telecomunicaciones-infraestructuras-digitales/areas-interes/espectro-radioelectrico/radioaficionados-cb27" target="_blank" rel="noopener">Ministerio para la Transformación Digital</a></td><td>URE</td></tr>
+            <tr><td>🇲🇽 México</td><td>XE</td><td><a href="https://www.ift.org.mx/" target="_blank" rel="noopener">IFT</a></td><td>FMRE</td></tr>
+            <tr><td>🇦🇷 Argentina</td><td>LU</td><td><a href="https://www.enacom.gob.ar/" target="_blank" rel="noopener">ENACOM</a></td><td>Radio Club Argentino</td></tr>
+            <tr><td>🇨🇴 Colombia</td><td>HK</td><td><a href="https://www.mintic.gov.co/" target="_blank" rel="noopener">MinTIC</a></td><td>Liga Colombiana de Radioaficionados</td></tr>
+            <tr><td>🇨🇱 Chile</td><td>CE</td><td><a href="https://www.subtel.gob.cl/" target="_blank" rel="noopener">SUBTEL</a></td><td>Radio Club de Chile</td></tr>
+            <tr><td>🇵🇪 Perú</td><td>OA</td><td><a href="https://www.gob.pe/mtc" target="_blank" rel="noopener">MTC</a></td><td>Radio Club Peruano</td></tr>
+            <tr><td>🇻🇪 Venezuela</td><td>YV</td><td><a href="https://www.conatel.gob.ve/" target="_blank" rel="noopener">CONATEL</a></td><td>Radio Club Venezolano</td></tr>
+            <tr><td>🇪🇨 Ecuador</td><td>HC</td><td><a href="https://www.arcotel.gob.ec/" target="_blank" rel="noopener">ARCOTEL</a></td><td>Guayaquil Radio Club</td></tr>
+            <tr><td>🇺🇾 Uruguay</td><td>CX</td><td><a href="https://www.gub.uy/unidad-reguladora-servicios-comunicaciones/" target="_blank" rel="noopener">URSEC</a></td><td>Radio Club del Uruguay</td></tr>
+            <tr><td>🇨🇺 Cuba</td><td>CO / CM</td><td>Ministerio de Comunicaciones</td><td>Federación de Radioaficionados de Cuba</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">El examen y el simulador de esta web siguen el temario español. La electricidad, la radio y la operación son comunes; la normativa cambia en cada país. Para transmitir desde otro país, consulta antes la reciprocidad de licencias con su organismo.</p>
+    </section>
+
     <!-- EMERGENCIAS -->
     <section id="emergencias" class="band-strip">
       <div class="section-head">
@@ -567,6 +650,9 @@
   <script src="js/propagation.js"></script>
   <script src="js/live.js"></script>
   <script src="js/iss.js"></script>
+  <script src="js/clubs-data.js"></script>
+  <script src="js/clubs.js"></script>
+  <script src="js/family.js"></script>
   <script src="js/app.js"></script>
   <script src="js/glossary.js"></script>
   <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
