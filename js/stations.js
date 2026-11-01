@@ -26,9 +26,12 @@
   function initMap() {
     if (typeof L === 'undefined') { $('map').textContent = 'No se pudo cargar el mapa.'; return; }
     map = L.map('map', { worldCopyJump: true, scrollWheelZoom: false }).setView([40.2, -3.7], 5);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18, subdomains: 'abcd',
+    // Mapa base gris oscuro de Esri (sin API key) + capa de nombres
+    const esri = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/';
+    L.tileLayer(esri + 'World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Mapa &copy; Esri, HERE, Garmin, &copy; OpenStreetMap', maxZoom: 16,
     }).addTo(map);
+    L.tileLayer(esri + 'World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', { maxZoom: 16 }).addTo(map);
     layer = L.layerGroup().addTo(map);
   }
 
