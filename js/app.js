@@ -14,7 +14,7 @@
   const isDay = () => { const h = new Date().getHours(); return h >= 8 && h < 19; };
 
   $('dialScale').innerHTML = DIAL_BANDS.map(b =>
-    `<span class="mark" style="left:${(pos(b.from) * 100).toFixed(2)}%;width:${Math.max(0.8, (pos(b.to) - pos(b.from)) * 100).toFixed(2)}%"><b>${b.name.replace(' m', '')}</b></span>`
+    `<span class="mark" style="left:${(pos(b.from) * 100).toFixed(2)}%;width:${Math.max(0.8, (pos(b.to) - pos(b.from)) * 100).toFixed(2)}%">${b.name === '12 m' ? '' : `<b>${b.name.replace(' m', '')}</b>`}</span>`
   ).join('');
 
   function dialMood(b) {
@@ -42,6 +42,26 @@
     }
   }
   $('dialKnob').addEventListener('input', updateDial);
+
+  // Señal del dial: limpia dentro de banda, ruido fuera
+  const wave = $('wavePath');
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let phase = 0;
+  function drawWave() {
+    const clear = $('dialBand').classList.contains('hot');
+    const pts = [];
+    for (let x = 0; x <= 400; x += 4) {
+      const env = Math.sin((x / 400) * Math.PI);
+      const sig = clear ? Math.sin(x / 9 + phase) * 16 * env : 0;
+      const noise = (Math.random() - 0.5) * (clear ? 4 : 18) * env;
+      pts.push(`${x},${(30 + sig + noise).toFixed(1)}`);
+    }
+    wave.setAttribute('d', 'M' + pts.join(' L'));
+    wave.parentNode.classList.toggle('clear', clear);
+    phase += 0.25;
+    if (!still) setTimeout(() => requestAnimationFrame(drawWave), 60);
+  }
+  drawWave();
   // arranca en 40 m
   $('dialKnob').value = Math.round(pos(7.1) * 1000);
   updateDial();
