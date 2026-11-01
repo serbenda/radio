@@ -190,6 +190,7 @@
     if (!raf) { clear(); draw(); }
     const end = SYNTH[s.id](ctx.currentTime + 0.05);
     document.querySelector(`.sound-card[data-id="${s.id}"]`).classList.add('on');
+    document.dispatchEvent(new CustomEvent('radio:event', { detail: { name: 'sound', id: s.id } }));
     $('soundNow').textContent = `▶ ${s.name}`;
     $('soundInfo').innerHTML = `<h3>${s.icon} ${s.name}</h3><p>${s.what}</p><p class="look">${s.look}</p>
       <a class="btn small ghost" href="${WEBSDR + s.tune}" target="_blank" rel="noopener">🎧 Búscalo en un receptor de verdad</a>`;

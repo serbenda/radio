@@ -40,6 +40,7 @@
         (Math.max(...states) === 2 ? `Lo mejor ahora: <b>${best.bands}</b>, para llegar a ${best.where.toLowerCase()}.` : 'Las bandas están flojas: buen momento para escuchar con paciencia.');
       $('propBands').innerHTML = GROUPS.map((g, i) =>
         `<div class="pb ${CLASS[states[i]]}"><span class="dot"></span><b>${g.bands}</b><span>${LABEL[states[i]]}</span><small>${g.where}</small></div>`).join('');
+      document.dispatchEvent(new CustomEvent('radio:event', { detail: { name: 'prop', id: 'hoy' } }));
       $('propMeta').textContent = `Datos solares: HamQTH.com · actualizado ${new Date(s.fetchedAt || Date.now()).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}. Estimación orientativa.`;
     } catch (e) {
       $('propSentence').textContent = 'No se han podido cargar los datos solares ahora mismo. Vuelve a intentarlo en un rato.';
