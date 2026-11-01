@@ -2,7 +2,7 @@
 
 **Web de iniciación a la radioafición en español:** de "¿qué es esto?" a tu indicativo. Para quien no ha tocado nunca una radio.
 
-**👉 https://bendi.dev/radio**
+**👉 https://bendi.dev/radio** · 🇬🇧 **English:** https://bendi.dev/radio/en/
 
 [![Comprobaciones](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml/badge.svg)](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml)
 [![Enlaces externos](https://github.com/serbenda/radio/actions/workflows/enlaces.yml/badge.svg)](https://github.com/serbenda/radio/actions/workflows/enlaces.yml)
@@ -86,6 +86,7 @@ Todo está documentado para poder mantenerlo sin ayuda. Índice completo y orden
 | Arreglar algo que falla | [Solución de problemas](docs/PROBLEMAS.md) |
 | Saber de dónde salen los datos | [Datos y servicios](docs/DATOS.md) · [Contenido](docs/CONTENIDO.md) |
 | Cambiar el diseño | [Estilos](docs/ESTILOS.md) |
+| Traducir o tocar la versión en inglés | [Idiomas](docs/IDIOMAS.md) |
 | Saber por qué se hizo así | [Decisiones](docs/DECISIONES.md) · [Estudio](docs/ESTUDIO.md) |
 | Comprobar la calidad | [Pruebas](docs/PRUEBAS.md) · [Calidad](docs/CALIDAD.md) · [Privacidad](docs/PRIVACIDAD.md) |
 | Entender un término | [Glosario](docs/GLOSARIO.md) |

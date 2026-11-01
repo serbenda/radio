@@ -2,6 +2,17 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión corresponde a una pull request fusionada en `main`.
 
+## [2.4.0] · 1 de noviembre de 2026 · En inglés
+
+### Añadido
+- **Versión en inglés** de toda la web en `/radio/en/` (`en/listen/`, `en/understand/`, `en/practice/`, `en/exam/`, `en/start/`), con los mismos módulos, secciones y progreso guardado.
+- **Selector ES/EN** en la cabecera de cada página, que lleva a la misma página y sección en el otro idioma.
+- **Examen en inglés:** las 169 preguntas traducidas, con los mismos ids, opciones y respuestas.
+- Contactos simulados en inglés con voces en inglés; lecciones, glosario, calendario y textos de todos los módulos en los dos idiomas (`Radio.t`).
+- `hreflang` en todas las páginas y en `sitemap.xml`; páginas de error y sin conexión bilingües.
+- `tools/check.mjs` §12: cada página tiene su versión en inglés con las mismas secciones, y el examen en inglés coincide con el castellano.
+- `docs/IDIOMAS.md`: cómo está hecha la versión en inglés y cómo traducir algo nuevo.
+
 ## [2.3.0] · 1 de noviembre de 2026 · Instalable en Android e iPhone, buenas prácticas y documentación completa
 
 ### Añadido

@@ -4,6 +4,14 @@ Las decisiones de diseño importantes, con su contexto y sus consecuencias, para
 
 ---
 
+## D19 · Versión en inglés con páginas propias y textos en el código (1 nov 2026)
+
+**Contexto.** Se quiere la web en inglés además de en castellano, sin paso de compilación (D10) y sin duplicar la lógica.
+
+**Decisión.** Páginas HTML propias en `en/` con nombres de carpeta en inglés (mejor para buscadores y para quien comparte el enlace), con la misma estructura e ids que las castellanas. Los textos que pinta JavaScript se escriben juntos en el código con `Radio.t('castellano', 'English')`, para que al cambiar uno se vea el otro. El banco del examen, por su tamaño, va en un archivo aparte (`js/en/exam-data.js`) con los mismos ids y respuestas. `Radio.url()` traduce solo las rutas entre páginas. `hreflang` en páginas y sitemap; `x-default` es el castellano. No se redirige automáticamente según el idioma del navegador: hay un selector visible ES/EN.
+
+**Consecuencias.** Cada cambio de texto en una página hay que hacerlo en las dos versiones; `tools/check.mjs` §12 avisa si las secciones dejan de coincidir y §6 si el examen inglés se desalinea. El progreso es el mismo en los dos idiomas. Los formularios de aviso y la documentación siguen en castellano. Detalle: [IDIOMAS.md](IDIOMAS.md).
+
 ## D18 · Instalar la app: botón propio y pasos por sistema (1 nov 2026)
 
 **Contexto.** La web ya era instalable (D12), pero casi nadie sabe que una web se puede instalar, y cada sistema lo hace distinto: Android y Chrome/Edge ofrecen una ventana de instalación (`beforeinstallprompt`); iPhone e iPad no la tienen y solo se instala desde Compartir → Añadir a pantalla de inicio.

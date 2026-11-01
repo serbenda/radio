@@ -36,6 +36,7 @@ y, si vas a publicar, los pasos de [Publicar una versión](#publicar-una-versió
 - [Actualizar Leaflet o satellite.js](#actualizar-leaflet-o-satellitejs)
 - [Cambiar colores o tipografías](#cambiar-colores-o-tipografías)
 - [Cambiar el menú o el pie](#cambiar-el-menú-o-el-pie)
+- [Cambiar un texto en los dos idiomas](#cambiar-un-texto-en-los-dos-idiomas)
 
 **Operación**
 - [Publicar una versión](#publicar-una-versión)
@@ -270,7 +271,14 @@ Ver [ESTILOS.md](ESTILOS.md): colores en `:root` de `css/style.css`; tipografía
 
 ### Cambiar el menú o el pie
 
-Cámbialo **igual en las seis páginas** (la portada usa `./` y las demás `../`). Truco: haz el cambio en una y cópialo con cuidado; `check.mjs` (§2) te dirá cuál ha quedado distinta.
+Cámbialo **igual en las seis páginas** de cada idioma (en castellano la portada usa `./` y las demás `../`; en inglés, `en/index.html` usa `./` y las demás `../`). Truco: haz el cambio en una y cópialo con cuidado; `check.mjs` (§2) te dirá cuál ha quedado distinta.
+
+### Cambiar un texto en los dos idiomas
+
+- **Texto de una página:** cambia la página en castellano y su pareja en `en/` (`escuchar/` ↔ `en/listen/`, etc.).
+- **Texto que pinta un módulo:** está escrito como `t('castellano', 'English')`: cambia los dos.
+- **Pregunta del examen:** en `js/exam-data.js` y en `js/en/exam-data.js`, mismo `id`, mismas opciones en el mismo orden y mismo `ok`.
+- Detalle y reglas: [IDIOMAS.md](IDIOMAS.md).
 
 ---
 

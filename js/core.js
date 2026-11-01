@@ -17,8 +17,12 @@
  *  - Radio.esc(texto)            → escapa HTML; úsalo siempre que pintes texto que venga de fuera.
  *  - Radio.store.get/set/remove  → localStorage con JSON y try/catch (en modo privado puede fallar).
  *  - Radio.emit(nombre, id)      → avisa de un logro para "Tu primer mes" (evento `radio:event`).
- *  - Radio.url(ruta)             → enlace correcto a otra página, esté donde esté la actual.
- *  - Radio.root                  → la raíz relativa ("./" o "../").
+ *  - Radio.url(ruta)             → enlace correcto a otra página, esté donde esté la actual y en su idioma
+ *                                   (la ruta se escribe con nombres en castellano: url('examen/')).
+ *  - Radio.root                  → la raíz relativa ("./", "../" o "../../").
+ *  - Radio.lang / Radio.locale   → 'es' o 'en' / 'es-ES' o 'en-GB' (según <html lang>).
+ *  - Radio.t(es, en)             → el texto del idioma de la página: t('Cargando…', 'Loading…').
+ *  - Radio.counterpart(idioma)   → la misma página en el otro idioma (selector ES/EN de la cabecera).
  *  - Radio.whileVisible(el, on, off) → ejecuta `on` cuando el elemento se ve y la pestaña está
  *                                   activa, y `off` cuando deja de verse. Es la base para que
  *                                   ninguna animación gaste batería fuera de pantalla.
@@ -121,12 +125,53 @@
    * Así los enlaces funcionan igual en bendi.dev/radio/, en local y abriendo el archivo directamente.
    */
   const root = (document.querySelector('meta[name="radio-root"]') || {}).content || './';
+
+  /* ---------- Idioma (castellano / inglés) ----------
+   * La web existe en castellano (raíz) y en inglés (carpeta en/, con nombres de carpeta en inglés).
+   * Las dos versiones comparten módulos, ids y datos guardados; cambia solo el texto.
+   * Detalle: docs/IDIOMAS.md. */
+
+  /** Idioma de la página: 'en' si <html lang="en…">; si no, 'es'. */
+  const lang = /^en/i.test(document.documentElement.lang) ? 'en' : 'es';
+  /** Configuración regional para fechas, horas y números (toLocaleString…). */
+  const locale = lang === 'en' ? 'en-GB' : 'es-ES';
+
   /**
-   * Construye un enlace a otra página del sitio desde la página actual.
-   * @param {string} path  Ruta desde la raíz del sitio, sin "/" inicial (p. ej. 'escuchar/#emisoras').
-   * @returns {string} Ruta relativa lista para usar en href (p. ej. '../escuchar/#emisoras').
+   * Elige el texto del idioma de la página. Los módulos escriben los dos textos juntos:
+   *   t('Cargando emisoras…', 'Loading stations…')
+   * @param {*} es  Texto (o valor) en castellano.
+   * @param {*} [en] El mismo en inglés. Si falta, se usa el castellano.
+   * @returns {*} El del idioma actual.
    */
-  const url = path => root + path;
+  const t = (es, en) => (lang === 'en' && en !== undefined ? en : es);
+
+  /** Nombre de cada página en castellano (carpeta de la raíz) → carpeta en la versión inglesa (en/…). */
+  const SLUGS = { escuchar: 'listen', entender: 'understand', practicar: 'practice', examen: 'exam', empezar: 'start' };
+  const SLUGS_ES = Object.fromEntries(Object.entries(SLUGS).map(([es, en]) => [en, es]));
+
+  /**
+   * Construye un enlace a otra página del sitio desde la página actual, en el idioma actual.
+   * Las rutas se escriben SIEMPRE con los nombres en castellano; en inglés se traducen solas:
+   *   url('escuchar/#emisoras') → '../escuchar/#emisoras' (castellano) o '../../en/listen/#emisoras' (inglés).
+   * @param {string} path  Ruta desde la raíz del sitio, sin "/" inicial (p. ej. 'escuchar/#emisoras', '#mes', '').
+   * @returns {string} Ruta relativa lista para usar en href.
+   */
+  const url = path => {
+    if (lang !== 'en') return root + path;
+    const m = path.match(/^([a-z-]+)\/(.*)$/);
+    return root + 'en/' + (m && SLUGS[m[1]] ? `${SLUGS[m[1]]}/${m[2]}` : path);
+  };
+
+  /**
+   * Dirección de la misma página en el otro idioma (para el selector de idioma).
+   * @param {'es'|'en'} to Idioma de destino.
+   * @returns {string} Ruta relativa con el mismo anclaje (#…).
+   */
+  function counterpart(to) {
+    const page = document.body.dataset.page;      // siempre el nombre en castellano: inicio, escuchar…
+    const folder = page === 'inicio' ? '' : `${to === 'en' ? SLUGS[page] : page}/`;
+    return root + (to === 'en' ? 'en/' : '') + folder + location.hash;
+  }
 
   // Se lee una sola vez al cargar: si la persona cambia el ajuste del sistema, se aplica al recargar.
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -209,7 +254,7 @@
   }
 
   // Única variable global que crea este archivo. Los demás módulos hacen `const { $, esc, store } = Radio;`.
-  window.Radio = { $, esc, store, emit, url, root, reducedMotion, whileVisible, onceVisible, report, track };
+  window.Radio = { $, esc, store, emit, url, root, lang, locale, t, counterpart, SLUGS, SLUGS_ES, reducedMotion, whileVisible, onceVisible, report, track };
 
   /* ---------- Enlaces antiguos ---------- */
   // Hasta noviembre de 2026 todo estaba en una sola página: bendi.dev/radio/#ahora, #test…
@@ -224,7 +269,7 @@
   };
   const old = location.hash.slice(1);
   // location.replace (y no location.href) para que el botón "Atrás" no vuelva a la URL antigua y repita la redirección.
-  if (document.body.dataset.page === 'inicio' && MOVED[old]) location.replace(url(`${MOVED[old]}/#${old}`));
+  if (lang === 'es' && document.body.dataset.page === 'inicio' && MOVED[old]) location.replace(url(`${MOVED[old]}/#${old}`));
 
   /* ---------- Cabecera y pie, comunes a todas las páginas ---------- */
 
@@ -246,6 +291,14 @@
   // "¿Ves un error?": abre el formulario de GitHub con la página ya puesta.
   const rep = $('reportLink');
   if (rep) rep.href = report('error-contenido', { pagina: location.origin + location.pathname + location.hash }, `[Web] ${document.title}`);
+
+  // Selector de idioma de la cabecera: lleva a la misma página (y la misma sección) en el otro idioma.
+  // El href ya viene escrito en el HTML; aquí se le añade el #anclaje actual y se recuerda la elección.
+  const sw = $('langSwitch');
+  if (sw) sw.addEventListener('click', () => {
+    sw.href = counterpart(sw.hreflang === 'en' ? 'en' : 'es');
+    store.set('radio.lang', sw.hreflang);
+  });
 
   // "Apoya el proyecto": cuenta cuántas personas abren la página de GitHub Sponsors (hito sin datos personales).
   const sponsor = $('sponsorLink');
@@ -270,9 +323,9 @@
      * portapapeles y cambia el texto del botón durante 2,5 s. Si tampoco hay portapapeles, muestra la URL.
      */
     share.addEventListener('click', async () => {
-      const data = { title: 'Radio · Descubre la radioafición', text: 'Escucha emisoras de todo el mundo y haz tu primer contacto por radio 📻', url: 'https://bendi.dev/radio/' };
+      const data = { title: t('Radio · Descubre la radioafición', 'Radio · Discover amateur radio'), text: t('Escucha emisoras de todo el mundo y haz tu primer contacto por radio 📻', 'Listen to stations from all over the world and make your first radio contact 📻'), url: t('https://bendi.dev/radio/', 'https://bendi.dev/radio/en/') };
       if (navigator.share) { try { await navigator.share(data); } catch (e) { /* cancelado */ } return; }
-      try { await navigator.clipboard.writeText(data.url); share.textContent = '✅ Enlace copiado'; } catch (e) { share.textContent = data.url; }
+      try { await navigator.clipboard.writeText(data.url); share.textContent = t('✅ Enlace copiado', '✅ Link copied'); } catch (e) { share.textContent = data.url; }
       setTimeout(() => { share.textContent = label; }, 2500);
     });
   }

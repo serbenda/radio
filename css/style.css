@@ -59,7 +59,8 @@
  * 45. Grabaciones reales ........ tarjetas de audio de Wikimedia Commons.
  * 46. Aviso sin JavaScript ...... mensaje de <noscript>.
  * 47. Instalar y apoyar ......... pasos para instalar la app y tarjeta de GitHub Sponsors (+ pie).
- * 48. Movimiento reducido ....... con "reducir movimiento", ninguna animación ni transición dura.
+ * 48. Selector de idioma ........ enlace ES/EN de la cabecera.
+ * 49. Movimiento reducido ....... con "reducir movimiento", ninguna animación ni transición dura.
  *
  * CAPAS (z-index), de abajo arriba:
  *   -1    ondas del receptor (.receiver::before/::after), detrás del contenido de la tarjeta.
@@ -84,7 +85,7 @@
  *
  * MOVIMIENTO: con "reducir movimiento" activado en el sistema (prefers-reduced-motion: reduce) se
  *   desactivan el desplazamiento suave, el ecualizador del reproductor y las ondas del receptor (secciones
- *   17 y 18), y la sección 48 anula cualquier otra animación o transición (latido de los sonidos,
+ *   17 y 18), y la sección 49 anula cualquier otra animación o transición (latido de los sonidos,
  *   medidor del QSO, botones, .toast). Los lienzos animados los controla JavaScript con
  *   Radio.reducedMotion (js/core.js).
  *
@@ -901,6 +902,15 @@ footer .report, footer .sponsor { font-size: .88rem; }
 }
 .sponsor-pill:hover { background: #ea4aaa26; border-color: #ea4aaa; color: #fff; }
 .sponsor-pill .beat { display: inline-block; animation: sponsorBeat 1.6s ease-in-out infinite; }
+
+/* ---------- Selector de idioma ----------
+   Enlace ES/EN de la cabecera (id langSwitch). Lleva a la misma página en el otro idioma; core.js le
+   añade el #anclaje actual al pulsarlo. */
+.lang-switch {
+  font: 600 .8rem var(--mono); letter-spacing: .06em; color: var(--ink); text-decoration: none;
+  padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px; white-space: nowrap;
+}
+.lang-switch:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ---------- Movimiento reducido ----------
    Red de seguridad: si el sistema pide "reducir movimiento", ninguna animación ni transición dura
