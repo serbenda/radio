@@ -52,26 +52,6 @@ const GLOSSARY = [
   ['Indicativo', 'Tu “nombre” oficial en el aire. En España empiezan por EA, EB, EC… y un número de zona.'],
 ];
 
-const QUIZ = [
-  { q: '¿Qué significa “73” al final de un contacto?',
-    a: ['Fin de la emisión por avería', 'Saludos cordiales', 'Cambio de frecuencia', 'Llámame en 73 minutos'], ok: 1 },
-  { q: 'Una banda de 40 metros, ¿a qué frecuencia aproximada está?',
-    a: ['7 MHz', '40 MHz', '144 MHz', '400 kHz'], ok: 0,
-    why: 'Longitud de onda ≈ 300 / frecuencia en MHz. 300 / 7 ≈ 43 m.' },
-  { q: '¿Qué hora usan los radioaficionados para anotar sus contactos?',
-    a: ['La hora local', 'La hora UTC', 'La hora de Greenwich en verano', 'La del país que llama'], ok: 1 },
-  { q: '¿Por qué de noche se oyen estaciones lejanas en 40 y 80 metros?',
-    a: ['Hay menos gente usando el móvil', 'Las ondas rebotan en la ionosfera', 'Las emisoras suben la potencia', 'El frío mejora los cables'], ok: 1 },
-  { q: 'Ley de Ohm: con 12 V y una resistencia de 6 Ω, ¿qué corriente circula?',
-    a: ['72 A', '0,5 A', '2 A', '18 A'], ok: 2, why: 'I = V / R = 12 / 6 = 2 A.' },
-  { q: '¿Qué es un repetidor?',
-    a: ['Un equipo que retransmite tu señal desde un sitio alto para darle más alcance', 'Alguien que repite los mensajes de voz', 'Un amplificador de audio', 'Una antena de onda corta'], ok: 0 },
-  { q: '“QTH” significa…',
-    a: ['Mi potencia', 'Mi localización', 'Hay interferencias', 'Recibido'], ok: 1 },
-  { q: '¿Necesitas licencia para escuchar a los radioaficionados?',
-    a: ['Sí, siempre', 'No, escuchar es libre', 'Solo en onda corta', 'Solo si usas un SDR'], ok: 1 },
-];
-
 const FAQ = [
   ['¿Es caro?', 'Para escuchar te basta con el navegador o un SDR de unos 35 €. Un walkie para empezar con licencia cuesta menos que unas zapatillas. Luego puedes gastar lo que quieras, como en cualquier hobby.'],
   ['¿Tengo que saber Morse?', 'No. Hace años que no es obligatorio. Mucha gente lo aprende después porque engancha y porque llega más lejos con menos potencia.'],

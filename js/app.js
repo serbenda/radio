@@ -116,36 +116,6 @@
     btn.disabled = false; btn.textContent = '▶ Escuchar';
   });
 
-  /* ---------- Morse: juego ---------- */
-  // Orden de aprendizaje tipo Koch: se van añadiendo letras según aciertas
-  const KOCH = 'ETIANMSURWDKGOHVFLPJBXCYZQ'.split('');
-  let level = 6, score = 0, streak = 0, answer = null, locked = false;
-  const shuffle = a => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
-
-  async function newRound() {
-    const pool = KOCH.slice(0, level);
-    answer = pool[Math.floor(Math.random() * pool.length)];
-    const opts = shuffle([answer, ...shuffle(pool.filter(c => c !== answer)).slice(0, 3)]);
-    $('gameOptions').innerHTML = opts.map(c => `<button class="opt">${c}</button>`).join('');
-    locked = false;
-    $('gameListen').textContent = '🔁 Repetir';
-    await Morse.play(answer, +$('wpm').value);
-  }
-  $('gameListen').addEventListener('click', () => (answer && !locked ? Morse.play(answer, +$('wpm').value) : newRound()));
-  $('gameOptions').addEventListener('click', e => {
-    const b = e.target.closest('.opt');
-    if (!b || locked) return;
-    locked = true;
-    const ok = b.textContent === answer;
-    b.classList.add(ok ? 'right' : 'wrong');
-    if (!ok) [...$('gameOptions').children].find(x => x.textContent === answer).classList.add('right');
-    if (ok) { score++; streak++; if (streak % 3 === 0 && level < KOCH.length) level++; } else streak = 0;
-    $('gameScore').textContent = `Aciertos: ${score} · Racha: ${streak} · Letras: ${level}`;
-    $('gameListen').textContent = '🔊 Siguiente';
-    answer = null;
-    setTimeout(() => { if (!answer) newRound(); }, 900);
-  });
-
   /* ---------- Alfabeto fonético ---------- */
   const renderPhonetic = () => {
     const txt = $('phoneticIn').value.toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
@@ -159,37 +129,6 @@
   /* ---------- Jerga ---------- */
   $('glossary').innerHTML = GLOSSARY.map(([t, d]) => `<dt>${t}</dt><dd>${d}</dd>`).join('');
 
-  /* ---------- Test ---------- */
-  let qi = 0, hits = 0;
-  function renderQuiz() {
-    const box = $('quiz');
-    if (qi >= QUIZ.length) {
-      const pct = Math.round(hits / QUIZ.length * 100);
-      const msg = pct >= 75 ? '¡Tienes madera de radioaficionado! El examen está a tu alcance.'
-        : pct >= 50 ? 'Nada mal para no haber estudiado. Con un curso de club lo apruebas.'
-        : 'Todo se aprende: date una vuelta por las secciones de arriba y vuelve a intentarlo.';
-      box.innerHTML = `<div class="quiz-end"><p class="big">${hits} / ${QUIZ.length}</p><p>${msg}</p>
-        <button class="btn" id="quizAgain">Repetir</button></div>`;
-      $('quizAgain').onclick = () => { qi = 0; hits = 0; renderQuiz(); };
-      return;
-    }
-    const q = QUIZ[qi];
-    box.innerHTML = `<p class="quiz-n">Pregunta ${qi + 1} de ${QUIZ.length}</p><h3>${esc(q.q)}</h3>
-      <div class="quiz-opts">${q.a.map((a, i) => `<button class="opt wide" data-i="${i}">${esc(a)}</button>`).join('')}</div>
-      <p class="quiz-why" id="quizWhy"></p>`;
-    box.querySelector('.quiz-opts').addEventListener('click', e => {
-      const b = e.target.closest('.opt');
-      if (!b || box.dataset.done === String(qi)) return;
-      box.dataset.done = String(qi);
-      const i = +b.dataset.i;
-      const opts = box.querySelectorAll('.opt');
-      opts[q.ok].classList.add('right');
-      if (i === q.ok) hits++; else b.classList.add('wrong');
-      $('quizWhy').innerHTML = (q.why ? esc(q.why) + ' ' : '') + `<button class="btn small" id="quizNext">Siguiente →</button>`;
-      $('quizNext').onclick = () => { qi++; renderQuiz(); };
-    });
-  }
-  renderQuiz();
 
   /* ---------- Compartir la web ---------- */
   $('shareSite').addEventListener('click', async () => {
@@ -199,6 +138,14 @@
     catch (e) { $('shareSite').textContent = data.url; }
     setTimeout(() => { $('shareSite').textContent = '📤 Compartir esta web'; }, 2500);
   });
+
+  /* ---------- Lista de comprobación del trámite ---------- */
+  const CK = 'radio.checklist';
+  let ck = {}; try { ck = JSON.parse(localStorage.getItem(CK)) || {}; } catch (e) {}
+  const boxes = [...document.querySelectorAll('#checklist input')];
+  const ckNote = () => { const n = boxes.filter(b => b.checked).length; $('checkNote').textContent = n === boxes.length ? '🎉 ¡Ya eres radioaficionado! 73.' : `${n} de ${boxes.length} pasos hechos. Se guarda en este navegador.`; };
+  boxes.forEach(b => { b.checked = !!ck[b.dataset.k]; b.addEventListener('change', () => { ck[b.dataset.k] = b.checked; try { localStorage.setItem(CK, JSON.stringify(ck)); } catch (e) {} ckNote(); document.dispatchEvent(new CustomEvent('radio:progress')); }); });
+  ckNote();
 
   /* ---------- FAQ ---------- */
   $('faqList').innerHTML = FAQ.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('');

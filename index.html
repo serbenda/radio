@@ -40,7 +40,7 @@
       <a href="#morse">Morse</a>
       <a href="#qso">Tu QSO</a>
       <a href="#empezar">Empezar</a>
-      <a href="#test">Test</a>
+      <a href="#test">Examen</a>
     </nav>
     <div class="utc" title="Los radioaficionados siempre usan la hora UTC"><small>UTC</small> <span id="utc">--:--</span></div>
   </header>
@@ -293,14 +293,17 @@
             <label class="inline">Velocidad <input type="range" id="wpm" min="8" max="30" value="15"> <span id="wpmVal">15</span> ppm</label>
           </div>
         </div>
-        <div class="card">
-          <h3>¿Qué letra es?</h3>
-          <p>Escucha y adivina. Empezamos con letras fáciles y vamos añadiendo.</p>
-          <div class="game">
-            <button class="btn" id="gameListen">🔊 Nueva letra</button>
-            <div class="game-options" id="gameOptions"></div>
-            <div class="game-score" id="gameScore">Aciertos: 0 · Racha: 0</div>
+        <div class="card koch">
+          <h3>Entrenador Koch</h3>
+          <p>El método con el que aprenden los telegrafistas: oyes letras a velocidad real, empiezas con dos y se desbloquea una nueva cuando dominas las anteriores. Responde con el teclado o tocando la letra.</p>
+          <button class="btn" id="kochStart">🎧 Empezar a entrenar</button>
+          <div id="kochBoard" hidden>
+            <div class="koch-screen"><span class="koch-prompt" id="kochPrompt">?</span><button class="btn small ghost" id="kochRepeat">🔁 Repetir</button></div>
+            <p class="koch-feedback" id="kochFeedback" aria-live="polite"></p>
+            <div class="koch-keys" id="kochKeys"></div>
           </div>
+          <p class="note" id="kochStats"></p>
+          <p class="note">Consejo: 15 minutos al día valen más que dos horas el domingo. No cuentes puntos y rayas: aprende el sonido de cada letra.</p>
         </div>
       </div>
     </section>
@@ -330,13 +333,22 @@
       <div class="section-head">
         <p class="kicker">Simulador</p>
         <h2>Haz tu primer contacto</h2>
-        <p>El miedo de todo novato: “¿y qué digo?”. Aquí practicas un QSO completo con una estación virtual, sin presión. Al final te llevas tu tarjeta QSL.</p>
+        <p>El miedo de todo novato: “¿y qué digo?”. Aquí practicas contactos completos con estaciones virtuales, sin presión: tu primera charla, un concurso, un parque natural, una red de emergencia o la Estación Espacial. Al final te llevas la tarjeta QSL.</p>
       </div>
       <div class="qso">
         <form class="qso-setup card" id="qsoSetup">
           <label>Tu nombre <input type="text" id="qsoName" maxlength="20" placeholder="Bendi" required></label>
           <label>Tu ciudad <input type="text" id="qsoCity" maxlength="24" placeholder="Madrid" required></label>
           <label>Tu indicativo de prácticas <input type="text" id="qsoCall" maxlength="8" placeholder="EA4ABC" required></label>
+          <label class="wide">Tipo de contacto
+            <select id="qsoScenario">
+              <option value="primero">🎙️ Mi primer contacto (charla con otro país)</option>
+              <option value="concurso">🏁 Concurso: rápido, solo lo justo</option>
+              <option value="pota">🌲 Cazar un parque natural (POTA)</option>
+              <option value="emergencia">🚨 Ejercicio de red de emergencia</option>
+              <option value="iss">🛰️ La Estación Espacial pasa por encima</option>
+            </select>
+          </label>
           <label class="check"><input type="checkbox" id="qsoVoice" checked> Oír a la otra estación</label>
           <button class="btn" type="submit">🎙️ Salir al aire</button>
           <p class="note">En España los indicativos empiezan por EA, EB, EC… y un número de zona (4 = centro). Este es inventado, solo para practicar.</p>
@@ -389,6 +401,31 @@
           <p>Para tener equipo propio en casa tramitas la licencia de estación con una descripción de antenas y equipos. Y después: “CQ, CQ…”.</p>
         </li>
       </ol>
+      <h3 class="sub">El trámite en cifras</h3>
+      <div class="facts">
+        <div class="fact"><b>2</b><span>partes de examen: electricidad y radio, y normativa</span></div>
+        <div class="fact"><b>50 %</b><span>de aciertos en cada parte para aprobar</span></div>
+        <div class="fact"><b>90 min</b><span>de examen, en ordenador, en la Jefatura Provincial de Telecomunicaciones</span></div>
+        <div class="fact"><b>23,67 €</b><span>de tasa de examen</span></div>
+        <div class="fact"><b>114,36 €</b><span>por la autorización (exentos mayores de 65, pensionistas y personas con discapacidad)</span></div>
+        <div class="fact"><b>Para siempre</b><span>la autorización no caduca mientras no renuncies</span></div>
+      </div>
+      <p class="note">Importes y condiciones según la <a href="https://www.ure.es/obtener-autorizacion/" target="_blank" rel="noopener">guía de la URE</a> y la <a href="https://boe.es/boe/dias/2013/07/12/pdfs/BOE-A-2013-7624.pdf" target="_blank" rel="noopener">Orden IET/1311/2013</a>. Compruébalos antes de pagar: las tasas pueden cambiar.</p>
+
+      <h3 class="sub">Tu lista de comprobación</h3>
+      <ul class="checklist" id="checklist">
+        <li><label><input type="checkbox" data-k="escuchar"> He escuchado radioaficionados en un receptor web</label></li>
+        <li><label><input type="checkbox" data-k="club"> He contactado con un radioclub o sección de la URE</label></li>
+        <li><label><input type="checkbox" data-k="estudio"> Tengo el termómetro del simulador por encima del 80 % en las dos partes</label></li>
+        <li><label><input type="checkbox" data-k="solicitud"> He pagado la tasa (modelo 790) y presentado la solicitud de examen</label></li>
+        <li><label><input type="checkbox" data-k="aprobado"> He aprobado y tengo el certificado HAREC</label></li>
+        <li><label><input type="checkbox" data-k="autorizacion"> He pedido la autorización y tengo mi indicativo</label></li>
+        <li><label><input type="checkbox" data-k="seguro"> Tengo seguro de responsabilidad civil para la antena (incluido si eres socio de la URE)</label></li>
+        <li><label><input type="checkbox" data-k="estacion"> He tramitado la licencia de estación para casa (si quiero estación fija)</label></li>
+        <li><label><input type="checkbox" data-k="qso"> ¡He hecho mi primer contacto de verdad!</label></li>
+      </ul>
+      <p class="note" id="checkNote"></p>
+
       <div class="cards three gear">
         <article class="card">
           <span class="tag">Solo escuchar · ~35 €</span>
@@ -422,11 +459,15 @@
     <!-- TEST -->
     <section id="test">
       <div class="section-head">
-        <p class="kicker">Ponte a prueba</p>
-        <h2>¿Aprobarías? Mini test de iniciación</h2>
-        <p>Preguntas del estilo de las que caen en el examen. No es el examen oficial: es para que veas que no es tan difícil como parece.</p>
+        <p class="kicker">Prepara el examen</p>
+        <h2>Simulador del examen de radioaficionado</h2>
+        <p>Como el examen real: dos partes, electricidad y radio por un lado y normativa y operación por otro, y se aprueba con la mitad de aciertos en cada una. Primero estudia con tarjetas, que repiten lo que fallas; cuando el termómetro llegue al 80 %, haz el simulacro.</p>
       </div>
-      <div class="card quiz" id="quiz"></div>
+      <div class="exam card">
+        <div id="examDash"></div>
+        <div id="examStage" hidden></div>
+      </div>
+      <p class="note">Preguntas de práctica escritas a partir del temario oficial (anexo II de la <a href="https://boe.es/boe/dias/2013/07/12/pdfs/BOE-A-2013-7624.pdf" target="_blank" rel="noopener">Orden IET/1311/2013</a>), no las del examen. Tu progreso se guarda solo en este navegador.</p>
     </section>
 
     <!-- FAQ -->
@@ -448,7 +489,10 @@
   <script src="js/data.js"></script>
   <script src="js/stations.js"></script>
   <script src="js/morse.js"></script>
+  <script src="js/koch.js"></script>
   <script src="js/qso.js"></script>
+  <script src="js/exam-data.js"></script>
+  <script src="js/exam.js"></script>
   <script src="js/sounds.js"></script>
   <script src="js/lessons.js"></script>
   <script src="js/propagation.js"></script>
