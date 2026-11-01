@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entender · Radio</title>
+  <meta name="description" content="Cómo funciona la radio en lecciones interactivas, las bandas de radioaficionado, la propagación de hoy y los pases de la ISS sobre tu ciudad.">
+  <meta name="radio-root" content="../">
+  <meta name="theme-color" content="#111214">
+  <link rel="canonical" href="https://bendi.dev/radio/entender/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="radio · bendi.dev">
+  <meta property="og:title" content="Entender · Radio">
+  <meta property="og:description" content="Cómo funciona la radio en lecciones interactivas, las bandas de radioaficionado, la propagación de hoy y los pases de la ISS sobre tu ciudad.">
+  <meta property="og:url" content="https://bendi.dev/radio/entender/">
+  <meta property="og:image" content="https://bendi.dev/radio/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dial de radio con una señal y el texto: Hay miles de voces en el aire. Escúchalas.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Entender · Radio">
+  <meta name="twitter:description" content="Cómo funciona la radio en lecciones interactivas, las bandas de radioaficionado, la propagación de hoy y los pases de la ISS sobre tu ciudad.">
+  <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📻</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="entender">
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header class="top">
+    <a class="brand" href="../" aria-label="radio, ir a la portada">📻 <span>radio</span></a>
+    <nav aria-label="Principal">
+      <a href="../" data-page="inicio">Inicio</a>
+      <a href="../escuchar/" data-page="escuchar">Escuchar</a>
+      <a href="../entender/" data-page="entender">Entender</a>
+      <a href="../practicar/" data-page="practicar">Practicar</a>
+      <a href="../examen/" data-page="examen">Examen</a>
+      <a href="../empezar/" data-page="empezar">Empezar</a>
+    </nav>
+    <div class="utc" title="Los radioaficionados siempre usan la hora UTC"><small>UTC</small> <span id="utc">--:--</span></div>
+  </header>
+
+  <main id="contenido">
+    <header class="page-head">
+      <p class="kicker">Paso 2</p>
+      <h1>Entender</h1>
+      <p class="lead">Cómo viaja la radio, qué son las bandas, cómo está hoy la propagación y cuándo pasa la Estación Espacial sobre ti.</p>
+      <nav class="toc" aria-label="En esta página"><a href="#como-funciona">Cómo funciona la radio</a> · <a href="#bandas">Las bandas: un mapa del espectro</a> · <a href="#propagacion">¿Cómo está hoy la propagación?</a> · <a href="#iss">¿Cuándo pasa la Estación Espacial sobre ti?</a></nav>
+    </header>
+
+    <!-- CÓMO FUNCIONA -->
+    <section id="como-funciona">
+      <div class="section-head">
+        <p class="kicker">Lecciones de 5 minutos</p>
+        <h2>Cómo funciona la radio</h2>
+        <p>Cuatro ideas que lo explican casi todo. Elige cuánto quieres profundizar: la misma lección contada para curiosos, para interesados o con la parte técnica.</p>
+      </div>
+      <div class="lesson card">
+        <div class="lesson-tabs" id="lessonTabs"></div>
+        <div class="lesson-body">
+          <div class="lesson-stage" id="lessonStage"></div>
+          <div class="lesson-side">
+            <div class="lesson-levels" id="lessonLevels" role="tablist">
+              <button data-l="0" class="on">🙂 Curioso</button><button data-l="1">🤓 Interesado</button><button data-l="2">🔧 Técnico</button>
+            </div>
+            <div class="lesson-text" id="lessonText" data-noglossary></div>
+            <div class="lesson-quiz" id="lessonQuiz"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- BANDAS -->
+    <section id="bandas">
+      <div class="section-head">
+        <p class="kicker">Entender lo que oyes</p>
+        <h2>Las bandas: un mapa del espectro</h2>
+        <p>Los radioaficionados tienen “carriles” reservados en el espectro. Se nombran por su longitud de onda. Toca una banda para ver cómo se comporta.</p>
+      </div>
+      <div class="bands" id="bands"></div>
+      <div class="band-detail" id="bandDetail"></div>
+      <p class="note">Rangos aproximados de la IARU Región 1 (Europa y África). Lo que puedes usar exactamente depende de tu autorización.</p>
+    </section>
+    <!-- PROPAGACIÓN -->
+    <section id="propagacion">
+      <div class="section-head">
+        <p class="kicker">El tiempo… pero del espacio</p>
+        <h2>¿Cómo está hoy la propagación?</h2>
+        <p>El Sol manda. Con mucha actividad solar las bandas altas se “abren” y llegas lejísimos; con tormentas geomagnéticas todo se apaga. Los radioaficionados lo miran como quien mira el parte antes de salir al monte.</p>
+      </div>
+      <div class="prop card">
+        <p class="prop-sentence" id="propSentence">Consultando el Sol…</p>
+        <div class="prop-bands" id="propBands"></div>
+        <p class="prop-explain" id="propExplain" aria-live="polite"></p>
+        <p class="note" id="propMeta"></p>
+      </div>
+      <div class="cards two">
+        <div class="card" id="mufWrap">
+          <h3>El mapa de la ionosfera, ahora</h3>
+          <img id="mufMap" alt="Mapa mundial de la máxima frecuencia utilizable en este momento" loading="lazy" width="1145" height="679">
+          <p class="note">Cada color es la frecuencia más alta (en MHz) que rebota en esa zona para un salto de 3.000 km. Donde pone 28 o más, la banda de 10 m está abierta. Mapa de <a href="https://prop.kc2g.com/" target="_blank" rel="noopener">KC2G</a>, actualizado cada 15 minutos.</p>
+        </div>
+        <div class="card">
+          <h3>Cómo leerlo</h3>
+          <dl class="glossary">
+            <dt>Flujo solar</dt><dd>Cuanto más alto, mejor van las bandas altas (20, 15, 10 m). Por encima de 150 es una fiesta.</dd>
+            <dt>Índice K</dt><dd>Agitación del campo magnético. 0-2 tranquilo; 5 o más, tormenta: ruido y bandas cerradas.</dd>
+            <dt>Día / Noche</dt><dd>De día funcionan las bandas altas; de noche las bajas (80 y 40 m). Por eso el dial de la portada cambia según la hora.</dd>
+            <dt>Ciclo solar</dt><dd>El Sol tiene ciclos de unos 11 años. El ciclo 25 ha tenido su máximo hace poco: buen momento para empezar.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+    <!-- ISS -->
+    <section id="iss">
+      <div class="section-head">
+        <p class="kicker">Radio desde el espacio</p>
+        <h2>¿Cuándo pasa la Estación Espacial sobre ti?</h2>
+        <p>La ISS lleva una estación de radioaficionado. Cuando pasa por encima, unos 10 minutos, se puede oír con un walkie o un receptor sencillo en <strong>145,800 MHz en FM</strong>. Aquí ves dónde está ahora y sus próximos pases.</p>
+      </div>
+      <div class="iss-wrap">
+        <div class="card iss-panel">
+          <p class="iss-count" id="issCount">Calculando la órbita…</p>
+          <p id="issNow"></p>
+          <div class="row">
+            <label class="inline">Desde
+              <select id="issCity">
+                <option value="40.4168,-3.7038">Madrid</option><option value="41.3874,2.1686">Barcelona</option><option value="39.4699,-0.3763">Valencia</option>
+                <option value="37.3891,-5.9845">Sevilla</option><option value="43.2630,-2.9350">Bilbao</option><option value="42.8782,-8.5448">Santiago</option>
+                <option value="28.4636,-16.2518">Santa Cruz de Tenerife</option><option value="39.5696,2.6502">Palma</option>
+                <option value="19.4326,-99.1332">Ciudad de México</option><option value="-34.6037,-58.3816">Buenos Aires</option><option value="4.7110,-74.0721">Bogotá</option>
+              </select>
+            </label>
+            <button class="btn small ghost" id="issGeo">📍 Usar mi ubicación</button>
+          </div>
+          <p class="note">Mostrando pases para <b id="issWhere">Madrid</b>. Tu ubicación se usa solo en tu navegador: no se envía a ningún sitio.</p>
+          <h3>Próximos pases</h3>
+          <ol class="iss-passes" id="issPasses"></ol>
+        </div>
+        <div id="issMap" role="region" aria-label="Posición de la Estación Espacial"></div>
+      </div>
+      <p class="note">Órbita de <a href="https://celestrak.org/" target="_blank" rel="noopener">CelesTrak</a>, calculada en tu navegador. Con una antena de mano y paciencia se oyen los contactos con colegios que organiza <a href="https://www.ariss.org/" target="_blank" rel="noopener">ARISS</a>; los pases altos se oyen mejor. Al acercarse y alejarse, la frecuencia se desplaza unos kHz (efecto Doppler).</p>
+    </section>
+
+    <nav class="next-page" aria-label="Siguiente paso"><a href="../practicar/">Siguiente: Practicar →</a></nav>
+  </main>
+
+  <footer>
+    <p><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button></p>
+    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">código y fuentes de datos</a> · 73!</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/5.0.0/satellite.min.js"></script>
+  <script src="../js/core.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/journey.js"></script>
+  <script src="../js/lessons.js"></script>
+  <script src="../js/bands.js"></script>
+  <script src="../js/propagation.js"></script>
+  <script src="../js/iss.js"></script>
+  <script src="../js/glossary.js"></script>
+  <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

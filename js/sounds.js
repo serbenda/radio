@@ -1,6 +1,23 @@
-// "¿Qué es este sonido?": sonidos típicos de la radio sintetizados en el navegador,
-// con una cascada (espectrograma) en directo para aprender a reconocerlos también a la vista.
+/**
+ * sounds.js · "¿Qué es este sonido?": galería de sonidos de la radio con cascada en directo.
+ *
+ * Página: Escuchar (#sonidos). Necesita: #waterfall (canvas), #soundGrid, #soundInfo, #soundNow, #soundStop.
+ * Depende de: morse.js (tabla Morse.CODE para el Morse y la baliza).
+ *
+ * Los ocho sonidos se SINTETIZAN con Web Audio imitando los reales (no son grabaciones):
+ *   cw (Morse), ft8 (8-FSK, 6,25 Hz entre tonos, símbolos de 0,16 s), rtty (dos tonos a 170 Hz, 45,45 baudios),
+ *   beacon (baliza NCDXF: indicativo + 4 rayas a 100/10/1/0,1 W), pips (señal horaria),
+ *   tuning (portadora que se desplaza), qrn (estática con chasquidos), buzz (armónicos cada 100 Hz).
+ * La cascada es un AnalyserNode (FFT de 4096) pintado fila a fila de 0 a 3 kHz.
+ *
+ * Rendimiento: el bucle de dibujo solo corre mientras suena algo y 1,5 s después; luego se para.
+ * Accesibilidad: cada sonido es un botón con aria-pressed; la descripción en texto (qué es y cómo
+ * se ve en la cascada) está en #soundInfo, así que el canvas es decorativo para lectores de pantalla.
+ * Logro: Radio.emit('sound', id).
+ */
 (() => {
+  'use strict';
+  if (!document.getElementById('sonidos')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
   const WEBSDR = 'http://websdr.ewi.utwente.nl:8901/?tune=';
 
@@ -173,24 +190,29 @@
       row.data.set([r, gg, b, 255], x * 4);
     }
     g2.putImageData(row, 0, 0);
-    raf = requestAnimationFrame(draw);
+    // Se detiene sola un poco después del último sonido (deja caer la cascada) para no gastar batería
+    if (playing.length || performance.now() < tailUntil) raf = requestAnimationFrame(draw);
+    else raf = null;
   }
+  let tailUntil = 0;
 
   function stop() {
     playing.forEach(n => { try { n.stop(); } catch (e) {} });
     playing = [];
     clearTimeout(timer);
-    document.querySelectorAll('.sound-card').forEach(c => c.classList.remove('on'));
+    tailUntil = performance.now() + 1500;
+    document.querySelectorAll('.sound-card').forEach(c => { c.classList.remove('on'); c.setAttribute('aria-pressed', 'false'); });
     $('soundNow').textContent = 'Elige un sonido para oírlo y verlo';
   }
 
   function play(s) {
     audio();
     stop();
-    if (!raf) { clear(); draw(); }
     const end = SYNTH[s.id](ctx.currentTime + 0.05);
-    document.querySelector(`.sound-card[data-id="${s.id}"]`).classList.add('on');
-    document.dispatchEvent(new CustomEvent('radio:event', { detail: { name: 'sound', id: s.id } }));
+    if (!raf) draw();
+    const card = document.querySelector(`.sound-card[data-id="${s.id}"]`);
+    card.classList.add('on'); card.setAttribute('aria-pressed', 'true');
+    Radio.emit('sound', s.id);
     $('soundNow').textContent = `▶ ${s.name}`;
     $('soundInfo').innerHTML = `<h3>${s.icon} ${s.name}</h3><p>${s.what}</p><p class="look">${s.look}</p>
       <a class="btn small ghost" href="${WEBSDR + s.tune}" target="_blank" rel="noopener">🎧 Búscalo en un receptor de verdad</a>`;
@@ -198,7 +220,7 @@
   }
 
   $('soundGrid').innerHTML = SOUNDS.map(s =>
-    `<button class="sound-card" data-id="${s.id}"><span class="ico">${s.icon}</span><span>${s.name}</span></button>`).join('');
+    `<button type="button" class="sound-card" data-id="${s.id}" aria-pressed="false"><span class="ico" aria-hidden="true">${s.icon}</span><span>${s.name}</span></button>`).join('');
   $('soundGrid').addEventListener('click', e => {
     const b = e.target.closest('.sound-card'); if (!b) return;
     const s = SOUNDS.find(x => x.id === b.dataset.id);

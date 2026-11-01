@@ -1,0 +1,23 @@
+# Ejecuta las comprobaciones automáticas (tools/check.mjs) en cada pull request y en cada
+# push a development o main. Si algo falla, la PR lo muestra en rojo antes de fusionar.
+# Detalle de lo que se comprueba: docs/PRUEBAS.md
+name: Comprobaciones
+
+on:
+  pull_request:
+  push:
+    branches: [development, main]
+
+permissions:
+  contents: read
+
+jobs:
+  comprobar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Comprobar páginas, enlaces, scripts y datos
+        run: node tools/check.mjs

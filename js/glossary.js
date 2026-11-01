@@ -1,4 +1,12 @@
-// Glosario emergente: cada término de jerga se explica donde aparece (ratón, teclado o toque).
+/**
+ * glossary.js · Glosario emergente: la jerga se explica donde aparece.
+ *
+ * Páginas: todas. Debe cargarse el ÚLTIMO, cuando el resto de módulos ya han pintado su contenido.
+ * Marca con <abbr class="term"> la primera aparición de cada término en cada <section> de <main>,
+ * salvo dentro de enlaces, botones, títulos h1/h2, formularios, gráficos o elementos con [data-noglossary].
+ * El bocadillo sale al pasar el ratón, al enfocar con el teclado (tabindex=0) o al tocar en el móvil; Esc lo cierra.
+ * Términos ambiguos se dejan fuera a propósito (p. ej. USB: banda lateral o conector).
+ */
 (() => {
   const TERMS = [
     ['CQ', 'Llamada general: “¿alguien quiere hablar conmigo?”.'],
@@ -45,6 +53,8 @@
     ['POTA', 'Parks on the Air: transmitir desde parques naturales, como un juego con puntos y diplomas.'],
     ['YOTA', 'Youngsters On The Air: actividades de radioafición para menores de 26 años.'],
     ['SWL', 'Radioescucha: quien escucha la radio sin transmitir. No necesita licencia.'],
+    ['CB-27', 'Banda Ciudadana: 40 canales alrededor de 27 MHz que cualquiera puede usar sin licencia con un equipo homologado.'],
+    ['PMR446', 'Walkies de uso libre en 446 MHz, con 0,5 W y antena fija. No necesitan licencia.'],
     ['Morse', 'Código de puntos y rayas para enviar letras. En radio se llama CW o telegrafía.'],
   ];
 

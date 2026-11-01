@@ -1,4 +1,17 @@
-// Contenido estático de la web: bandas, jerga, alfabeto, test y FAQ.
+/**
+ * data.js · Contenido estático compartido (sin lógica). Se carga en todas las páginas, justo después de core.js.
+ *
+ *  BANDS        Bandas de radioaficionado (IARU Región 1, aproximadas): nombre, MHz, tipo, cuándo funciona y texto.
+ *  DIAL_BANDS   Las bandas de onda corta de BANDS, para el dial de la portada (dial.js).
+ *  PHONETIC     Alfabeto fonético internacional y números (jargon.js, qso.js).
+ *  GLOSSARY     Jerga básica para la lista de "Habla como un radioaficionado" (jargon.js).
+ *  FAQ          Preguntas frecuentes [pregunta, respuesta] (faq.js).
+ *  WEBSDR       URL base del WebSDR de Twente con ?tune= (guided.js, sounds.js).
+ *  LISTEN       Presets de la escucha guiada: tune = "<kHz><modo>", best = day | night | any (guided.js).
+ *  RECEIVERS    Receptores web alternativos (guided.js).
+ *
+ * Cómo añadir contenido: docs/CONTENIDO.md. tools/check.mjs valida BANDS y LISTEN.
+ */
 
 const BANDS = [
   { name: '160 m', from: 1.81, to: 2.0, kind: 'hf', when: 'Noche de invierno',
@@ -58,6 +71,8 @@ const FAQ = [
   ['¿Es muy difícil el examen?', 'Es asequible estudiando unas semanas. Hay electricidad básica, radio, normativa y operación. Los radioclubes suelen dar cursos de preparación.'],
   ['¿Es legal escuchar?', 'Escuchar las bandas de radioaficionado es libre. Para emitir necesitas la autorización y tu indicativo.'],
   ['¿Es cosa de mayores?', 'Hay mucha gente veterana, sí, pero también grupos juveniles muy activos (busca “YOTA”, Youngsters On The Air), satélites, drones, electrónica, programación de SDR… Es un hobby muy técnico y muy actual.'],
+  ['¿Puedo usar una Baofeng sin licencia?', 'Para escuchar, sí. Para transmitir, no: solo con licencia de radioaficionado y en las bandas de radioaficionado. No es un walkie PMR446 de uso libre, aunque pueda sintonizar esas frecuencias.'],
+  ['¿Y la CB-27? ¿Necesita licencia?', 'No. Desde 2015 la Banda Ciudadana es de uso común en España: basta un equipo homologado y respetar sus límites (40 canales, 4 W en FM y AM, 12 W en BLU).'],
   ['¿Mis vecinos van a oírme en la tele?', 'Con un equipo moderno, bien instalado y con potencias razonables, es muy raro. Parte del examen trata justo de evitar interferencias.'],
   ['¿Dónde encuentro gente?', 'En los radioclubes y secciones locales de la URE, en las redes (charlas programadas) de los repetidores de tu zona y en los mercadillos de radio, que son un planazo.'],
 ];
@@ -75,4 +90,10 @@ const LISTEN = [
     text: 'Un coro de pitidos que suben y bajan cada 15 segundos. Son ordenadores intercambiando contactos con señales tan débiles que el oído no las oye.' },
   { id: 'bc', title: 'Emisoras internacionales', tune: '9600am', chip: '📻 Onda corta', best: 'any',
     text: 'La banda de 31 m de radiodifusión: emisoras de otros países en idiomas de todo el mundo. Mueve la sintonía para ir saltando entre ellas.' },
+];
+
+// Receptores web alternativos por si el de Twente está saturado o caído
+const RECEIVERS = [
+  { name: 'Lista de todos los WebSDR del mundo', url: 'http://websdr.org/' },
+  { name: 'Mapa de receptores KiwiSDR', url: 'http://rx.linkfanel.net/' },
 ];

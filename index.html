@@ -4,14 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Radio · Descubre la radioafición</title>
-  <meta name="description" content="Iniciación a la radioafición: escucha emisoras de todo el mundo, oye a radioaficionados en directo, aprende Morse y da tus primeros pasos.">
+  <meta name="description" content="Iniciación a la radioafición en español: escucha emisoras de todo el mundo, aprende cómo funciona la radio, practica tu primer contacto y prepara el examen.">
+  <meta name="radio-root" content="./">
   <meta name="theme-color" content="#111214">
   <link rel="canonical" href="https://bendi.dev/radio/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
   <meta property="og:site_name" content="radio · bendi.dev">
   <meta property="og:title" content="Radio · Descubre la radioafición">
-  <meta property="og:description" content="Escucha emisoras de todo el mundo, oye a radioaficionados en directo, aprende Morse y haz tu primer contacto por radio.">
+  <meta property="og:description" content="Iniciación a la radioafición en español: escucha emisoras de todo el mundo, aprende cómo funciona la radio, practica tu primer contacto y prepara el examen.">
   <meta property="og:url" content="https://bendi.dev/radio/">
   <meta property="og:image" content="https://bendi.dev/radio/og.png">
   <meta property="og:image:width" content="1200">
@@ -19,34 +20,30 @@
   <meta property="og:image:alt" content="Dial de radio con una señal y el texto: Hay miles de voces en el aire. Escúchalas.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Radio · Descubre la radioafición">
-  <meta name="twitter:description" content="Emisoras de todo el mundo, receptores en directo, Morse y tu primer contacto por radio.">
+  <meta name="twitter:description" content="Iniciación a la radioafición en español: escucha emisoras de todo el mundo, aprende cómo funciona la radio, practica tu primer contacto y prepara el examen.">
   <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📻</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
-<body>
+<body data-page="inicio">
+  <a class="skip" href="#contenido">Saltar al contenido</a>
   <header class="top">
-    <a class="brand" href="#inicio">📻 <span>radio</span></a>
-    <nav>
-      <a href="#mes">Tu mes</a>
-      <a href="#emisoras">Emisoras</a>
-      <a href="#ahora">Ahora</a>
-      <a href="#sonidos">Sonidos</a>
-      <a href="#como-funciona">Cómo funciona</a>
-      <a href="#iss">ISS</a>
-      <a href="#morse">Morse</a>
-      <a href="#qso">Tu QSO</a>
-      <a href="#test">Examen</a>
-      <a href="#clubes">Radioclubes</a>
+    <a class="brand" href="./" aria-label="radio, ir a la portada">📻 <span>radio</span></a>
+    <nav aria-label="Principal">
+      <a href="./" data-page="inicio">Inicio</a>
+      <a href="./escuchar/" data-page="escuchar">Escuchar</a>
+      <a href="./entender/" data-page="entender">Entender</a>
+      <a href="./practicar/" data-page="practicar">Practicar</a>
+      <a href="./examen/" data-page="examen">Examen</a>
+      <a href="./empezar/" data-page="empezar">Empezar</a>
     </nav>
     <div class="utc" title="Los radioaficionados siempre usan la hora UTC"><small>UTC</small> <span id="utc">--:--</span></div>
   </header>
 
-  <main>
+  <main id="contenido">
     <!-- HERO -->
     <section id="inicio" class="hero">
       <div class="hero-text">
@@ -54,11 +51,11 @@
         <h1>Hay miles de voces en el aire.<br><em>Ahora mismo.</em></h1>
         <p class="lead">La radioafición es el hobby de comunicarse por radio con gente de todo el planeta, sin internet ni operador de por medio. Esta web te enseña a escucharla, entenderla y, si te engancha, a dar el salto.</p>
         <div class="hero-cta">
-          <a class="btn" href="#emisoras">Escuchar algo ya</a>
-          <a class="btn ghost" href="#empezar">Cómo empezar</a>
+          <a class="btn" href="escuchar/">Escuchar algo ya</a>
+          <a class="btn ghost" href="empezar/">Cómo empezar</a>
         </div>
       </div>
-      <div class="receiver" aria-label="Dial interactivo">
+      <div class="receiver" aria-label="Dial interactivo" data-noglossary>
         <div class="dial">
           <svg class="wave" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true"><path id="wavePath"></path></svg>
           <div class="dial-scale" id="dialScale"></div>
@@ -72,7 +69,6 @@
         <p class="hint">Mueve el dial: cada banda se comporta distinto según la hora y el sol.</p>
       </div>
     </section>
-
     <!-- QUÉ ES -->
     <section class="intro">
       <div class="cards three">
@@ -90,7 +86,6 @@
         </article>
       </div>
     </section>
-
     <!-- TU PRIMER MES -->
     <section id="mes">
       <div class="section-head">
@@ -107,554 +102,33 @@
         <div class="weeks" id="weeks"></div>
       </div>
     </section>
-
-    <!-- EMISORAS -->
-    <section id="emisoras">
+    <!-- PÁGINAS -->
+    <section id="paginas">
       <div class="section-head">
-        <p class="kicker">Paso 1 · Escuchar</p>
-        <h2>Emisoras de todo el mundo en un mapa</h2>
-        <p>Antes de emitir, todo radioaficionado empieza escuchando. Aquí tienes miles de emisoras reales: pulsa en un punto del mapa y suena.</p>
+        <p class="kicker">Por dónde empezar</p>
+        <h2>Cinco pasos, a tu ritmo</h2>
+        <p>Puedes seguir el orden o saltar a lo que más te llame. Tu ruta de arriba se va marcando sola.</p>
       </div>
-      <div class="station-tools">
-        <label>País
-          <select id="country">
-            <option value="ES" selected>España</option>
-            <option value="PT">Portugal</option>
-            <option value="FR">Francia</option>
-            <option value="IT">Italia</option>
-            <option value="DE">Alemania</option>
-            <option value="GB">Reino Unido</option>
-            <option value="US">Estados Unidos</option>
-            <option value="MX">México</option>
-            <option value="AR">Argentina</option>
-            <option value="JP">Japón</option>
-            <option value="BR">Brasil</option>
-            <option value="">Todo el mundo</option>
-          </select>
-        </label>
-        <label class="grow">Buscar
-          <input type="search" id="stationSearch" placeholder="jazz, noticias, flamenco, nombre de la emisora…">
-        </label>
-        <button class="btn small" id="randomStation">🎲 Sorpréndeme</button>
-      </div>
-      <div class="map-wrap">
-        <div id="map" role="region" aria-label="Mapa de emisoras"></div>
-        <aside class="station-list">
-          <div class="status" id="stationStatus">Cargando emisoras…</div>
-          <ul id="stationList"></ul>
-        </aside>
-      </div>
-      <div class="player" id="player" hidden>
-        <button class="play" id="playBtn" aria-label="Pausar">⏸</button>
-        <div class="now">
-          <strong id="nowName">—</strong>
-          <span id="nowMeta">—</span>
-        </div>
-        <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8" aria-label="Volumen">
-      </div>
-      <p class="note greyline-note"><span class="swatch"></span> La zona oscura es donde ahora es de noche. Por la <strong>línea gris</strong>, el borde entre día y noche, la onda corta viaja especialmente lejos. Se actualiza en directo.</p>
-      <p class="note">Datos del directorio libre <a href="https://www.radio-browser.info" target="_blank" rel="noopener">Radio Browser</a>. Son emisoras de radiodifusión por internet: el primer paso para coger el gusanillo. Lo de los radioaficionados de verdad viene justo abajo.</p>
-    </section>
-
-    <!-- EN DIRECTO -->
-    <section id="directo">
-      <div class="section-head">
-        <p class="kicker">Paso 2 · Oír a radioaficionados de verdad</p>
-        <h2>Receptores abiertos en directo</h2>
-        <p>Hay receptores conectados a grandes antenas que cualquiera puede manejar desde el navegador. Sin instalar nada, sin licencia. Prueba en la banda de 40 metros por la tarde-noche: oirás a gente charlando desde media Europa.</p>
-      </div>
-      <div class="guided card" id="guided">
-        <div class="guided-now">
-          <p class="kicker">Escucha guiada · <span id="guidedWhen">ahora</span></p>
-          <h3 id="guidedTitle">Voces en 40 m</h3>
-          <p id="guidedText">—</p>
-          <a class="btn" id="guidedGo" href="#" target="_blank" rel="noopener">🎧 Abrir el receptor ya sintonizado</a>
-        </div>
-        <div class="guided-more">
-          <p class="guided-label">O prueba otra cosa:</p>
-          <div class="guided-presets" id="guidedPresets"></div>
-          <ol class="guided-tips">
-            <li>Se abre un receptor real en Países Bajos, ya en la frecuencia buena.</li>
-            <li>Si no suena nada, haz clic en cualquier parte de la página: el navegador no deja sonar audio hasta que tocas algo.</li>
-            <li>Haz clic en la cascada (la franja de colores) cerca de las rayas brillantes: cada una es alguien transmitiendo.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="cards">
-        <a class="card link" href="http://websdr.ewi.utwente.nl:8901/" target="_blank" rel="noopener">
-          <span class="tag">El clásico</span>
-          <h3>WebSDR de la Universidad de Twente</h3>
-          <p>Un receptor en Países Bajos que cubre toda la onda corta a la vez. Haz clic en la cascada y escucha. Muchos se han aficionado aquí.</p>
-          <span class="go">Abrir →</span>
-        </a>
-        <a class="card link" href="http://rx.linkfanel.net/" target="_blank" rel="noopener">
-          <span class="tag">Por todo el mundo</span>
-          <h3>Mapa de receptores KiwiSDR</h3>
-          <p>Cientos de receptores repartidos por el planeta. Elige uno en Australia o en Canadá y escucha lo que se oye allí.</p>
-          <span class="go">Abrir →</span>
-        </a>
-        <a class="card link" href="https://pskreporter.info/pskmap.html" target="_blank" rel="noopener">
-          <span class="tag">Ver en vez de oír</span>
-          <h3>PSK Reporter</h3>
-          <p>Mapa en vivo de quién está recibiendo a quién en modos digitales. Se ve literalmente cómo se “abre” una banda.</p>
-          <span class="go">Abrir →</span>
-        </a>
-        <a class="card link" href="https://www.ariss.org/" target="_blank" rel="noopener">
-          <span class="tag">Desde el espacio</span>
-          <h3>Radio en la Estación Espacial</h3>
-          <p>La ISS lleva una estación de radioaficionado. Los colegios organizan contactos con los astronautas y se pueden escuchar desde casa.</p>
-          <span class="go">Abrir →</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- AHORA EN EL AIRE -->
-    <section id="ahora">
-      <div class="section-head">
-        <p class="kicker">En directo</p>
-        <h2>Ahora en el aire</h2>
-        <p>Cuando un radioaficionado oye a otro, a menudo lo publica en internet: es un <strong>spot</strong>, un aviso. Juntos forman un mapa vivo de quién está hablando con quién en todo el mundo, ahora mismo. Cada línea es una señal que ha cruzado países u océanos.</p>
-      </div>
-      <p class="live-summary" id="liveSummary">Cargando avisos…</p>
-      <div class="chips live-bands" id="liveBands"></div>
-      <div class="live-wrap">
-        <div id="liveMap" role="region" aria-label="Mapa de avisos en directo"></div>
-        <ol class="live-stories" id="liveStories"></ol>
-      </div>
-      <p class="note" id="liveStatus"></p>
-    </section>
-
-    <!-- SONIDOS -->
-    <section id="sonidos">
-      <div class="section-head">
-        <p class="kicker">Aprende a reconocerlos</p>
-        <h2>¿Qué es este sonido?</h2>
-        <p>Cuando escuchas la radio por primera vez todo parecen pitidos y ruido. Cada sonido tiene su forma en la <strong>cascada</strong>, el gráfico de colores de los receptores. Pulsa uno: lo oirás y verás cómo se dibuja.</p>
-      </div>
-      <div class="sounds">
-        <div class="wf card">
-          <div class="wf-head"><span id="soundNow">Elige un sonido para oírlo y verlo</span><button class="btn small ghost" id="soundStop">■ Parar</button></div>
-          <canvas id="waterfall" width="640" height="220" aria-label="Cascada: espectrograma del sonido que suena"></canvas>
-          <div class="wf-axis" aria-hidden="true"><span>0 Hz</span><span>1.000</span><span>2.000</span><span>3.000 Hz</span></div>
-          <p class="note">El tiempo cae hacia abajo y el tono va de grave (izquierda) a agudo (derecha). Igual que en un receptor de verdad.</p>
-        </div>
-        <div>
-          <div class="sound-grid" id="soundGrid"></div>
-          <div class="sound-info card" id="soundInfo"><p class="note">Los sonidos se generan en tu navegador imitando los reales. Después, búscalos en un receptor de verdad con el botón que aparece aquí.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BANDAS -->
-    <section id="bandas">
-      <div class="section-head">
-        <p class="kicker">Entender lo que oyes</p>
-        <h2>Las bandas: un mapa del espectro</h2>
-        <p>Los radioaficionados tienen “carriles” reservados en el espectro. Se nombran por su longitud de onda. Toca una banda para ver cómo se comporta.</p>
-      </div>
-      <div class="bands" id="bands"></div>
-      <div class="band-detail" id="bandDetail"></div>
-      <p class="note">Rangos aproximados de la IARU Región 1 (Europa y África). Lo que puedes usar exactamente depende de tu autorización.</p>
-    </section>
-
-    <!-- CÓMO FUNCIONA -->
-    <section id="como-funciona">
-      <div class="section-head">
-        <p class="kicker">Lecciones de 5 minutos</p>
-        <h2>Cómo funciona la radio</h2>
-        <p>Cuatro ideas que lo explican casi todo. Elige cuánto quieres profundizar: la misma lección contada para curiosos, para interesados o con la parte técnica.</p>
-      </div>
-      <div class="lesson card">
-        <div class="lesson-tabs" id="lessonTabs"></div>
-        <div class="lesson-body">
-          <div class="lesson-stage" id="lessonStage"></div>
-          <div class="lesson-side">
-            <div class="lesson-levels" id="lessonLevels" role="tablist">
-              <button data-l="0" class="on">🙂 Curioso</button><button data-l="1">🤓 Interesado</button><button data-l="2">🔧 Técnico</button>
-            </div>
-            <div class="lesson-text" id="lessonText" data-noglossary></div>
-            <div class="lesson-quiz" id="lessonQuiz"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROPAGACIÓN -->
-    <section id="propagacion">
-      <div class="section-head">
-        <p class="kicker">El tiempo… pero del espacio</p>
-        <h2>¿Cómo está hoy la propagación?</h2>
-        <p>El Sol manda. Con mucha actividad solar las bandas altas se “abren” y llegas lejísimos; con tormentas geomagnéticas todo se apaga. Los radioaficionados lo miran como quien mira el parte antes de salir al monte.</p>
-      </div>
-      <div class="prop card">
-        <p class="prop-sentence" id="propSentence">Consultando el Sol…</p>
-        <div class="prop-bands" id="propBands"></div>
-        <p class="note" id="propMeta"></p>
-      </div>
-      <div class="cards two">
-        <div class="card" id="mufWrap">
-          <h3>El mapa de la ionosfera, ahora</h3>
-          <img id="mufMap" alt="Mapa mundial de la máxima frecuencia utilizable en este momento" loading="lazy" width="1145" height="679">
-          <p class="note">Cada color es la frecuencia más alta (en MHz) que rebota en esa zona para un salto de 3.000 km. Donde pone 28 o más, la banda de 10 m está abierta. Mapa de <a href="https://prop.kc2g.com/" target="_blank" rel="noopener">KC2G</a>, actualizado cada 15 minutos.</p>
-        </div>
-        <div class="card">
-          <h3>Cómo leerlo</h3>
-          <dl class="glossary">
-            <dt>Flujo solar</dt><dd>Cuanto más alto, mejor van las bandas altas (20, 15, 10 m). Por encima de 150 es una fiesta.</dd>
-            <dt>Índice K</dt><dd>Agitación del campo magnético. 0-2 tranquilo; 5 o más, tormenta: ruido y bandas cerradas.</dd>
-            <dt>Día / Noche</dt><dd>De día funcionan las bandas altas; de noche las bajas (80 y 40 m). Por eso el dial de arriba cambia según la hora.</dd>
-            <dt>Ciclo solar</dt><dd>El Sol tiene ciclos de unos 11 años. El ciclo 25 ha tenido su máximo hace poco: buen momento para empezar.</dd>
-          </dl>
-        </div>
-      </div>
-    </section>
-
-    <!-- ISS -->
-    <section id="iss">
-      <div class="section-head">
-        <p class="kicker">Radio desde el espacio</p>
-        <h2>¿Cuándo pasa la Estación Espacial sobre ti?</h2>
-        <p>La ISS lleva una estación de radioaficionado. Cuando pasa por encima, unos 10 minutos, se puede oír con un walkie o un receptor sencillo en <strong>145,800 MHz en FM</strong>. Aquí ves dónde está ahora y sus próximos pases.</p>
-      </div>
-      <div class="iss-wrap">
-        <div class="card iss-panel">
-          <p class="iss-count" id="issCount">Calculando la órbita…</p>
-          <p id="issNow"></p>
-          <div class="row">
-            <label class="inline">Desde
-              <select id="issCity">
-                <option value="40.4168,-3.7038">Madrid</option><option value="41.3874,2.1686">Barcelona</option><option value="39.4699,-0.3763">Valencia</option>
-                <option value="37.3891,-5.9845">Sevilla</option><option value="43.2630,-2.9350">Bilbao</option><option value="42.8782,-8.5448">Santiago</option>
-                <option value="28.4636,-16.2518">Santa Cruz de Tenerife</option><option value="39.5696,2.6502">Palma</option>
-                <option value="19.4326,-99.1332">Ciudad de México</option><option value="-34.6037,-58.3816">Buenos Aires</option><option value="4.7110,-74.0721">Bogotá</option>
-              </select>
-            </label>
-            <button class="btn small ghost" id="issGeo">📍 Usar mi ubicación</button>
-          </div>
-          <p class="note">Mostrando pases para <b id="issWhere">Madrid</b>. Tu ubicación se usa solo en tu navegador: no se envía a ningún sitio.</p>
-          <h3>Próximos pases</h3>
-          <ol class="iss-passes" id="issPasses"></ol>
-        </div>
-        <div id="issMap" role="region" aria-label="Posición de la Estación Espacial"></div>
-      </div>
-      <p class="note">Órbita de <a href="https://celestrak.org/" target="_blank" rel="noopener">CelesTrak</a>, calculada en tu navegador. Con una antena de mano y paciencia se oyen los contactos con colegios que organiza <a href="https://www.ariss.org/" target="_blank" rel="noopener">ARISS</a>; los pases altos se oyen mejor. Al acercarse y alejarse, la frecuencia se desplaza unos kHz (efecto Doppler).</p>
-    </section>
-
-    <!-- MORSE -->
-    <section id="morse">
-      <div class="section-head">
-        <p class="kicker">Juega</p>
-        <h2>Morse: el idioma más viejo de la radio</h2>
-        <p>Ya no es obligatorio para la licencia, pero sigue vivo porque llega donde la voz no llega. Escribe algo y escúchalo, o pon a prueba tu oído.</p>
-      </div>
-      <div class="cards two">
-        <div class="card">
-          <h3>Traductor</h3>
-          <input type="text" id="morseIn" maxlength="60" value="CQ CQ DE EA4" aria-label="Texto a Morse">
-          <div class="morse-out" id="morseOut"></div>
-          <div class="row">
-            <button class="btn small" id="morsePlay">▶ Escuchar</button>
-            <label class="inline">Velocidad <input type="range" id="wpm" min="8" max="30" value="15"> <span id="wpmVal">15</span> ppm</label>
-          </div>
-        </div>
-        <div class="card koch">
-          <h3>Entrenador Koch</h3>
-          <p>El método con el que aprenden los telegrafistas: oyes letras a velocidad real, empiezas con dos y se desbloquea una nueva cuando dominas las anteriores. Responde con el teclado o tocando la letra.</p>
-          <button class="btn" id="kochStart">🎧 Empezar a entrenar</button>
-          <div id="kochBoard" hidden>
-            <div class="koch-screen"><span class="koch-prompt" id="kochPrompt">?</span><button class="btn small ghost" id="kochRepeat">🔁 Repetir</button></div>
-            <p class="koch-feedback" id="kochFeedback" aria-live="polite"></p>
-            <div class="koch-keys" id="kochKeys"></div>
-          </div>
-          <p class="note" id="kochStats"></p>
-          <p class="note">Consejo: 15 minutos al día valen más que dos horas el domingo. No cuentes puntos y rayas: aprende el sonido de cada letra.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- JERGA -->
-    <section id="jerga">
-      <div class="section-head">
-        <p class="kicker">Habla como un radioaficionado</p>
-        <h2>Deletrear, códigos Q y jerga</h2>
-      </div>
-      <div class="cards two">
-        <div class="card">
-          <h3>Deletrea tu nombre</h3>
-          <p>Por radio “B” y “P” suenan igual. Por eso se usa el alfabeto fonético internacional.</p>
-          <input type="text" id="phoneticIn" maxlength="40" placeholder="Escribe tu nombre" aria-label="Texto a deletrear">
-          <div class="phonetic-out" id="phoneticOut"></div>
-        </div>
-        <div class="card">
-          <h3>Lo que vas a oír</h3>
-          <dl class="glossary" id="glossary"></dl>
-        </div>
-      </div>
-    </section>
-
-    <!-- PRIMER CONTACTO -->
-    <section id="qso">
-      <div class="section-head">
-        <p class="kicker">Simulador</p>
-        <h2>Haz tu primer contacto</h2>
-        <p>El miedo de todo novato: “¿y qué digo?”. Aquí practicas contactos completos con estaciones virtuales, sin presión: tu primera charla, un concurso, un parque natural, una red de emergencia o la Estación Espacial. Al final te llevas la tarjeta QSL.</p>
-      </div>
-      <div class="qso">
-        <form class="qso-setup card" id="qsoSetup">
-          <label>Tu nombre <input type="text" id="qsoName" maxlength="20" placeholder="Bendi" required></label>
-          <label>Tu ciudad <input type="text" id="qsoCity" maxlength="24" placeholder="Madrid" required></label>
-          <label>Tu indicativo de prácticas <input type="text" id="qsoCall" maxlength="8" placeholder="EA4ABC" required></label>
-          <label class="wide">Tipo de contacto
-            <select id="qsoScenario">
-              <option value="primero">🎙️ Mi primer contacto (charla con otro país)</option>
-              <option value="concurso">🏁 Concurso: rápido, solo lo justo</option>
-              <option value="pota">🌲 Cazar un parque natural (POTA)</option>
-              <option value="emergencia">🚨 Ejercicio de red de emergencia</option>
-              <option value="iss">🛰️ La Estación Espacial pasa por encima</option>
-            </select>
-          </label>
-          <label class="check"><input type="checkbox" id="qsoVoice" checked> Oír a la otra estación</label>
-          <button class="btn" type="submit">🎙️ Salir al aire</button>
-          <p class="note">En España los indicativos empiezan por EA, EB, EC… y un número de zona (4 = centro). Este es inventado, solo para practicar.</p>
-        </form>
-        <div class="qso-radio card" id="qsoRadio" hidden>
-          <div class="qso-head">
-            <span class="onair" id="qsoOnAir">EN EL AIRE</span>
-            <span class="qso-freq" id="qsoFreq">7.145 MHz · LSB</span>
-            <span class="qso-meter" aria-hidden="true"><i id="qsoMeter"></i></span>
-          </div>
-          <ol class="qso-log" id="qsoLog" aria-live="polite"></ol>
-          <div class="qso-choices" id="qsoChoices"></div>
-        </div>
-        <div class="qso-qsl card" id="qsoQsl" hidden>
-          <canvas id="qslCanvas" width="900" height="560" aria-label="Tu tarjeta QSL"></canvas>
-          <div class="row">
-            <button class="btn" id="qslShare" hidden>📤 Compartir mi QSL</button>
-            <button class="btn" id="qslDownload">⬇️ Descargar mi QSL</button>
-            <button class="btn ghost" id="qsoAgain">Otro contacto</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- EMPEZAR -->
-    <section id="empezar">
-      <div class="section-head">
-        <p class="kicker">Si te ha picado el gusanillo</p>
-        <h2>Cómo empezar en España</h2>
-      </div>
-      <ol class="steps">
-        <li>
-          <h3>Escucha (es gratis y no necesita licencia)</h3>
-          <p>Usa los receptores web de arriba. Si quieres algo propio, un receptor SDR USB de unos 30-40 € y un programa gratuito te convierten el ordenador en una radio que oye de todo.</p>
-        </li>
-        <li>
-          <h3>Busca un radio club</h3>
-          <p>Es la forma más rápida de aprender. La <a href="https://www.ure.es" target="_blank" rel="noopener">URE (Unión de Radioaficionados Españoles)</a> tiene secciones por toda España, y muchos clubes dan cursos para el examen.</p>
-        </li>
-        <li>
-          <h3>Aprueba el examen</h3>
-          <p>Hay preguntas de electricidad y radio básica, normativa y práctica de operación. Al aprobar obtienes el certificado HAREC, válido en buena parte de Europa.</p>
-        </li>
-        <li>
-          <h3>Pide tu autorización e indicativo</h3>
-          <p>Con el certificado solicitas al Ministerio la autorización de radioaficionado, que te asigna tu indicativo (tipo EA4XYZ). Ese es tu “nombre” en el aire.</p>
-        </li>
-        <li>
-          <h3>Monta tu estación y haz tu primer contacto</h3>
-          <p>Para tener equipo propio en casa tramitas la licencia de estación con una descripción de antenas y equipos. Y después: “CQ, CQ…”.</p>
-        </li>
+      <ol class="page-cards">
+        <li><a href="escuchar/"><span class="n">1</span><b>Escuchar</b><span>Emisoras del mundo, receptores en directo, quién habla ahora y qué es cada sonido.</span></a></li>
+        <li><a href="entender/"><span class="n">2</span><b>Entender</b><span>Lecciones interactivas, bandas, propagación de hoy y la Estación Espacial.</span></a></li>
+        <li><a href="practicar/"><span class="n">3</span><b>Practicar</b><span>Morse, cómo se habla por radio y contactos simulados con tarjeta QSL.</span></a></li>
+        <li><a href="examen/"><span class="n">4</span><b>Preparar el examen</b><span>Tarjetas que repiten lo que fallas y simulacro como el real.</span></a></li>
+        <li><a href="empezar/"><span class="n">5</span><b>Dar el salto</b><span>El trámite, tu radioclub, el calendario y guía para familias.</span></a></li>
       </ol>
-      <h3 class="sub">El trámite en cifras</h3>
-      <div class="facts">
-        <div class="fact"><b>2</b><span>partes de examen: electricidad y radio, y normativa</span></div>
-        <div class="fact"><b>50 %</b><span>de aciertos en cada parte para aprobar</span></div>
-        <div class="fact"><b>90 min</b><span>de examen, en ordenador, en la Jefatura Provincial de Telecomunicaciones</span></div>
-        <div class="fact"><b>23,67 €</b><span>de tasa de examen</span></div>
-        <div class="fact"><b>114,36 €</b><span>por la autorización (exentos mayores de 65, pensionistas y personas con discapacidad)</span></div>
-        <div class="fact"><b>Para siempre</b><span>la autorización no caduca mientras no renuncies</span></div>
-      </div>
-      <p class="note">Importes y condiciones según la <a href="https://www.ure.es/obtener-autorizacion/" target="_blank" rel="noopener">guía de la URE</a> y la <a href="https://boe.es/boe/dias/2013/07/12/pdfs/BOE-A-2013-7624.pdf" target="_blank" rel="noopener">Orden IET/1311/2013</a>. Compruébalos antes de pagar: las tasas pueden cambiar.</p>
-
-      <h3 class="sub">Tu lista de comprobación</h3>
-      <ul class="checklist" id="checklist">
-        <li><label><input type="checkbox" data-k="escuchar"> He escuchado radioaficionados en un receptor web</label></li>
-        <li><label><input type="checkbox" data-k="club"> He contactado con un radioclub o sección de la URE</label></li>
-        <li><label><input type="checkbox" data-k="estudio"> Tengo el termómetro del simulador por encima del 80 % en las dos partes</label></li>
-        <li><label><input type="checkbox" data-k="solicitud"> He pagado la tasa (modelo 790) y presentado la solicitud de examen</label></li>
-        <li><label><input type="checkbox" data-k="aprobado"> He aprobado y tengo el certificado HAREC</label></li>
-        <li><label><input type="checkbox" data-k="autorizacion"> He pedido la autorización y tengo mi indicativo</label></li>
-        <li><label><input type="checkbox" data-k="seguro"> Tengo seguro de responsabilidad civil para la antena (incluido si eres socio de la URE)</label></li>
-        <li><label><input type="checkbox" data-k="estacion"> He tramitado la licencia de estación para casa (si quiero estación fija)</label></li>
-        <li><label><input type="checkbox" data-k="qso"> ¡He hecho mi primer contacto de verdad!</label></li>
-      </ul>
-      <p class="note" id="checkNote"></p>
-
-      <div class="cards three gear">
-        <article class="card">
-          <span class="tag">Solo escuchar · ~35 €</span>
-          <h3>Receptor SDR USB</h3>
-          <p>Un “pincho” que se enchufa al ordenador. Con una antena sencilla oyes aviones, barcos, satélites meteorológicos y radioaficionados. Cero trámites.</p>
-        </article>
-        <article class="card">
-          <span class="tag">Primer equipo · ~40-100 €</span>
-          <h3>Walkie bibanda (2 m / 70 cm)</h3>
-          <p>El típico primer equipo con licencia: hablas con gente de tu zona y, a través de repetidores, de toda la comunidad. Ideal para las redes semanales de los clubes.</p>
-        </article>
-        <article class="card">
-          <span class="tag">Dar la vuelta al mundo</span>
-          <h3>Equipo de HF + antena de hilo</h3>
-          <p>Para las bandas de onda corta. Muchos empiezan comprando de segunda mano en los mercadillos de radio y montando un dipolo de cable en la terraza.</p>
-        </article>
-      </div>
-      <p class="note">Precios orientativos. Pregunta en un club antes de comprar: casi siempre alguien te deja probar.</p>
-      <p class="note">Los trámites oficiales están en la <a href="https://digital.gob.es/telecomunicaciones-infraestructuras-digitales/areas-interes/espectro-radioelectrico/radioaficionados-cb27/autorizaciones/autorizacion-administrativa-radioaficionado" target="_blank" rel="noopener">web del Ministerio para la Transformación Digital</a>. Comprueba siempre allí los requisitos vigentes.</p>
-    </section>
-
-    <!-- RADIOCLUBES Y CALENDARIO -->
-    <section id="clubes">
-      <div class="section-head">
-        <p class="kicker">Pasa de la pantalla a la radio</p>
-        <h2>Encuentra tu radioclub</h2>
-        <p>La forma más rápida de aprender es con gente: en un radioclub te enseñan a montar la antena, preparan el examen contigo y, en sus actividades de divulgación, puedes probar a transmitir bajo supervisión aunque aún no tengas licencia. <span id="clubCount"></span>.</p>
-      </div>
-      <div class="clubs">
-        <div id="clubMap" role="region" aria-label="Mapa de secciones de la URE por provincia"></div>
-        <div class="card club-side">
-          <div class="row">
-            <select id="clubProv" aria-label="Provincia"></select>
-            <button class="btn small ghost" id="clubNear">📍 La más cercana</button>
-          </div>
-          <div id="clubList"><p class="note">Elige tu provincia o pulsa un número del mapa. Hay además muchos radioclubes independientes: pregunta en la sección más cercana.</p></div>
-        </div>
-      </div>
-
-      <h3 class="sub">Citas del año</h3>
-      <ol class="cal" id="calList"></ol>
-      <p class="note">Fechas calculadas con las reglas habituales de cada evento. Confírmalas en la web de cada organizador antes de planear nada.</p>
-    </section>
-
-    <!-- FAMILIAS Y JÓVENES -->
-    <section id="familias">
-      <div class="section-head">
-        <p class="kicker">Para familias, curiosos y jóvenes</p>
-        <h2>¿Es para mí?</h2>
-        <p>Cinco preguntas rápidas y te decimos por dónde empezar.</p>
-      </div>
-      <div class="cards two">
-        <div class="card fit">
-          <div id="fitQs"></div>
-          <div id="fitResult"></div>
-        </div>
-        <div class="card">
-          <h3>¿Cuánto cuesta?</h3>
-          <ol class="costs">
-            <li><b>0 €</b><span>Escuchar en receptores web y practicar en esta página.</span></li>
-            <li><b>~35 €</b><span>Un receptor SDR USB para escuchar desde tu ordenador.</span></li>
-            <li><b>~40-100 €</b><span>Un walkie bibanda, el primer equipo típico cuando tienes licencia.</span></li>
-            <li><b>desde ~100 €</b><span>Un equipo de onda corta de segunda mano.</span></li>
-            <li><b>~300 €</b><span>Una estación completa con antena.</span></li>
-          </ol>
-          <p class="note">Precios orientativos; los de equipo usado y estación completa, según el tríptico de iniciación de la URE. A esto se suman las tasas del examen y la autorización.</p>
-        </div>
-      </div>
-      <div class="card parents">
-        <h3>Para madres y padres</h3>
-        <div class="parents-grid">
-          <div><b>¿Puede tener licencia un menor?</b><p>Sí. El reglamento pide una autorización escrita de los padres o tutores, que asumen la responsabilidad.</p></div>
-          <div><b>¿Es seguro?</b><p>Todo lo que se dice por radio es público: cualquiera puede escucharlo. Por eso se da la ciudad, nunca la dirección, y no se habla de temas personales.</p></div>
-          <div><b>¿Y las antenas y la electricidad?</b><p>Montar antenas exteriores o tocar fuentes de alimentación debe hacerse con un adulto o en el radioclub. Es parte del examen.</p></div>
-          <div><b>¿Hay actividades para jóvenes?</b><p>Sí: el programa <a href="https://www.ham-yota.com/" target="_blank" rel="noopener">YOTA</a> organiza campamentos y el YOTA Month de diciembre para menores de 26, y el Jamboree en el aire con los scouts.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- HISPANOAMÉRICA -->
-    <section id="hispanoamerica">
-      <div class="section-head">
-        <p class="kicker">Radioafición en español</p>
-        <h2>Si no estás en España</h2>
-        <p>Casi todo lo de esta web vale en cualquier país: escuchar, entender, el Morse y los contactos. Lo que cambia es el trámite. Estas son las referencias de cada país.</p>
-      </div>
-      <div class="table-wrap">
-        <table class="countries">
-          <thead><tr><th>País</th><th>Prefijo</th><th>Quién da la licencia</th><th>Asociación nacional (IARU)</th></tr></thead>
-          <tbody>
-            <tr><td>🇪🇸 España</td><td>EA</td><td><a href="https://digital.gob.es/telecomunicaciones-infraestructuras-digitales/areas-interes/espectro-radioelectrico/radioaficionados-cb27" target="_blank" rel="noopener">Ministerio para la Transformación Digital</a></td><td>URE</td></tr>
-            <tr><td>🇲🇽 México</td><td>XE</td><td><a href="https://www.ift.org.mx/" target="_blank" rel="noopener">IFT</a></td><td>FMRE</td></tr>
-            <tr><td>🇦🇷 Argentina</td><td>LU</td><td><a href="https://www.enacom.gob.ar/" target="_blank" rel="noopener">ENACOM</a></td><td>Radio Club Argentino</td></tr>
-            <tr><td>🇨🇴 Colombia</td><td>HK</td><td><a href="https://www.mintic.gov.co/" target="_blank" rel="noopener">MinTIC</a></td><td>Liga Colombiana de Radioaficionados</td></tr>
-            <tr><td>🇨🇱 Chile</td><td>CE</td><td><a href="https://www.subtel.gob.cl/" target="_blank" rel="noopener">SUBTEL</a></td><td>Radio Club de Chile</td></tr>
-            <tr><td>🇵🇪 Perú</td><td>OA</td><td><a href="https://www.gob.pe/mtc" target="_blank" rel="noopener">MTC</a></td><td>Radio Club Peruano</td></tr>
-            <tr><td>🇻🇪 Venezuela</td><td>YV</td><td><a href="https://www.conatel.gob.ve/" target="_blank" rel="noopener">CONATEL</a></td><td>Radio Club Venezolano</td></tr>
-            <tr><td>🇪🇨 Ecuador</td><td>HC</td><td><a href="https://www.arcotel.gob.ec/" target="_blank" rel="noopener">ARCOTEL</a></td><td>Guayaquil Radio Club</td></tr>
-            <tr><td>🇺🇾 Uruguay</td><td>CX</td><td><a href="https://www.gub.uy/unidad-reguladora-servicios-comunicaciones/" target="_blank" rel="noopener">URSEC</a></td><td>Radio Club del Uruguay</td></tr>
-            <tr><td>🇨🇺 Cuba</td><td>CO / CM</td><td>Ministerio de Comunicaciones</td><td>Federación de Radioaficionados de Cuba</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="note">El examen y el simulador de esta web siguen el temario español. La electricidad, la radio y la operación son comunes; la normativa cambia en cada país. Para transmitir desde otro país, consulta antes la reciprocidad de licencias con su organismo.</p>
-    </section>
-
-    <!-- EMERGENCIAS -->
-    <section id="emergencias" class="band-strip">
-      <div class="section-head">
-        <p class="kicker">Cuando todo se cae</p>
-        <h2>La radio que no depende de nada</h2>
-        <p>Sin cobertura, sin luz y sin internet, una radio con una batería y un trozo de cable sigue funcionando. En España, voluntarios de la <strong>REMER</strong> (Red Radio de Emergencia de Protección Civil) y de los radioclubes apoyan las comunicaciones en catástrofes. Muchos llegan a la radioafición por aquí: por querer ser útiles.</p>
-      </div>
-    </section>
-
-    <!-- TEST -->
-    <section id="test">
-      <div class="section-head">
-        <p class="kicker">Prepara el examen</p>
-        <h2>Simulador del examen de radioaficionado</h2>
-        <p>Como el examen real: dos partes, electricidad y radio por un lado y normativa y operación por otro, y se aprueba con la mitad de aciertos en cada una. Primero estudia con tarjetas, que repiten lo que fallas; cuando el termómetro llegue al 80 %, haz el simulacro.</p>
-      </div>
-      <div class="exam card">
-        <div id="examDash"></div>
-        <div id="examStage" hidden></div>
-      </div>
-      <p class="note">Preguntas de práctica escritas a partir del temario oficial (anexo II de la <a href="https://boe.es/boe/dias/2013/07/12/pdfs/BOE-A-2013-7624.pdf" target="_blank" rel="noopener">Orden IET/1311/2013</a>), no las del examen. Tu progreso se guarda solo en este navegador.</p>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq">
-      <div class="section-head">
-        <p class="kicker">Dudas típicas</p>
-        <h2>Preguntas frecuentes</h2>
-      </div>
-      <div class="faq" id="faqList"></div>
     </section>
   </main>
 
   <footer>
-    <p><button class="btn ghost small" id="shareSite">📤 Compartir esta web</button></p>
-    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · 73!</p>
+    <p><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button></p>
+    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">código y fuentes de datos</a> · 73!</p>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/5.0.0/satellite.min.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/journey.js"></script>
-  <script src="js/stations.js"></script>
-  <script src="js/morse.js"></script>
-  <script src="js/koch.js"></script>
-  <script src="js/qso.js"></script>
-  <script src="js/exam-data.js"></script>
-  <script src="js/exam.js"></script>
-  <script src="js/sounds.js"></script>
-  <script src="js/lessons.js"></script>
-  <script src="js/propagation.js"></script>
-  <script src="js/live.js"></script>
-  <script src="js/iss.js"></script>
-  <script src="js/clubs-data.js"></script>
-  <script src="js/clubs.js"></script>
-  <script src="js/family.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/glossary.js"></script>
+  <script src="./js/core.js"></script>
+  <script src="./js/data.js"></script>
+  <script src="./js/journey.js"></script>
+  <script src="./js/dial.js"></script>
+  <script src="./js/glossary.js"></script>
   <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

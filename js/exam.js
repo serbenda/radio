@@ -1,6 +1,22 @@
-// Simulador del examen: estudio con tarjetas adaptativas (cajas de Leitner), lista de errores,
-// dominio por tema, termómetro de preparación y simulacro de dos partes. Todo se guarda en el navegador.
+/**
+ * exam.js · Simulador del examen de radioaficionado.
+ *
+ * Página: Examen (#test). Necesita: #examDash, #examStage. Datos: EXAM (exam-data.js).
+ *
+ * Estudio (cajas de Leitner): cada pregunta está en una caja del 0 al 4. Acertar la sube una caja; fallar la
+ * devuelve a la 0. Se pregunta antes lo de las cajas bajas y lo menos visto. Desde la caja 3 cuenta como dominada.
+ * Termómetro: % de preguntas dominadas por parte; "listo" con ≥ 80 % en las dos.
+ * Repasar fallos: preguntas falladas alguna vez que siguen por debajo de la caja 2.
+ * Simulacro: 30 preguntas por parte al azar, sin correcciones hasta el final; APTO con la mitad de aciertos
+ * en cada parte, como el examen real (según la URE). Al corregir también mueve las cajas.
+ *
+ * Guarda en localStorage → "radio.exam": { q: { id: { box, wrong, seen } }, best: mejor simulacro,
+ *   ready: { 1: %, 2: % } } (journey.js lee `q` y `ready`).
+ * Eventos: `radio:progress` al responder y `radio:mock` ({ pass }) al corregir un simulacro.
+ */
 (() => {
+  'use strict';
+  if (!document.getElementById('test')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const shuffle = a => a.map(v => [Math.random(), v]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
@@ -21,6 +37,7 @@
   }
   function renderDash() {
     const r1 = readiness(1), r2 = readiness(2), ready = r1 >= 80 && r2 >= 80;
+    st.ready = { 1: r1, 2: r2 }; save(); // journey.js lo lee desde la portada
     const topics = [...new Set(EXAM.map(q => q.t))];
     const wrongs = EXAM.filter(q => info(q.id).wrong > 0 && info(q.id).box < 2).length;
     $('examDash').innerHTML = `

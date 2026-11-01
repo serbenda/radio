@@ -1,7 +1,24 @@
-// Entrenador de Morse con método Koch y reconocimiento instantáneo:
-// letras a 20 ppm, se desbloquea una nueva al dominar las anteriores, repite más las que fallas o tardas,
-// mide el tiempo de reacción y lleva racha diaria. Todo se guarda en el navegador.
+/**
+ * koch.js · Entrenador de Morse con método Koch y reconocimiento instantáneo de caracteres.
+ *
+ * Página: Practicar (#morse). Necesita: #kochStart, #kochBoard, #kochPrompt, #kochRepeat, #kochFeedback,
+ *   #kochKeys, #kochStats. Depende de: morse.js.
+ *
+ * Método (inspirado en LCWO, CW Academy y MorseCode.World; ver docs/DECISIONES.md):
+ *  - Letras a 20 ppm de velocidad de carácter, para aprender el sonido y no contar puntos.
+ *  - Orden de Koch (K M U R E S N A P T L W I J Z F O Y V G 5 Q 9 2 H 3 8 B 4 7 C 1 D 6 0 X); empieza con 2.
+ *  - Se desbloquea una letra nueva cuando las 10 últimas respuestas tienen ≥ 9 aciertos y la última
+ *    letra añadida lleva 4 aciertos de sus 5 últimos intentos.
+ *  - Elige la siguiente letra con pesos: más probabilidad para las que fallas, las lentas (> 1,5 s) y las nuevas.
+ *  - Mide el tiempo de reacción desde que acaba el sonido; racha de días seguidos y minutos de hoy (meta: 15).
+ *
+ * Guarda en localStorage → "radio.koch": { level, hist: { letra: [{ok, ms}] (últimos 5) }, recent, streak,
+ *   lastDay, todaySec, day }. journey.js lee `level`.
+ * Accesibilidad: se responde con el teclado (la propia letra) o tocando; el resultado se anuncia (aria-live).
+ */
 (() => {
+  'use strict';
+  if (!document.getElementById('kochStart')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
   const ORDER = 'KMURESNAPTLWIJZFOYVG5Q92H38B47C1D60X'.split('');
   const WPM = 20;

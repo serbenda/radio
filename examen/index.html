@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Examen · Radio</title>
+  <meta name="description" content="Simulador del examen de radioaficionado en España: tarjetas adaptativas con explicaciones, dominio por tema y simulacro de dos partes.">
+  <meta name="radio-root" content="../">
+  <meta name="theme-color" content="#111214">
+  <link rel="canonical" href="https://bendi.dev/radio/examen/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="radio · bendi.dev">
+  <meta property="og:title" content="Examen · Radio">
+  <meta property="og:description" content="Simulador del examen de radioaficionado en España: tarjetas adaptativas con explicaciones, dominio por tema y simulacro de dos partes.">
+  <meta property="og:url" content="https://bendi.dev/radio/examen/">
+  <meta property="og:image" content="https://bendi.dev/radio/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dial de radio con una señal y el texto: Hay miles de voces en el aire. Escúchalas.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Examen · Radio">
+  <meta name="twitter:description" content="Simulador del examen de radioaficionado en España: tarjetas adaptativas con explicaciones, dominio por tema y simulacro de dos partes.">
+  <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📻</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="examen">
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header class="top">
+    <a class="brand" href="../" aria-label="radio, ir a la portada">📻 <span>radio</span></a>
+    <nav aria-label="Principal">
+      <a href="../" data-page="inicio">Inicio</a>
+      <a href="../escuchar/" data-page="escuchar">Escuchar</a>
+      <a href="../entender/" data-page="entender">Entender</a>
+      <a href="../practicar/" data-page="practicar">Practicar</a>
+      <a href="../examen/" data-page="examen">Examen</a>
+      <a href="../empezar/" data-page="empezar">Empezar</a>
+    </nav>
+    <div class="utc" title="Los radioaficionados siempre usan la hora UTC"><small>UTC</small> <span id="utc">--:--</span></div>
+  </header>
+
+  <main id="contenido">
+    <header class="page-head">
+      <p class="kicker">Paso 4</p>
+      <h1>Preparar el examen</h1>
+      <p class="lead">Estudia con tarjetas que repiten lo que fallas y comprueba si estás listo con un simulacro como el real.</p>
+      <nav class="toc" aria-label="En esta página"><a href="#test">Simulador del examen de radioaficionado</a></nav>
+    </header>
+
+    <!-- TEST -->
+    <section id="test">
+      <div class="section-head">
+        <p class="kicker">Prepara el examen</p>
+        <h2>Simulador del examen de radioaficionado</h2>
+        <p>Como el examen real: dos partes, electricidad y radio por un lado y normativa y operación por otro, y se aprueba con la mitad de aciertos en cada una. Primero estudia con tarjetas, que repiten lo que fallas; cuando el termómetro llegue al 80 %, haz el simulacro.</p>
+      </div>
+      <div class="exam card">
+        <div id="examDash"></div>
+        <div id="examStage" hidden></div>
+      </div>
+      <p class="note">Preguntas de práctica escritas a partir del temario oficial (anexo II de la <a href="https://boe.es/boe/dias/2013/07/12/pdfs/BOE-A-2013-7624.pdf" target="_blank" rel="noopener">Orden IET/1311/2013</a>), no las del examen. Tu progreso se guarda solo en este navegador.</p>
+    </section>
+
+    <nav class="next-page" aria-label="Siguiente paso"><a href="../empezar/">Siguiente: Dar el salto →</a></nav>
+  </main>
+
+  <footer>
+    <p><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button></p>
+    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">código y fuentes de datos</a> · 73!</p>
+  </footer>
+
+  <script src="../js/core.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/journey.js"></script>
+  <script src="../js/exam-data.js"></script>
+  <script src="../js/exam.js"></script>
+  <script src="../js/glossary.js"></script>
+  <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

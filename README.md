@@ -4,34 +4,70 @@ Web de iniciación a la radioafición en español: de "¿qué es esto?" a tu ind
 
 **Web:** https://bendi.dev/radio
 
-## Qué tiene
+[![Comprobaciones](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml/badge.svg)](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml)
 
-**Tu ruta**
-- **Tu primer mes**: 4 semanas y 14 pasos que se marcan solos al usar la web, con insignias por semana.
+## Qué es
 
-**Escuchar**
-- **Mapa de emisoras** de todo el mundo con reproductor.
-- **Escucha guiada**: el receptor web de Twente ya sintonizado según la hora.
-- **Ahora en el aire**: mapa en directo de quién oye a quién, contado en español.
-- **¿Qué es este sonido?**: ocho sonidos típicos generados en el navegador con su cascada en directo.
+Una web estática, sin registro ni cookies, que acompaña a un novato en cinco pasos:
 
-**Entender**
-- **Cómo funciona la radio**: cuatro lecciones interactivas (onda, antena, ionosfera y modos) en tres niveles, con preguntas.
-- **Bandas**, **propagación en lenguaje llano** con datos solares en directo y el mapa de la ionosfera.
-- **Pases de la ISS** sobre tu ciudad.
-- **Glosario emergente**: la jerga se explica al pasar el ratón.
+| Paso | Página | Qué hay |
+| --- | --- | --- |
+| — | [Inicio](https://bendi.dev/radio/) | Dial de onda corta, qué es la radioafición y **Tu primer mes**: 4 semanas, 14 pasos que se marcan solos e insignias |
+| 1 | [Escuchar](https://bendi.dev/radio/escuchar/) | Mapa de emisoras con reproductor, escucha guiada en un receptor real, **Ahora en el aire** (quién habla con quién, en directo) y **¿Qué es este sonido?** con cascada |
+| 2 | [Entender](https://bendi.dev/radio/entender/) | Cuatro lecciones interactivas en tres niveles, bandas, propagación de hoy en lenguaje llano y pases de la ISS sobre tu ciudad |
+| 3 | [Practicar](https://bendi.dev/radio/practicar/) | Entrenador de Morse con método Koch, alfabeto fonético y jerga, y cinco contactos simulados con tarjeta QSL |
+| 4 | [Examen](https://bendi.dev/radio/examen/) | Simulador del examen español con tarjetas adaptativas, explicaciones y simulacro de dos partes |
+| 5 | [Empezar](https://bendi.dev/radio/empezar/) | El trámite en cifras, lista de comprobación, radioclubes de la URE por provincia, calendario, familias e Hispanoamérica |
 
-**Practicar**
-- **Entrenador de Morse** con método Koch y traductor.
-- **Contactos simulados**: primer contacto, concurso, parque POTA, red de emergencia y la ISS, con tarjeta QSL descargable.
-- **Simulador del examen** con tarjetas adaptativas, explicaciones, dominio por tema y simulacro de dos partes.
+Todo el progreso se guarda solo en el navegador de cada persona.
 
-**Dar el salto**
-- **El trámite en cifras** y lista de comprobación de cero a indicativo.
-- **Encuentra tu radioclub**: las secciones de la URE por provincia y el calendario de citas del año.
-- **¿Es para mí?**, costes, guía para familias y referencias de Hispanoamérica.
+## Probar en local
 
-Todo el progreso (ruta, examen, Morse, lecciones) se guarda solo en el navegador de cada persona. No hay registro ni cookies.
+```bash
+python3 -m http.server 8000      # y abre http://localhost:8000/
+node tools/check.mjs             # comprobaciones automáticas
+```
+
+No hay nada que instalar ni que compilar: lo que hay en el repositorio es lo que se publica.
+
+## Estructura
+
+```
+index.html                 Inicio
+escuchar/index.html        Paso 1
+entender/index.html        Paso 2
+practicar/index.html       Paso 3
+examen/index.html          Paso 4
+empezar/index.html         Paso 5
+404.html                   Página de error
+css/style.css              Estilos de todas las páginas
+js/                        Un módulo por funcionalidad (ver docs/MODULOS.md)
+  core.js                  Núcleo común: objeto Radio (va el primero)
+  data.js                  Contenido estático compartido
+  journey.js               Tu primer mes (en todas las páginas)
+  glossary.js              Glosario emergente (va el último)
+  …                        Resto de módulos
+og.png                     Imagen para compartir (1200 × 630)
+sitemap.xml                Mapa del sitio
+tools/check.mjs            Comprobaciones automáticas
+.github/workflows/         GitHub Actions: comprobaciones en cada PR
+docs/                      Documentación
+```
+
+## Documentación
+
+| Documento | Contenido |
+| --- | --- |
+| [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md) | Cómo está montada: páginas, orden de carga, núcleo `Radio`, eventos, almacenamiento |
+| [docs/MODULOS.md](docs/MODULOS.md) | Referencia de cada archivo de `js/`, convenciones y cómo añadir un módulo |
+| [docs/DATOS.md](docs/DATOS.md) | Servicios externos: endpoints, límites, atribución, qué pasa si fallan |
+| [docs/CONTENIDO.md](docs/CONTENIDO.md) | Cómo añadir preguntas, sonidos, lecciones, contactos, términos, radioclubes… |
+| [docs/PRIVACIDAD.md](docs/PRIVACIDAD.md) | Qué se guarda, ubicación, peticiones a terceros y datos personales |
+| [docs/CALIDAD.md](docs/CALIDAD.md) | Accesibilidad, rendimiento, seguridad, SEO y limitaciones conocidas |
+| [docs/PRUEBAS.md](docs/PRUEBAS.md) | Comprobaciones automáticas y lista de pruebas manuales |
+| [docs/DECISIONES.md](docs/DECISIONES.md) | Registro de decisiones de diseño y por qué |
+| [docs/ESTUDIO.md](docs/ESTUDIO.md) | Resumen del estudio de webs de radioafición que guía el proyecto |
+| [CHANGELOG.md](CHANGELOG.md) | Historial de versiones |
 
 ## Datos y servicios
 
@@ -43,41 +79,18 @@ Todo el progreso (ruta, examen, Morse, lecciones) se guarda solo en el navegador
 | Órbita de la ISS | [CelesTrak](https://celestrak.org/) con [satellite.js](https://github.com/shashwatak/satellite-js) |
 | Mapas | [Leaflet](https://leafletjs.com) con el mapa base gris oscuro de Esri |
 | Receptor web | [WebSDR de la Universidad de Twente](http://websdr.ewi.utwente.nl:8901/) |
-| Secciones de radioclub | [URE](https://www.ure.es/secciones/): solo nombre, provincia, indicativo y web de cada sección |
-| Preguntas de examen | Escritas a partir del temario de la [Orden IET/1311/2013](https://boe.es/boe/dias/2013/07/12/pdfs/BOE-A-2013-7624.pdf) |
+| Secciones de radioclub | [URE](https://www.ure.es/secciones/): solo nombre, provincia, indicativo y web |
+| Preguntas de examen | Escritas a partir de la [Orden IET/1311/2013](https://boe.es/boe/dias/2013/07/12/pdfs/BOE-A-2013-7624.pdf) |
 | Visitas | [GoatCounter](https://www.goatcounter.com/), sin cookies |
 
-## Estructura
+Detalle completo en [docs/DATOS.md](docs/DATOS.md).
 
-```
-index.html
-css/style.css
-js/data.js         bandas, jerga, alfabeto, FAQ y presets de escucha
-js/journey.js      Tu primer mes
-js/stations.js     mapa de emisoras
-js/morse.js        codificación y sonido Morse
-js/koch.js         entrenador Koch
-js/qso.js          contactos simulados y QSL
-js/exam-data.js    banco de preguntas
-js/exam.js         simulador del examen
-js/sounds.js       galería de sonidos y cascada
-js/lessons.js      lecciones interactivas
-js/propagation.js  propagación en directo
-js/live.js         Ahora en el aire
-js/iss.js          pases de la ISS
-js/clubs-data.js   secciones de la URE
-js/clubs.js        radioclubes y calendario
-js/family.js       autotest ¿Es para mí?
-js/app.js          dial, bandas, traductores, compartir, FAQ
-js/glossary.js     glosario emergente (se carga el último)
-```
+## Flujo de trabajo
 
-## Desarrollo
-
-Se trabaja en la rama `development` y los cambios llegan a `main` mediante pull request. Para probar en local basta con servir la carpeta:
-
-```bash
-python3 -m http.server 8000
-```
+1. Se trabaja en la rama `development`.
+2. Antes de subir: `node tools/check.mjs` sin fallos y la lista manual de [docs/PRUEBAS.md](docs/PRUEBAS.md).
+3. Los cambios llegan a `main` con una pull request; GitHub Actions ejecuta las comprobaciones.
+4. Al fusionar, GitHub Pages publica `main` en bendi.dev/radio en uno o dos minutos.
+5. Cada versión se anota en [CHANGELOG.md](CHANGELOG.md).
 
 73!

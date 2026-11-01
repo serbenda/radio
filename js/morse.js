@@ -1,4 +1,14 @@
-// Morse: traductor, reproducción con Web Audio y juego de oído.
+/**
+ * morse.js · Código Morse: tabla, codificación y sonido. Expone el objeto global `Morse`.
+ *
+ *  Morse.CODE            Tabla letra → código (incluye Ñ y signos habituales).
+ *  Morse.encode(texto)   Devuelve el código separado por espacios ("/" entre palabras).
+ *  Morse.play(texto, ppm, tono) → Promise que se resuelve al terminar de sonar.
+ *  Morse.stop()
+ *
+ * Tiempos según la norma PARIS: un punto dura 1,2 / ppm segundos; raya = 3 puntos; entre letras 3; entre palabras 7.
+ * Usado por: morse-ui.js (traductor), koch.js (entrenador), sounds.js (Morse y baliza).
+ */
 const Morse = (() => {
   const CODE = {
     A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....', I: '..',

@@ -1,5 +1,21 @@
-// "Cómo funciona": cuatro lecciones interactivas, cada una en tres niveles y con 3 preguntas.
+/**
+ * lessons.js · "Cómo funciona la radio": cuatro lecciones interactivas.
+ *
+ * Página: Entender (#como-funciona). Necesita: #lessonTabs, #lessonStage, #lessonLevels, #lessonText, #lessonQuiz.
+ *
+ * Lecciones (STAGES): onda (canvas animado + frecuencia → longitud de onda), antena (SVG del dipolo a escala),
+ * ionosfera (SVG con capas D/F, día/noche y Sol activo), modos (canvas animado AM/FM/CW/BLU).
+ * Cada lección tiene tres niveles de explicación (curioso, interesado, técnico) y 3 preguntas.
+ *
+ * Guarda en localStorage → "radio.lessons" ({ idLección: true } al acertar las 3 preguntas)
+ * y avisa con el evento `radio:progress` para que journey.js lo tenga en cuenta.
+ * Rendimiento: los lienzos animados solo se animan mientras se ven (animate → Radio.whileVisible)
+ * y no se animan con "reducir movimiento" (se dibujan una vez).
+ * Accesibilidad: cada dibujo va acompañado de un texto (.lesson-readout, aria-live) con lo que muestra.
+ */
 (() => {
+  'use strict';
+  if (!document.getElementById('como-funciona')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const store = {
@@ -74,16 +90,22 @@
     return { g, w: r.width, h: r.height };
   }
 
+  /** Anima solo mientras el lienzo se ve y la pestaña está activa. Devuelve la función para parar. */
+  function animate(el, start, stop) {
+    if (Radio.reducedMotion) return () => {};
+    const unwatch = Radio.whileVisible(el, start, stop);
+    return () => { unwatch(); stop(); };
+  }
+
   const STAGES = {
     onda(box) {
-      box.innerHTML = `<canvas class="lesson-canvas"></canvas>
+      box.innerHTML = `<canvas class="lesson-canvas" aria-hidden="true"></canvas>
         <label class="inline">Frecuencia <input type="range" id="lwF" min="0" max="1000" value="400"> <b id="lwFv"></b></label>
-        <p class="lesson-readout" id="lwOut"></p>`;
-      const c = box.querySelector('canvas'); let t = 0, run = true;
+        <p class="lesson-readout" id="lwOut" aria-live="polite"></p>`;
+      const c = box.querySelector('canvas'); let t = 0, run = false;
       const freq = () => 1.8 * Math.pow(450 / 1.8, $('lwF').value / 1000);
       const compare = l => l > 100 ? 'más que un campo de fútbol' : l > 30 ? 'como un edificio de 10 plantas' : l > 8 ? 'como un autobús' : l > 1.5 ? 'como una persona' : l > 0.3 ? 'como un plato' : 'como un móvil';
       function frame() {
-        if (!run) return;
         const { g, w, h } = sizeCanvas(c), f = freq(), lam = 300 / f;
         const cycles = 1 + Math.log(f / 1.8) / Math.log(450 / 1.8) * 11;
         g.clearRect(0, 0, w, h);
@@ -93,16 +115,17 @@
         g.stroke(); t += 0.06;
         $('lwFv').textContent = f < 10 ? f.toFixed(2) + ' MHz' : f.toFixed(0) + ' MHz';
         $('lwOut').innerHTML = `Longitud de onda: <b>${lam >= 10 ? lam.toFixed(0) : lam.toFixed(2)} m</b>, ${compare(lam)}.`;
-        requestAnimationFrame(frame);
+        if (run && !Radio.reducedMotion) requestAnimationFrame(frame);
       }
-      frame();
-      return () => { run = false; };
+      $('lwF').addEventListener('input', () => { if (!run) frame(); });
+      frame(); // primer dibujo, aunque no se anime
+      return animate(c, () => { if (!run) { run = true; frame(); } }, () => { run = false; });
     },
     antena(box) {
       const bands = [['80 m', 3.65], ['40 m', 7.1], ['20 m', 14.2], ['10 m', 28.5], ['2 m', 145]];
-      box.innerHTML = `<svg class="lesson-svg" viewBox="0 0 600 220" id="laSvg"></svg>
+      box.innerHTML = `<svg class="lesson-svg" viewBox="0 0 600 220" id="laSvg" aria-hidden="true"></svg>
         <div class="chips" id="laBands">${bands.map((b, i) => `<button class="chip${i === 1 ? ' on' : ''}" data-i="${i}">${b[0]}</button>`).join('')}</div>
-        <p class="lesson-readout" id="laOut"></p>`;
+        <p class="lesson-readout" id="laOut" aria-live="polite"></p>`;
       function draw(i) {
         const [name, f] = bands[i], len = 143 / f;
         const scale = Math.min(520 / len, 260); // px por metro, con tope para que la persona no sea gigante
@@ -128,10 +151,10 @@
     ionosfera(box) {
       const freqs = [['80 m', 3.6], ['40 m', 7.1], ['20 m', 14.2], ['10 m', 28.5]];
       let fi = 1, day = new Date().getHours() >= 8 && new Date().getHours() < 19, sun = false;
-      box.innerHTML = `<svg class="lesson-svg" viewBox="0 0 600 260" id="liSvg"></svg>
+      box.innerHTML = `<svg class="lesson-svg" viewBox="0 0 600 260" id="liSvg" aria-hidden="true"></svg>
         <div class="row"><div class="chips" id="liF">${freqs.map((b, i) => `<button class="chip" data-i="${i}">${b[0]}</button>`).join('')}</div>
         <div class="chips"><button class="chip" id="liDay"></button><button class="chip" id="liSun">☀️ Sol muy activo</button></div></div>
-        <p class="lesson-readout" id="liOut"></p>`;
+        <p class="lesson-readout" id="liOut" aria-live="polite"></p>`;
       function draw() {
         const f = freqs[fi][1];
         const muf = (day ? 16 : 9) * (sun ? 2 : 1);
@@ -169,10 +192,10 @@
     },
     modos(box) {
       const modes = ['AM', 'FM', 'CW', 'SSB'];
-      let m = 0, t = 0, run = true;
-      box.innerHTML = `<canvas class="lesson-canvas"></canvas>
+      let m = 0, t = 0, run = false;
+      box.innerHTML = `<canvas class="lesson-canvas" aria-hidden="true"></canvas>
         <div class="chips" id="lmM">${modes.map((x, i) => `<button class="chip${i ? '' : ' on'}" data-i="${i}">${x === 'SSB' ? 'BLU (SSB)' : x}</button>`).join('')}</div>
-        <p class="lesson-readout" id="lmOut"></p>`;
+        <p class="lesson-readout" id="lmOut" aria-live="polite"></p>`;
       const text = [
         'AM: la portadora sube y baja de fuerza siguiendo tu voz (la línea amarilla).',
         'FM: la fuerza es constante; lo que cambia es lo apretadas que van las ondas.',
@@ -180,7 +203,6 @@
         'BLU: no hay portadora fija; solo sale energía cuando hablas. Por eso llega más lejos.',
       ];
       function frame() {
-        if (!run) return;
         const { g, w, h } = sizeCanvas(c);
         g.clearRect(0, 0, w, h);
         const voice = x => Math.sin(x * 0.018 - t * 0.6) * 0.6 + Math.sin(x * 0.041 - t) * 0.3;
@@ -204,17 +226,18 @@
           g.stroke(); g.setLineDash([]);
         }
         t += 0.05;
-        requestAnimationFrame(frame);
+        if (run && !Radio.reducedMotion) requestAnimationFrame(frame);
       }
       const c = box.querySelector('canvas');
       box.querySelector('#lmM').addEventListener('click', e => {
         const b = e.target.closest('.chip'); if (!b) return;
         m = +b.dataset.i; $('lmOut').textContent = text[m];
+        if (!run) frame();
         box.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x === b));
       });
       $('lmOut').textContent = text[0];
-      frame();
-      return () => { run = false; };
+      frame(); // primer dibujo, aunque no se anime
+      return animate(c, () => { if (!run) { run = true; frame(); } }, () => { run = false; });
     },
   };
 

@@ -1,6 +1,17 @@
-// Pases de la ISS: posición en directo y próximos pases sobre tu ubicación.
-// Elementos orbitales de CelesTrak, cálculo en el navegador con satellite.js. La ubicación no sale de tu equipo.
+/**
+ * iss.js · Posición de la Estación Espacial en directo y sus próximos pases sobre ti.
+ *
+ * Página: Entender (#iss). Necesita: #issMap, #issCount, #issNow, #issPasses, #issCity, #issGeo, #issWhere.
+ * Depende de: Leaflet y satellite.js (cdnjs).
+ *
+ * Datos: elementos orbitales (TLE) de CelesTrak: gp.php?CATNR=25544&FORMAT=TLE. El cálculo es local (SGP4).
+ * Pases: se recorren las próximas 48 h en pasos de 20 s y se guardan los de elevación máxima ≥ 10° (hasta 6).
+ * Privacidad: la ubicación del navegador solo se pide al pulsar el botón y nunca se envía a ningún sitio.
+ * Logro: Radio.emit('iss') al elegir una ciudad o usar tu ubicación.
+ */
 (() => {
+  'use strict';
+  if (!document.getElementById('iss')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
   const TLE = 'https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=TLE';
   const rad = Math.PI / 180, deg = 180 / Math.PI;
@@ -74,7 +85,7 @@
     if (!satrec) return;
     homeMark.setLatLng([lat, lon]);
     findPasses(); renderPasses(); update();
-    document.dispatchEvent(new CustomEvent('radio:event', { detail: { name: 'iss', id: 'pases' } }));
+    Radio.emit('iss', 'pases');
   }
 
   async function init() {
@@ -89,7 +100,6 @@
     marker = L.marker([0, 0], { icon: L.divIcon({ className: 'iss-icon', html: '🛰️', iconSize: [28, 28], iconAnchor: [14, 14] }) }).addTo(map);
     homeMark = L.circleMarker([home.lat, home.lon], { radius: 6, color: '#ffd27a', fillColor: '#ffd27a', fillOpacity: 1 }).bindTooltip('Tú').addTo(map);
     findPasses(); renderPasses(); drawTrack(); update();
-    document.dispatchEvent(new CustomEvent('radio:event', { detail: { name: 'iss', id: 'pases' } }));
     tick = setInterval(update, 1000);
     setInterval(drawTrack, 5 * 60e3);
   }
