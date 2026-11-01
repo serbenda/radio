@@ -352,3 +352,15 @@ body { overflow-x: hidden; }
   .qso-log li { max-width: 100%; }
 }
 .qso [hidden] { display: none !important; }
+
+/* ---------- Escucha guiada ---------- */
+.guided { display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; margin-bottom: 18px; padding: 28px;
+  background: linear-gradient(135deg, #1f2a27, var(--panel) 60%); border-color: #8be0c240; }
+.guided h3 { font: 800 1.8rem var(--serif); margin-bottom: .3em; }
+.guided-now p:not(.kicker) { color: #d4d5db; }
+.guided-label { margin: 0 0 8px; font: 600 .8rem var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.guided-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.chip { background: var(--bg2); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; font: 500 .9rem var(--sans); cursor: pointer; }
+.chip:hover, .chip.on { border-color: var(--accent); background: var(--accent-soft); }
+.guided-tips { margin: 0; padding-left: 20px; color: var(--muted); font-size: .9rem; display: grid; gap: 6px; }
+@media (max-width: 860px) { .guided { grid-template-columns: 1fr; padding: 22px; } }

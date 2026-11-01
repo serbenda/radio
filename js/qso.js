@@ -202,6 +202,23 @@
     $('qsoQsl').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
+  // Compartir la QSL como imagen (móvil) si el navegador lo permite
+  const canShareFiles = !!(navigator.canShare && window.File &&
+    navigator.canShare({ files: [new File([''], 'x.png', { type: 'image/png' })] }));
+  if (canShareFiles) {
+    $('qslShare').hidden = false;
+    $('qslDownload').classList.add('ghost');
+  }
+  $('qslShare').addEventListener('click', () => {
+    $('qslCanvas').toBlob(async blob => {
+      const file = new File([blob], `QSL_${dx.call}_${me.call}.png`, { type: 'image/png' });
+      try {
+        await navigator.share({ files: [file], title: 'Mi primer QSO',
+          text: `¡He hecho mi primer contacto por radio con ${dx.country}! 📻 73. Pruébalo en https://bendi.dev/radio/` });
+      } catch (e) { /* cancelado */ }
+    }, 'image/png');
+  });
+
   $('qslDownload').addEventListener('click', () => {
     const a = document.createElement('a');
     a.download = `QSL_${dx.call}_${me.call}.png`;
