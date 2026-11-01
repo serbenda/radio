@@ -77,7 +77,7 @@
     const bounds = [];
     withGeo.forEach(s => {
       const m = L.circleMarker([s.geo_lat, s.geo_long], {
-        radius: 6, color: '#ffb000', weight: 1, fillColor: '#ffb000', fillOpacity: 0.65,
+        radius: 6, color: '#2fe07a', weight: 1, fillColor: '#2fe07a', fillOpacity: 0.65,
       }).addTo(layer);
       m.bindTooltip(esc(s.name.trim()));
       m.on('click', () => play(s));
