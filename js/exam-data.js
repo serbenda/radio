@@ -5,14 +5,41 @@
  * NO son las preguntas oficiales: sirven para estudiar los mismos temas. Las de normativa citan el artículo.
  * Revisión independiente completa contra el texto del BOE: 1 nov 2026 (docs/CONTENIDO.md#preguntas-del-examen).
  *
- * Formato de cada pregunta:
- *   id   identificador único y estable (no cambiarlo: el progreso guardado lo usa)
- *   p    parte: 1 = Electricidad y radioelectricidad · 2 = Normativa y operación
- *   t    tema (agrupa el dominio por tema)
- *   q    enunciado · a: opciones (se barajan al mostrarse) · ok: índice de la correcta · why: explicación
+ * Define la variable global EXAM (lista de objetos). La usan js/exam.js (estudio y simulacro) y
+ * tools/check.mjs (validación). Se carga en examen/index.html antes de exam.js.
  *
- * Reglas: cada parte necesita al menos 30 preguntas para el simulacro. tools/check.mjs lo valida.
- * Cómo añadir preguntas: docs/CONTENIDO.md.
+ * ── Campos de cada pregunta ──────────────────────────────────────────────────────────────────────
+ *   id    Texto único y ESTABLE: letra(s) + número, p. ej. 'e9', 'x57', 'y44'.
+ *         NUNCA cambies ni reutilices un id: el progreso de cada persona (caja de Leitner, fallos y veces
+ *         vista) se guarda en su navegador bajo ese id ("radio.exam" → q[id]). Cambiarlo borra ese
+ *         progreso; reutilizarlo daría a una pregunta nueva el historial de otra.
+ *         Prefijos usados hasta ahora (orientativos, no se validan):
+ *           parte 1: e Electricidad · c Componentes · t Equipos · a Antenas · p Propagación ·
+ *                    s Seguridad y medidas · x varios temas de la parte 1
+ *           parte 2: n Normativa · o Operación · y varios temas de la parte 2
+ *         Para una pregunta nueva usa el siguiente número libre de su prefijo (p. ej. tras 'y44', 'y45').
+ *   p     Parte del examen: 1 = Electricidad y radioelectricidad · 2 = Normativa y operación. Solo 1 o 2.
+ *   t     Tema, para las barras de progreso por tema. Usa uno existente (Electricidad, Componentes, Equipos,
+ *         Antenas, Propagación, Seguridad y medidas, Normativa, Operación) escrito EXACTAMENTE igual;
+ *         un texto distinto crea un tema nuevo en el panel.
+ *   q     Enunciado (texto plano; se escapa al mostrarlo, así que no admite HTML).
+ *   a     Opciones: de 3 a 4 textos, todos distintos. El orden da igual porque se barajan al mostrarse.
+ *   ok    Índice de la correcta dentro de `a`, empezando en 0 (0 = la primera opción escrita).
+ *   why   Explicación obligatoria de por qué es la correcta (en normativa, con el artículo). Se muestra
+ *         tras responder y en el repaso del simulacro.
+ *
+ * ── Reglas que comprueba tools/check.mjs (sección 6) ────────────────────────────────────────────
+ *   ids únicos · p es 1 o 2 · t, q y why no vacíos · al menos 3 opciones distintas · ok válido ·
+ *   al menos 30 preguntas en cada parte (el simulacro saca 30 de cada una).
+ *
+ * ── Cómo añadir, cambiar o quitar ────────────────────────────────────────────────────────────────
+ *   - Añadir: copia una línea del mismo tema, ponle un id nuevo y colócala en el bloque de su parte y tema
+ *     (los comentarios "// ---------- Parte … ----------" separan los bloques; el orden no afecta al uso).
+ *   - Corregir una pregunta: cambia q, a, ok o why, pero deja el mismo id. Si el cambio altera el sentido
+ *     de la pregunta por completo, es mejor quitarla y crear otra con id nuevo.
+ *   - Quitar: borra la línea. Su id no debe volver a usarse. El progreso guardado de ese id se queda en el
+ *     navegador sin efecto (exam.js solo recorre las preguntas de EXAM).
+ *   - Después: node tools/check.mjs. Cómo escribir buenas preguntas y trampas frecuentes: docs/CONTENIDO.md.
  */
 const EXAM = [
   // ---------- Parte 1 · Electricidad ----------
