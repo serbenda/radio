@@ -19,12 +19,13 @@
  * instalar/hecha (evento appinstalled, también si se instala desde el menú del navegador).
  *
  * Cómo modificarlo:
- *  - Textos de los pasos: en index.html, sección #instalar.
+ *  - Textos de los pasos: en index.html (y en/index.html), sección #instalar. Los mensajes de estado de este
+ *    archivo van en los dos idiomas con Radio.t.
  *  - Ventana de instalación de Android (nombre, icono, capturas): manifest.webmanifest e img/.
  */
 (() => {
   'use strict';
-  const { $ } = Radio;
+  const { $, t } = Radio;
   const footerBtn = $('installApp');
   const nowBtn = $('installNow');
   const status = $('installStatus');
@@ -62,13 +63,13 @@
 
   if (installed()) {
     buttons(false);
-    say('✅ Ya la estás usando instalada. ¡Buen DX!');
+    say(t('✅ Ya la estás usando instalada. ¡Buen DX!', '✅ You are already using it as an installed app. Good DX!'));
     return;
   }
   if (isIOS) {
     // En iPhone/iPad el botón del pie lleva a los pasos; el de la portada no hace falta (los pasos están debajo).
     if (footerBtn) footerBtn.hidden = false;
-    say('En iPhone y iPad se instala desde el botón Compartir de Safari: sigue los pasos de abajo.');
+    say(t('En iPhone y iPad se instala desde el botón Compartir de Safari: sigue los pasos de abajo.', 'On iPhone and iPad you install it from the Share button in Safari: follow the steps below.'));
   }
 
   /* ---------- Instalación directa (Android, Chrome y Edge) ---------- */
@@ -76,7 +77,7 @@
     e.preventDefault(); // que no salga la barra automática: la ofrecemos con nuestros botones
     deferred = e;
     buttons(true);
-    say('Tu navegador permite instalarla con un toque.');
+    say(t('Tu navegador permite instalarla con un toque.', 'Your browser lets you install it with one tap.'));
   });
 
   /**
@@ -88,7 +89,7 @@
     deferred.prompt();
     const { outcome } = await deferred.userChoice;
     deferred = null; // cada evento solo se puede usar una vez
-    if (outcome === 'accepted') { Radio.track('instalar/aceptada'); buttons(false); say('📲 Instalando… La encontrarás con tus apps.'); }
+    if (outcome === 'accepted') { Radio.track('instalar/aceptada'); buttons(false); say(t('📲 Instalando… La encontrarás con tus apps.', '📲 Installing… You will find it with your other apps.')); }
     else { Radio.track('instalar/rechazada'); }
   }
   [footerBtn, nowBtn].forEach(b => { if (b) b.addEventListener('click', install); });
@@ -97,6 +98,6 @@
   addEventListener('appinstalled', () => {
     Radio.track('instalar/hecha');
     buttons(false);
-    say('✅ ¡Instalada! Ya la tienes en la pantalla de inicio.');
+    say(t('✅ ¡Instalada! Ya la tienes en la pantalla de inicio.', '✅ Installed! It is now on your home screen.'));
   });
 })();

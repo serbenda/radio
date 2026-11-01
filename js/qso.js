@@ -43,6 +43,9 @@
  * Accesibilidad: todo se maneja con botones y el formulario; lo que dice la otra estación también se escribe
  *   en #qsoLog (aria-live="polite": se anuncia), así que el contacto se puede hacer sin sonido.
  *
+ * Textos visibles: en castellano e inglés con Radio.t(es, en) (ver docs/IDIOMAS.md). En inglés la otra
+ *   estación habla inglés (voz en-GB, o en-US si su campo langEn lo dice) y la QSL sale con etiquetas en inglés.
+ *
  * Cómo modificarlo:
  *  - Añadir un escenario: (1) un <option value="mi-id"> en #qsoScenario (practicar/index.html); (2) en start(),
  *    una línea `if (scenario === 'mi-id') { dx = …; band = …; mode = …; freq = …; }`; (3) una función
@@ -57,6 +60,7 @@
   if (!document.getElementById('qso')) return; // esta página no tiene la sección
   /* ---------- Utilidades ---------- */
   const $ = id => document.getElementById(id);
+  const { t } = Radio;
   /**
    * Escapa texto para meterlo en HTML (& < > " '). Imprescindible aquí: nombre y ciudad los escribe la persona.
    * @param {*} s Valor a escapar.
@@ -86,16 +90,17 @@
    *  - op       Nombre del operador.                          · city     Ciudad desde la que transmite.
    *  - tz       Zona horaria IANA: con ella dice la hora local de su país ("Aquí son las…").
    *  - lang     Idioma de la voz (BCP 47); si el sistema no tiene esa variante se usa es-ES u otra en español.
+   *  - langEn   Voz en la página en inglés: 'en-GB' o 'en-US' (si falta, en-GB).
    *  - flag     Emoji de la bandera que se ve junto a su indicativo en la conversación.
    * Para añadir una, copia una línea y cambia los valores.
    */
   const STATIONS = [
-    { prefix: 'EA8', country: 'Canarias', op: 'Carmen', city: 'Santa Cruz de Tenerife', tz: 'Atlantic/Canary', lang: 'es-ES', flag: '🇮🇨' },
-    { prefix: 'LU1', country: 'Argentina', op: 'Ricardo', city: 'Buenos Aires', tz: 'America/Argentina/Buenos_Aires', lang: 'es-AR', flag: '🇦🇷' },
-    { prefix: 'XE1', country: 'México', op: 'Lupita', city: 'Guadalajara', tz: 'America/Mexico_City', lang: 'es-MX', flag: '🇲🇽' },
-    { prefix: 'CE3', country: 'Chile', op: 'Andrés', city: 'Valparaíso', tz: 'America/Santiago', lang: 'es-CL', flag: '🇨🇱' },
-    { prefix: 'HK4', country: 'Colombia', op: 'Jorge', city: 'Medellín', tz: 'America/Bogota', lang: 'es-CO', flag: '🇨🇴' },
-    { prefix: 'CO2', country: 'Cuba', op: 'Yoel', city: 'La Habana', tz: 'America/Havana', lang: 'es-US', flag: '🇨🇺' },
+    { prefix: 'EA8', country: t('Canarias', 'the Canary Islands'), op: 'Carmen', city: 'Santa Cruz de Tenerife', tz: 'Atlantic/Canary', lang: 'es-ES', langEn: 'en-GB', flag: '🇮🇨' },
+    { prefix: 'LU1', country: 'Argentina', op: 'Ricardo', city: 'Buenos Aires', tz: 'America/Argentina/Buenos_Aires', lang: 'es-AR', langEn: 'en-US', flag: '🇦🇷' },
+    { prefix: 'XE1', country: t('México', 'Mexico'), op: 'Lupita', city: 'Guadalajara', tz: 'America/Mexico_City', lang: 'es-MX', langEn: 'en-US', flag: '🇲🇽' },
+    { prefix: 'CE3', country: 'Chile', op: 'Andrés', city: 'Valparaíso', tz: 'America/Santiago', lang: 'es-CL', langEn: 'en-US', flag: '🇨🇱' },
+    { prefix: 'HK4', country: 'Colombia', op: 'Jorge', city: 'Medellín', tz: 'America/Bogota', lang: 'es-CO', langEn: 'en-US', flag: '🇨🇴' },
+    { prefix: 'CO2', country: 'Cuba', op: 'Yoel', city: t('La Habana', 'Havana'), tz: 'America/Havana', lang: 'es-US', langEn: 'en-US', flag: '🇨🇺' },
   ];
 
   /**
@@ -164,13 +169,22 @@
   /**
    * Elige la voz del sistema para un idioma: la variante exacta (es-AR…), si no es-ES, si no cualquier
    * voz en español, y si no hay ninguna, null (el navegador usará la suya por defecto).
+   * En inglés, igual: la variante exacta (en-US…), si no en-GB, si no cualquier voz en inglés.
    * @param {string} lang Etiqueta BCP 47, por ejemplo "es-MX".
    * @returns {SpeechSynthesisVoice|null}
    */
   function voiceFor(lang) {
-    const vs = speechSynthesis.getVoices().filter(v => v.lang && v.lang.toLowerCase().startsWith('es'));
-    return vs.find(v => v.lang === lang) || vs.find(v => v.lang === 'es-ES') || vs[0] || null;
+    const base = lang.slice(0, 2).toLowerCase(), main = base === 'en' ? 'en-GB' : 'es-ES';
+    const vs = speechSynthesis.getVoices().filter(v => v.lang && v.lang.toLowerCase().startsWith(base));
+    const norm = x => x.replace('_', '-').toLowerCase();
+    return vs.find(v => norm(v.lang) === lang.toLowerCase()) || vs.find(v => norm(v.lang) === main.toLowerCase()) || vs[0] || null;
   }
+  /**
+   * Idioma de la voz de la otra estación: el de su país en castellano; en la página en inglés, inglés
+   * (langEn de la estación, o en-GB).
+   * @returns {string} Etiqueta BCP 47.
+   */
+  const voiceLang = () => (Radio.lang === 'en' ? dx.langEn || 'en-GB' : dx.lang);
   /**
    * Hace hablar a la otra estación y sube el ruido mientras habla.
    * Los paréntesis del texto se cambian por comas (pausas) para que el deletreo suene natural.
@@ -184,8 +198,9 @@
     return new Promise(resolve => {
       if (!$('qsoVoice').checked || !('speechSynthesis' in window)) { setTimeout(resolve, 900); return; }
       const u = new SpeechSynthesisUtterance(text.replace(/\(([^)]*)\)/g, ', $1,'));
-      u.lang = dx.lang; u.rate = 1.02; u.pitch = 1;
-      const v = voiceFor(dx.lang); if (v) u.voice = v;
+      const lang = voiceLang();
+      u.lang = lang; u.rate = 1.02; u.pitch = 1;
+      const v = voiceFor(lang); if (v) u.voice = v;
       u.onend = u.onerror = resolve;
       noise(0.05);
       speechSynthesis.cancel();
@@ -223,13 +238,13 @@
     sending = true;
     $('qsoChoices').innerHTML = '';
     $('qsoRadio').classList.add('rx');
-    $('qsoOnAir').textContent = 'RECIBIENDO';
+    $('qsoOnAir').textContent = t('RECIBIENDO', 'RECEIVING');
     const li = add('rx', '<em>· · ·</em>');
     await new Promise(r => setTimeout(r, 700));
     li.querySelector('p').innerHTML = esc(text);
     await speak(text);
     $('qsoRadio').classList.remove('rx');
-    $('qsoOnAir').textContent = 'TU TURNO';
+    $('qsoOnAir').textContent = t('TU TURNO', 'YOUR TURN');
     sending = false;
   }
 
@@ -244,7 +259,7 @@
    */
   function choose(options) {
     const box = $('qsoChoices');
-    box.innerHTML = '<p class="qso-ask">¿Qué transmites?</p>' + options.map((o, i) =>
+    box.innerHTML = t('<p class="qso-ask">¿Qué transmites?</p>', '<p class="qso-ask">What do you transmit?</p>') + options.map((o, i) =>
       `<button class="opt wide" data-i="${i}">${esc(o.text)}</button>`).join('') + '<p class="qso-tip" id="qsoTip"></p>';
     return new Promise(resolve => {
       box.onclick = e => {
@@ -275,42 +290,60 @@
   async function run() {
     const theirName = dx.op, call = me.call, them = dx.call;
     // El control que te da la otra estación varía al azar; `rst` ('57', '58' o '59') es el que irá en la QSL.
-    const rstMe = pick(['5 y 7', '5 y 8', '5 y 9']);
-    rst = rstMe.replace(' y ', '');
+    rst = pick(['57', '58', '59']);
+    const rstMe = t(`${rst[0]} y ${rst[1]}`, `${rst[0]} and ${rst[1]}`);
     // Hora local de la otra estación, para que diga "Aquí son las…".
-    const theirTime = new Intl.DateTimeFormat('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: dx.tz }).format(new Date());
+    const theirTime = new Intl.DateTimeFormat(Radio.locale, { hour: '2-digit', minute: '2-digit', timeZone: dx.tz }).format(new Date());
 
-    add('info', `Sintonizas ${freq} MHz en ${band}. Antes de llamar, escuchas un rato: parece libre.`);
+    add('info', t(`Sintonizas ${freq} MHz en ${band}. Antes de llamar, escuchas un rato: parece libre.`,
+      `You tune to ${freq} MHz on ${band}. Before calling, you listen for a while: it seems free.`));
     await choose([
-      { ok: true, text: '¿QRL? ¿Está ocupada la frecuencia?', why: 'Bien hecho: siempre se pregunta antes de llamar, por si alguien la está usando y no le oyes.' },
-      { ok: false, text: '¡Hola a todos! ¿Alguien me oye?', why: 'Así no se identifica nadie. Antes de nada, pregunta si la frecuencia está libre.' },
-      { ok: false, text: 'Mayday, mayday, mayday…', why: '¡Ojo! “Mayday” es solo para emergencias reales con vidas en peligro.' },
+      { ok: true, text: t('¿QRL? ¿Está ocupada la frecuencia?', 'QRL? Is this frequency in use?'),
+        why: t('Bien hecho: siempre se pregunta antes de llamar, por si alguien la está usando y no le oyes.', 'Well done: always ask before calling, in case someone is using it and you cannot hear them.') },
+      { ok: false, text: t('¡Hola a todos! ¿Alguien me oye?', 'Hello everyone! Can anybody hear me?'),
+        why: t('Así no se identifica nadie. Antes de nada, pregunta si la frecuencia está libre.', 'That does not identify anyone. First of all, ask if the frequency is free.') },
+      { ok: false, text: 'Mayday, mayday, mayday…',
+        why: t('¡Ojo! “Mayday” es solo para emergencias reales con vidas en peligro.', 'Careful! “Mayday” is only for real emergencies when lives are in danger.') },
     ]);
-    add('info', 'Silencio. Nadie contesta: la frecuencia está libre.');
+    add('info', t('Silencio. Nadie contesta: la frecuencia está libre.', 'Silence. Nobody answers: the frequency is free.'));
 
     await choose([
-      { ok: true, text: `CQ CQ CQ, aquí ${say(call)}, ${call}, llamando general y a la escucha.`, why: '“CQ” es una llamada general. Deletrear tu indicativo con el alfabeto fonético evita confusiones.' },
-      { ok: false, text: `CQ, aquí ${me.name}, ¿alguien quiere hablar?`, why: 'Por radio no vale el nombre: hay que dar el indicativo, y mejor deletreado.' },
-      { ok: false, text: '¿Hay alguien en Argentina? Llamo solo a Argentina.', why: 'Se puede llamar a una zona concreta (“CQ DX”), pero para empezar lo normal es una llamada general.' },
+      { ok: true, text: t(`CQ CQ CQ, aquí ${say(call)}, ${call}, llamando general y a la escucha.`, `CQ CQ CQ, this is ${say(call)}, ${call}, calling CQ and listening.`),
+        why: t('“CQ” es una llamada general. Deletrear tu indicativo con el alfabeto fonético evita confusiones.', '“CQ” is a general call. Spelling your callsign with the phonetic alphabet avoids mix-ups.') },
+      { ok: false, text: t(`CQ, aquí ${me.name}, ¿alguien quiere hablar?`, `CQ, this is ${me.name}, does anyone want to chat?`),
+        why: t('Por radio no vale el nombre: hay que dar el indicativo, y mejor deletreado.', 'On the radio your name is not enough: you must give your callsign, ideally spelt out.') },
+      { ok: false, text: t('¿Hay alguien en Argentina? Llamo solo a Argentina.', 'Is anyone in Argentina? Calling Argentina only.'),
+        why: t('Se puede llamar a una zona concreta (“CQ DX”), pero para empezar lo normal es una llamada general.', 'You can call a particular area (“CQ DX”), but to start with a general call is the usual thing.') },
     ]);
     await new Promise(r => setTimeout(r, 1200));
-    await receive(`${call}, ${call}, aquí ${say(them)}. Cambio.`);
-    add('info', `¡Te contesta ${dx.country}! Ahora te toca dar el control de señal, tu nombre y tu QTH (dónde estás).`);
+    await receive(t(`${call}, ${call}, aquí ${say(them)}. Cambio.`, `${call}, ${call}, this is ${say(them)}. Over.`));
+    add('info', t(`¡Te contesta ${dx.country}! Ahora te toca dar el control de señal, tu nombre y tu QTH (dónde estás).`,
+      `An answer from ${dx.country}! Now it is your turn to give a signal report, your name and your QTH (where you are).`));
 
     await choose([
-      { ok: true, text: `${them}, aquí ${call}. Gracias por responder. Te recibo 5 y 9. Mi nombre es ${me.name}, ${me.name}, y mi QTH es ${me.city}. ¿Cómo me copias? ${them} de ${call}, cambio.`, why: '“5 y 9” es el control RS: 5 de legibilidad (perfecta) y 9 de intensidad (muy fuerte).' },
-      { ok: false, text: 'Hola, ¿quién eres? Cuéntame cosas.', why: 'Primero identifícate y da los datos básicos: control de señal, nombre y QTH.' },
-      { ok: false, text: `${them}, te recibo 10 de 10, ¡perfecto!`, why: 'El control de señal tiene su escala: legibilidad del 1 al 5 e intensidad del 1 al 9. Lo máximo es “5 y 9”.' },
+      { ok: true, text: t(`${them}, aquí ${call}. Gracias por responder. Te recibo 5 y 9. Mi nombre es ${me.name}, ${me.name}, y mi QTH es ${me.city}. ¿Cómo me copias? ${them} de ${call}, cambio.`,
+        `${them}, this is ${call}. Thanks for coming back. You are 5 and 9. My name is ${me.name}, ${me.name}, and my QTH is ${me.city}. How do you copy? ${them} de ${call}, over.`),
+        why: t('“5 y 9” es el control RS: 5 de legibilidad (perfecta) y 9 de intensidad (muy fuerte).', '“5 and 9” is the RS report: 5 for readability (perfect) and 9 for strength (very strong).') },
+      { ok: false, text: t('Hola, ¿quién eres? Cuéntame cosas.', 'Hi, who are you? Tell me about yourself.'),
+        why: t('Primero identifícate y da los datos básicos: control de señal, nombre y QTH.', 'First identify yourself and give the basics: signal report, name and QTH.') },
+      { ok: false, text: t(`${them}, te recibo 10 de 10, ¡perfecto!`, `${them}, you are 10 out of 10, perfect!`),
+        why: t('El control de señal tiene su escala: legibilidad del 1 al 5 e intensidad del 1 al 9. Lo máximo es “5 y 9”.', 'Signal reports have their own scale: readability from 1 to 5 and strength from 1 to 9. The top is “5 and 9”.') },
     ]);
-    await receive(`${call} de ${them}. Muchas gracias, ${me.name}. Te copio ${rstMe}, buena señal hasta ${dx.country}. Mi nombre es ${theirName}, ${theirName}, y estoy en ${dx.city}. Aquí son las ${theirTime}. Trabajo con 100 vatios y un dipolo. Es un placer, bienvenido a la banda. ${call} de ${them}, cambio.`);
+    await receive(t(`${call} de ${them}. Muchas gracias, ${me.name}. Te copio ${rstMe}, buena señal hasta ${dx.country}. Mi nombre es ${theirName}, ${theirName}, y estoy en ${dx.city}. Aquí son las ${theirTime}. Trabajo con 100 vatios y un dipolo. Es un placer, bienvenido a la banda. ${call} de ${them}, cambio.`,
+      `${call} de ${them}. Thank you very much, ${me.name}. You are ${rstMe}, a good signal here in ${dx.country}. My name is ${theirName}, ${theirName}, and I am in ${dx.city}. The time here is ${theirTime}. I am running 100 watts into a dipole. A pleasure, welcome to the band. ${call} de ${them}, over.`));
 
     await choose([
-      { ok: true, text: `Recibido, ${theirName}, todo copiado. Te confirmo el contacto con QSL. Muchas gracias por el QSO. 73. ${them} de ${call}.`, why: '“73” son saludos cordiales. Y siempre te identificas al terminar.' },
-      { ok: false, text: 'Vale, adiós.', why: 'Despídete bien: agradece, manda 73 y di tu indicativo al cerrar.' },
-      { ok: false, text: '¿Y qué te parece el gobierno? Yo creo que…', why: 'En el aire se evitan la política y la religión: es una comunidad de todo el mundo.' },
+      { ok: true, text: t(`Recibido, ${theirName}, todo copiado. Te confirmo el contacto con QSL. Muchas gracias por el QSO. 73. ${them} de ${call}.`,
+        `Roger, ${theirName}, all copied. I will confirm the contact with a QSL. Many thanks for the QSO. 73. ${them} de ${call}.`),
+        why: t('“73” son saludos cordiales. Y siempre te identificas al terminar.', '“73” means best regards. And you always identify yourself at the end.') },
+      { ok: false, text: t('Vale, adiós.', 'OK, bye.'),
+        why: t('Despídete bien: agradece, manda 73 y di tu indicativo al cerrar.', 'Sign off properly: say thank you, send 73 and give your callsign as you finish.') },
+      { ok: false, text: t('¿Y qué te parece el gobierno? Yo creo que…', 'And what do you think of the government? I reckon…'),
+        why: t('En el aire se evitan la política y la religión: es una comunidad de todo el mundo.', 'On the air we avoid politics and religion: it is a worldwide community.') },
     ]);
-    await receive(`Recibido, ${me.name}. Te mando mi QSL. 73 y buenos DX. ${call} de ${them}, sigo a la escucha.`);
-    finish(`🎉 ¡Has completado tu primer QSO con ${dx.country}!`, true);
+    await receive(t(`Recibido, ${me.name}. Te mando mi QSL. 73 y buenos DX. ${call} de ${them}, sigo a la escucha.`,
+      `Roger, ${me.name}. I will send you my QSL. 73 and good DX. ${call} de ${them}, standing by.`));
+    finish(t(`🎉 ¡Has completado tu primer QSO con ${dx.country}!`, `🎉 You have completed your first QSO with ${dx.country}!`), true);
   }
 
   /* ---------- Otros escenarios ---------- */
@@ -329,7 +362,7 @@
    * @param {string} [suffix] Sufijo opcional, por ejemplo "/P" (portátil) en POTA.
    * @returns {object} Estación con los mismos campos que STATIONS más call.
    */
-  const spaniard = suffix => { const s = pick(SPAIN.filter(x => x.d !== me.call.match(/\d/)?.[0])); return { prefix: 'EA' + s.d, call: 'EA' + s.d + letters(pick([2, 3])) + (suffix || ''), op: s.op, city: s.city, country: 'España', flag: '🇪🇸', lang: 'es-ES', tz: 'Europe/Madrid' }; };
+  const spaniard = suffix => { const s = pick(SPAIN.filter(x => x.d !== me.call.match(/\d/)?.[0])); return { prefix: 'EA' + s.d, call: 'EA' + s.d + letters(pick([2, 3])) + (suffix || ''), op: s.op, city: s.city, country: t('España', 'Spain'), flag: '🇪🇸', lang: 'es-ES', langEn: 'en-GB', tz: 'Europe/Madrid' }; };
   /**
    * Espera ms milisegundos.
    * @param {number} ms
@@ -345,22 +378,28 @@
   async function runContest() {
     rst = '59';
     const call = me.call, them = dx.call, serial = 100 + Math.floor(Math.random() * 300);
-    add('info', `Es fin de semana de concurso: la banda está llena de estaciones que intentan hacer el máximo de contactos. Oyes llamar a ${them}.`);
-    await receive(`CQ concurso, CQ concurso, ${say(them)}.`);
+    add('info', t(`Es fin de semana de concurso: la banda está llena de estaciones que intentan hacer el máximo de contactos. Oyes llamar a ${them}.`,
+      `It is a contest weekend: the band is full of stations trying to make as many contacts as they can. You hear ${them} calling.`));
+    await receive(t(`CQ concurso, CQ concurso, ${say(them)}.`, `CQ contest, CQ contest, ${say(them)}.`));
     await choose([
-      { ok: true, text: `${call}`, why: 'En concurso se contesta solo con tu indicativo, una vez. Rápido y claro.' },
-      { ok: false, text: `Hola ${them}, aquí ${call}, ¿qué tal el fin de semana? Por aquí hace buen tiempo…`, why: 'En un concurso la otra estación quiere ir rápido: nada de charla, solo indicativo e intercambio.' },
-      { ok: false, text: `CQ concurso, aquí ${call}`, why: 'Él está llamando; tú debes contestarle con tu indicativo, no lanzar tu propia llamada encima.' },
+      { ok: true, text: `${call}`, why: t('En concurso se contesta solo con tu indicativo, una vez. Rápido y claro.', 'In a contest you answer with just your callsign, once. Quick and clear.') },
+      { ok: false, text: t(`Hola ${them}, aquí ${call}, ¿qué tal el fin de semana? Por aquí hace buen tiempo…`, `Hello ${them}, this is ${call}, how is your weekend going? The weather is lovely here…`),
+        why: t('En un concurso la otra estación quiere ir rápido: nada de charla, solo indicativo e intercambio.', 'In a contest the other station wants to be quick: no chatting, just callsign and exchange.') },
+      { ok: false, text: t(`CQ concurso, aquí ${call}`, `CQ contest, this is ${call}`),
+        why: t('Él está llamando; tú debes contestarle con tu indicativo, no lanzar tu propia llamada encima.', 'They are the one calling; you should answer with your callsign, not put out your own call on top.') },
     ]);
     await receive(`${call}, 5 9, ${serial}.`);
-    add('info', `Te ha pasado el control (59) y su número de contacto (${serial}). Tú le das tu control y tu número: es tu primer contacto, así que 001.`);
+    add('info', t(`Te ha pasado el control (59) y su número de contacto (${serial}). Tú le das tu control y tu número: es tu primer contacto, así que 001.`,
+      `They have given you a report (59) and their contact number (${serial}). You give your report and your number: it is your first contact, so 001.`));
     await choose([
-      { ok: true, text: `Gracias, 5 9, 0 0 1.`, why: 'Intercambio completo: control de señal y número de serie. Con eso el contacto es válido.' },
-      { ok: false, text: `5 9, me llamo ${me.name} y estoy en ${me.city}.`, why: 'En este concurso el intercambio es control y número de serie, no nombre y ciudad.' },
-      { ok: false, text: '¿Me lo repites todo desde el principio?', why: 'Si no copiaste algo, pide solo lo que te falta (“¿número?”), no todo.' },
+      { ok: true, text: t(`Gracias, 5 9, 0 0 1.`, `Thanks, 5 9, 0 0 1.`), why: t('Intercambio completo: control de señal y número de serie. Con eso el contacto es válido.', 'Complete exchange: signal report and serial number. That makes the contact valid.') },
+      { ok: false, text: t(`5 9, me llamo ${me.name} y estoy en ${me.city}.`, `5 9, my name is ${me.name} and I am in ${me.city}.`),
+        why: t('En este concurso el intercambio es control y número de serie, no nombre y ciudad.', 'In this contest the exchange is report and serial number, not name and town.') },
+      { ok: false, text: t('¿Me lo repites todo desde el principio?', 'Could you repeat everything from the start?'),
+        why: t('Si no copiaste algo, pide solo lo que te falta (“¿número?”), no todo.', 'If you missed something, ask only for what you need (“number?”), not everything.') },
     ]);
-    await receive(`Gracias, 73. QRZ concurso, ${them}.`);
-    finish('🏁 ¡Contacto de concurso hecho! Así se hacen cientos en un fin de semana.', true);
+    await receive(t(`Gracias, 73. QRZ concurso, ${them}.`, `Thanks, 73. QRZ contest, ${them}.`));
+    finish(t('🏁 ¡Contacto de concurso hecho! Así se hacen cientos en un fin de semana.', '🏁 Contest contact done! That is how people make hundreds in a weekend.'), true);
   }
 
   /**
@@ -369,22 +408,27 @@
    */
   async function runPota() {
     const call = me.call, them = dx.call;
-    add('info', `En un mapa de actividad ves que ${them} está transmitiendo desde un parque natural cerca de ${dx.city}. Cazar parques desde casa es uno de los juegos favoritos de los radioaficionados.`);
-    await receive(`CQ POTA, CQ POTA, aquí ${say(them)}, portable desde un parque natural. Cambio.`);
+    add('info', t(`En un mapa de actividad ves que ${them} está transmitiendo desde un parque natural cerca de ${dx.city}. Cazar parques desde casa es uno de los juegos favoritos de los radioaficionados.`,
+      `On an activity map you see that ${them} is on the air from a nature park near ${dx.city}. Hunting parks from home is one of radio amateurs’ favourite games.`));
+    await receive(t(`CQ POTA, CQ POTA, aquí ${say(them)}, portable desde un parque natural. Cambio.`, `CQ POTA, CQ POTA, this is ${say(them)}, portable in a nature park. Over.`));
     await choose([
-      { ok: true, text: `${call}`, why: 'Los activadores de parques reciben muchas llamadas: se contesta con el indicativo y se espera turno.' },
-      { ok: false, text: `${them}, ${them}, ${them}, aquí ${call}, ${call}, ${call}, cambio…`, why: 'Repetir tanto alarga la llamada y pisa a los demás. Una o dos veces basta.' },
-      { ok: false, text: '¿En qué parque estás exactamente? ¿Hace frío?', why: 'Primero hay que hacer el contacto; las preguntas, si hay tiempo, al final.' },
+      { ok: true, text: `${call}`, why: t('Los activadores de parques reciben muchas llamadas: se contesta con el indicativo y se espera turno.', 'Park activators get lots of calls: you answer with your callsign and wait your turn.') },
+      { ok: false, text: t(`${them}, ${them}, ${them}, aquí ${call}, ${call}, ${call}, cambio…`, `${them}, ${them}, ${them}, this is ${call}, ${call}, ${call}, over…`),
+        why: t('Repetir tanto alarga la llamada y pisa a los demás. Una o dos veces basta.', 'Repeating that much makes the call longer and covers the others. Once or twice is enough.') },
+      { ok: false, text: t('¿En qué parque estás exactamente? ¿Hace frío?', 'Which park are you in exactly? Is it cold?'),
+        why: t('Primero hay que hacer el contacto; las preguntas, si hay tiempo, al final.', 'First make the contact; questions at the end, if there is time.') },
     ]);
     rst = '57';
-    await receive(`${call}, te copio 5 y 7. Te pido tu QTH, por favor.`);
+    await receive(t(`${call}, te copio 5 y 7. Te pido tu QTH, por favor.`, `${call}, you are 5 and 7. Your QTH, please.`));
     await choose([
-      { ok: true, text: `Gracias. Te copio 5 y 9, QTH ${me.city}. ${them} de ${call}.`, why: 'Control de señal y localización: lo que el activador anota en su libro de guardia.' },
-      { ok: false, text: 'Te copio 5 y 9.', why: 'Te ha pedido tu QTH: dale también tu localización.' },
-      { ok: false, text: `Te copio perfecto, ¿me mandas una foto del parque por WhatsApp?`, why: 'Céntrate en el intercambio que pide; después hay otros esperando.' },
+      { ok: true, text: t(`Gracias. Te copio 5 y 9, QTH ${me.city}. ${them} de ${call}.`, `Thanks. You are 5 and 9, QTH ${me.city}. ${them} de ${call}.`),
+        why: t('Control de señal y localización: lo que el activador anota en su libro de guardia.', 'Signal report and location: what the activator writes in their log.') },
+      { ok: false, text: t('Te copio 5 y 9.', 'You are 5 and 9.'), why: t('Te ha pedido tu QTH: dale también tu localización.', 'They asked for your QTH: give your location too.') },
+      { ok: false, text: t(`Te copio perfecto, ¿me mandas una foto del parque por WhatsApp?`, `Copy you perfectly, can you send me a photo of the park on WhatsApp?`),
+        why: t('Céntrate en el intercambio que pide; después hay otros esperando.', 'Stick to the exchange they ask for; there are others waiting after you.') },
     ]);
-    await receive(`Recibido ${me.city}. Gracias por el parque, 73. QRZ POTA, ${them}.`);
-    finish('🌲 ¡Has cazado tu primer parque! En POTA se llevan rankings y diplomas por parques cazados.', true);
+    await receive(t(`Recibido ${me.city}. Gracias por el parque, 73. QRZ POTA, ${them}.`, `Roger ${me.city}. Thanks for the park, 73. QRZ POTA, ${them}.`));
+    finish(t('🌲 ¡Has cazado tu primer parque! En POTA se llevan rankings y diplomas por parques cazados.', '🌲 You have hunted your first park! POTA keeps rankings and awards for the parks you hunt.'), true);
   }
 
   /**
@@ -393,21 +437,28 @@
    */
   async function runEmergency() {
     const call = me.call, them = dx.call;
-    add('info', `Hoy hay un ejercicio de emergencias. Una estación de control, ${them}, organiza la red: en estas redes se habla solo cuando el control lo pide.`);
-    await receive(`Aquí ${say(them)}, estación de control del ejercicio. Estaciones que quieran entrar en la red, solo indicativo. Cambio.`);
+    add('info', t(`Hoy hay un ejercicio de emergencias. Una estación de control, ${them}, organiza la red: en estas redes se habla solo cuando el control lo pide.`,
+      `Today there is an emergency exercise. A control station, ${them}, is running the net: on these nets you only speak when control asks you to.`));
+    await receive(t(`Aquí ${say(them)}, estación de control del ejercicio. Estaciones que quieran entrar en la red, solo indicativo. Cambio.`,
+      `This is ${say(them)}, control station for the exercise. Stations wishing to join the net, callsigns only. Over.`));
     await choose([
-      { ok: true, text: `${call}`, why: 'En una red dirigida te presentas solo con el indicativo y esperas a que el control te llame.' },
-      { ok: false, text: `Hola, soy ${me.name}, estoy en ${me.city} y tengo un equipo nuevo que…`, why: 'En emergencias cada segundo cuenta: solo indicativo, el resto cuando te lo pidan.' },
-      { ok: false, text: 'Mayday, mayday, mayday', why: 'Es un ejercicio: “mayday” solo se usa ante un peligro real para la vida.' },
+      { ok: true, text: `${call}`, why: t('En una red dirigida te presentas solo con el indicativo y esperas a que el control te llame.', 'On a controlled net you check in with just your callsign and wait for control to call you.') },
+      { ok: false, text: t(`Hola, soy ${me.name}, estoy en ${me.city} y tengo un equipo nuevo que…`, `Hello, I am ${me.name}, I am in ${me.city} and I have a new radio that…`),
+        why: t('En emergencias cada segundo cuenta: solo indicativo, el resto cuando te lo pidan.', 'In emergencies every second counts: callsign only, the rest when they ask for it.') },
+      { ok: false, text: 'Mayday, mayday, mayday', why: t('Es un ejercicio: “mayday” solo se usa ante un peligro real para la vida.', 'It is an exercise: “mayday” is only used when there is a real danger to life.') },
     ]);
-    await receive(`${call}, adelante con su informe.`);
+    await receive(t(`${call}, adelante con su informe.`, `${call}, go ahead with your report.`));
     await choose([
-      { ok: true, text: `${call}: en ${me.city} sin novedad, sin daños. Disponible con equipo portátil y baterías. Cambio.`, why: 'Un informe útil es corto: dónde estás, qué ves y con qué medios cuentas.' },
-      { ok: false, text: 'Bueno, pues por aquí todo bien, la verdad, aunque esta mañana se fue un rato la luz y…', why: 'Sé breve y concreto: situación, daños y medios disponibles.' },
-      { ok: false, text: 'Pásame con el 112, por favor.', why: 'La red de radio apoya a los servicios de emergencia, pero no es una centralita: da tu informe al control.' },
+      { ok: true, text: t(`${call}: en ${me.city} sin novedad, sin daños. Disponible con equipo portátil y baterías. Cambio.`, `${call}: all quiet in ${me.city}, no damage. Available with portable equipment and batteries. Over.`),
+        why: t('Un informe útil es corto: dónde estás, qué ves y con qué medios cuentas.', 'A useful report is short: where you are, what you see and what equipment you have.') },
+      { ok: false, text: t('Bueno, pues por aquí todo bien, la verdad, aunque esta mañana se fue un rato la luz y…', 'Well, everything is fine here, really, although the power went off for a bit this morning and…'),
+        why: t('Sé breve y concreto: situación, daños y medios disponibles.', 'Be short and to the point: situation, damage and equipment available.') },
+      { ok: false, text: t('Pásame con el 112, por favor.', 'Put me through to 112, please.'),
+        why: t('La red de radio apoya a los servicios de emergencia, pero no es una centralita: da tu informe al control.', 'The radio net supports the emergency services, but it is not a switchboard: give your report to control.') },
     ]);
-    await receive(`Recibido ${call}, anotado. Quede a la escucha en esta frecuencia. Control.`);
-    finish('🚨 Ejercicio completado. Así funcionan las redes de emergencia: disciplina, mensajes cortos y la estación de control al mando.', false);
+    await receive(t(`Recibido ${call}, anotado. Quede a la escucha en esta frecuencia. Control.`, `Roger ${call}, logged. Please stand by on this frequency. Control.`));
+    finish(t('🚨 Ejercicio completado. Así funcionan las redes de emergencia: disciplina, mensajes cortos y la estación de control al mando.',
+      '🚨 Exercise complete. This is how emergency nets work: discipline, short messages and the control station in charge.'), false);
   }
 
   /**
@@ -417,21 +468,25 @@
   async function runIss() {
     rst = '59';
     const call = me.call, them = dx.call;
-    add('info', 'La Estación Espacial Internacional pasa sobre España. Solo la tendrás a la vista unos 10 minutos y mucha gente intenta contactar a la vez: hay que ser rapidísimo.');
+    add('info', t('La Estación Espacial Internacional pasa sobre España. Solo la tendrás a la vista unos 10 minutos y mucha gente intenta contactar a la vez: hay que ser rapidísimo.',
+      'The International Space Station is passing over you. It will only be in view for about 10 minutes and lots of people are trying to make contact at once: you have to be very quick.'));
     await wait(800);
-    await receive(`${say(them)}, escuchando. Adelante.`);
+    await receive(t(`${say(them)}, escuchando. Adelante.`, `${say(them)}, listening. Go ahead.`));
     await choose([
-      { ok: true, text: `${them}, aquí ${call}.`, why: 'Con decenas de estaciones llamando, solo el indicativo de la ISS y el tuyo. Nada más.' },
-      { ok: false, text: `Hola ${them}, ¿qué tal por el espacio? Aquí ${me.name}, desde ${me.city}, te quería preguntar…`, why: 'El pase dura minutos: si te alargas, nadie más podrá hacer su contacto.' },
-      { ok: false, text: 'CQ CQ CQ', why: 'No se llama CQ a la ISS: se contesta a su llamada con los dos indicativos.' },
+      { ok: true, text: t(`${them}, aquí ${call}.`, `${them}, this is ${call}.`), why: t('Con decenas de estaciones llamando, solo el indicativo de la ISS y el tuyo. Nada más.', 'With dozens of stations calling, just the ISS callsign and yours. Nothing else.') },
+      { ok: false, text: t(`Hola ${them}, ¿qué tal por el espacio? Aquí ${me.name}, desde ${me.city}, te quería preguntar…`, `Hello ${them}, how is space? This is ${me.name}, in ${me.city}, I wanted to ask you…`),
+        why: t('El pase dura minutos: si te alargas, nadie más podrá hacer su contacto.', 'The pass only lasts minutes: if you go on, nobody else will get their contact.') },
+      { ok: false, text: 'CQ CQ CQ', why: t('No se llama CQ a la ISS: se contesta a su llamada con los dos indicativos.', 'You do not call CQ to the ISS: you answer its call with both callsigns.') },
     ]);
-    await receive(`${call}, 5 9. Gracias. Siguiente.`);
+    await receive(t(`${call}, 5 9. Gracias. Siguiente.`, `${call}, 5 9. Thank you. Next.`));
     await choose([
-      { ok: true, text: '5 9, gracias, 73.', why: 'Corto y con cortesía: control de señal y despedida. ¡Contacto con el espacio hecho!' },
-      { ok: false, text: '¿Puedes repetir? ¿Y me saludas a la tripulación?', why: 'La ISS ya ha pasado a la siguiente estación: lo justo y a tiempo.' },
-      { ok: false, text: '(No digo nada)', why: 'Hay que confirmar el contacto con tu control de señal para que sea válido.' },
+      { ok: true, text: t('5 9, gracias, 73.', '5 9, thanks, 73.'), why: t('Corto y con cortesía: control de señal y despedida. ¡Contacto con el espacio hecho!', 'Short and polite: signal report and goodbye. Contact with space done!') },
+      { ok: false, text: t('¿Puedes repetir? ¿Y me saludas a la tripulación?', 'Can you say again? And say hello to the crew for me?'),
+        why: t('La ISS ya ha pasado a la siguiente estación: lo justo y a tiempo.', 'The ISS has already moved on to the next station: just what is needed, and in time.') },
+      { ok: false, text: t('(No digo nada)', '(I say nothing)'), why: t('Hay que confirmar el contacto con tu control de señal para que sea válido.', 'You need to confirm the contact with your signal report for it to be valid.') },
     ]);
-    finish('🛰️ ¡Contacto con la Estación Espacial! Algunos radioaficionados lo consiguen con un walkie y una antena de mano.', true);
+    finish(t('🛰️ ¡Contacto con la Estación Espacial! Algunos radioaficionados lo consiguen con un walkie y una antena de mano.',
+      '🛰️ Contact with the Space Station! Some radio amateurs manage it with a handheld radio and a hand-held antenna.'), true);
   }
 
   /* ---------- Final del contacto ---------- */
@@ -446,13 +501,13 @@
   function finish(text, qsl) {
     Radio.track(`qso/${scenario}`);
     stopNoise();
-    $('qsoOnAir').textContent = qsl ? 'QSO COMPLETO' : 'EJERCICIO HECHO';
-    add('info', text + (qsl ? ' Te ha llegado su tarjeta QSL.' : ''));
+    $('qsoOnAir').textContent = qsl ? t('QSO COMPLETO', 'QSO COMPLETE') : t('EJERCICIO HECHO', 'EXERCISE DONE');
+    add('info', text + (qsl ? t(' Te ha llegado su tarjeta QSL.', ' Their QSL card has arrived.') : ''));
     document.dispatchEvent(new CustomEvent('radio:qso', { detail: { scenario } }));
     if (qsl) setTimeout(showQsl, 900);
     else {
       const b = document.createElement('button');
-      b.className = 'btn ghost small'; b.textContent = 'Otro contacto';
+      b.className = 'btn ghost small'; b.textContent = t('Otro contacto', 'Another contact');
       b.onclick = () => $('qsoAgain').click();
       $('qsoChoices').innerHTML = ''; $('qsoChoices').appendChild(b);
     }
@@ -494,16 +549,16 @@
     g.fillStyle = ink; g.font = '800 104px Fraunces, Georgia, serif';
     g.fillText(dx.call, 46, 180);
     g.font = '400 24px "IBM Plex Sans", sans-serif'; g.fillStyle = muted;
-    g.fillText(`Operador: ${dx.op}`, 52, 222);
+    g.fillText(`${t('Operador', 'Operator')}: ${dx.op}`, 52, 222);
 
     g.fillStyle = ink; g.font = '600 26px "IBM Plex Sans", sans-serif';
-    g.fillText(`Para: ${me.call} · ${me.name} (${me.city})`, 52, 290);
+    g.fillText(`${t('Para', 'To')}: ${me.call} · ${me.name} (${me.city})`, 52, 290);
     g.fillStyle = muted; g.font = '400 20px "IBM Plex Sans", sans-serif';
-    g.fillText('Confirmando nuestro QSO:', 52, 326);
+    g.fillText(t('Confirmando nuestro QSO:', 'Confirming our QSO:'), 52, 326);
 
     // Tabla de seis casillas [título, valor]. `weights` reparte el ancho: FECHA es la más ancha y RST la más
     // estrecha. unit = píxeles por unidad de peso.
-    const cols = [['FECHA', date], ['UTC', time], ['BANDA', band], ['MHz', freq], ['MODO', mode], ['RST', rst]];
+    const cols = [[t('FECHA', 'DATE'), date], ['UTC', time], [t('BANDA', 'BAND'), band], ['MHz', freq], [t('MODO', 'MODE'), mode], ['RST', rst]];
     const x0 = 52, y0 = 352, weights = [1.7, 1, 1, 1.15, 0.95, 0.8];
     const unit = (W - 104) / weights.reduce((a, b) => a + b, 0);
     g.strokeStyle = '#3a3d44'; g.lineWidth = 1.5;
@@ -519,7 +574,7 @@
     g.fillStyle = mint; g.font = 'italic 800 40px Fraunces, Georgia, serif';
     g.fillText('Tnx QSO · 73!', 52, 506);
     g.fillStyle = muted; g.font = '400 15px "IBM Plex Mono", monospace';
-    g.textAlign = 'right'; g.fillText('Contacto simulado · bendi.dev/radio', W - 52, 506); g.textAlign = 'left';
+    g.textAlign = 'right'; g.fillText(t('Contacto simulado · bendi.dev/radio', 'Simulated contact · bendi.dev/radio/en'), W - 52, 506); g.textAlign = 'left';
 
     $('qsoQsl').hidden = false;
     $('qsoQsl').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -541,8 +596,9 @@
     $('qslCanvas').toBlob(async blob => {
       const file = new File([blob], `QSL_${dx.call}_${me.call}.png`, { type: 'image/png' });
       try {
-        await navigator.share({ files: [file], title: 'Mi primer QSO',
-          text: `¡He hecho mi primer contacto por radio con ${dx.country}! 📻 73. Pruébalo en https://bendi.dev/radio/` });
+        await navigator.share({ files: [file], title: t('Mi primer QSO', 'My first QSO'),
+          text: t(`¡He hecho mi primer contacto por radio con ${dx.country}! 📻 73. Pruébalo en https://bendi.dev/radio/`,
+            `I have made my first radio contact with ${dx.country}! 📻 73. Try it at https://bendi.dev/radio/en/`) });
       } catch (e) { /* cancelado */ }
     }, 'image/png');
   });
@@ -570,7 +626,7 @@
     e.preventDefault();
     const callIn = $('qsoCall').value.toUpperCase().replace(/[^A-Z0-9]/g, '');
     if (!/^[A-Z0-9]{3,8}$/.test(callIn) || !/\d/.test(callIn)) {
-      $('qsoCall').setCustomValidity('Un indicativo lleva letras y al menos un número, por ejemplo EA4ABC.');
+      $('qsoCall').setCustomValidity(t('Un indicativo lleva letras y al menos un número, por ejemplo EA4ABC.', 'A callsign has letters and at least one number, for example EA4ABC.'));
       $('qsoCall').reportValidity();
       return;
     }
@@ -589,11 +645,11 @@
     if (scenario === 'concurso') { dx = spaniard(); band = '40 m'; mode = 'LSB'; freq = (7.060 + Math.random() * 0.13).toFixed(3); }
     if (scenario === 'pota') { dx = spaniard('/P'); }
     if (scenario === 'emergencia') { dx = spaniard(); band = '2 m'; mode = 'FM'; freq = '145.425'; }
-    if (scenario === 'iss') { dx = { call: 'NA1SS', op: 'Tripulación de la ISS', city: 'a 400 km de altura', country: 'Estación Espacial', flag: '🛰️', lang: 'es-ES', tz: 'UTC' }; band = '2 m'; mode = 'FM'; freq = '145.800'; }
+    if (scenario === 'iss') { dx = { call: 'NA1SS', op: t('Tripulación de la ISS', 'ISS crew'), city: t('a 400 km de altura', '400 km up'), country: t('Estación Espacial', 'the Space Station'), flag: '🛰️', lang: 'es-ES', langEn: 'en-US', tz: 'UTC' }; band = '2 m'; mode = 'FM'; freq = '145.800'; }
     log = [];
     $('qsoLog').innerHTML = '';
     $('qsoFreq').textContent = `${freq} MHz · ${mode}`;
-    $('qsoOnAir').textContent = 'EN EL AIRE';
+    $('qsoOnAir').textContent = t('EN EL AIRE', 'ON AIR');
     $('qsoSetup').hidden = true;
     $('qsoQsl').hidden = true;
     $('qsoRadio').hidden = false;

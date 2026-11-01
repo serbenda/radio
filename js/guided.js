@@ -15,6 +15,7 @@
  *   contenido mixto). Formato y comprobación en docs/DATOS.md.
  * Accesibilidad: los presets son <button> con aria-pressed (el elegido está a "true").
  * No guarda nada en localStorage.
+ * Textos: en los dos idiomas con Radio.t (los de LISTEN y RECEIVERS ya llegan traducidos desde data.js).
  *
  * Cómo modificarlo:
  *  - Añadir o cambiar un preset: LISTEN en data.js (la forma está documentada allí).
@@ -25,7 +26,7 @@
  */
 (() => {
   'use strict';
-  const { $, esc } = Radio;
+  const { $, esc, t } = Radio;
   if (!$('guided')) return;
 
   // Hora local del dispositivo, calculada una vez al cargar la página.
@@ -43,7 +44,7 @@
     $('guidedTitle').textContent = l.title;
     $('guidedText').textContent = l.text;
     $('guidedGo').href = WEBSDR + l.tune;
-    $('guidedWhen').textContent = l === recommended ? `lo mejor a esta hora (${isDaytime ? 'de día' : 'de noche'})` : 'tu elección';
+    $('guidedWhen').textContent = l === recommended ? t(`lo mejor a esta hora (${isDaytime ? 'de día' : 'de noche'})`, `best at this time (${isDaytime ? 'daytime' : 'night-time'})`) : t('tu elección', 'your choice');
     $('guidedPresets').querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.id === l.id)));
   }
   // Un botón por preset. `chip` es contenido propio de data.js, por eso no se escapa.
