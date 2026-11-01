@@ -462,7 +462,7 @@ flowchart LR
   G --> H[bendi.dev/radio actualizado]
 ```
 
-- **Nunca** se trabaja directamente en `main`: todo pasa por `development` y una pull request.
+- **Nunca** se trabaja directamente en `main`: todo pasa por `development` y una pull request. GitHub lo impone: `main` está protegida (pull request obligatoria con la comprobación `comprobar` en verde, sin `push --force` ni borrado, también para administradores) y `development` no se puede forzar ni borrar.
 - GitHub Pages está configurado como "Deploy from a branch" → `main` → `/ (root)`. El dominio `bendi.dev` está configurado en el repositorio de la web personal; esta web vive en la subcarpeta `/radio/`.
 - Paso a paso: [TUTORIAL.md](TUTORIAL.md). Normas: [../CONTRIBUTING.md](../CONTRIBUTING.md).
 

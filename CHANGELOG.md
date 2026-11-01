@@ -11,6 +11,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). C
 - **Comprobación semanal de enlaces externos** (`tools/enlaces.mjs`) que abre un aviso si alguno se rompe.
 - **Documentación completa:** README renovado con capturas; índice de la documentación; cómo se construyó; arquitectura con diagramas; tutorial; guía de recetas; solución de problemas; estilos; glosario; guía de contribución y plantilla de pull request. Todo el código comentado función a función.
 - `tools/check.mjs`: comprobaciones de seguridad (CSP, integridad, `noopener`, tipografías).
+- **Ramas protegidas en GitHub:** `main` solo con pull request y comprobaciones en verde; ni `main` ni `development` se pueden forzar ni borrar.
 
 ### Cambiado
 - **Buenas prácticas:** auditoría de accesibilidad con axe y sus arreglos; tipografías alojadas en la web (sin Google Fonts); Content-Security-Policy; integridad (SRI) de las librerías; aviso para quien navega sin JavaScript.

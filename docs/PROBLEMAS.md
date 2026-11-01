@@ -75,6 +75,7 @@ El service worker renueva los archivos en segundo plano: el cambio se ve **en la
 
 | Problema | Solución |
 | --- | --- |
+| `protected branch hook declined` o `Changes must be made through a pull request` | Has intentado subir directamente a `main` (o forzar en `development`): las ramas están protegidas. Sube a `development` y abre una pull request |
 | `rejected … fetch first` al hacer push | Alguien (o tú desde otro equipo) subió cambios: `git pull` y vuelve a hacer push |
 | Conflicto al hacer pull | Git marca el archivo con `<<<<<<<`. Edita y deja la versión buena, `git add`, `git commit` |
 | Hice commit en `main` por error | `git branch -f development main && git checkout development && git push origin development`, y en `main`: `git reset --hard origin/main` (solo si no lo has subido) |

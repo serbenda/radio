@@ -21,6 +21,13 @@ gitGraph
 - **`main`** es lo que está publicado en `bendi.dev/radio`. **Nadie hace commits directos en `main`.**
 - **`development`** es donde se trabaja. Los cambios llegan a `main` con una **pull request** que fusiona el responsable del proyecto.
 
+Las dos ramas están **protegidas en GitHub** (Settings → Branches), sin excepciones ni para administradores:
+
+| Rama | Protección |
+| --- | --- |
+| `main` | Solo se cambia con pull request (sin aprobaciones obligatorias, porque el proyecto lo lleva una persona); la comprobación `comprobar` de GitHub Actions debe estar en verde; prohibido `push --force` y borrarla |
+| `development` | Se puede subir directamente; prohibido `push --force` y borrarla |
+
 ## Antes de abrir una pull request
 
 1. `node tools/check.mjs` termina en `✓`.
