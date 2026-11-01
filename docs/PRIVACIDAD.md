@@ -41,7 +41,8 @@ El nombre, la ciudad y el indicativo de prácticas que escribes en "Haz tu prime
 
 Al visitar la web, tu navegador se conecta a servicios de terceros, que como cualquier servidor ven tu dirección IP:
 
-- **Siempre:** Google Fonts (tipografías), cdnjs (librerías), GoatCounter (visitas).
+- **Siempre:** GoatCounter (visitas). Las tipografías están alojadas en la propia web: **no se hace ninguna petición a Google**.
+- **En páginas con mapas o la ISS:** cdnjs (librerías Leaflet y satellite.js).
 - **Según la página:** Radio Browser, HamQTH, KC2G, CelesTrak y Esri. La lista completa está en [DATOS.md](DATOS.md).
 - **Al reproducir una emisora**, el audio viene directamente del servidor de esa emisora.
 
@@ -62,6 +63,8 @@ Además de las visitas, se cuentan algunos **hitos** como eventos de GoatCounter
 | `radio/examen/simulacro-apto` o `-no-apto` | Terminas un simulacro |
 | `radio/insignia/semana-<n>` | Ganas una insignia de "Tu primer mes" |
 | `radio/progreso/guardar` o `/recuperar` | Usas la copia de tu progreso |
+| `radio/apoyo/sponsors` y `radio/apoyo/sponsors-portada` | Pulsas "Apoya el proyecto" en el pie o en la portada (no se sabe si después apoyas ni quién eres) |
+| `radio/instalar/aceptada`, `/rechazada`, `/hecha` | Aceptas o rechazas la ventana de instalación, o la app termina de instalarse |
 
 Si bloqueas GoatCounter (por ejemplo, con un bloqueador de anuncios), no se cuenta nada y todo funciona igual.
 

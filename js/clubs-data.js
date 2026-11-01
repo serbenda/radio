@@ -1,10 +1,35 @@
 /**
- * clubs-data.js · Secciones locales de la URE: [provincia, nombre, indicativo de la sección, web].
+ * clubs-data.js · Secciones locales de la URE (Unión de Radioaficionados Españoles).
  *
  * Fuente: https://www.ure.es/secciones/ (consultado el 1 de noviembre de 2026).
- * Privacidad: SOLO datos públicos de cada sección. La web de la URE también muestra nombres, teléfonos y
- * correos de los presidentes: no se copian nunca (tools/check.mjs lo vigila).
- * Cómo actualizarlo: docs/CONTENIDO.md.
+ * Define la variable global URE_SECTIONS. La usan js/clubs.js (mapa y lista de empezar/#clubes) y
+ * tools/check.mjs (validación). Se carga en empezar/index.html antes de clubs.js.
+ *
+ * ── Formato: una fila por sección, un array de 4 textos ──────────────────────────────────────────
+ *   [provincia, nombre, indicativo, web]
+ *   0 provincia   Grafía de la URE (p. ej. "Bizkaia", "Guipúzcoa", "S.C.Tenerife"). Debe coincidir
+ *                 EXACTAMENTE con una clave de PROV en js/clubs.js para tener marcador en el mapa.
+ *   1 nombre      Nombre de la sección (normalmente la localidad o comarca).
+ *   2 indicativo  Indicativo de la sección, en mayúsculas (p. ej. "EA4URA"), o "" si no tiene.
+ *                 check.mjs exige el formato E + letra de la A a la H + dígito + 1 a 4 letras o cifras.
+ *   3 web         URL completa que empieza por http:// o https://, o "" si no tiene. No se ponen webs
+ *                 genéricas (la portada de la URE o de QRZ).
+ *   Ejemplo: ["Madrid","Alcorcón","EA4URA","https://ea4ura.es"]
+ *   Las filas no necesitan orden: clubs.js las agrupa por provincia y ordena las provincias.
+ *   No hay id: si cambia el nombre de una sección basta con editarlo (no se guarda progreso por sección).
+ *
+ * ── Privacidad (regla obligatoria) ──────────────────────────────────────────────────────────────
+ *   SOLO datos públicos de la SECCIÓN: provincia, nombre, indicativo y web.
+ *   La web de la URE también muestra nombres, teléfonos y correos de presidentes y responsables:
+ *   NO se copian nunca, ni direcciones postales. tools/check.mjs falla si una fila contiene una "@",
+ *   un número de 9 cifras o la palabra "Presidente".
+ *
+ * ── Cómo añadir, cambiar o quitar ────────────────────────────────────────────────────────────────
+ *   - Añadir: una fila nueva con los 4 campos (usa "" en los que falten). Si la provincia es nueva, añade
+ *     su capital en PROV de js/clubs.js.
+ *   - Quitar: borra la fila (y cuida que la anterior siga terminando en coma y la última, en "]];").
+ *   - Repetir la recogida completa: pasos en docs/CONTENIDO.md#radioclubes. Revisión recomendada: cada seis meses.
+ *   - Después: node tools/check.mjs (también exige más de 100 secciones, para detectar un archivo truncado).
  */
 const URE_SECTIONS = [["Madrid","Alcorcón","EA4URA","https://ea4ura.es"],
   ["Madrid","Fuenlabrada","EA4RKF","https://ea4rkf.jimdofree.com/"],

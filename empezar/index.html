@@ -3,10 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://*.api.radio-browser.info https://www.hamqth.com https://celestrak.org https://serbenda.goatcounter.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Empezar · Radio</title>
   <meta name="description" content="Cómo sacarte la licencia de radioaficionado en España, radioclubes por provincia, calendario de eventos, guía para familias y preguntas frecuentes.">
   <meta name="radio-root" content="../">
   <meta name="theme-color" content="#111214">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="radio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="canonical" href="https://bendi.dev/radio/empezar/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
@@ -25,10 +31,8 @@
   <link rel="icon" href="../img/favicon-64.png" type="image/png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../manifest.webmanifest">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="preload" href="../fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body data-page="empezar">
@@ -47,6 +51,7 @@
   </header>
 
   <main id="contenido">
+    <noscript><p class="noscript">Los textos se leen sin JavaScript, pero el dial, los mapas, los sonidos, el Morse, los contactos y el examen lo necesitan. Actívalo para usarlos.</p></noscript>
     <header class="page-head">
       <p class="kicker">Paso 5</p>
       <h1>Dar el salto</h1>
@@ -153,9 +158,9 @@
           <h3>Walkies PMR446</h3>
           <p>Los walkies que se venden en tiendas y grandes superficies. Funcionan en <b>446 MHz</b>, con <b>0,5 W</b> y antena fija, también sin licencia. Su alcance es corto: de unos cientos de metros en ciudad a algunos kilómetros en campo abierto.</p>
           <h3 class="sub-small">CB, PMR o radioaficionado</h3>
-          <div class="table-wrap">
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Comparativa: PMR446, CB-27 o radioaficionado">
             <table class="countries cmp">
-              <thead><tr><th></th><th>PMR446</th><th>CB-27</th><th>Radioaficionado</th></tr></thead>
+              <thead><tr><th scope="col"><span class="sr-only">Característica</span></th><th>PMR446</th><th>CB-27</th><th>Radioaficionado</th></tr></thead>
               <tbody>
                 <tr><td>Examen y licencia</td><td>No</td><td>No</td><td>Sí</td></tr>
                 <tr><td>Frecuencias</td><td>446 MHz</td><td>40 canales en 27 MHz</td><td>Decenas de bandas, de onda larga a microondas</td></tr>
@@ -179,7 +184,7 @@
         <p>La regla de oro: <strong>escuchar es libre; para transmitir hace falta el equipo adecuado y, fuera de la CB y los PMR446, tu licencia</strong>. Un walkie barato no te da permiso para hablar en cualquier frecuencia.</p>
       </div>
 
-      <div class="table-wrap">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Qué se puede hacer con y sin licencia">
         <table class="countries legal">
           <thead><tr><th>Quiero…</th><th>¿Licencia?</th><th>Con qué</th></tr></thead>
           <tbody>
@@ -205,7 +210,7 @@
       </div>
 
       <h3 class="sub">Modelos para empezar</h3>
-      <div class="table-wrap">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Modelos de radio para empezar">
         <table class="countries models">
           <thead><tr><th>Equipo</th><th>Para</th><th>Licencia</th><th>Precio orientativo</th><th>Por qué sí / por qué no</th></tr></thead>
           <tbody>
@@ -295,7 +300,7 @@
         <h2>Si no estás en España</h2>
         <p>Casi todo lo de esta web vale en cualquier país: escuchar, entender, el Morse y los contactos. Lo que cambia es el trámite. Estas son las referencias de cada país.</p>
       </div>
-      <div class="table-wrap">
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Referencias por país en Hispanoamérica">
         <table class="countries">
           <thead><tr><th>País</th><th>Prefijo</th><th>Quién da la licencia</th><th>Asociación nacional (IARU)</th></tr></thead>
           <tbody>
@@ -333,12 +338,13 @@
   </main>
 
   <footer>
-    <p><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button></p>
-    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">código y fuentes de datos</a> · 73!</p>
+    <p class="footer-actions"><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button> <button class="btn small" id="installApp" type="button" hidden>📲 Instalar la app</button></p>
+    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">código y fuentes de datos</a> · 73! <small>(«saludos» en jerga de radio)</small></p>
+    <p class="sponsor"><a class="sponsor-pill" id="sponsorLink" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span class="beat" aria-hidden="true">💚</span> ¿Te es útil? <b>Apoya el proyecto</b> en GitHub Sponsors</a></p>
     <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">¿Ves un error o algo desactualizado? Avísanos</a></p>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="../js/core.js"></script>
   <script src="../js/data.js"></script>
   <script src="../js/journey.js"></script>
@@ -347,6 +353,7 @@
   <script src="../js/family.js"></script>
   <script src="../js/checklist.js"></script>
   <script src="../js/faq.js"></script>
+  <script src="../js/install.js"></script>
   <script src="../js/glossary.js"></script>
   <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>

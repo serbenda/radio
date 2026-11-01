@@ -1,28 +1,94 @@
 /**
- * qso.js · Contactos de radio simulados y tarjeta QSL.
+ * qso.js · Contactos de radio (QSO) simulados paso a paso y tarjeta QSL de recuerdo.
  *
- * Página: Practicar (#qso). Necesita: #qsoSetup (formulario), #qsoScenario, #qsoRadio, #qsoLog, #qsoChoices,
- *   #qsoQsl, #qslCanvas, #qslShare, #qslDownload, #qsoAgain. Datos: PHONETIC (data.js).
+ * Página: Practicar (/practicar/, sección #qso; si no existe, el módulo no hace nada).
+ * Elementos que necesita (practicar/index.html):
+ *  - #qsoSetup     <form> inicial con #qsoName, #qsoCity, #qsoCall (indicativo de prácticas),
+ *                  #qsoScenario (<select> de escenario) y #qsoVoice (casilla "Oír a la otra estación").
+ *  - #qsoRadio     Panel del contacto (clase "rx" mientras recibe), con #qsoOnAir (estado: EN EL AIRE,
+ *                  RECIBIENDO, TU TURNO…), #qsoFreq (frecuencia y modo), #qsoLog (<ol aria-live> de la conversación)
+ *                  y #qsoChoices (las tres opciones de cada turno).
+ *  - #qsoQsl       Bloque de la tarjeta, con #qslCanvas (<canvas width="900" height="560">), #qslShare,
+ *                  #qslDownload y #qsoAgain ("Otro contacto").
  *
- * Escenarios: primero (charla con una estación hispanohablante de otro país), concurso, pota (parque),
- * emergencia (red dirigida, sin QSL) e iss (Estación Espacial, 145,800 MHz FM).
- * En cada turno se elige qué transmitir entre tres opciones; las incorrectas explican por qué y permiten repetir.
- * La otra estación habla con la voz del navegador (speechSynthesis) y un ruido de banda de fondo (Web Audio).
+ * Depende de: core.js (Radio.track) y data.js (global PHONETIC, para deletrear indicativos).
+ *
+ * Escenarios (valor del <select> → función del guion):
+ *  - primero     → run()           Charla con una estación hispanohablante de otro país (STATIONS). Da QSL.
+ *  - concurso    → runContest()    Contacto rápido de concurso: control y número de serie. Da QSL.
+ *  - pota        → runPota()       "Cazar" una estación portátil en un parque natural. Da QSL.
+ *  - emergencia  → runEmergency()  Red dirigida de un ejercicio de emergencias, en 2 m FM. Sin QSL.
+ *  - iss         → runIss()        Contacto con la Estación Espacial (NA1SS) en 145,800 MHz FM. Da QSL.
+ * Cada guion alterna receive() (habla la otra estación) y choose() (eliges qué transmitir entre tres opciones;
+ * las incorrectas se desactivan y explican por qué, y puedes volver a elegir). Termina con finish().
  * Los indicativos de las estaciones virtuales se generan al azar en cada contacto.
  *
- * Tarjeta QSL: se dibuja en un <canvas> de 900 × 560 y se descarga como PNG o se comparte con la Web Share API
- * (solo si el navegador permite compartir archivos).
- * Evento: `radio:qso` ({ scenario }) al terminar, que journey.js registra. No guarda nada.
+ * Banda y frecuencia (start()): de 8:00 a 17:59 UTC, 20 m en USB (14,150-14,290 MHz); el resto, 40 m en LSB
+ * (7,090-7,180 MHz). Concurso, emergencia e ISS fijan las suyas.
+ *
+ * Audio:
+ *  - Voz de la otra estación con la síntesis de voz del navegador (speechSynthesis), en la variante de español
+ *    de su país si el sistema la tiene. Sin la casilla #qsoVoice o sin soporte, se espera 0,9 s en su lugar.
+ *  - Ruido de banda de fondo con Web Audio: 2 s de ruido blanco en bucle → filtro paso banda de 1.400 Hz →
+ *    ganancia → altavoces. Volumen 0,012 de fondo y 0,05 mientras habla la otra estación.
+ *
+ * Tarjeta QSL: se dibuja en el <canvas> de 900 × 560 px y se descarga como PNG o se comparte como archivo con la
+ *   Web Share API (el botón solo aparece si el navegador permite compartir archivos, normalmente en móvil).
+ *
+ * No guarda nada en localStorage (el nombre, la ciudad y el indicativo solo viven en memoria).
+ * Eventos: `radio:qso` con detail { scenario } al terminar cualquier contacto; journey.js lo registra
+ *   ("Haz tu primer contacto", "Prueba 3 tipos"). Hitos de métricas (con Radio.track): 'qso/<escenario>' y
+ *   'qsl/descargada'.
+ * No usa servicios externos.
+ * Accesibilidad: todo se maneja con botones y el formulario; lo que dice la otra estación también se escribe
+ *   en #qsoLog (aria-live="polite": se anuncia), así que el contacto se puede hacer sin sonido.
+ *
+ * Cómo modificarlo:
+ *  - Añadir un escenario: (1) un <option value="mi-id"> en #qsoScenario (practicar/index.html); (2) en start(),
+ *    una línea `if (scenario === 'mi-id') { dx = …; band = …; mode = …; freq = …; }`; (3) una función
+ *    `async function runMiId()` que use add/receive/choose/finish como las demás; (4) su entrada en el objeto
+ *    del final de start() ({ …, 'mi-id': runMiId }). journey.js lo contará solo como un tipo más.
+ *  - Añadir una estación extranjera para "primero": una entrada en STATIONS (campos explicados encima).
+ *  - Cambiar un turno: edita la lista de opciones de su choose() ({ ok, text, why }, ver choose()).
+ *  - Cambiar el diseño de la tarjeta: showQsl() (coordenadas en píxeles del lienzo de 900 × 560).
  */
 (() => {
   'use strict';
   if (!document.getElementById('qso')) return; // esta página no tiene la sección
+  /* ---------- Utilidades ---------- */
   const $ = id => document.getElementById(id);
+  /**
+   * Escapa texto para meterlo en HTML (& < > " '). Imprescindible aquí: nombre y ciudad los escribe la persona.
+   * @param {*} s Valor a escapar.
+   * @returns {string}
+   */
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  /**
+   * Elemento al azar de una lista.
+   * @template T
+   * @param {T[]} a Lista.
+   * @returns {T}
+   */
   const pick = a => a[Math.floor(Math.random() * a.length)];
+  /**
+   * n letras mayúsculas al azar (A-Z; 65 es el código de la "A"). Sirve para el sufijo de los indicativos.
+   * @param {number} n Cuántas letras.
+   * @returns {string}
+   */
   const letters = n => Array.from({ length: n }, () => String.fromCharCode(65 + Math.floor(Math.random() * 26))).join('');
 
-  // Estaciones virtuales hispanohablantes (indicativo generado al azar en cada contacto)
+  /* ---------- Estaciones virtuales ---------- */
+
+  /**
+   * Estaciones hispanohablantes de otros países para el escenario "primero". El indicativo final es
+   * prefix + 2 o 3 letras al azar (por ejemplo LU1ABC). Campos:
+   *  - prefix   Prefijo del país (con su número de zona).     · country  País o región, para los textos.
+   *  - op       Nombre del operador.                          · city     Ciudad desde la que transmite.
+   *  - tz       Zona horaria IANA: con ella dice la hora local de su país ("Aquí son las…").
+   *  - lang     Idioma de la voz (BCP 47); si el sistema no tiene esa variante se usa es-ES u otra en español.
+   *  - flag     Emoji de la bandera que se ve junto a su indicativo en la conversación.
+   * Para añadir una, copia una línea y cambia los valores.
+   */
   const STATIONS = [
     { prefix: 'EA8', country: 'Canarias', op: 'Carmen', city: 'Santa Cruz de Tenerife', tz: 'Atlantic/Canary', lang: 'es-ES', flag: '🇮🇨' },
     { prefix: 'LU1', country: 'Argentina', op: 'Ricardo', city: 'Buenos Aires', tz: 'America/Argentina/Buenos_Aires', lang: 'es-AR', flag: '🇦🇷' },
@@ -32,23 +98,50 @@
     { prefix: 'CO2', country: 'Cuba', op: 'Yoel', city: 'La Habana', tz: 'America/Havana', lang: 'es-US', flag: '🇨🇺' },
   ];
 
+  /**
+   * Deletrea un indicativo con el alfabeto fonético de data.js ("EA4" → "Echo Alfa Cuatro").
+   * Los caracteres sin palabra (como "/") se dejan tal cual.
+   * @param {string} call Indicativo en mayúsculas.
+   * @returns {string}
+   */
   const spell = call => call.split('').map(c => PHONETIC[c] || c).join(' ');
+  /**
+   * Indicativo seguido de su deletreo entre paréntesis: "EA4ABC (Echo Alfa Cuatro …)".
+   * speak() convierte los paréntesis en pausas para que la voz no los lea.
+   * @param {string} call Indicativo.
+   * @returns {string}
+   */
   const say = call => `${call} (${spell(call)})`;
 
+  // Estado del contacto en curso:
+  //  me      { name, city, call } de la persona (del formulario);  dx  la otra estación (mismos campos que STATIONS + call);
+  //  band, freq, mode  datos para la conversación y la QSL;  rst  control de señal que te dan ('59', '57'…);
+  //  log     elementos <li> añadidos a la conversación;  sending  true mientras habla la otra estación
+  //          (choose() ignora los clics);  scenario  escenario elegido.
   let me, dx, band, freq, mode, rst = '59', log, sending = false, scenario = 'primero';
 
   /* ---------- Audio: voz + ruido de banda ---------- */
+  // ctx: AudioContext (se crea al empezar el primer contacto, tras el clic de la persona, que es cuando el
+  // navegador permite sonar). noiseGain: volumen del ruido; si existe, el ruido ya está sonando.
   let ctx, noiseGain;
+  /**
+   * Arranca el ruido de banda la primera vez (después solo reanuda el AudioContext). Empieza en silencio
+   * (ganancia 0); el volumen lo pone noise(). Si el navegador no tiene Web Audio, se sigue sin ruido.
+   * Efectos: crea nodos de audio que suenan en bucle hasta cerrar la página (con volumen 0 al terminar).
+   * @returns {void}
+   */
   function startNoise() {
     try {
       ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
       if (ctx.state === 'suspended') ctx.resume();
       if (noiseGain) return;
+      // 2 segundos de ruido blanco (valores al azar entre −1 y 1) en un búfer mono que se repite.
       const buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
       const d = buf.getChannelData(0);
       for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
       const src = ctx.createBufferSource();
       src.buffer = buf; src.loop = true;
+      // Filtro paso banda centrado en 1.400 Hz y ancho (Q 0,7): deja el "shhh" típico de un receptor de voz.
       const bp = ctx.createBiquadFilter();
       bp.type = 'bandpass'; bp.frequency.value = 1400; bp.Q.value = 0.7;
       noiseGain = ctx.createGain(); noiseGain.gain.value = 0;
@@ -56,13 +149,37 @@
       src.start();
     } catch (e) { /* sin audio */ }
   }
+  /**
+   * Cambia el volumen del ruido con una transición suave (constante de tiempo 0,08 s) para que no chasquee.
+   * @param {number} level Ganancia: 0 silencio, 0,012 fondo, 0,05 mientras habla la otra estación.
+   * @returns {void}
+   */
   function noise(level) { if (noiseGain) noiseGain.gain.setTargetAtTime(level, ctx.currentTime, 0.08); }
+  /**
+   * Silencia el ruido (no lo destruye: así el siguiente contacto lo reutiliza).
+   * @returns {void}
+   */
   function stopNoise() { noise(0); }
 
+  /**
+   * Elige la voz del sistema para un idioma: la variante exacta (es-AR…), si no es-ES, si no cualquier
+   * voz en español, y si no hay ninguna, null (el navegador usará la suya por defecto).
+   * @param {string} lang Etiqueta BCP 47, por ejemplo "es-MX".
+   * @returns {SpeechSynthesisVoice|null}
+   */
   function voiceFor(lang) {
     const vs = speechSynthesis.getVoices().filter(v => v.lang && v.lang.toLowerCase().startsWith('es'));
     return vs.find(v => v.lang === lang) || vs.find(v => v.lang === 'es-ES') || vs[0] || null;
   }
+  /**
+   * Hace hablar a la otra estación y sube el ruido mientras habla.
+   * Los paréntesis del texto se cambian por comas (pausas) para que el deletreo suene natural.
+   * La Promise se resuelve al acabar de hablar, si hay error o, como red de seguridad, a los 20 s (algunos
+   * navegadores no avisan del final). Sin voz activada o sin soporte, espera 0,9 s.
+   * Efectos: cancela cualquier frase anterior; deja el ruido en el nivel de fondo al terminar.
+   * @param {string} text Texto a decir.
+   * @returns {Promise<void>}
+   */
   function speak(text) {
     return new Promise(resolve => {
       if (!$('qsoVoice').checked || !('speechSynthesis' in window)) { setTimeout(resolve, 900); return; }
@@ -78,6 +195,12 @@
   }
 
   /* ---------- Registro de la conversación ---------- */
+  /**
+   * Añade una línea a la conversación (#qsoLog) y la desplaza a la vista.
+   * @param {'rx'|'tx'|'info'} who rx = habla la otra estación, tx = tú, info = nota del narrador. Es también la clase CSS.
+   * @param {string} html Contenido YA ESCAPADO o HTML propio (quien llama es responsable de escapar).
+   * @returns {HTMLLIElement} La línea creada (receive() la rellena después).
+   */
   function add(who, html) {
     const li = document.createElement('li');
     li.className = who;
@@ -89,6 +212,13 @@
     return li;
   }
 
+  /**
+   * Turno de la otra estación: borra las opciones, muestra "RECIBIENDO", pone "· · ·" 0,7 s (como si
+   * empezara a llegar la señal), escribe el texto y lo dice en voz alta. Al terminar, "TU TURNO".
+   * Mientras dura, `sending` impide responder.
+   * @param {string} text Lo que dice (texto plano; se escapa aquí).
+   * @returns {Promise<void>}
+   */
   async function receive(text) {
     sending = true;
     $('qsoChoices').innerHTML = '';
@@ -103,6 +233,15 @@
     sending = false;
   }
 
+  /**
+   * Turno de la persona: muestra las opciones y espera a que elija la correcta.
+   * Cada opción es { ok: boolean, text: lo que se transmite, why: explicación }. Las incorrectas se
+   * marcan, se desactivan y muestran su `why` como consejo; se puede seguir probando. La correcta se escribe
+   * en la conversación como "tx" y, si tiene `why`, debajo como nota. Conviene que haya exactamente una
+   * correcta; el orden en que se escriben es el orden en pantalla (no se barajan).
+   * @param {{ok: boolean, text: string, why?: string}[]} options Opciones del turno.
+   * @returns {Promise<void>} Se resuelve al elegir la correcta.
+   */
   function choose(options) {
     const box = $('qsoChoices');
     box.innerHTML = '<p class="qso-ask">¿Qué transmites?</p>' + options.map((o, i) =>
@@ -127,10 +266,18 @@
   }
 
   /* ---------- El guion del contacto ---------- */
+  /**
+   * Escenario "primero": el contacto completo de charla, el más largo. Pasos: preguntar si la frecuencia está
+   * libre (QRL?), llamar CQ, recibir respuesta, pasar control de señal (RS), nombre y QTH, recibir los suyos y
+   * despedirse con 73.
+   * @returns {Promise<void>}
+   */
   async function run() {
     const theirName = dx.op, call = me.call, them = dx.call;
+    // El control que te da la otra estación varía al azar; `rst` ('57', '58' o '59') es el que irá en la QSL.
     const rstMe = pick(['5 y 7', '5 y 8', '5 y 9']);
     rst = rstMe.replace(' y ', '');
+    // Hora local de la otra estación, para que diga "Aquí son las…".
     const theirTime = new Intl.DateTimeFormat('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: dx.tz }).format(new Date());
 
     add('info', `Sintonizas ${freq} MHz en ${band}. Antes de llamar, escuchas un rato: parece libre.`);
@@ -167,13 +314,34 @@
   }
 
   /* ---------- Otros escenarios ---------- */
+
+  /**
+   * Estaciones españolas para concurso, POTA y emergencia. Campos: d = número de zona del indicativo
+   * (EA1, EA2…), op = nombre del operador, city = ciudad. Para añadir una, copia un objeto { … }.
+   */
   const SPAIN = [
     { d: '1', op: 'Lola', city: 'León' }, { d: '2', op: 'Íñigo', city: 'Zaragoza' }, { d: '3', op: 'Marta', city: 'Girona' },
     { d: '5', op: 'Paco', city: 'Murcia' }, { d: '7', op: 'Rocío', city: 'Sevilla' }, { d: '4', op: 'Andrés', city: 'Toledo' },
   ];
+  /**
+   * Crea una estación española al azar con una zona distinta de la del indicativo de la persona (para no
+   * hablar consigo misma; si no hay número, vale cualquiera). Indicativo: EA + zona + 2 o 3 letras + sufijo.
+   * @param {string} [suffix] Sufijo opcional, por ejemplo "/P" (portátil) en POTA.
+   * @returns {object} Estación con los mismos campos que STATIONS más call.
+   */
   const spaniard = suffix => { const s = pick(SPAIN.filter(x => x.d !== me.call.match(/\d/)?.[0])); return { prefix: 'EA' + s.d, call: 'EA' + s.d + letters(pick([2, 3])) + (suffix || ''), op: s.op, city: s.city, country: 'España', flag: '🇪🇸', lang: 'es-ES', tz: 'Europe/Madrid' }; };
+  /**
+   * Espera ms milisegundos.
+   * @param {number} ms
+   * @returns {Promise<void>}
+   */
   const wait = ms => new Promise(r => setTimeout(r, ms));
 
+  /**
+   * Escenario "concurso": contestar solo con el indicativo y dar el intercambio (control 59 y número de serie;
+   * el de la persona es 001 por ser su primer contacto). El de la otra estación es un número entre 100 y 399.
+   * @returns {Promise<void>}
+   */
   async function runContest() {
     rst = '59';
     const call = me.call, them = dx.call, serial = 100 + Math.floor(Math.random() * 300);
@@ -195,6 +363,10 @@
     finish('🏁 ¡Contacto de concurso hecho! Así se hacen cientos en un fin de semana.', true);
   }
 
+  /**
+   * Escenario "pota" (Parks on the Air): contestar a una estación portátil en un parque y dar control y QTH.
+   * @returns {Promise<void>}
+   */
   async function runPota() {
     const call = me.call, them = dx.call;
     add('info', `En un mapa de actividad ves que ${them} está transmitiendo desde un parque natural cerca de ${dx.city}. Cazar parques desde casa es uno de los juegos favoritos de los radioaficionados.`);
@@ -215,6 +387,10 @@
     finish('🌲 ¡Has cazado tu primer parque! En POTA se llevan rankings y diplomas por parques cazados.', true);
   }
 
+  /**
+   * Escenario "emergencia": entrar en una red dirigida de un ejercicio y dar un informe breve. No da QSL.
+   * @returns {Promise<void>}
+   */
   async function runEmergency() {
     const call = me.call, them = dx.call;
     add('info', `Hoy hay un ejercicio de emergencias. Una estación de control, ${them}, organiza la red: en estas redes se habla solo cuando el control lo pide.`);
@@ -234,6 +410,10 @@
     finish('🚨 Ejercicio completado. Así funcionan las redes de emergencia: disciplina, mensajes cortos y la estación de control al mando.', false);
   }
 
+  /**
+   * Escenario "iss": contacto rapidísimo con la Estación Espacial (solo indicativos y control).
+   * @returns {Promise<void>}
+   */
   async function runIss() {
     rst = '59';
     const call = me.call, them = dx.call;
@@ -254,6 +434,15 @@
     finish('🛰️ ¡Contacto con la Estación Espacial! Algunos radioaficionados lo consiguen con un walkie y una antena de mano.', true);
   }
 
+  /* ---------- Final del contacto ---------- */
+
+  /**
+   * Cierra el contacto: hito de métricas, silencia el ruido, escribe el mensaje final y emite `radio:qso`.
+   * Con QSL, muestra la tarjeta a los 0,9 s; sin ella, pone un botón "Otro contacto" que equivale a #qsoAgain.
+   * @param {string} text Mensaje final para la conversación (HTML propio, no se escapa).
+   * @param {boolean} qsl true si el escenario da tarjeta QSL.
+   * @returns {void}
+   */
   function finish(text, qsl) {
     Radio.track(`qso/${scenario}`);
     stopNoise();
@@ -270,6 +459,21 @@
   }
 
   /* ---------- Tarjeta QSL ---------- */
+  /**
+   * Dibuja la tarjeta QSL en #qslCanvas y la muestra.
+   * Espera a que carguen las fuentes de la web (si no, el lienzo usaría las del sistema). Fecha y hora en
+   * UTC, como se hace en radio. Los colores van escritos aquí (no variables CSS) para que la tarjeta salga
+   * igual con tema claro u oscuro.
+   * Coordenadas en píxeles del lienzo (900 × 560), con el origen arriba a la izquierda y la y hacia abajo:
+   *  - fondo y círculos concéntricos decorativos centrados en (W − 90, 90), radio de 60 a 700 cada 46 px;
+   *  - marco a 18 px del borde;
+   *  - textos con margen izquierdo de 52 px: país y ciudad (y 76), indicativo grande (y 180),
+   *    operador (y 222), "Para: …" (y 290), "Confirmando…" (y 326);
+   *  - tabla de datos desde (52, 352), 92 px de alto, a todo el ancho menos 52 px por cada lado;
+   *  - "Tnx QSO · 73!" a la izquierda y la firma a la derecha, ambos en y 506.
+   * fillText usa la y como línea base del texto, no como su borde superior.
+   * @returns {Promise<void>}
+   */
   async function showQsl() {
     if (document.fonts) await document.fonts.ready;
     const now = new Date();
@@ -297,6 +501,8 @@
     g.fillStyle = muted; g.font = '400 20px "IBM Plex Sans", sans-serif';
     g.fillText('Confirmando nuestro QSO:', 52, 326);
 
+    // Tabla de seis casillas [título, valor]. `weights` reparte el ancho: FECHA es la más ancha y RST la más
+    // estrecha. unit = píxeles por unidad de peso.
     const cols = [['FECHA', date], ['UTC', time], ['BANDA', band], ['MHz', freq], ['MODO', mode], ['RST', rst]];
     const x0 = 52, y0 = 352, weights = [1.7, 1, 1, 1.15, 0.95, 0.8];
     const unit = (W - 104) / weights.reduce((a, b) => a + b, 0);
@@ -319,13 +525,18 @@
     $('qsoQsl').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
+  /* ---------- Compartir y descargar la QSL ---------- */
   // Compartir la QSL como imagen (móvil) si el navegador lo permite
+  // Se comprueba con un archivo PNG vacío de prueba si el navegador acepta compartir archivos; si sí,
+  // aparece el botón Compartir y Descargar pasa a ser secundario (clase "ghost").
   const canShareFiles = !!(navigator.canShare && window.File &&
     navigator.canShare({ files: [new File([''], 'x.png', { type: 'image/png' })] }));
   if (canShareFiles) {
     $('qslShare').hidden = false;
     $('qslDownload').classList.add('ghost');
   }
+  // Compartir: convierte el lienzo en un archivo PNG y abre el panel de compartir del sistema.
+  // Si la persona lo cierra sin compartir, navigator.share lanza un error que se ignora.
   $('qslShare').addEventListener('click', () => {
     $('qslCanvas').toBlob(async blob => {
       const file = new File([blob], `QSL_${dx.call}_${me.call}.png`, { type: 'image/png' });
@@ -336,6 +547,7 @@
     }, 'image/png');
   });
 
+  // Descargar: un enlace temporal con el PNG en una URL data: y el atributo download, pulsado por código.
   $('qslDownload').addEventListener('click', () => {
     const a = document.createElement('a');
     a.download = `QSL_${dx.call}_${me.call}.png`;
@@ -345,6 +557,15 @@
   });
 
   /* ---------- Inicio ---------- */
+  /* ---------- Inicio ---------- */
+  /**
+   * Envío del formulario: valida el indicativo, prepara la otra estación, la banda y la frecuencia, muestra
+   * el panel de radio, arranca el ruido y lanza el guion del escenario elegido.
+   * Indicativo válido: de 3 a 8 letras o cifras (se quitan los demás caracteres) y al menos una cifra; si no,
+   * se muestra el aviso nativo del navegador (setCustomValidity + reportValidity).
+   * @param {SubmitEvent} e Evento submit (se cancela para que no recargue la página).
+   * @returns {void}
+   */
   function start(e) {
     e.preventDefault();
     const callIn = $('qsoCall').value.toUpperCase().replace(/[^A-Z0-9]/g, '');
@@ -355,11 +576,15 @@
     }
     me = { name: $('qsoName').value.trim(), city: $('qsoCity').value.trim(), call: callIn };
     scenario = $('qsoScenario').value;
+    // Banda por la hora UTC: de día 20 m (USB, como se usa por encima de 10 MHz), de noche 40 m (LSB).
+    // La frecuencia es al azar dentro del segmento de voz, con 3 decimales (kHz).
     const h = new Date().getUTCHours();
     const day = h >= 8 && h < 18;
     band = day ? '20 m' : '40 m';
     mode = day ? 'USB' : 'LSB';
     freq = (day ? 14.150 + Math.random() * 0.14 : 7.090 + Math.random() * 0.09).toFixed(3);
+    // Otra estación y, si hace falta, banda, modo y frecuencia propios de cada escenario.
+    // 145.425 MHz es una frecuencia símplex de FM en 2 m; 145.800 MHz, la de voz de la ISS.
     if (scenario === 'primero') { const st = pick(STATIONS); dx = { ...st, call: st.prefix + letters(pick([2, 3])) }; }
     if (scenario === 'concurso') { dx = spaniard(); band = '40 m'; mode = 'LSB'; freq = (7.060 + Math.random() * 0.13).toFixed(3); }
     if (scenario === 'pota') { dx = spaniard('/P'); }
@@ -373,19 +598,23 @@
     $('qsoQsl').hidden = true;
     $('qsoRadio').hidden = false;
     startNoise(); noise(0.012);
+    // Lanza el guion: este objeto relaciona el valor del <select> con su función. Añade aquí los escenarios nuevos.
     ({ primero: run, concurso: runContest, pota: runPota, emergencia: runEmergency, iss: runIss })[scenario]();
   }
 
+  // Al escribir el indicativo: borra el aviso de error anterior y lo pasa a mayúsculas.
   $('qsoCall').addEventListener('input', () => {
     $('qsoCall').setCustomValidity('');
     const v = $('qsoCall').value.toUpperCase();
     if (v !== $('qsoCall').value) $('qsoCall').value = v;
   });
   $('qsoSetup').addEventListener('submit', start);
+  // "Otro contacto": corta voz y ruido y vuelve al formulario.
   $('qsoAgain').addEventListener('click', () => {
     stopNoise(); if ('speechSynthesis' in window) speechSynthesis.cancel();
     $('qsoRadio').hidden = true; $('qsoQsl').hidden = true; $('qsoSetup').hidden = false;
     $('qsoSetup').scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
+  // Algunos navegadores (Chrome) cargan la lista de voces tarde: pedirla ya hace que esté lista en el primer contacto.
   if ('speechSynthesis' in window) speechSynthesis.getVoices(); // precarga de voces
 })();

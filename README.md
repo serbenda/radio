@@ -1,101 +1,167 @@
 # 📻 radio
 
-Web de iniciación a la radioafición en español: de "¿qué es esto?" a tu indicativo. Para quien no ha tocado nunca una radio.
+**Web de iniciación a la radioafición en español:** de "¿qué es esto?" a tu indicativo. Para quien no ha tocado nunca una radio.
 
-**Web:** https://bendi.dev/radio
+**👉 https://bendi.dev/radio**
 
 [![Comprobaciones](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml/badge.svg)](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml)
+[![Enlaces externos](https://github.com/serbenda/radio/actions/workflows/enlaces.yml/badge.svg)](https://github.com/serbenda/radio/actions/workflows/enlaces.yml)
+[![Licencia: MIT](https://img.shields.io/badge/c%C3%B3digo-MIT-8be0c2)](LICENSE)
+[![Contenido: CC BY-SA 4.0](https://img.shields.io/badge/contenido-CC%20BY--SA%204.0-8be0c2)](LICENSE-CONTENIDO.md)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/serbenda?label=apoya&logo=githubsponsors&color=ea4aaa)](https://github.com/sponsors/serbenda)
+
+![Portada: dial de onda corta y el título "Hay miles de voces en el aire. Ahora mismo."](docs/img/inicio.png)
 
 ## Qué es
 
-Una web estática, sin registro ni cookies, que acompaña a un novato en cinco pasos:
+Una web estática, sin registro, sin cookies y que funciona sin conexión, que acompaña a un novato en cinco pasos:
 
 | Paso | Página | Qué hay |
 | --- | --- | --- |
-| — | [Inicio](https://bendi.dev/radio/) | Dial de onda corta, qué es la radioafición y **Tu primer mes**: 4 semanas, 14 pasos que se marcan solos e insignias |
-| 1 | [Escuchar](https://bendi.dev/radio/escuchar/) | Mapa de emisoras con reproductor, escucha guiada en un receptor real, **Ahora en el aire** (quién habla con quién, en directo) **¿Qué es este sonido?** con cascada y grabaciones reales |
+| — | [Inicio](https://bendi.dev/radio/) | Dial de onda corta, qué es la radioafición y **Tu primer mes**: 4 semanas, 14 pasos que se marcan solos e insignias. Guardar y recuperar el progreso, instalar la app y apoyar el proyecto |
+| 1 | [Escuchar](https://bendi.dev/radio/escuchar/) | Mapa de emisoras con reproductor, escucha guiada en un receptor real, **Ahora en el aire** (quién habla con quién, en directo), **¿Qué es este sonido?** con cascada y 11 grabaciones reales |
 | 2 | [Entender](https://bendi.dev/radio/entender/) | Cuatro lecciones interactivas en tres niveles, bandas, propagación de hoy en lenguaje llano y pases de la ISS sobre tu ciudad |
 | 3 | [Practicar](https://bendi.dev/radio/practicar/) | Entrenador de Morse con método Koch, alfabeto fonético y jerga, y cinco contactos simulados con tarjeta QSL |
-| 4 | [Examen](https://bendi.dev/radio/examen/) | Simulador del examen español con tarjetas adaptativas, explicaciones y simulacro de dos partes |
-| 5 | [Empezar](https://bendi.dev/radio/empezar/) | El trámite en cifras, lista de comprobación, radioclubes de la URE por provincia, calendario, familias e Hispanoamérica |
+| 4 | [Examen](https://bendi.dev/radio/examen/) | 169 preguntas revisadas contra la Orden IET/1311/2013, tarjetas que repiten lo que fallas y simulacro como el real |
+| 5 | [Empezar](https://bendi.dev/radio/empezar/) | El trámite en cifras, CB-27 y walkies, qué radio comprar (y qué es legal), radioclubes de la URE, calendario, familias e Hispanoamérica |
 
-Todo el progreso se guarda solo en el navegador de cada persona (y se puede guardar en un archivo). Se puede instalar en el móvil y funciona sin conexión.
+📲 **Se instala como una app** en Android, iPhone, iPad y ordenador (botón "Instalar la app" del pie o pasos en la [portada](https://bendi.dev/radio/#instalar)) y funciona sin conexión.
 
-## Probar en local
+<table>
+  <tr>
+    <td><img src="docs/img/escuchar.png" alt="Escuchar: sonidos con cascada"></td>
+    <td><img src="docs/img/examen.png" alt="Examen: tarjeta con explicación"></td>
+    <td rowspan="2"><img src="docs/img/movil.png" alt="Portada en el móvil" width="220"></td>
+  </tr>
+  <tr>
+    <td><img src="docs/img/entender.png" alt="Entender: lección interactiva"></td>
+    <td><img src="docs/img/empezar.png" alt="Empezar: CB-27 y walkies"></td>
+  </tr>
+</table>
+
+## Empezar en 1 minuto
 
 ```bash
-python3 -m http.server 8000      # y abre http://localhost:8000/
-node tools/check.mjs             # comprobaciones automáticas
+git clone https://github.com/serbenda/radio.git && cd radio
+python3 -m http.server 8000      # abre http://localhost:8000/
+node tools/check.mjs             # comprobaciones automáticas (Node 18+)
 ```
 
-No hay nada que instalar ni que compilar: lo que hay en el repositorio es lo que se publica.
+No hay nada que instalar ni que compilar: lo que hay en el repositorio es exactamente lo que se publica.
+
+**¿Primera vez?** Sigue el [tutorial](docs/TUTORIAL.md): de cero a tu primer cambio publicado en 30 minutos.
+
+## Cómo está hecha
+
+```mermaid
+flowchart LR
+  subgraph Navegador
+    H[6 páginas HTML] --> C[core.js<br/>objeto Radio]
+    C --> M[Módulos<br/>uno por función]
+    M <--> L[(localStorage<br/>progreso)]
+    S[[sw.js<br/>sin conexión]]
+  end
+  M -- fetch --> X[APIs públicas<br/>sin clave]
+  G[GitHub · main] -- Pages --> H
+```
+
+- **HTML, CSS y JavaScript sin frameworks ni compilación.** Un módulo por funcionalidad; se comunican con eventos.
+- **Sin servidor propio:** datos en directo de APIs públicas con CORS; el progreso se queda en el navegador.
+- **Instalable en Android, iPhone y ordenador** y **sin conexión**, con un service worker propio.
+- **Accesible:** auditada con axe (WCAG 2.2 AA), contraste ≥ 6:1, teclado y lector de pantalla.
+- **Segura:** Content-Security-Policy, integridad (SRI) de librerías, todo texto externo escapado.
+- **Privada:** sin cookies, tipografías propias, métricas sin datos personales.
+
+Explicación completa con diagramas en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md).
+
+## Documentación
+
+Todo está documentado para poder mantenerlo sin ayuda. Índice completo y orden de lectura en **[docs/README.md](docs/README.md)**.
+
+| Quiero… | Lee |
+| --- | --- |
+| Entender cómo está hecha | [Arquitectura](docs/ARQUITECTURA.md) · [Módulos](docs/MODULOS.md) · [Cómo se construyó](docs/HISTORIA.md) |
+| Hacer mi primer cambio | [Tutorial](docs/TUTORIAL.md) |
+| Cambiar algo concreto (pregunta, grabación, página…) | [Guía de recetas](docs/GUIA.md) |
+| Arreglar algo que falla | [Solución de problemas](docs/PROBLEMAS.md) |
+| Saber de dónde salen los datos | [Datos y servicios](docs/DATOS.md) · [Contenido](docs/CONTENIDO.md) |
+| Cambiar el diseño | [Estilos](docs/ESTILOS.md) |
+| Saber por qué se hizo así | [Decisiones](docs/DECISIONES.md) · [Estudio](docs/ESTUDIO.md) |
+| Comprobar la calidad | [Pruebas](docs/PRUEBAS.md) · [Calidad](docs/CALIDAD.md) · [Privacidad](docs/PRIVACIDAD.md) |
+| Entender un término | [Glosario](docs/GLOSARIO.md) |
+| Contribuir | [CONTRIBUTING.md](CONTRIBUTING.md) |
 
 ## Estructura
 
 ```
-index.html                 Inicio
-escuchar/index.html        Paso 1
-entender/index.html        Paso 2
-practicar/index.html       Paso 3
-examen/index.html          Paso 4
-empezar/index.html         Paso 5
-404.html                   Página de error
-offline.html               Lo que se ve sin conexión en una página no visitada
-sw.js                      Service worker: instalable y sin conexión
-manifest.webmanifest       Datos para instalar la web
-img/                       Iconos de la web instalada
-css/style.css              Estilos de todas las páginas
-js/                        Un módulo por funcionalidad (ver docs/MODULOS.md)
-  core.js                  Núcleo común: objeto Radio (va el primero)
-  data.js                  Contenido estático compartido
-  journey.js               Tu primer mes (en todas las páginas)
-  glossary.js              Glosario emergente (va el último)
-  …                        Resto de módulos
-og.png                     Imagen para compartir (1200 × 630)
-sitemap.xml                Mapa del sitio
-tools/check.mjs            Comprobaciones automáticas
-.github/workflows/         GitHub Actions: comprobaciones en cada PR
-.github/ISSUE_TEMPLATE/    Formularios para avisar de errores
-docs/                      Documentación
+index.html  escuchar/  entender/  practicar/  examen/  empezar/    Las seis páginas
+404.html  offline.html                                             Páginas de error y sin conexión
+css/style.css                                                      Estilos (una sola hoja)
+js/                                                                Un módulo por funcionalidad
+fonts/  img/  og.png                                               Tipografías, iconos, imagen para redes
+sw.js  manifest.webmanifest  sitemap.xml                           Sin conexión, instalación, buscadores
+tools/                                                             Comprobaciones y utilidades
+.github/                                                           Actions, formularios de aviso, plantilla de PR
+docs/                                                              Documentación
 ```
 
-## Documentación
-
-| Documento | Contenido |
-| --- | --- |
-| [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md) | Cómo está montada: páginas, orden de carga, núcleo `Radio`, eventos, almacenamiento |
-| [docs/MODULOS.md](docs/MODULOS.md) | Referencia de cada archivo de `js/`, convenciones y cómo añadir un módulo |
-| [docs/DATOS.md](docs/DATOS.md) | Servicios externos: endpoints, límites, atribución, qué pasa si fallan |
-| [docs/CONTENIDO.md](docs/CONTENIDO.md) | Cómo añadir preguntas, sonidos, lecciones, contactos, términos, radioclubes… |
-| [docs/PRIVACIDAD.md](docs/PRIVACIDAD.md) | Qué se guarda, ubicación, peticiones a terceros y datos personales |
-| [docs/CALIDAD.md](docs/CALIDAD.md) | Accesibilidad, rendimiento, seguridad, SEO y limitaciones conocidas |
-| [docs/PRUEBAS.md](docs/PRUEBAS.md) | Comprobaciones automáticas y lista de pruebas manuales |
-| [docs/DECISIONES.md](docs/DECISIONES.md) | Registro de decisiones de diseño y por qué |
-| [docs/ESTUDIO.md](docs/ESTUDIO.md) | Resumen del estudio de webs de radioafición que guía el proyecto |
-| [CHANGELOG.md](CHANGELOG.md) | Historial de versiones |
-
-## Datos y servicios
-
-| Qué | De dónde |
-| --- | --- |
-| Emisoras | [Radio Browser](https://www.radio-browser.info) |
-| Avisos en directo y datos solares | [HamQTH.com](https://www.hamqth.com/developers.php) |
-| Mapa de la ionosfera | [KC2G](https://prop.kc2g.com/) |
-| Órbita de la ISS | [CelesTrak](https://celestrak.org/) con [satellite.js](https://github.com/shashwatak/satellite-js) |
-| Mapas | [Leaflet](https://leafletjs.com) con el mapa base gris oscuro de Esri |
-| Receptor web | [WebSDR de la Universidad de Twente](http://websdr.ewi.utwente.nl:8901/) |
-| Secciones de radioclub | [URE](https://www.ure.es/secciones/): solo nombre, provincia, indicativo y web |
-| Preguntas de examen | Escritas a partir de la [Orden IET/1311/2013](https://boe.es/boe/dias/2013/07/12/pdfs/BOE-A-2013-7624.pdf) |
-| Visitas | [GoatCounter](https://www.goatcounter.com/), sin cookies |
-
-Detalle completo en [docs/DATOS.md](docs/DATOS.md).
+Árbol detallado en [docs/ARQUITECTURA.md §3](docs/ARQUITECTURA.md#3-estructura-de-carpetas).
 
 ## Flujo de trabajo
 
-1. Se trabaja en la rama `development`.
+1. Se trabaja en la rama **`development`**; nunca directamente en `main`.
 2. Antes de subir: `node tools/check.mjs` sin fallos y la lista manual de [docs/PRUEBAS.md](docs/PRUEBAS.md).
-3. Los cambios llegan a `main` con una pull request; GitHub Actions ejecuta las comprobaciones.
+3. Los cambios llegan a `main` con una **pull request**; GitHub Actions ejecuta las comprobaciones.
 4. Al fusionar, GitHub Pages publica `main` en bendi.dev/radio en uno o dos minutos.
-5. Cada versión se anota en [CHANGELOG.md](CHANGELOG.md).
+5. Cada versión sube `VERSION` en `sw.js` y se anota en [CHANGELOG.md](CHANGELOG.md).
 
-73!
+Normas completas en [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Datos, servicios y créditos
+
+| Qué | De dónde | Licencia o condiciones |
+| --- | --- | --- |
+| Emisoras | [Radio Browser](https://www.radio-browser.info) | Datos abiertos |
+| Avisos en directo y datos solares | [HamQTH.com](https://www.hamqth.com/developers.php) | Citar la fuente; ≤ 1 consulta/15 s |
+| Mapa de la ionosfera | [KC2G](https://prop.kc2g.com/) | Citar la fuente |
+| Órbita de la ISS | [CelesTrak](https://celestrak.org/) con [satellite.js](https://github.com/shashwatak/satellite-js) | satellite.js: MIT |
+| Mapas | [Leaflet](https://leafletjs.com) con teselas de [Esri](https://www.esri.com/) | Leaflet: BSD-2; atribución de Esri en cada mapa |
+| Receptor web | [WebSDR de la Universidad de Twente](http://websdr.ewi.utwente.nl:8901/) | Enlace |
+| Grabaciones reales | [Wikimedia Commons](https://commons.wikimedia.org/wiki/Category:Audio_files_of_amateur_radio) | CC0, CC BY, CC BY-SA; autor y licencia en cada una |
+| Secciones de radioclub | [URE](https://www.ure.es/secciones/) | Solo datos públicos de cada sección |
+| Preguntas de examen | Escritas a partir de la [Orden IET/1311/2013](https://www.boe.es/buscar/doc.php?id=BOE-A-2013-7624) | Propias |
+| Tipografías | [Fraunces](https://github.com/undercasetype/Fraunces), [IBM Plex](https://github.com/IBM/plex) | SIL Open Font License (`fonts/`) |
+| Visitas y hitos | [GoatCounter](https://www.goatcounter.com/) | Sin cookies ni datos personales |
+
+Detalle en [docs/DATOS.md](docs/DATOS.md).
+
+## 💚 Apoya el proyecto
+
+<p align="center">
+  <a href="https://github.com/sponsors/serbenda"><img src="https://img.shields.io/badge/Apoya_la_radio-GitHub_Sponsors-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="Apoya el proyecto en GitHub Sponsors"></a>
+  &nbsp;
+  <a href="https://github.com/serbenda/radio"><img src="https://img.shields.io/github/stars/serbenda/radio?style=for-the-badge&logo=github&label=Estrellas&color=8be0c2" alt="Estrellas en GitHub"></a>
+</p>
+
+La web es **gratuita, sin publicidad, sin registro y sin rastrear a nadie**, y lo seguirá siendo. Si te ha sido útil, tu apoyo sirve para:
+
+| | Para qué |
+| :-: | --- |
+| 📝 | Más preguntas del examen, revisadas con la ley delante |
+| 🎧 | Grabaciones reales de radioaficionados en español |
+| 🛰️ | Nuevas lecciones, contactos simulados y satélites |
+| 🛠️ | Mantener los datos al día (tasas, radioclubes, enlaces) |
+
+**¿Sin presupuesto?** También ayuda muchísimo, y es gratis: [avisar de un error](https://github.com/serbenda/radio/issues/new/choose), compartir la web con quien pueda engancharse a la radio o darle una ⭐ al repositorio. 73!
+
+## Licencia
+
+| Qué | Licencia |
+| --- | --- |
+| **Código** (HTML, CSS, JavaScript, herramientas) | [MIT](LICENSE) |
+| **Contenido** (textos, preguntas del examen, documentación, imágenes propias) | [CC BY-SA 4.0](LICENSE-CONTENIDO.md): puedes reutilizarlo citando la fuente y compartiendo igual |
+| Recursos de terceros (tipografías, librerías, grabaciones, datos) | Los suyos; detalle en [LICENSE-CONTENIDO.md](LICENSE-CONTENIDO.md#lo-que-no-es-de-este-proyecto-conserva-su-licencia) |
+
+© 2026 Sergio Santiago Bendaña Quesada
+
+73! 📻 *(«saludos cordiales» en jerga de radio)*

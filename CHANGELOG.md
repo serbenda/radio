@@ -2,22 +2,41 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión corresponde a una pull request fusionada en `main`.
 
+## [2.3.0] · 1 de noviembre de 2026 · Instalable en Android e iPhone, buenas prácticas y documentación completa
+
+### Añadido
+- **Instalar la app** en Android, iPhone, iPad y ordenador: botón "Instalar la app" en el pie (instalación directa donde el navegador lo permite) e instrucciones paso a paso para cada sistema en la portada. Capturas en el manifest para la ventana de instalación de Android y metadatos para la pantalla de inicio de iPhone.
+- **Licencias:** MIT para el código y CC BY-SA 4.0 para textos, preguntas, documentación e imágenes propias.
+- **Apoya el proyecto:** enlace a GitHub Sponsors en el pie de cada página, en el README y botón "Sponsor" en el repositorio.
+- **Comprobación semanal de enlaces externos** (`tools/enlaces.mjs`) que abre un aviso si alguno se rompe.
+- **Documentación completa:** README renovado con capturas; índice de la documentación; cómo se construyó; arquitectura con diagramas; tutorial; guía de recetas; solución de problemas; estilos; glosario; guía de contribución y plantilla de pull request. Todo el código comentado función a función.
+- `tools/check.mjs`: comprobaciones de seguridad (CSP, integridad, `noopener`, tipografías).
+
+### Cambiado
+- **Buenas prácticas:** auditoría de accesibilidad con axe y sus arreglos; tipografías alojadas en la web (sin Google Fonts); Content-Security-Policy; integridad (SRI) de las librerías; aviso para quien navega sin JavaScript.
+
+### Arreglado
+- "Ahora en el aire" deja de consultar con la pestaña oculta, nunca consulta HamQTH antes de 15 s aunque se entre y salga de la sección, y muestra las frases aunque no cargue el mapa. Sus filtros indican cuál está pulsado a los lectores de pantalla.
+- Con "reducir movimiento" ya no queda ninguna animación (latido de los sonidos, medidor del contacto).
+- Quitados estilos sin uso.
+- `tools/check.mjs` ya no confunde comentarios con código.
+
 ## [2.2.0] · 1 de noviembre de 2026 · Más preguntas, sonidos reales y sin conexión
 
 ### Añadido
 - **Examen:** el banco pasa de 68 a 169 preguntas (95 de la parte 1 y 74 de la parte 2), revisadas por separado contra la Orden IET/1311/2013.
-
-### Arreglado
-- Cinco preguntas del examen con errores (sufijos Y y Z, "portable" frente a "portátil", autorización de menores) y diez con ambigüedades, explicaciones desactualizadas o estilo mejorable. La pregunta frecuente sobre menores, más precisa.
 - **Grabaciones reales** (Escuchar): once audios grabados en el aire con licencia libre de Wikimedia Commons (llamada CQ, informe de señal, concurso, satélite, repetidores, balizas, señal horaria), con autor y licencia en cada uno.
 - **Instalable y sin conexión:** manifest, iconos y service worker. Tras la primera visita, el examen, el Morse, las lecciones y los contactos simulados funcionan sin cobertura. Página `offline.html` para lo que no está guardado.
 - **Guardar y recuperar tu progreso** en un archivo (Inicio), para cambiar de móvil o de navegador.
 - **Avisar de errores:** formularios de GitHub para preguntas del examen, errores de contenido y sugerencias; el pie de cada página y cada pregunta del examen abren el formulario ya rellenado.
 - **Métricas de hitos** sin datos personales (contactos simulados, simulacros, insignias, lecciones, niveles de Morse) para saber si la web cumple su objetivo.
-- `tools/check.mjs`: comprobaciones del modo sin conexión y de las métricas (66 en total).
+- `tools/check.mjs`: comprobaciones del modo sin conexión y de las métricas.
 
 ### Cambiado
 - Icono propio en lugar del emoji.
+
+### Arreglado
+- Cinco preguntas del examen con errores (sufijos Y y Z, "portable" frente a "portátil", autorización de menores) y diez con ambigüedades, explicaciones desactualizadas o estilo mejorable. La pregunta frecuente sobre menores, más precisa.
 
 ## [2.1.0] · 1 de noviembre de 2026 · CB-27 y qué radio comprar
 

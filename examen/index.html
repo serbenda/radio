@@ -3,10 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://*.api.radio-browser.info https://www.hamqth.com https://celestrak.org https://serbenda.goatcounter.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Examen · Radio</title>
   <meta name="description" content="Simulador del examen de radioaficionado en España: tarjetas adaptativas con explicaciones, dominio por tema y simulacro de dos partes.">
   <meta name="radio-root" content="../">
   <meta name="theme-color" content="#111214">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="radio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="canonical" href="https://bendi.dev/radio/examen/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
@@ -25,9 +31,7 @@
   <link rel="icon" href="../img/favicon-64.png" type="image/png">
   <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
   <link rel="manifest" href="../manifest.webmanifest">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="../fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body data-page="examen">
@@ -46,6 +50,7 @@
   </header>
 
   <main id="contenido">
+    <noscript><p class="noscript">Los textos se leen sin JavaScript, pero el dial, los mapas, los sonidos, el Morse, los contactos y el examen lo necesitan. Actívalo para usarlos.</p></noscript>
     <header class="page-head">
       <p class="kicker">Paso 4</p>
       <h1>Preparar el examen</h1>
@@ -71,8 +76,9 @@
   </main>
 
   <footer>
-    <p><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button></p>
-    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">código y fuentes de datos</a> · 73!</p>
+    <p class="footer-actions"><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button> <button class="btn small" id="installApp" type="button" hidden>📲 Instalar la app</button></p>
+    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">código y fuentes de datos</a> · 73! <small>(«saludos» en jerga de radio)</small></p>
+    <p class="sponsor"><a class="sponsor-pill" id="sponsorLink" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span class="beat" aria-hidden="true">💚</span> ¿Te es útil? <b>Apoya el proyecto</b> en GitHub Sponsors</a></p>
     <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">¿Ves un error o algo desactualizado? Avísanos</a></p>
   </footer>
 
@@ -81,6 +87,7 @@
   <script src="../js/journey.js"></script>
   <script src="../js/exam-data.js"></script>
   <script src="../js/exam.js"></script>
+  <script src="../js/install.js"></script>
   <script src="../js/glossary.js"></script>
   <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
