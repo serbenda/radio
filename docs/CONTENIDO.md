@@ -32,6 +32,16 @@ Archivo: `js/exam-data.js`. Cada pregunta:
 
 Recomendado: que un radioaficionado con licencia revise las preguntas nuevas antes de publicarlas.
 
+### Revisión del banco
+
+El 1 de noviembre de 2026 una revisión independiente comprobó las 169 preguntas contra el texto de la Orden IET/1311/2013 en el BOE y rehizo todos los cálculos. Se corrigieron 5 errores (sufijos Y y Z, "portable" frente a "portátil", la autorización de menores), 3 ambigüedades, 2 explicaciones desactualizadas y 7 detalles de estilo.
+
+Ojo con estas trampas al escribir preguntas nuevas:
+- **Portable ≠ portátil.** El reglamento habla de estaciones *portables* (la fija instalada temporalmente en otro sitio); *portátil* es un equipo de mano.
+- **Distrito 4** no es toda Castilla-La Mancha: Albacete va en el 5.
+- La Secretaría de Estado que cita el reglamento (SETSI) hoy se llama de otra forma: nombrar las dos.
+- Las bandas laterales tienen excepciones (60 m usa USB).
+
 ## Bandas
 
 Archivo: `js/data.js`, lista `BANDS`, **ordenadas de menor a mayor frecuencia**. `kind` es `hf`, `vhf` o `uhf`. Las de tipo `hf` aparecen también en el dial de la portada.

@@ -6,6 +6,9 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). C
 
 ### Añadido
 - **Examen:** el banco pasa de 68 a 169 preguntas (95 de la parte 1 y 74 de la parte 2), revisadas por separado contra la Orden IET/1311/2013.
+
+### Arreglado
+- Cinco preguntas del examen con errores (sufijos Y y Z, "portable" frente a "portátil", autorización de menores) y diez con ambigüedades, explicaciones desactualizadas o estilo mejorable. La pregunta frecuente sobre menores, más precisa.
 - **Grabaciones reales** (Escuchar): once audios grabados en el aire con licencia libre de Wikimedia Commons (llamada CQ, informe de señal, concurso, satélite, repetidores, balizas, señal horaria), con autor y licencia en cada uno.
 - **Instalable y sin conexión:** manifest, iconos y service worker. Tras la primera visita, el examen, el Morse, las lecciones y los contactos simulados funcionan sin cobertura. Página `offline.html` para lo que no está guardado.
 - **Guardar y recuperar tu progreso** en un archivo (Inicio), para cambiar de móvil o de navegador.
