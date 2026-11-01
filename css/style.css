@@ -489,3 +489,64 @@ h3.sub { margin: 36px 0 14px; font: 800 1.4rem var(--serif); }
 .checklist label { display: flex; gap: 12px; align-items: flex-start; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; cursor: pointer; }
 .checklist input { width: 20px; height: 20px; accent-color: var(--accent); flex: none; margin-top: 2px; }
 .checklist input:checked + * , .checklist label:has(input:checked) { color: var(--muted); }
+
+/* ---------- Tu primer mes ---------- */
+.journey-top { display: grid; gap: 8px; margin-bottom: 18px; }
+.journey-top .bar { height: 14px; }
+.journey-top p { margin: 0; color: var(--muted); }
+.journey-top p b { color: var(--ink); }
+.weeks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.week { background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; }
+.week.full { border-color: var(--accent); background: linear-gradient(160deg, #1f2a27, var(--bg2) 70%); }
+.week h3 { font-size: 1rem; margin-bottom: 10px; }
+.week ul { list-style: none; padding: 0; margin: 0 0 12px; display: grid; gap: 8px; flex: 1; }
+.week li { display: grid; grid-template-columns: 20px 1fr; column-gap: 8px; font-size: .9rem; line-height: 1.35; }
+.week li .tick { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; font-size: .7rem; color: #0f1714; margin-top: 1px; }
+.week li.ok .tick { background: var(--accent); border-color: var(--accent); }
+.week li a { color: #d4d5db; text-decoration: none; }
+.week li a:hover { color: var(--accent); }
+.week li.ok a { color: var(--muted); text-decoration: line-through; }
+.week li small { grid-column: 2; color: var(--hot); font-family: var(--mono); font-size: .75rem; }
+.badge { margin: 0; font-size: .82rem; color: var(--muted); }
+.badge.won { color: var(--accent); }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 40px); opacity: 0; z-index: 3000; background: #1d1e23;
+  border: 1px solid var(--accent); color: var(--ink); padding: 12px 20px; border-radius: 999px; box-shadow: 0 12px 30px #000a; transition: all .35s; }
+.toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+/* ---------- Ahora en el aire ---------- */
+.live-summary { color: #d4d5db; margin: 0 0 10px; }
+.live-summary b { color: var(--accent); }
+.live-bands { margin-bottom: 12px; }
+.chip .sw { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; }
+.live-wrap { display: grid; grid-template-columns: 1fr 360px; gap: 16px; }
+#liveMap { height: 460px; border-radius: var(--radius); border: 1px solid var(--line); background: #0b0c0e; }
+.live-stories { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; align-content: start; max-height: 460px; overflow-y: auto; }
+.live-stories li { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--band, var(--accent)); border-radius: 10px; padding: 10px 12px; }
+.live-stories p { margin: 2px 0 4px; font-size: .92rem; color: #d4d5db; }
+.live-stories b { color: var(--ink); }
+.ls-meta { font: .75rem var(--mono); color: var(--muted); }
+.ls-c { color: var(--muted); font-style: italic; }
+.ls-go { font-size: .85rem; font-weight: 600; text-decoration: none; }
+
+/* ---------- ISS ---------- */
+.iss-wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 16px; }
+.iss-count { font: 600 1.3rem var(--mono); color: var(--accent); margin-top: 0; }
+#issNow b { color: var(--ink); }
+#issNow .live { color: var(--hot); }
+.iss-panel h3 { margin: 18px 0 8px; }
+.iss-passes { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.iss-passes li { background: var(--bg2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px; }
+.iss-passes li.next { border-color: var(--accent); }
+.iss-passes b { text-transform: capitalize; }
+.iss-passes span { color: #d4d5db; font-size: .9rem; }
+.iss-passes small { color: var(--muted); }
+#issMap { min-height: 420px; border-radius: var(--radius); border: 1px solid var(--line); background: #0b0c0e; }
+.iss-icon { font-size: 24px; line-height: 28px; text-align: center; filter: drop-shadow(0 0 6px #8be0c2); }
+
+@media (max-width: 960px) {
+  .weeks { grid-template-columns: repeat(2, 1fr); }
+  .live-wrap, .iss-wrap { grid-template-columns: 1fr; }
+  #liveMap { height: 340px; }
+  #issMap { min-height: 300px; }
+}
+@media (max-width: 560px) { .weeks { grid-template-columns: 1fr; } }

@@ -137,6 +137,7 @@
     $('nowName').textContent = s.name.trim();
     $('nowMeta').textContent = [s.state, s.country, tagsOf(s)].filter(Boolean).join(' · ');
     document.querySelectorAll('#stationList li').forEach(li => li.classList.toggle('on', li.dataset.uuid === s.stationuuid));
+    document.dispatchEvent(new CustomEvent('radio:event', { detail: { name: 'station', id: s.stationuuid } }));
     // cortesía con el directorio: cuenta la escucha
     if (server) fetch(`${server}/json/url/${s.stationuuid}`).catch(() => {});
   }

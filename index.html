@@ -32,11 +32,14 @@
   <header class="top">
     <a class="brand" href="#inicio">📻 <span>radio</span></a>
     <nav>
+      <a href="#mes">Tu mes</a>
       <a href="#emisoras">Emisoras</a>
       <a href="#directo">En directo</a>
+      <a href="#ahora">Ahora</a>
       <a href="#sonidos">Sonidos</a>
       <a href="#como-funciona">Cómo funciona</a>
       <a href="#propagacion">Propagación</a>
+      <a href="#iss">ISS</a>
       <a href="#morse">Morse</a>
       <a href="#qso">Tu QSO</a>
       <a href="#empezar">Empezar</a>
@@ -87,6 +90,23 @@
           <h3>🚨 Servir cuando todo falla</h3>
           <p>Cuando caen las redes en una DANA, un terremoto o un apagón, los radioaficionados siguen comunicando. Por eso existe y está protegida por ley.</p>
         </article>
+      </div>
+    </section>
+
+    <!-- TU PRIMER MES -->
+    <section id="mes">
+      <div class="section-head">
+        <p class="kicker">Tu ruta</p>
+        <h2>Tu primer mes en la radio</h2>
+        <p>Cuatro semanas, de escuchar por primera vez a estar listo para el examen. Los pasos se marcan solos a medida que usas la web, y cada semana completa te da una insignia. Todo se guarda en tu navegador, sin registrarte.</p>
+      </div>
+      <div class="journey card">
+        <div class="journey-top">
+          <div class="bar"><i id="journeyBar"></i></div>
+          <p id="journeyMeta"></p>
+          <div class="row"><button class="btn small" id="journeyShare" hidden>📤 Compartir mi progreso</button><button class="btn small ghost" id="journeyReset">Empezar de cero</button></div>
+        </div>
+        <div class="weeks" id="weeks"></div>
       </div>
     </section>
 
@@ -191,6 +211,22 @@
       </div>
     </section>
 
+    <!-- AHORA EN EL AIRE -->
+    <section id="ahora">
+      <div class="section-head">
+        <p class="kicker">En directo</p>
+        <h2>Ahora en el aire</h2>
+        <p>Cuando un radioaficionado oye a otro, a menudo lo publica en internet: es un <strong>spot</strong>, un aviso. Juntos forman un mapa vivo de quién está hablando con quién en todo el mundo, ahora mismo. Cada línea es una señal que ha cruzado países u océanos.</p>
+      </div>
+      <p class="live-summary" id="liveSummary">Cargando avisos…</p>
+      <div class="chips live-bands" id="liveBands"></div>
+      <div class="live-wrap">
+        <div id="liveMap" role="region" aria-label="Mapa de avisos en directo"></div>
+        <ol class="live-stories" id="liveStories"></ol>
+      </div>
+      <p class="note" id="liveStatus"></p>
+    </section>
+
     <!-- SONIDOS -->
     <section id="sonidos">
       <div class="section-head">
@@ -274,6 +310,37 @@
           </dl>
         </div>
       </div>
+    </section>
+
+    <!-- ISS -->
+    <section id="iss">
+      <div class="section-head">
+        <p class="kicker">Radio desde el espacio</p>
+        <h2>¿Cuándo pasa la Estación Espacial sobre ti?</h2>
+        <p>La ISS lleva una estación de radioaficionado. Cuando pasa por encima, unos 10 minutos, se puede oír con un walkie o un receptor sencillo en <strong>145,800 MHz en FM</strong>. Aquí ves dónde está ahora y sus próximos pases.</p>
+      </div>
+      <div class="iss-wrap">
+        <div class="card iss-panel">
+          <p class="iss-count" id="issCount">Calculando la órbita…</p>
+          <p id="issNow"></p>
+          <div class="row">
+            <label class="inline">Desde
+              <select id="issCity">
+                <option value="40.4168,-3.7038">Madrid</option><option value="41.3874,2.1686">Barcelona</option><option value="39.4699,-0.3763">Valencia</option>
+                <option value="37.3891,-5.9845">Sevilla</option><option value="43.2630,-2.9350">Bilbao</option><option value="42.8782,-8.5448">Santiago</option>
+                <option value="28.4636,-16.2518">Santa Cruz de Tenerife</option><option value="39.5696,2.6502">Palma</option>
+                <option value="19.4326,-99.1332">Ciudad de México</option><option value="-34.6037,-58.3816">Buenos Aires</option><option value="4.7110,-74.0721">Bogotá</option>
+              </select>
+            </label>
+            <button class="btn small ghost" id="issGeo">📍 Usar mi ubicación</button>
+          </div>
+          <p class="note">Mostrando pases para <b id="issWhere">Madrid</b>. Tu ubicación se usa solo en tu navegador: no se envía a ningún sitio.</p>
+          <h3>Próximos pases</h3>
+          <ol class="iss-passes" id="issPasses"></ol>
+        </div>
+        <div id="issMap" role="region" aria-label="Posición de la Estación Espacial"></div>
+      </div>
+      <p class="note">Órbita de <a href="https://celestrak.org/" target="_blank" rel="noopener">CelesTrak</a>, calculada en tu navegador. Con una antena de mano y paciencia se oyen los contactos con colegios que organiza <a href="https://www.ariss.org/" target="_blank" rel="noopener">ARISS</a>; los pases altos se oyen mejor. Al acercarse y alejarse, la frecuencia se desplaza unos kHz (efecto Doppler).</p>
     </section>
 
     <!-- MORSE -->
@@ -486,7 +553,9 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/satellite.js/5.0.0/satellite.min.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/journey.js"></script>
   <script src="js/stations.js"></script>
   <script src="js/morse.js"></script>
   <script src="js/koch.js"></script>
@@ -496,7 +565,10 @@
   <script src="js/sounds.js"></script>
   <script src="js/lessons.js"></script>
   <script src="js/propagation.js"></script>
+  <script src="js/live.js"></script>
+  <script src="js/iss.js"></script>
   <script src="js/app.js"></script>
   <script src="js/glossary.js"></script>
+  <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
