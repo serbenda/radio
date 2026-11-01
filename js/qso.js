@@ -18,7 +18,7 @@
   const spell = call => call.split('').map(c => PHONETIC[c] || c).join(' ');
   const say = call => `${call} (${spell(call)})`;
 
-  let me, dx, band, freq, mode, rst = '59', log, sending = false;
+  let me, dx, band, freq, mode, rst = '59', log, sending = false, scenario = 'primero';
 
   /* ---------- Audio: voz + ruido de banda ---------- */
   let ctx, noiseGain;
@@ -146,10 +146,109 @@
       { ok: false, text: '¿Y qué te parece el gobierno? Yo creo que…', why: 'En el aire se evitan la política y la religión: es una comunidad de todo el mundo.' },
     ]);
     await receive(`Recibido, ${me.name}. Te mando mi QSL. 73 y buenos DX. ${call} de ${them}, sigo a la escucha.`);
+    finish(`🎉 ¡Has completado tu primer QSO con ${dx.country}!`, true);
+  }
+
+  /* ---------- Otros escenarios ---------- */
+  const SPAIN = [
+    { d: '1', op: 'Lola', city: 'León' }, { d: '2', op: 'Íñigo', city: 'Zaragoza' }, { d: '3', op: 'Marta', city: 'Girona' },
+    { d: '5', op: 'Paco', city: 'Murcia' }, { d: '7', op: 'Rocío', city: 'Sevilla' }, { d: '4', op: 'Andrés', city: 'Toledo' },
+  ];
+  const spaniard = suffix => { const s = pick(SPAIN.filter(x => x.d !== me.call.match(/\d/)?.[0])); return { prefix: 'EA' + s.d, call: 'EA' + s.d + letters(pick([2, 3])) + (suffix || ''), op: s.op, city: s.city, country: 'España', flag: '🇪🇸', lang: 'es-ES', tz: 'Europe/Madrid' }; };
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+
+  async function runContest() {
+    rst = '59';
+    const call = me.call, them = dx.call, serial = 100 + Math.floor(Math.random() * 300);
+    add('info', `Es fin de semana de concurso: la banda está llena de estaciones que intentan hacer el máximo de contactos. Oyes llamar a ${them}.`);
+    await receive(`CQ concurso, CQ concurso, ${say(them)}.`);
+    await choose([
+      { ok: true, text: `${call}`, why: 'En concurso se contesta solo con tu indicativo, una vez. Rápido y claro.' },
+      { ok: false, text: `Hola ${them}, aquí ${call}, ¿qué tal el fin de semana? Por aquí hace buen tiempo…`, why: 'En un concurso la otra estación quiere ir rápido: nada de charla, solo indicativo e intercambio.' },
+      { ok: false, text: `CQ concurso, aquí ${call}`, why: 'Él está llamando; tú debes contestarle con tu indicativo, no lanzar tu propia llamada encima.' },
+    ]);
+    await receive(`${call}, 5 9, ${serial}.`);
+    add('info', `Te ha pasado el control (59) y su número de contacto (${serial}). Tú le das tu control y tu número: es tu primer contacto, así que 001.`);
+    await choose([
+      { ok: true, text: `Gracias, 5 9, 0 0 1.`, why: 'Intercambio completo: control de señal y número de serie. Con eso el contacto es válido.' },
+      { ok: false, text: `5 9, me llamo ${me.name} y estoy en ${me.city}.`, why: 'En este concurso el intercambio es control y número de serie, no nombre y ciudad.' },
+      { ok: false, text: '¿Me lo repites todo desde el principio?', why: 'Si no copiaste algo, pide solo lo que te falta (“¿número?”), no todo.' },
+    ]);
+    await receive(`Gracias, 73. QRZ concurso, ${them}.`);
+    finish('🏁 ¡Contacto de concurso hecho! Así se hacen cientos en un fin de semana.', true);
+  }
+
+  async function runPota() {
+    const call = me.call, them = dx.call;
+    add('info', `En un mapa de actividad ves que ${them} está transmitiendo desde un parque natural cerca de ${dx.city}. Cazar parques desde casa es uno de los juegos favoritos de los radioaficionados.`);
+    await receive(`CQ POTA, CQ POTA, aquí ${say(them)}, portable desde un parque natural. Cambio.`);
+    await choose([
+      { ok: true, text: `${call}`, why: 'Los activadores de parques reciben muchas llamadas: se contesta con el indicativo y se espera turno.' },
+      { ok: false, text: `${them}, ${them}, ${them}, aquí ${call}, ${call}, ${call}, cambio…`, why: 'Repetir tanto alarga la llamada y pisa a los demás. Una o dos veces basta.' },
+      { ok: false, text: '¿En qué parque estás exactamente? ¿Hace frío?', why: 'Primero hay que hacer el contacto; las preguntas, si hay tiempo, al final.' },
+    ]);
+    rst = '57';
+    await receive(`${call}, te copio 5 y 7. Te pido tu QTH, por favor.`);
+    await choose([
+      { ok: true, text: `Gracias. Te copio 5 y 9, QTH ${me.city}. ${them} de ${call}.`, why: 'Control de señal y localización: lo que el activador anota en su libro de guardia.' },
+      { ok: false, text: 'Te copio 5 y 9.', why: 'Te ha pedido tu QTH: dale también tu localización.' },
+      { ok: false, text: `Te copio perfecto, ¿me mandas una foto del parque por WhatsApp?`, why: 'Céntrate en el intercambio que pide; después hay otros esperando.' },
+    ]);
+    await receive(`Recibido ${me.city}. Gracias por el parque, 73. QRZ POTA, ${them}.`);
+    finish('🌲 ¡Has cazado tu primer parque! En POTA se llevan rankings y diplomas por parques cazados.', true);
+  }
+
+  async function runEmergency() {
+    const call = me.call, them = dx.call;
+    add('info', `Hoy hay un ejercicio de emergencias. Una estación de control, ${them}, organiza la red: en estas redes se habla solo cuando el control lo pide.`);
+    await receive(`Aquí ${say(them)}, estación de control del ejercicio. Estaciones que quieran entrar en la red, solo indicativo. Cambio.`);
+    await choose([
+      { ok: true, text: `${call}`, why: 'En una red dirigida te presentas solo con el indicativo y esperas a que el control te llame.' },
+      { ok: false, text: `Hola, soy ${me.name}, estoy en ${me.city} y tengo un equipo nuevo que…`, why: 'En emergencias cada segundo cuenta: solo indicativo, el resto cuando te lo pidan.' },
+      { ok: false, text: 'Mayday, mayday, mayday', why: 'Es un ejercicio: “mayday” solo se usa ante un peligro real para la vida.' },
+    ]);
+    await receive(`${call}, adelante con su informe.`);
+    await choose([
+      { ok: true, text: `${call}: en ${me.city} sin novedad, sin daños. Disponible con equipo portátil y baterías. Cambio.`, why: 'Un informe útil es corto: dónde estás, qué ves y con qué medios cuentas.' },
+      { ok: false, text: 'Bueno, pues por aquí todo bien, la verdad, aunque esta mañana se fue un rato la luz y…', why: 'Sé breve y concreto: situación, daños y medios disponibles.' },
+      { ok: false, text: 'Pásame con el 112, por favor.', why: 'La red de radio apoya a los servicios de emergencia, pero no es una centralita: da tu informe al control.' },
+    ]);
+    await receive(`Recibido ${call}, anotado. Quede a la escucha en esta frecuencia. Control.`);
+    finish('🚨 Ejercicio completado. Así funcionan las redes de emergencia: disciplina, mensajes cortos y la estación de control al mando.', false);
+  }
+
+  async function runIss() {
+    rst = '59';
+    const call = me.call, them = dx.call;
+    add('info', 'La Estación Espacial Internacional pasa sobre España. Solo la tendrás a la vista unos 10 minutos y mucha gente intenta contactar a la vez: hay que ser rapidísimo.');
+    await wait(800);
+    await receive(`${say(them)}, escuchando. Adelante.`);
+    await choose([
+      { ok: true, text: `${them}, aquí ${call}.`, why: 'Con decenas de estaciones llamando, solo el indicativo de la ISS y el tuyo. Nada más.' },
+      { ok: false, text: `Hola ${them}, ¿qué tal por el espacio? Aquí ${me.name}, desde ${me.city}, te quería preguntar…`, why: 'El pase dura minutos: si te alargas, nadie más podrá hacer su contacto.' },
+      { ok: false, text: 'CQ CQ CQ', why: 'No se llama CQ a la ISS: se contesta a su llamada con los dos indicativos.' },
+    ]);
+    await receive(`${call}, 5 9. Gracias. Siguiente.`);
+    await choose([
+      { ok: true, text: '5 9, gracias, 73.', why: 'Corto y con cortesía: control de señal y despedida. ¡Contacto con el espacio hecho!' },
+      { ok: false, text: '¿Puedes repetir? ¿Y me saludas a la tripulación?', why: 'La ISS ya ha pasado a la siguiente estación: lo justo y a tiempo.' },
+      { ok: false, text: '(No digo nada)', why: 'Hay que confirmar el contacto con tu control de señal para que sea válido.' },
+    ]);
+    finish('🛰️ ¡Contacto con la Estación Espacial! Algunos radioaficionados lo consiguen con un walkie y una antena de mano.', true);
+  }
+
+  function finish(text, qsl) {
     stopNoise();
-    $('qsoOnAir').textContent = 'QSO COMPLETO';
-    add('info', `🎉 ¡Has completado tu primer QSO con ${dx.country}! Te ha llegado su tarjeta QSL.`);
-    setTimeout(showQsl, 900);
+    $('qsoOnAir').textContent = qsl ? 'QSO COMPLETO' : 'EJERCICIO HECHO';
+    add('info', text + (qsl ? ' Te ha llegado su tarjeta QSL.' : ''));
+    document.dispatchEvent(new CustomEvent('radio:qso', { detail: { scenario } }));
+    if (qsl) setTimeout(showQsl, 900);
+    else {
+      const b = document.createElement('button');
+      b.className = 'btn ghost small'; b.textContent = 'Otro contacto';
+      b.onclick = () => $('qsoAgain').click();
+      $('qsoChoices').innerHTML = ''; $('qsoChoices').appendChild(b);
+    }
   }
 
   /* ---------- Tarjeta QSL ---------- */
@@ -236,13 +335,17 @@
       return;
     }
     me = { name: $('qsoName').value.trim(), city: $('qsoCity').value.trim(), call: callIn };
-    const st = pick(STATIONS);
-    dx = { ...st, call: st.prefix + letters(pick([2, 3])) };
+    scenario = $('qsoScenario').value;
     const h = new Date().getUTCHours();
     const day = h >= 8 && h < 18;
     band = day ? '20 m' : '40 m';
     mode = day ? 'USB' : 'LSB';
     freq = (day ? 14.150 + Math.random() * 0.14 : 7.090 + Math.random() * 0.09).toFixed(3);
+    if (scenario === 'primero') { const st = pick(STATIONS); dx = { ...st, call: st.prefix + letters(pick([2, 3])) }; }
+    if (scenario === 'concurso') { dx = spaniard(); band = '40 m'; mode = 'LSB'; freq = (7.060 + Math.random() * 0.13).toFixed(3); }
+    if (scenario === 'pota') { dx = spaniard('/P'); }
+    if (scenario === 'emergencia') { dx = spaniard(); band = '2 m'; mode = 'FM'; freq = '145.425'; }
+    if (scenario === 'iss') { dx = { call: 'NA1SS', op: 'Tripulación de la ISS', city: 'a 400 km de altura', country: 'Estación Espacial', flag: '🛰️', lang: 'es-ES', tz: 'UTC' }; band = '2 m'; mode = 'FM'; freq = '145.800'; }
     log = [];
     $('qsoLog').innerHTML = '';
     $('qsoFreq').textContent = `${freq} MHz · ${mode}`;
@@ -251,7 +354,7 @@
     $('qsoQsl').hidden = true;
     $('qsoRadio').hidden = false;
     startNoise(); noise(0.012);
-    run();
+    ({ primero: run, concurso: runContest, pota: runPota, emergencia: runEmergency, iss: runIss })[scenario]();
   }
 
   $('qsoCall').addEventListener('input', () => {
