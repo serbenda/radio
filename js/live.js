@@ -56,7 +56,9 @@
     const link = tuneOf(s);
     return `<li style="--band:${BANDCOL[s.band] || '#9c9ea6'}">
       <span class="ls-meta">${ago(s.time)} · <b>${bandName(s.band)}</b> · ${(s.freq / 1000).toFixed(3)} MHz</span>
-      <p><b>${esc(s.spotter)}</b> oye a <b>${esc(s.dxcall)}</b> (${esc(country(s.country))}) ${MODE(s.mode)}${dist ? `, a <b>${dist.toLocaleString('es-ES')} km</b>` : ''}.${s.comment ? ` <span class="ls-c">«${esc(s.comment.slice(0, 40))}»</span>` : ''}</p>
+      <p>${s.spotter === s.dxcall
+        ? `<b>${esc(s.dxcall)}</b> (${esc(country(s.country))}) avisa de que está transmitiendo ${MODE(s.mode)}${/POTA|SOTA|WWFF/i.test(s.comment || '') ? ' desde un parque o una cumbre' : ''}.`
+        : `<b>${esc(s.spotter)}</b> oye a <b>${esc(s.dxcall)}</b> (${esc(country(s.country))}) ${MODE(s.mode)}${dist ? `, a <b>${dist.toLocaleString('es-ES')} km</b>` : ''}.`}${s.comment ? ` <span class="ls-c">«${esc(s.comment.slice(0, 40))}»</span>` : ''}</p>
       ${link ? `<a href="${link}" target="_blank" rel="noopener" class="ls-go" data-ev="websdr">🎧 Escúchalo</a>` : ''}
     </li>`;
   }
