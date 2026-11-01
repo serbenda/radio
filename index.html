@@ -22,6 +22,7 @@
       <a href="#bandas">Bandas</a>
       <a href="#morse">Morse</a>
       <a href="#jerga">Jerga</a>
+      <a href="#qso">Tu QSO</a>
       <a href="#empezar">Empezar</a>
       <a href="#test">Test</a>
     </nav>
@@ -118,6 +119,7 @@
         <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
         <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8" aria-label="Volumen">
       </div>
+      <p class="note greyline-note"><span class="swatch"></span> La zona oscura es donde ahora es de noche. Por la <strong>línea gris</strong>, el borde entre día y noche, la onda corta viaja especialmente lejos. Se actualiza en directo.</p>
       <p class="note">Datos del directorio libre <a href="https://www.radio-browser.info" target="_blank" rel="noopener">Radio Browser</a>. Son emisoras de radiodifusión por internet: el primer paso para coger el gusanillo. Lo de los radioaficionados de verdad viene justo abajo.</p>
     </section>
 
@@ -241,6 +243,41 @@
       </div>
     </section>
 
+    <!-- PRIMER CONTACTO -->
+    <section id="qso">
+      <div class="section-head">
+        <p class="kicker">Simulador</p>
+        <h2>Haz tu primer contacto</h2>
+        <p>El miedo de todo novato: “¿y qué digo?”. Aquí practicas un QSO completo con una estación virtual, sin presión. Al final te llevas tu tarjeta QSL.</p>
+      </div>
+      <div class="qso">
+        <form class="qso-setup card" id="qsoSetup">
+          <label>Tu nombre <input type="text" id="qsoName" maxlength="20" placeholder="Bendi" required></label>
+          <label>Tu ciudad <input type="text" id="qsoCity" maxlength="24" placeholder="Madrid" required></label>
+          <label>Tu indicativo de prácticas <input type="text" id="qsoCall" maxlength="8" placeholder="EA4ABC" required></label>
+          <label class="check"><input type="checkbox" id="qsoVoice" checked> Oír a la otra estación</label>
+          <button class="btn" type="submit">🎙️ Salir al aire</button>
+          <p class="note">En España los indicativos empiezan por EA, EB, EC… y un número de zona (4 = centro). Este es inventado, solo para practicar.</p>
+        </form>
+        <div class="qso-radio card" id="qsoRadio" hidden>
+          <div class="qso-head">
+            <span class="onair" id="qsoOnAir">EN EL AIRE</span>
+            <span class="qso-freq" id="qsoFreq">7.145 MHz · LSB</span>
+            <span class="qso-meter" aria-hidden="true"><i id="qsoMeter"></i></span>
+          </div>
+          <ol class="qso-log" id="qsoLog" aria-live="polite"></ol>
+          <div class="qso-choices" id="qsoChoices"></div>
+        </div>
+        <div class="qso-qsl card" id="qsoQsl" hidden>
+          <canvas id="qslCanvas" width="900" height="560" aria-label="Tu tarjeta QSL"></canvas>
+          <div class="row">
+            <button class="btn" id="qslDownload">⬇️ Descargar mi QSL</button>
+            <button class="btn ghost" id="qsoAgain">Otro contacto</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- EMPEZAR -->
     <section id="empezar">
       <div class="section-head">
@@ -327,6 +364,7 @@
   <script src="js/data.js"></script>
   <script src="js/stations.js"></script>
   <script src="js/morse.js"></script>
+  <script src="js/qso.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
