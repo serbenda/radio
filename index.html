@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Radio · Descubre la radioafición</title>
+  <meta name="description" content="Iniciación a la radioafición: escucha emisoras de todo el mundo, oye a radioaficionados en directo, aprende Morse y da tus primeros pasos.">
+  <meta name="theme-color" content="#111214">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📻</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#inicio">📻 <span>radio</span></a>
+    <nav>
+      <a href="#emisoras">Emisoras</a>
+      <a href="#directo">En directo</a>
+      <a href="#bandas">Bandas</a>
+      <a href="#morse">Morse</a>
+      <a href="#jerga">Jerga</a>
+      <a href="#empezar">Empezar</a>
+      <a href="#test">Test</a>
+    </nav>
+    <div class="utc" title="Los radioaficionados siempre usan la hora UTC"><small>UTC</small> <span id="utc">--:--</span></div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+      <div class="hero-text">
+        <p class="kicker">Para quien nunca ha tocado una radio</p>
+        <h1>Hay miles de voces en el aire.<br><em>Ahora mismo.</em></h1>
+        <p class="lead">La radioafición es el hobby de comunicarse por radio con gente de todo el planeta, sin internet ni operador de por medio. Esta web te enseña a escucharla, entenderla y, si te engancha, a dar el salto.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#emisoras">Escuchar algo ya</a>
+          <a class="btn ghost" href="#empezar">Cómo empezar</a>
+        </div>
+      </div>
+      <div class="receiver" aria-label="Dial interactivo">
+        <div class="dial">
+          <svg class="wave" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true"><path id="wavePath"></path></svg>
+          <div class="dial-scale" id="dialScale"></div>
+          <div class="dial-needle" id="dialNeedle"></div>
+        </div>
+        <div class="receiver-row">
+          <div class="readout"><span id="dialFreq">7.100</span> MHz</div>
+          <div class="readout small" id="dialBand">40 m · de noche, Europa entera</div>
+        </div>
+        <input type="range" id="dialKnob" min="0" max="1000" value="380" aria-label="Sintonizar">
+        <p class="hint">Mueve el dial: cada banda se comporta distinto según la hora y el sol.</p>
+      </div>
+    </section>
+
+    <!-- QUÉ ES -->
+    <section class="intro">
+      <div class="cards three">
+        <article class="card">
+          <h3>🌍 Hablar con el mundo</h3>
+          <p>Con una antena en el balcón puedes contactar con Japón, Argentina o una base en la Antártida. Las ondas cortas rebotan en la ionosfera y dan la vuelta al planeta.</p>
+        </article>
+        <article class="card">
+          <h3>🛠️ Construir y experimentar</h3>
+          <p>Antenas caseras, kits de soldar, radios definidas por software, satélites, globos sonda… Es un laboratorio de electrónica con licencia para emitir.</p>
+        </article>
+        <article class="card">
+          <h3>🚨 Servir cuando todo falla</h3>
+          <p>Cuando caen las redes en una DANA, un terremoto o un apagón, los radioaficionados siguen comunicando. Por eso existe y está protegida por ley.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- EMISORAS -->
+    <section id="emisoras">
+      <div class="section-head">
+        <p class="kicker">Paso 1 · Escuchar</p>
+        <h2>Emisoras de todo el mundo en un mapa</h2>
+        <p>Antes de emitir, todo radioaficionado empieza escuchando. Aquí tienes miles de emisoras reales: pulsa en un punto del mapa y suena.</p>
+      </div>
+      <div class="station-tools">
+        <label>País
+          <select id="country">
+            <option value="ES" selected>España</option>
+            <option value="PT">Portugal</option>
+            <option value="FR">Francia</option>
+            <option value="IT">Italia</option>
+            <option value="DE">Alemania</option>
+            <option value="GB">Reino Unido</option>
+            <option value="US">Estados Unidos</option>
+            <option value="MX">México</option>
+            <option value="AR">Argentina</option>
+            <option value="JP">Japón</option>
+            <option value="BR">Brasil</option>
+            <option value="">Todo el mundo</option>
+          </select>
+        </label>
+        <label class="grow">Buscar
+          <input type="search" id="stationSearch" placeholder="jazz, noticias, flamenco, nombre de la emisora…">
+        </label>
+        <button class="btn small" id="randomStation">🎲 Sorpréndeme</button>
+      </div>
+      <div class="map-wrap">
+        <div id="map" role="region" aria-label="Mapa de emisoras"></div>
+        <aside class="station-list">
+          <div class="status" id="stationStatus">Cargando emisoras…</div>
+          <ul id="stationList"></ul>
+        </aside>
+      </div>
+      <div class="player" id="player" hidden>
+        <button class="play" id="playBtn" aria-label="Pausar">⏸</button>
+        <div class="now">
+          <strong id="nowName">—</strong>
+          <span id="nowMeta">—</span>
+        </div>
+        <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8" aria-label="Volumen">
+      </div>
+      <p class="note">Datos del directorio libre <a href="https://www.radio-browser.info" target="_blank" rel="noopener">Radio Browser</a>. Son emisoras de radiodifusión por internet: el primer paso para coger el gusanillo. Lo de los radioaficionados de verdad viene justo abajo.</p>
+    </section>
+
+    <!-- EN DIRECTO -->
+    <section id="directo">
+      <div class="section-head">
+        <p class="kicker">Paso 2 · Oír a radioaficionados de verdad</p>
+        <h2>Receptores abiertos en directo</h2>
+        <p>Hay receptores conectados a grandes antenas que cualquiera puede manejar desde el navegador. Sin instalar nada, sin licencia. Prueba en la banda de 40 metros por la tarde-noche: oirás a gente charlando desde media Europa.</p>
+      </div>
+      <div class="cards">
+        <a class="card link" href="http://websdr.ewi.utwente.nl:8901/" target="_blank" rel="noopener">
+          <span class="tag">El clásico</span>
+          <h3>WebSDR de la Universidad de Twente</h3>
+          <p>Un receptor en Países Bajos que cubre toda la onda corta a la vez. Haz clic en la cascada y escucha. Muchos se han aficionado aquí.</p>
+          <span class="go">Abrir →</span>
+        </a>
+        <a class="card link" href="http://rx.linkfanel.net/" target="_blank" rel="noopener">
+          <span class="tag">Por todo el mundo</span>
+          <h3>Mapa de receptores KiwiSDR</h3>
+          <p>Cientos de receptores repartidos por el planeta. Elige uno en Australia o en Canadá y escucha lo que se oye allí.</p>
+          <span class="go">Abrir →</span>
+        </a>
+        <a class="card link" href="https://pskreporter.info/pskmap.html" target="_blank" rel="noopener">
+          <span class="tag">Ver en vez de oír</span>
+          <h3>PSK Reporter</h3>
+          <p>Mapa en vivo de quién está recibiendo a quién en modos digitales. Se ve literalmente cómo se “abre” una banda.</p>
+          <span class="go">Abrir →</span>
+        </a>
+        <a class="card link" href="https://www.ariss.org/" target="_blank" rel="noopener">
+          <span class="tag">Desde el espacio</span>
+          <h3>Radio en la Estación Espacial</h3>
+          <p>La ISS lleva una estación de radioaficionado. Los colegios organizan contactos con los astronautas y se pueden escuchar desde casa.</p>
+          <span class="go">Abrir →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- BANDAS -->
+    <section id="bandas">
+      <div class="section-head">
+        <p class="kicker">Entender lo que oyes</p>
+        <h2>Las bandas: un mapa del espectro</h2>
+        <p>Los radioaficionados tienen “carriles” reservados en el espectro. Se nombran por su longitud de onda. Toca una banda para ver cómo se comporta.</p>
+      </div>
+      <div class="bands" id="bands"></div>
+      <div class="band-detail" id="bandDetail"></div>
+      <p class="note">Rangos aproximados de la IARU Región 1 (Europa y África). Lo que puedes usar exactamente depende de tu autorización.</p>
+    </section>
+
+    <!-- PROPAGACIÓN -->
+    <section id="propagacion">
+      <div class="section-head">
+        <p class="kicker">El tiempo… pero del espacio</p>
+        <h2>¿Cómo está hoy la propagación?</h2>
+        <p>El Sol manda. Con mucha actividad solar las bandas altas se “abren” y llegas lejísimos; con tormentas geomagnéticas todo se apaga. Los radioaficionados lo miran como quien mira el parte antes de salir al monte.</p>
+      </div>
+      <div class="cards two">
+        <div class="card solar">
+          <img src="https://www.hamqsl.com/solar101vhf.php" alt="Datos solares y estado de las bandas en tiempo real" loading="lazy" width="460" height="250">
+          <p class="note">Panel en vivo de <a href="https://www.hamqsl.com/solar.html" target="_blank" rel="noopener">HamQSL (N0NBH)</a>. “Good” = la banda está abierta.</p>
+        </div>
+        <div class="card">
+          <h3>Cómo leerlo</h3>
+          <dl class="glossary">
+            <dt>SFI (flujo solar)</dt><dd>Cuanto más alto, mejor van las bandas altas (20, 15, 10 m). Por encima de 150 es una fiesta.</dd>
+            <dt>K-index</dt><dd>Agitación del campo magnético. 0-2 tranquilo; 5 o más, tormenta: ruido y bandas cerradas.</dd>
+            <dt>Día / Noche</dt><dd>De día funcionan las bandas altas; de noche las bajas (80 y 40 m). Por eso el dial de arriba cambia según la hora.</dd>
+            <dt>Ciclo solar</dt><dd>El Sol tiene ciclos de unos 11 años. El ciclo 25 ha tenido su máximo hace poco: buen momento para empezar.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- MORSE -->
+    <section id="morse">
+      <div class="section-head">
+        <p class="kicker">Juega</p>
+        <h2>Morse: el idioma más viejo de la radio</h2>
+        <p>Ya no es obligatorio para la licencia, pero sigue vivo porque llega donde la voz no llega. Escribe algo y escúchalo, o pon a prueba tu oído.</p>
+      </div>
+      <div class="cards two">
+        <div class="card">
+          <h3>Traductor</h3>
+          <input type="text" id="morseIn" maxlength="60" value="CQ CQ DE EA4" aria-label="Texto a Morse">
+          <div class="morse-out" id="morseOut"></div>
+          <div class="row">
+            <button class="btn small" id="morsePlay">▶ Escuchar</button>
+            <label class="inline">Velocidad <input type="range" id="wpm" min="8" max="30" value="15"> <span id="wpmVal">15</span> ppm</label>
+          </div>
+        </div>
+        <div class="card">
+          <h3>¿Qué letra es?</h3>
+          <p>Escucha y adivina. Empezamos con letras fáciles y vamos añadiendo.</p>
+          <div class="game">
+            <button class="btn" id="gameListen">🔊 Nueva letra</button>
+            <div class="game-options" id="gameOptions"></div>
+            <div class="game-score" id="gameScore">Aciertos: 0 · Racha: 0</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JERGA -->
+    <section id="jerga">
+      <div class="section-head">
+        <p class="kicker">Habla como un radioaficionado</p>
+        <h2>Deletrear, códigos Q y jerga</h2>
+      </div>
+      <div class="cards two">
+        <div class="card">
+          <h3>Deletrea tu nombre</h3>
+          <p>Por radio “B” y “P” suenan igual. Por eso se usa el alfabeto fonético internacional.</p>
+          <input type="text" id="phoneticIn" maxlength="40" placeholder="Escribe tu nombre" aria-label="Texto a deletrear">
+          <div class="phonetic-out" id="phoneticOut"></div>
+        </div>
+        <div class="card">
+          <h3>Lo que vas a oír</h3>
+          <dl class="glossary" id="glossary"></dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- EMPEZAR -->
+    <section id="empezar">
+      <div class="section-head">
+        <p class="kicker">Si te ha picado el gusanillo</p>
+        <h2>Cómo empezar en España</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Escucha (es gratis y no necesita licencia)</h3>
+          <p>Usa los receptores web de arriba. Si quieres algo propio, un receptor SDR USB de unos 30-40 € y un programa gratuito te convierten el ordenador en una radio que oye de todo.</p>
+        </li>
+        <li>
+          <h3>Busca un radio club</h3>
+          <p>Es la forma más rápida de aprender. La <a href="https://www.ure.es" target="_blank" rel="noopener">URE (Unión de Radioaficionados Españoles)</a> tiene secciones por toda España, y muchos clubes dan cursos para el examen.</p>
+        </li>
+        <li>
+          <h3>Aprueba el examen</h3>
+          <p>Hay preguntas de electricidad y radio básica, normativa y práctica de operación. Al aprobar obtienes el certificado HAREC, válido en buena parte de Europa.</p>
+        </li>
+        <li>
+          <h3>Pide tu autorización e indicativo</h3>
+          <p>Con el certificado solicitas al Ministerio la autorización de radioaficionado, que te asigna tu indicativo (tipo EA4XYZ). Ese es tu “nombre” en el aire.</p>
+        </li>
+        <li>
+          <h3>Monta tu estación y haz tu primer contacto</h3>
+          <p>Para tener equipo propio en casa tramitas la licencia de estación con una descripción de antenas y equipos. Y después: “CQ, CQ…”.</p>
+        </li>
+      </ol>
+      <div class="cards three gear">
+        <article class="card">
+          <span class="tag">Solo escuchar · ~35 €</span>
+          <h3>Receptor SDR USB</h3>
+          <p>Un “pincho” que se enchufa al ordenador. Con una antena sencilla oyes aviones, barcos, satélites meteorológicos y radioaficionados. Cero trámites.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Primer equipo · ~40-100 €</span>
+          <h3>Walkie bibanda (2 m / 70 cm)</h3>
+          <p>El típico primer equipo con licencia: hablas con gente de tu zona y, a través de repetidores, de toda la comunidad. Ideal para las redes semanales de los clubes.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Dar la vuelta al mundo</span>
+          <h3>Equipo de HF + antena de hilo</h3>
+          <p>Para las bandas de onda corta. Muchos empiezan comprando de segunda mano en los mercadillos de radio y montando un dipolo de cable en la terraza.</p>
+        </article>
+      </div>
+      <p class="note">Precios orientativos. Pregunta en un club antes de comprar: casi siempre alguien te deja probar.</p>
+      <p class="note">Los trámites oficiales están en la <a href="https://digital.gob.es/telecomunicaciones-infraestructuras-digitales/areas-interes/espectro-radioelectrico/radioaficionados-cb27/autorizaciones/autorizacion-administrativa-radioaficionado" target="_blank" rel="noopener">web del Ministerio para la Transformación Digital</a>. Comprueba siempre allí los requisitos vigentes.</p>
+    </section>
+
+    <!-- EMERGENCIAS -->
+    <section id="emergencias" class="band-strip">
+      <div class="section-head">
+        <p class="kicker">Cuando todo se cae</p>
+        <h2>La radio que no depende de nada</h2>
+        <p>Sin cobertura, sin luz y sin internet, una radio con una batería y un trozo de cable sigue funcionando. En España, voluntarios de la <strong>REMER</strong> (Red Radio de Emergencia de Protección Civil) y de los radioclubes apoyan las comunicaciones en catástrofes. Muchos llegan a la radioafición por aquí: por querer ser útiles.</p>
+      </div>
+    </section>
+
+    <!-- TEST -->
+    <section id="test">
+      <div class="section-head">
+        <p class="kicker">Ponte a prueba</p>
+        <h2>¿Aprobarías? Mini test de iniciación</h2>
+        <p>Preguntas del estilo de las que caen en el examen. No es el examen oficial: es para que veas que no es tan difícil como parece.</p>
+      </div>
+      <div class="card quiz" id="quiz"></div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="section-head">
+        <p class="kicker">Dudas típicas</p>
+        <h2>Preguntas frecuentes</h2>
+      </div>
+      <div class="faq" id="faqList"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · 73!</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/stations.js"></script>
+  <script src="js/morse.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
