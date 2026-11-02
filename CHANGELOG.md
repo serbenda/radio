@@ -2,6 +2,12 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión corresponde a una pull request fusionada en `main`.
 
+## [2.6.1] · 2 de noviembre de 2026 · Enlaces rotos (aviso #18)
+
+### Corregido
+- Radioclubes: quitadas seis webs que ya no existen o tienen el certificado mal (Marina Alta, Cuenca del Almanzora, Campiña Cordobesa, Pamplona, Chasna y Paterna). Las secciones siguen en el mapa.
+- `tools/enlaces.mjs`: ya no revisa trozos de URL de comentarios o prefijos (`https://`, `…/wiki/File:`, `…?search=`), respeta los paréntesis dentro de una URL (`…_(Radiosonde)`) y trata un tiempo agotado como dudoso en lugar de roto.
+
 ## [2.6.0] · 2 de noviembre de 2026 · Espectro: quién habla en cada frecuencia y todo sobre las antenas
 
 ### Añadido

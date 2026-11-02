@@ -41,7 +41,7 @@
 // Número de versión de la web; tiene que coincidir con la última versión de CHANGELOG.md (lo vigila check.mjs).
 // check.mjs la lee con una expresión regular: no cambies la forma de la línea de abajo (nombre, espacios y
 // comillas simples) y no escribas esa misma línea de ejemplo en ningún comentario de este archivo, o la leería mal.
-const VERSION = '2.6.0';
+const VERSION = '2.6.1';
 // Nombre de la caché de esta versión. El prefijo 'radio-' sirve para borrar solo las cachés propias al activarse.
 const CACHE = `radio-${VERSION}`;
 // Archivos que se descargan y guardan al instalar, para que toda la web funcione sin conexión desde la primera
