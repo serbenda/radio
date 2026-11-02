@@ -66,3 +66,9 @@ const LISTEN = [{ id: 'voz40', title: t('Voces en 40 m', 'Voices on 40 m'), tune
 
 - Los formularios de aviso de GitHub (`.github/ISSUE_TEMPLATE/`) y la documentación de `docs/`.
 - Los datos de radioclubes (nombres propios) y los textos legales enlazados.
+
+## README del repositorio
+
+La portada del repositorio tiene dos versiones: [`README.md`](../README.md) (castellano, la principal) y [`README.en.md`](../README.en.md) (inglés, para quien llega desde fuera). Enlazan una a la otra arriba a la derecha. **El resto de la documentación solo está en castellano**: el README en inglés lo dice y remite a ella por papel.
+
+Si cambias algo del README que también diga el inglés (secciones de la web, cifras, créditos, licencia), cambia los dos en la misma pull request. La portada en inglés usa su propia imagen, `docs/img/banner-en.png`.
