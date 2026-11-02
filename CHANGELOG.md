@@ -2,6 +2,16 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión corresponde a una pull request fusionada en `main`.
 
+## [2.5.1] · 2 de noviembre de 2026 · La web no habla de código y documentación por papeles
+
+### Cambiado
+- **La web ya no enlaza al código**: fuera el enlace "código y fuentes de datos" del pie y el botón "Dar una estrella" de la portada. Se mantienen "Apoya el proyecto" y "¿Ves un error? Avísanos". `tools/check.mjs` §11 lo vigila (decisión D22).
+
+### Añadido
+- Documentación para cada papel: `docs/DESARROLLO.md` (manual de desarrollo), `docs/INFRAESTRUCTURA.md` (dominio, DNS en Porkbun, GitHub Pages, certificados, cachés, límites, recuperación), `docs/OPERACIONES.md` (SLO, monitorización, 11 runbooks, postmortem, calendario de mantenimiento), `docs/CICD.md` (tubería, protecciones, versionado, publicar y volver atrás) y `docs/SEGURIDAD.md` (modelo de amenazas y CSP directiva a directiva).
+- `SECURITY.md`: cómo avisar de una vulnerabilidad.
+- README nuevo, con portada, capturas del diseño actual y documentación por papel.
+
 ## [2.5.0] · 2 de noviembre de 2026 · Dominio propio radio.bendi.dev
 
 ### Cambiado

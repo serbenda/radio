@@ -35,7 +35,7 @@ Qué se ha aplicado, por qué, y qué limitaciones conocidas quedan.
 
 | Práctica | Dónde |
 | --- | --- |
-| Sin compilación ni frameworks: unos 230 KB de HTML, CSS y JS en total, repartidos entre seis páginas | Todo |
+| Sin compilación ni frameworks: cada página carga entre 63 y 89 KB (con gzip) de HTML, CSS y JS propios; presupuesto de 120 KB ([DESARROLLO.md](DESARROLLO.md#7-presupuesto-de-peso-y-rendimiento)) | Todo |
 | Cada página carga solo sus módulos y librerías (Leaflet solo con mapas; satellite.js solo en Entender) | Plantilla de cada página |
 | Carga perezosa de mapas y datos externos al acercarse la sección | `IntersectionObserver` en cada módulo con mapa o datos |
 | Animaciones solo con la sección en pantalla y la pestaña visible | `Radio.whileVisible`: dial, lecciones |
