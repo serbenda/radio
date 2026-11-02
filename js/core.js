@@ -155,7 +155,7 @@
   const t = (es, en) => (lang === 'en' && en !== undefined ? en : es);
 
   /** Nombre de cada página en castellano (carpeta de la raíz) → carpeta en la versión inglesa (en/…). */
-  const SLUGS = { escuchar: 'listen', entender: 'understand', practicar: 'practice', examen: 'exam', empezar: 'start' };
+  const SLUGS = { escuchar: 'listen', entender: 'understand', espectro: 'spectrum', practicar: 'practice', examen: 'exam', empezar: 'start' };
   const SLUGS_ES = Object.fromEntries(Object.entries(SLUGS).map(([es, en]) => [en, es]));
 
   /**

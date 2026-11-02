@@ -44,6 +44,7 @@ Definidos en `:root` al principio de `style.css`.
 | `--hot` | `#ffe2a0` | Luz pálida: reloj UTC, cifras destacadas | **13,7 : 1** |
 | `--red` | `#ff5a4e` | Aguja, página actual, errores, NO APTO | **5,6 : 1** |
 | `--vhf` | `#7cc7ff` | Bandas de VHF/UHF | **9,4 : 1** |
+| (sin variable) | `#c9a7ff` y `#6fdc9a` | Solo en el mapa del espectro: radiodifusión (lavanda) y aviones y barcos (verde). Contraste 8,6 : 1 y 10,2 : 1 | — |
 | (sin variable) | `#ea4aaa` | Rosa de marca de GitHub Sponsors, solo en "Apoya el proyecto". El botón lleva texto oscuro `#1d0a16` (5,3 : 1) | — |
 
 Texto oscuro sobre botón ámbar (`#1a1206` sobre `--accent`): **10 : 1**. Sobre `--panel` el peor caso es `--red` con 4,7 : 1. WCAG AA pide 4,5 : 1 para texto normal.
@@ -70,7 +71,7 @@ El proceso exacto está en [`tools/fuentes.py`](../tools/fuentes.py) (instruccio
 1. Instala `fonttools` y `brotli` y descarga los originales de `github.com/google/fonts` (solo las carpetas necesarias).
 2. Edita `UNICODES` (caracteres) o `FONTS` (archivos y ejes) si hace falta.
 3. `python3 tools/fuentes.py /ruta/a/google-fonts` → escribe `fonts/*.woff2`.
-4. Si cambian los nombres, actualiza los `@font-face` de `style.css`, el `preload` de las seis páginas y `PRECACHE` en `sw.js`.
+4. Si cambian los nombres, actualiza los `@font-face` de `style.css`, el `preload` de todas las páginas y `PRECACHE` en `sw.js`.
 5. Sube `VERSION` en `sw.js`.
 
 ## Medidas
@@ -123,6 +124,9 @@ Se diseña para **390 px** de ancho (móvil típico) y se comprueba también a 1
 | `.table-wrap` | Contenedor de tabla con desplazamiento horizontal y foco | — |
 | `.toast` | Aviso flotante temporal (insignias) | `.show` |
 | `.sr-only` | Oculto a la vista pero leído por lectores de pantalla | — |
+| `.spec-row`, `.spec-band` | Mapa del espectro (Espectro): una fila por categoría y franjas como botones | `.cat-dif`, `.cat-ham`, `.cat-free`, `.cat-pro`, `.cat-trans`, `.cat-sky`, `.cat-tel` (fijan `--c`) |
+| `.ant`, `.ant-pics`, `.ant-facts` | Tarjeta de antena con dibujo y diagrama de radiación, y ficha | `[hidden]` al filtrar |
+| `.countries.wrap` | Tabla con textos largos que sí salta de línea | — |
 
 **Estados:** lo seleccionado se marca con la clase `.on` **y** con el atributo ARIA correspondiente (`aria-pressed`, `aria-expanded`, `aria-current`), para que lo note también quien usa lector de pantalla. `[hidden]` lleva `display: none !important` para que ninguna otra regla lo anule.
 

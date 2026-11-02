@@ -116,7 +116,7 @@ Formato: **Síntomas → Diagnóstico → Arreglo → Comprobar**. Todos los com
 
 **Arreglo:** **revertir primero**. En GitHub, la PR fusionada → **Revert** → fusiona la PR de reversión. Después, con calma, arregla en `development` ([CICD.md](CICD.md#vuelta-atrás)).
 
-**Comprobar:** ventana privada, las 12 páginas abren; `check.mjs` en verde en la PR del arreglo.
+**Comprobar:** ventana privada, todas las páginas abren; `check.mjs` en verde en la PR del arreglo.
 
 ### RB-02 · El dominio no resuelve (`DNS_PROBE_FINISHED_NXDOMAIN`)
 
@@ -182,7 +182,7 @@ whois bendi.dev | grep -i expir                           # ¿ha caducado el dom
 
 **Causa:** un dominio nuevo (o cambiado) no está en la CSP.
 
-**Arreglo:** añade el dominio a la directiva que diga el error (`connect-src`, `script-src`…) en **las 12 páginas a la vez** (deben ser idénticas; `check.mjs` lo exige) y en la tabla de [INFRAESTRUCTURA.md §7](INFRAESTRUCTURA.md#7-servicios-de-terceros). Nunca uses `*` ni `'unsafe-eval'`.
+**Arreglo:** añade el dominio a la directiva que diga el error (`connect-src`, `script-src`…) en **todas las páginas a la vez** (deben ser idénticas; `check.mjs` lo exige) y en la tabla de [INFRAESTRUCTURA.md §7](INFRAESTRUCTURA.md#7-servicios-de-terceros). Nunca uses `*` ni `'unsafe-eval'`.
 
 ### RB-08 · Las comprobaciones salen en rojo en la PR
 

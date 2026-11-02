@@ -45,7 +45,7 @@
 git clone https://github.com/serbenda/radio.git && cd radio
 git checkout development
 python3 -m http.server 8000       # http://localhost:8000/
-node tools/check.mjs              # 108 comprobaciones
+node tools/check.mjs              # 116 comprobaciones
 ```
 
 ## 2. Ciclo de trabajo diario

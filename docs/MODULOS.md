@@ -25,6 +25,7 @@ flowchart LR
   CORE --> DIAL[dial.js] & BK[backup.js]
   CORE --> ST[stations.js] & GU[guided.js] & LI[live.js] & SO[sounds.js] & RE[recordings.js]
   CORE --> LE[lessons.js] & BA[bands.js] & PR[propagation.js] & IS[iss.js]
+  CORE --> SP[spectrum.js] & AN[antennas.js]
   CORE --> MU[morse-ui.js] & KO[koch.js] & JA[jargon.js] & QS[qso.js]
   CORE --> EX[exam.js] & CH[checklist.js] & CL[clubs.js] & FA[family.js] & FQ[faq.js]
   DATA --> DIAL & GU & BA & JA & FQ & RE & QS
@@ -33,7 +34,7 @@ flowchart LR
   CLD --> CL
   LF --> ST & LI & IS & CL
   SAT --> IS
-  ST & SO & RE & PR & LI & IS -. radio:event .-> J
+  ST & SO & RE & PR & LI & IS & SP -. radio:event .-> J
   QS -. radio:qso .-> J
   EX -. radio:mock .-> J
   LE & KO & EX & CH -. radio:progress .-> J
@@ -107,6 +108,13 @@ flowchart LR
 | `iss.js` | `#iss` | Posición de la ISS y próximos pases; avisa del lugar elegido con `radio:home` | CelesTrak, satellite.js, Leaflet, Esri | `iss`, `radio:home` |
 | `beacons.js` | `#balizas` | Qué baliza NCDXF transmite en cada frecuencia, calculado con la hora (sin red) | WebSDR (enlace) | — |
 | `sats.js` | `#satelites` | Orientación de la parabólica al QO-100 y pases de SO-50 y AO-91 | CelesTrak, satellite.js | escucha `radio:home` |
+
+### Espectro
+
+| Archivo | Raíz | Qué hace | Externo | Eventos |
+| --- | --- | --- | --- | --- |
+| `spectrum.js` | `#specMap`, `#sigGrid` | Mapa del espectro por usos (franjas como botones en escala logarítmica, ficha de cada una) y "Así suenan": siete señales de redes (TETRA, DMR, POCSAG, AIS, radiosonda, NOAA APT, canal FM vacío) generadas muestra a muestra en un `AudioBuffer`, con su cascada de 0 a 6.000 Hz | Signal Identification Wiki (enlaces) | `signal` (vía `Radio.emit`) |
+| `antennas.js` | `#antGrid`, `#antFilter`, `#sizeTool` | Dibuja la forma y el diagrama de radiación (polar, visto desde arriba) de cada tarjeta de antena en SVG; filtro por uso; "¿Cuánto mide la antena?" con deslizador logarítmico de 0,5 MHz a 3 GHz | — | — |
 
 ### Practicar
 

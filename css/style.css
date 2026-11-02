@@ -63,6 +63,8 @@
  * 49. La radio en clase ......... plan de la sesión y ficha imprimible (solo al imprimir).
  * 50. Selector de idioma ........ enlace ES/EN de la cabecera.
  * 51. Movimiento reducido ....... con "reducir movimiento", ninguna animación ni transición dura.
+ * 52. Espectro .................. mapa del espectro, temas, legalidad, repetidores (página Espectro).
+ * 53. Antenas ................... medidor de tamaño, conceptos, tarjetas con dibujos y filtro (página Espectro).
  *
  * CAPAS (z-index), de abajo arriba:
  *   -1    ondas del receptor (.receiver::before/::after), detrás del contenido de la tarjeta.
@@ -817,9 +819,10 @@ html, body { overflow-x: clip; }
   filter: drop-shadow(0 0 4px #f2b33d44);
 }
 body[data-page="escuchar"] { --needle: 10%; }
-body[data-page="entender"] { --needle: 30%; }
-body[data-page="practicar"] { --needle: 50%; }
-body[data-page="examen"] { --needle: 70%; }
+body[data-page="entender"] { --needle: 26%; }
+body[data-page="espectro"] { --needle: 42%; }
+body[data-page="practicar"] { --needle: 58%; }
+body[data-page="examen"] { --needle: 74%; }
 body[data-page="empezar"] { --needle: 90%; }
 .page-head .lead { margin: 0 0 18px; }
 .toc { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .92rem; }
@@ -1001,3 +1004,65 @@ footer .report, footer .sponsor { font-size: .88rem; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* ---------- 52. Espectro ----------
+   Mapa del espectro (spectrum.js): una fila por categoría (.spec-row.cat-<id>) con las franjas (.spec-band)
+   posicionadas en % sobre una escala logarítmica. El color de cada categoría es --c. */
+.cat-dif { --c: #c9a7ff; } .cat-ham { --c: var(--accent); } .cat-free { --c: var(--vhf); } .cat-pro { --c: var(--red); }
+.cat-trans { --c: #6fdc9a; } .cat-sky { --c: var(--hot); } .cat-tel { --c: var(--muted); }
+.spec-card { padding: 18px; }
+.spec-map { display: grid; gap: 6px; }
+.spec-row { display: grid; grid-template-columns: 170px 1fr; align-items: center; gap: 10px; }
+.spec-label { font: 600 .95rem var(--display); color: var(--c); letter-spacing: .02em; }
+.spec-track { position: relative; height: 26px; background:
+  repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 20%) , var(--bg2); border-radius: 4px; }
+.spec-band { position: absolute; top: 3px; bottom: 3px; min-width: 6px; padding: 0; border: 0; border-radius: 3px;
+  background: var(--c); opacity: .78; cursor: pointer; }
+.spec-band:hover, .spec-band:focus-visible, .spec-band[aria-pressed="true"] { opacity: 1; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--c); z-index: 1; }
+.spec-axis { display: flex; justify-content: space-between; margin: 6px 0 0 180px; font: .72rem var(--mono); color: var(--muted); }
+.spec-detail { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); min-height: 92px; }
+.spec-detail h3 { margin: 0 0 .2em; }
+.spec-cat { font: 600 .78rem var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--c); margin: 0 0 4px; }
+.spec-range { font: 600 1rem var(--mono); color: var(--hot); margin: 0 0 .5em; }
+.topic { margin-bottom: 18px; }
+.topic h4 { margin: 1em 0 .4em; font: 700 1.1rem var(--display); color: var(--ink); }
+.topic .cards { margin-top: 6px; }
+.tetra { border-left: 3px solid var(--red); }
+.law .card h3 { margin-top: 0; }
+.law-ok { border-top: 3px solid #6fdc9a; } .law-care { border-top: 3px solid var(--accent); } .law-no { border-top: 3px solid var(--red); }
+.rep-diagram { padding: 12px; margin-bottom: 14px; }
+.rep-diagram svg { width: 100%; max-width: 720px; height: auto; display: block; margin: 0 auto; }
+.warn { border-left: 3px solid var(--accent); margin-top: 22px; }
+@media (max-width: 700px) {
+  .spec-row { grid-template-columns: 1fr; gap: 3px; }
+  .spec-axis { margin-left: 0; }
+}
+
+/* ---------- 53. Antenas ----------
+   Tarjetas .ant con dibujos generados por antennas.js (.ant-pics), ficha <dl class="ant-facts">,
+   filtro (.ant-filter) y "¿Cuánto mide la antena?" (.size-tool). */
+.formula { font: 600 1rem var(--mono); color: var(--hot); background: var(--bg2); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
+.size-tool input[type="range"] { width: 100%; accent-color: var(--accent); margin: 8px 0 12px; }
+.size-bars { display: grid; gap: 6px; margin-bottom: 10px; }
+.size-row { display: grid; grid-template-columns: 140px 1fr auto; gap: 10px; align-items: center; font-size: .9rem; color: var(--muted); }
+.size-row b { font: 600 .95rem var(--mono); color: var(--hot); }
+.size-bar { height: 10px; border-radius: 3px; background: linear-gradient(90deg, var(--accent), #f2b33d66); }
+.concept h4 { margin: 0 0 .4em; font: 700 1.1rem var(--display); }
+.concept p { margin: 0; font-size: .95rem; }
+.ant-filter { margin: 10px 0 6px; }
+.ant-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 10px; }
+.ant h4 { margin: .1em 0 .4em; font: 700 1.2rem var(--display); }
+.ant p { font-size: .95rem; }
+.ant-pics { display: flex; justify-content: space-around; align-items: flex-end; gap: 8px; margin: -4px -4px 12px; padding: 10px 6px 6px;
+  background: var(--bg2); border: 1px solid var(--line); border-radius: 8px; }
+.ant-pics figure { margin: 0; text-align: center; }
+.ant-pics figcaption { font: .68rem var(--mono); color: var(--muted); margin-top: 2px; }
+.ant-facts { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; margin: 8px 0 0; font-size: .88rem; }
+.ant-facts dt { font: 600 .78rem var(--mono); color: var(--accent); text-transform: uppercase; letter-spacing: .05em; padding-top: 2px; }
+.ant-facts dd { margin: 0; color: #d5deea; }
+.ant[hidden] { display: none !important; }
+/* Tablas de texto largo (Espectro): se permite el salto de línea y la segunda columna no va en monoespaciada
+   salvo cuando es una frecuencia corta. */
+.countries.wrap th, .countries.wrap td { white-space: normal; vertical-align: top; }
+.countries.wrap td:first-child { min-width: 9rem; }
+.countries.wrap td:nth-child(2) { min-width: 7rem; }

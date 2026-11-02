@@ -9,6 +9,7 @@ La web existe en **castellano** (raíz del sitio) y en **inglés** (carpeta `en/
 | `index.html` → `/` | `en/index.html` → `/en/` |
 | `escuchar/` | `en/listen/` |
 | `entender/` | `en/understand/` |
+| `espectro/` | `en/spectrum/` |
 | `practicar/` | `en/practice/` |
 | `examen/` | `en/exam/` |
 | `empezar/` | `en/start/` |
@@ -17,10 +18,10 @@ La web existe en **castellano** (raíz del sitio) y en **inglés** (carpeta `en/
 ```mermaid
 flowchart LR
   subgraph ES["Castellano · /"]
-    E1[index.html] --- E2[escuchar/] --- E3[entender/] --- E4[practicar/] --- E5[examen/] --- E6[empezar/]
+    E1[index.html] --- E2[escuchar/] --- E3[entender/] --- E7[espectro/] --- E4[practicar/] --- E5[examen/] --- E6[empezar/]
   end
   subgraph EN["Inglés · /en/"]
-    N1[index.html] --- N2[listen/] --- N3[understand/] --- N4[practice/] --- N5[exam/] --- N6[start/]
+    N1[index.html] --- N2[listen/] --- N3[understand/] --- N7[spectrum/] --- N4[practice/] --- N5[exam/] --- N6[start/]
   end
   M[css · js · fonts · img<br/>compartidos] --> ES & EN
   E1 <-. ES / EN .-> N1

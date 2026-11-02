@@ -4,6 +4,18 @@ Las decisiones de diseño importantes, con su contexto y sus consecuencias, para
 
 ---
 
+## D23 · Página "Espectro" fuera de los cinco pasos (2 nov 2026)
+
+**Contexto.** Se pidió explicar a fondo la CB-27, las redes TETRA, las señales de otras redes y sus receptores, los repetidores y las antenas (qué son y cuántos tipos hay). Es mucho contenido que no encaja en ningún paso concreto del camino hacia la licencia, y meterlo en Empezar o en Entender las habría hecho inmanejables.
+
+**Decisión.** Una página nueva, `espectro/` (`en/spectrum/`), entre Entender y Practicar en el menú pero sin número de paso ("Más allá de la radioafición"). Organizada por **quién usa cada frecuencia** (sin licencia, profesional y emergencias, transporte, cielo, radiodifusión), luego **cómo suenan, con qué se escuchan y qué es legal**, y al final **repetidores y antenas**. Las señales se imitan en el navegador (como en "¿Qué es este sonido?") y enlazan a grabaciones reales en Signal Identification Wiki. La CB-27 de Empezar se queda como resumen y enlaza aquí.
+
+Sobre las redes de emergencia se explica qué son, quién las usa y **cómo se reconocen en la cascada**, pero nada sobre cómo descodificarlas: están cifradas y la ley prohíbe interceptarlas. La sección "Qué se puede escuchar" lo dice claro.
+
+**Consecuencias.** Siete páginas por idioma. El menú gana una entrada (en el móvil ya se desplazaba en horizontal). Los datos de la página tienen fecha y fuente en DATOS.md; los que caducan o están pendientes de confirmar están marcados ahí.
+
+---
+
 ## D22 · La web no enseña el código (2 nov 2026)
 
 **Contexto.** El pie de cada página enlazaba al repositorio ("código y fuentes de datos") y la portada pedía "dar una estrella" en GitHub. La web es para gente que no conoce la radio y, en su mayoría, tampoco GitHub: hablarle de código la saca de lo que ha venido a hacer y la manda a un sitio que no entiende.

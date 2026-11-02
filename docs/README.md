@@ -56,7 +56,7 @@ flowchart TD
 | [ARQUITECTURA.md](ARQUITECTURA.md) | Vista general, carpetas, páginas, carga, módulos, núcleo `Radio`, eventos, datos, sin conexión, seguridad y publicación. Con diagramas |
 | [MODULOS.md](MODULOS.md) | Referencia de cada archivo de JavaScript: qué hace, qué necesita, qué guarda, qué eventos usa |
 | [ESTILOS.md](ESTILOS.md) | Identidad "Dial nocturno": colores (con contraste), tipografías, medidas, puntos de corte, componentes |
-| [DECISIONES.md](DECISIONES.md) | Registro de decisiones (D01–D22): contexto, decisión y consecuencias |
+| [DECISIONES.md](DECISIONES.md) | Registro de decisiones (D01–D23): contexto, decisión y consecuencias |
 | [ESTUDIO.md](ESTUDIO.md) | Resumen del estudio de más de 50 webs de radioafición que guió el proyecto |
 | [IDIOMAS.md](IDIOMAS.md) | Cómo está hecha la versión en inglés y cómo traducir |
 | [GLOSARIO.md](GLOSARIO.md) | Términos de web y de radio usados en el código y la documentación |

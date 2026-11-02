@@ -47,7 +47,7 @@ Qué se ha aplicado, por qué, y qué limitaciones conocidas quedan.
 ## Seguridad
 
 - Todo texto que viene de APIs o de lo que escribe la persona se **escapa** antes de insertarlo como HTML (`Radio.esc`).
-- **Content-Security-Policy** en las seis páginas: solo scripts propios, de cdnjs y de GoatCounter; conexiones solo a los servicios de datos; sin `object`, sin formularios, `base-uri` fijo (D16).
+- **Content-Security-Policy** en todas las páginas: solo scripts propios, de cdnjs y de GoatCounter; conexiones solo a los servicios de datos; sin `object`, sin formularios, `base-uri` fijo (D16).
 - **Integridad (SRI)** y versión fija en las librerías de cdnjs.
 - Política de referer `strict-origin-when-cross-origin`.
 - Enlaces externos con `rel="noopener"`.
@@ -60,7 +60,7 @@ Qué se ha aplicado, por qué, y qué limitaciones conocidas quedan.
 
 - Título, descripción y URL canónica propios en cada página.
 - Etiquetas Open Graph y Twitter con imagen de 1200 × 630 (`og.png`).
-- `sitemap.xml` con las doce páginas (seis en castellano y seis en inglés) y `robots.txt` propio que lo anuncia. Desde la 2.5 la web tiene su dominio (`radio.bendi.dev`), así que su `robots.txt` es el de este repositorio; para que Google la indexe antes, dala de alta en Google Search Console como propiedad nueva.
+- `sitemap.xml` con las catorce páginas (siete en castellano y siete en inglés) y `robots.txt` propio que lo anuncia. Desde la 2.5 la web tiene su dominio (`radio.bendi.dev`), así que su `robots.txt` es el de este repositorio; para que Google la indexe antes, dala de alta en Google Search Console como propiedad nueva.
 
 ## Limitaciones conocidas
 

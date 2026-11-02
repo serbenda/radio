@@ -37,19 +37,24 @@
     <td><img src="docs/img/balizas.png" alt="Beacons right now: which NCDXF beacon is transmitting on each frequency this second (Spanish version)"></td>
     <td><img src="docs/img/estacion.png" alt="Your first station: what you need, plus an antenna and cable-loss calculator (Spanish version)"></td>
   </tr>
+  <tr>
+    <td><img src="docs/img/espectro.png" alt="Spectrum: map of the spectrum by use, with the UHF PMR band selected (Spanish version)"></td>
+    <td><img src="docs/img/antenas.png" alt="Antennas: cards with the shape and radiation pattern of each type (Spanish version)"></td>
+  </tr>
 </table>
 
 <sub>Screenshots of the Spanish version show the same content as the English one.</sub>
 
 ## What's inside
 
-> Five steps, from your ears to a licence. Each one ticks itself off in **Your first month** (4 weeks, 14 steps, badges) as you *do* things, not as you read.
+> Five steps, from your ears to a licence, plus a page to see the whole spectrum. Each step ticks itself off in **Your first month** (4 weeks, 14 steps, badges) as you *do* things, not as you read.
 
 | | Step | What you can do |
 | :-: | --- | --- |
 | 🏠 | **[Home](https://radio.bendi.dev/en/)** | Turn a real shortwave dial · amateur radio in one minute · **Your first month** · save your progress to a file · install the app |
 | 🎧 | **[Listen](https://radio.bendi.dev/en/listen/)** | World map of stations with a player · guided listening on a real receiver · **On the air now**: who's talking to whom, live · **What is this sound?**: Morse, SSB, FT8, SSTV… with a waterfall and 11 real recordings |
 | 🌍 | **[Understand](https://radio.bendi.dev/en/understand/)** | Four interactive lessons at three levels · bands · today's propagation in plain words · **live beacons** · ISS passes over your home · **QO-100** and **FM satellites** |
+| 📡 | **[Spectrum](https://radio.bendi.dev/en/spectrum/)** | **Who talks on each frequency**: spectrum map · CB in depth, PMR446 · **TETRA**, DMR and TETRAPOL networks · aircraft and ships (ADS-B, AIS) · weather satellites and radiosondes · **how they sound**: 7 signals with their waterfall · receivers · what is legal to listen to · repeaters · **antennas**: what they are, 18 types with drawings and radiation patterns |
 | 🎙️ | **[Practice](https://radio.bendi.dev/en/practice/)** | Morse with the Koch method at real speed · phonetic alphabet and jargon · **repeaters and digital radio** (DMR, C4FM, D-STAR, APRS) with a calculator · five simulated contacts with voice and a QSL card |
 | 📝 | **[Exam](https://radio.bendi.dev/en/exam/)** | **169 questions** written from Spain's licensing rules (Orden IET/1311/2013) · flashcards that repeat what you get wrong · two-part mock exam like the real one |
 | 🚀 | **[Start](https://radio.bendi.dev/en/start/)** | The paperwork in numbers · licence-free CB-27 and walkie-talkies · which radio to buy (and which is legal) · **your first station with an antenna calculator** · clubs on a map · calendar · families · **radio in the classroom** with a printable worksheet · Latin America |
@@ -85,17 +90,17 @@ Install it on **Android, iPhone, iPad and desktop** ("Install the app" button in
 
 | | | | |
 | :-: | :-: | :-: | :-: |
-| **12** pages | **2** languages | **169** exam questions | **14** steps with badges |
+| **14** pages | **2** languages | **169** exam questions | **14** steps with badges |
 | **0** dependencies | **0** cookies | **0** own servers | **0** build steps |
-| **≈ 85 KB** per page (gzip) | **108** automated checks | **22** documented decisions | **11** operations runbooks |
+| **≈ 85 KB** per page (gzip) | **116** automated checks | **23** documented decisions | **11** operations runbooks |
 
 ## How it's built
 
 ```mermaid
 flowchart LR
   subgraph Person["📱 The visitor's browser"]
-    H[12 HTML pages<br/>ES · EN] --> C[core.js<br/>Radio object]
-    C --> M[34 JS modules<br/>one per feature]
+    H[14 HTML pages<br/>ES · EN] --> C[core.js<br/>Radio object]
+    C --> M[36 JS modules<br/>one per feature]
     M <--> L[(localStorage<br/>their progress)]
     S[[sw.js<br/>offline]]
   end
@@ -120,7 +125,7 @@ flowchart LR
 ```bash
 git clone https://github.com/serbenda/radio.git && cd radio
 python3 -m http.server 8000      # open http://localhost:8000/ (English: /en/)
-node tools/check.mjs             # 108 checks (Node 18+)
+node tools/check.mjs             # 116 checks (Node 18+)
 ```
 
 Nothing to install.

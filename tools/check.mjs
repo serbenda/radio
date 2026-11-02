@@ -407,7 +407,7 @@ section('11. Seguridad y recursos externos');
 // (mismos id de <section>), el mismo idioma declarado, enlaces hreflang en las dos y el selector de idioma.
 section('12. Idiomas');
 if (existsSync(join(ROOT, 'en', 'index.html'))) {
-  const SLUGS = { escuchar: 'listen', entender: 'understand', practicar: 'practice', examen: 'exam', empezar: 'start' };
+  const SLUGS = { escuchar: 'listen', entender: 'understand', espectro: 'spectrum', practicar: 'practice', examen: 'exam', empezar: 'start' };
   const es = PAGES.filter(p => langOf(p) === 'es');
   const pairOf = p => (p === 'index.html' ? 'en/index.html' : `en/${SLUGS[p.split('/')[0]] || p.split('/')[0]}/index.html`);
   const missing = es.filter(p => !html[pairOf(p)]);
