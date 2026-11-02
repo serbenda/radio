@@ -14,14 +14,18 @@
  * Qué revisa: todas las URL http(s) que aparecen en los .html y .js del sitio (fuera de docs/, tools/,
  * fonts/, img/, node_modules/ y carpetas ocultas), salvo las de la lista SKIP: servicios que la web
  * consulta en directo (APIs, teselas, CDN), que tienen su propio mensaje de error en la web, las de
- * plantilla (con ${...}) y las de la propia web.
+ * plantilla (con ${...}) y las de la propia web. Los paréntesis equilibrados forman parte de la URL
+ * (…/wiki/Algo_(Cosa)); un ')' final sin abrir es del texto.
  *
  * Cómo decide (función probe):
  *   - Pide la URL con HEAD; si el servidor no admite HEAD (405 o 501) o la conexión falla, prueba con GET.
  *   - Límite de 20 s por petición. Si no hay respuesta válida, hasta 3 rondas, esperando 2, 4 y 6 s.
  *   - Cualquier otra respuesta (también un 404) se acepta a la primera, sin reintentar.
- *   - ROTO: sin respuesta (DNS, conexión, tiempo agotado), 404, 410 o 5xx. Hace fallar el informe.
- *   - DUDOSO: 401, 403 o 429 (muchos servidores bloquean robots). Se lista, pero no hace fallar.
+ *   - ROTO: sin respuesta (DNS, conexión, certificado), 404, 410 o 5xx. Hace fallar el informe.
+ *   - DUDOSO: 401, 403, 429 (muchos servidores bloquean robots) o tiempo agotado (servidores lentos o que no
+ *     responden a máquinas de otros países). Se lista, pero no hace fallar.
+ *   - Antes de revisar, descarta lo que no es una dirección completa (complete()): trozos de comentarios o
+ *     prefijos que el código completa, como 'https://', '…/wiki/File:' o '…?search='.
  *   - Todo lo demás (2xx, redirecciones ya seguidas, otros 4xx) cuenta como bueno y no se muestra.
  *   Revisa 8 enlaces a la vez para no tardar mucho sin saturar a nadie.
  *
@@ -60,16 +64,41 @@ function files(dir) {
   });
 }
 
+/**
+ * Quita del final lo que no es de la URL: puntuación de fin de frase y paréntesis de cierre sin abrir.
+ * @param {string} u  Texto tal como lo capturó la expresión regular.
+ * @returns {string}
+ */
+function cleanUrl(u) {
+  for (;;) {
+    const before = u;
+    u = u.replace(/[.,;:]+$/, '');
+    if (u.endsWith(')') && (u.match(/\(/g) || []).length < (u.match(/\)/g) || []).length) u = u.slice(0, -1);
+    if (u === before) return u;
+  }
+}
+/**
+ * ¿Es una dirección completa y no un trozo? Descarta lo que aparece en comentarios o en prefijos que el código
+ * completa después: 'https://' a secas, '…/wiki/File:' + nombre, '…?search=' + término o 'File:…'.
+ * @param {string} u
+ * @returns {boolean} true si tiene un dominio con punto y no termina en '=', ':', '/File:' ni '…'.
+ */
+function complete(u) {
+  try { if (!new URL(u).hostname.includes('.')) return false; } catch { return false; }
+  return !/[=…]$|\/File:$/.test(u);
+}
+
 // found: URL → lista de archivos (relativos a ROOT) donde aparece; sirve para decir en el informe dónde arreglarla.
 const found = new Map(); // url -> [archivos]
 for (const f of files(ROOT)) {
-  // /https?:\/\/[^\s"'`<>)\]]+/g: "http://" o "https://" y todo lo que siga hasta un espacio, una comilla
-  // (simple, doble o invertida), '<', '>', ')' o ']'. Así una URL dentro de href="…", de una plantilla o
-  // entre paréntesis termina donde debe. Después se quitan '.', ',' y ';' finales (fin de frase).
-  //   Ejemplo: '(ver https://www.ure.es/secciones/).' → 'https://www.ure.es/secciones/'.
-  for (const m of readFileSync(f, 'utf8').matchAll(/https?:\/\/[^\s"'`<>)\]]+/g)) {
-    const url = m[0].replace(/[.,;]+$/, '');
-    if (SKIP.some(re => re.test(url))) continue;
+  // /https?:\/\/[^\s"'`<>\]]+/g: "http://" o "https://" y todo lo que siga hasta un espacio, una comilla
+  // (simple, doble o invertida), '<', '>' o ']'. Después se limpia el final (cleanUrl): '.', ',' y ';' de fin
+  // de frase, y los ')' que sobran (cierran un paréntesis del texto, no de la URL).
+  //   '(ver https://www.ure.es/secciones/).'          → 'https://www.ure.es/secciones/'
+  //   '…/wiki/Vaisala_RS41-SG_Weather_Balloon_(Radiosonde)' se queda entero (paréntesis equilibrados).
+  for (const m of readFileSync(f, 'utf8').matchAll(/https?:\/\/[^\s"'`<>\]]+/g)) {
+    const url = cleanUrl(m[0]);
+    if (!complete(url) || SKIP.some(re => re.test(url))) continue;
     const list = found.get(url) || [];
     const rel = relative(ROOT, f);
     if (!list.includes(rel)) list.push(rel);
@@ -119,8 +148,10 @@ await Promise.all(Array.from({ length: 8 }, async () => {
   while (queue.length) {
     const url = queue.shift();
     const r = await probe(url);
-    if (r.code === 0 || r.code === 404 || r.code === 410 || r.code >= 500) broken.push({ url, ...r });
-    else if (r.code === 403 || r.code === 429 || r.code === 401) doubtful.push({ url, ...r });
+    // Un tiempo agotado no demuestra que la página no exista (servidores lentos o que no responden a
+    // máquinas de otros países): va a dudosos para revisarlo a mano, igual que 401, 403 y 429.
+    if (r.err === 'TimeoutError' || r.err === 'AbortError' || r.code === 403 || r.code === 429 || r.code === 401) doubtful.push({ url, ...r });
+    else if (r.code === 0 || r.code === 404 || r.code === 410 || r.code >= 500) broken.push({ url, ...r });
   }
 }));
 
@@ -137,7 +168,7 @@ const line = x => `${x.code || x.err} · ${x.url} · en ${found.get(x.url).join(
 if (MD) {
   console.log(`Comprobación del ${new Date().toISOString().slice(0, 10)}: ${urls.length} enlaces externos.\n`);
   console.log(broken.length ? `### Rotos (${broken.length})\n\n${broken.map(x => `- [ ] ${line(x)}`).join('\n')}\n` : 'Ningún enlace roto.\n');
-  if (doubtful.length) console.log(`### Dudosos (${doubtful.length}): el servidor no deja pasar robots; revisar a mano\n\n${doubtful.map(x => `- ${line(x)}`).join('\n')}\n`);
+  if (doubtful.length) console.log(`### Dudosos (${doubtful.length}): el servidor no deja pasar robots o tarda demasiado; revisar a mano\n\n${doubtful.map(x => `- ${line(x)}`).join('\n')}\n`);
   console.log('Cómo arreglarlos: docs/GUIA.md#un-enlace-externo-se-ha-roto');
 } else {
   console.log(`${urls.length} enlaces externos revisados.`);
