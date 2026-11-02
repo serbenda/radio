@@ -190,7 +190,7 @@ Lee el registro del paso "Comprobar páginas…": cada fallo dice archivo y moti
 
 ### RB-09 · Aviso semanal de enlaces rotos
 
-Sigue [GUIA.md → Un enlace externo se ha roto](GUIA.md#un-enlace-externo-se-ha-roto). Un "dudoso" (403/429) casi siempre es un servidor que bloquea robots: compruébalo a mano.
+Sigue [GUIA.md → Un enlace externo se ha roto](GUIA.md#un-enlace-externo-se-ha-roto). Un "dudoso" (401/403/429 o tiempo agotado) casi siempre es un servidor que bloquea robots: compruébalo a mano.
 
 ### RB-10 · Un aviso de la gente dice que un dato es incorrecto
 

@@ -323,7 +323,9 @@ No uses `git push --force` sobre `main`.
 4. Si ha desaparecido, quita el enlace o busca otra fuente equivalente.
 5. Cierra el aviso desde la PR (`Arregla #N`).
 
-"Dudoso" (403/429) suele significar que el servidor bloquea robots: compruébalo a mano y, si funciona, no hagas nada.
+"Dudoso" (401/403/429 o tiempo agotado) suele significar que el servidor bloquea robots o no responde a máquinas de otros países: compruébalo a mano y, si funciona, no hagas nada.
+
+Una **web de radioclub** que ya no existe se quita (deja `""` en la tercera columna de `js/clubs-data.js`): la sección sigue en el mapa con su provincia e indicativo, y el enlace general a las secciones de la URE.
 
 ### Un servicio externo ha dejado de funcionar
 
