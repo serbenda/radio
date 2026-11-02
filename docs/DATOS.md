@@ -72,7 +72,7 @@ Las comprobaciones de CORS se hicieron desde `https://bendi.dev` el **1 de novie
 
 | Recurso | Origen | Licencia |
 | --- | --- | --- |
-| Tipografías (`fonts/`) | [Fraunces](https://github.com/undercasetype/Fraunces) e [IBM Plex](https://github.com/IBM/plex), desde [google/fonts](https://github.com/google/fonts), recortadas con `tools/fuentes.py` | SIL OFL 1.1 (`fonts/OFL-*.txt`) |
+| Tipografías (`fonts/`) | [Barlow](https://github.com/jpt/barlow), [Atkinson Hyperlegible](https://www.brailleinstitute.org/freefont/) e [IBM Plex Mono](https://github.com/IBM/plex), desde [google/fonts](https://github.com/google/fonts), recortadas con `tools/fuentes.py` | SIL OFL 1.1 (`fonts/OFL-*.txt`) |
 | Iconos (`img/`) y `og.png` | Propios | Los del proyecto |
 
 ## Política de seguridad de contenido

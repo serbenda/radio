@@ -4,6 +4,14 @@ Las decisiones de diseño importantes, con su contexto y sus consecuencias, para
 
 ---
 
+## D20 · Identidad "Dial nocturno" (2 nov 2026)
+
+**Contexto.** El diseño grafito con acento menta funcionaba, pero se parecía a cualquier web oscura moderna: nada en él decía "radio". Para que la web sea memorable hacía falta una identidad propia.
+
+**Decisión.** Elegida entre tres propuestas (dial nocturno, tarjeta QSL, grafito pulido): la web se ve como un receptor de válvulas de noche. Azul medianoche, ámbar de la lámpara del dial, aguja roja; titulares en Barlow Condensed (rótulos de equipo) y texto en Atkinson Hyperlegible (lectura fácil); el menú es una escala con la aguja en la página actual y cada página tiene bajo el título una escala con la aguja en su posición del recorrido; las barras de progreso son medidores S de segmentos; la cascada usa los colores de un SDR. Se quitan las etiquetas en mayúsculas espaciadas. Detalle en [ESTILOS.md](ESTILOS.md).
+
+**Consecuencias.** Sustituye a la parte de tipografías de D15 (se mantiene alojarlas en el repositorio). Nuevos iconos y `og.png`. Todos los contrastes siguen por encima de AA. Si se cambia la paleta, hay colores escritos a mano en mapas, cascada y QSL (ver ESTILOS.md).
+
 ## D19 · Versión en inglés con páginas propias y textos en el código (1 nov 2026)
 
 **Contexto.** Se quiere la web en inglés además de en castellano, sin paso de compilación (D10) y sin duplicar la lógica.

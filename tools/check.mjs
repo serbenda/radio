@@ -377,7 +377,7 @@ section('11. Seguridad y recursos externos');
   }
   expect(!blank.length, `enlaces que abren pestaña nueva con rel="noopener"${blank.length ? ' (faltan: ' + blank.slice(0, 5).join(' | ') + ')' : ''}`);
   // Tipografías: ninguna página carga Google Fonts, y cada url('../fonts/…') de css/style.css existe.
-  //   /url\('\.\.\/(fonts\/[^']+)'\)/g: "url('../fonts/fraunces.woff2')" → 'fonts/fraunces.woff2'.
+  //   /url\('\.\.\/(fonts\/[^']+)'\)/g: "url('../fonts/atkinson-400.woff2')" → 'fonts/atkinson-400.woff2'.
   expect(PAGES.every(p => !/fonts\.googleapis|fonts\.gstatic/.test(html[p])), 'sin tipografías de terceros (todas en fonts/)');
   // Atributos de evento en el HTML (onclick="…", onsubmit="…"): la CSP los bloquea (no hay 'unsafe-inline' en
   // script-src), así que no funcionarían. Regex: espacio + on + letras + =".

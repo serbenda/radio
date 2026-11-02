@@ -74,7 +74,7 @@
    */
   const MODE = m => ({ CW: t('en Morse', 'in Morse'), SSB: t('en voz', 'on voice'), FM: t('en FM', 'on FM'), AM: t('en AM', 'on AM') })[m] || t('en modo digital', 'in a digital mode');
   // Banda (como la da HamQTH) → color de líneas, puntos y botones. El orden de las claves es el de los botones.
-  const BANDCOL = { '160M': '#b39ddb', '80M': '#9fa8da', '40M': '#8be0c2', '30M': '#80deea', '20M': '#ffd27a', '17M': '#ffab91', '15M': '#f48fb1', '12M': '#ce93d8', '10M': '#ff6b5a', '6M': '#e6ee9c' };
+  const BANDCOL = { '160M': '#b39ddb', '80M': '#9fa8da', '40M': '#7fe3c4', '30M': '#80deea', '20M': '#f2b33d', '17M': '#ffab91', '15M': '#f48fb1', '12M': '#ce93d8', '10M': '#ff6b5a', '6M': '#e6ee9c' };
   /**
    * Nombre de banda legible: '20M' → '20 m'.
    * @param {string} b  Banda de HamQTH.
@@ -153,7 +153,7 @@
     const a = locs[s.spotter], b = locs[s.dxcall];
     const dist = a && b ? km(a, b) : null;
     const link = tuneOf(s);
-    return `<li style="--band:${BANDCOL[s.band] || '#9c9ea6'}">
+    return `<li style="--band:${BANDCOL[s.band] || '#9db0c7'}">
       <span class="ls-meta">${ago(s.time)} · <b>${bandName(s.band)}</b> · ${(s.freq / 1000).toFixed(3)} MHz</span>
       <p>${s.spotter === s.dxcall
         ? t(`<b>${esc(s.dxcall)}</b> (${esc(country(s.country))}) avisa de que está transmitiendo ${MODE(s.mode)}${/POTA|SOTA|WWFF/i.test(s.comment || '') ? ' desde un parque o una cumbre' : ''}.`,
@@ -179,7 +179,7 @@
     if (layer) list.forEach(s => {
       const a = locs[s.spotter], b = locs[s.dxcall];
       if (!a || !b) return;
-      const c = BANDCOL[s.band] || '#9c9ea6';
+      const c = BANDCOL[s.band] || '#9db0c7';
       // Las líneas no son interactivas para que no tapen el tooltip de los puntos.
       L.polyline([[a.lat, a.lon], [b.lat, b.lon]], { color: c, weight: 1.4, opacity: 0.55, interactive: false }).addTo(layer);
       L.circleMarker([b.lat, b.lon], { radius: 4, color: c, fillColor: c, fillOpacity: 0.9, weight: 1 })

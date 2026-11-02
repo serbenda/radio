@@ -275,21 +275,21 @@
   const MAXF = 3000;
   /**
    * Paleta de la cascada: convierte una intensidad en color RGB, en tres tramos con interpolación lineal.
-   *  - 0 a 0,35: casi negro a gris oscuro (ruido de fondo).
-   *  - 0,35 a 0,7: gris a menta (#8be0c2, el color de acento de la web).
-   *  - 0,7 a 1: menta a amarillo (señales fuertes).
+   *  - 0 a 0,35: azul medianoche a azul (ruido de fondo).
+   *  - 0,35 a 0,7: azul a ámbar (#f2b33d, el color de acento de la web).
+   *  - 0,7 a 1: ámbar a blanco cálido (señales fuertes).
    * @param {number} v  Intensidad de 0 a 255 (puede pasarse algo de 255; el canvas lo recorta).
    * @returns {number[]} [rojo, verde, azul], cada uno de 0 a 255.
    */
-  function color(v) { // 0..255 → gris oscuro → menta → amarillo
+  function color(v) { // 0..255 → azul noche → azul → ámbar → blanco cálido (como la cascada de un SDR)
     const x = v / 255;
-    if (x < 0.35) return [17 + x * 60, 18 + x * 80, 22 + x * 90];
-    if (x < 0.7) { const k = (x - 0.35) / 0.35; return [38 + k * 101, 46 + k * 178, 54 + k * 140]; }
-    const k = (x - 0.7) / 0.3; return [139 + k * 116, 224 - k * 14, 194 - k * 72];
+    if (x < 0.35) { const k = x / 0.35; return [15 + k * 25, 27 + k * 63, 45 + k * 125]; }
+    if (x < 0.7) { const k = (x - 0.35) / 0.35; return [40 + k * 202, 90 + k * 89, 170 - k * 109]; }
+    const k = (x - 0.7) / 0.3; return [242 + k * 13, 179 + k * 57, 61 + k * 129];
   }
-  /** Pinta el canvas entero del color de fondo (#111214, casi negro). */
+  /** Pinta el canvas entero del color de fondo (#0f1b2d, azul medianoche). */
   function clear() {
-    g2.fillStyle = '#111214'; g2.fillRect(0, 0, canvas.width, canvas.height);
+    g2.fillStyle = '#0f1b2d'; g2.fillRect(0, 0, canvas.width, canvas.height);
   }
   /**
    * Dibuja una fila nueva de la cascada y programa la siguiente (requestAnimationFrame, ~60 por segundo).

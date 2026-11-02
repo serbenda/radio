@@ -4,6 +4,9 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). C
 
 ## [2.4.0] · 1 de noviembre de 2026 · En inglés
 
+### Cambiado
+- **Nuevo diseño "Dial nocturno"**: la web se ve como un receptor de válvulas de noche. Azul medianoche, ámbar de la lámpara del dial y aguja roja; titulares condensados como los rótulos de los equipos y texto en Atkinson Hyperlegible, pensada para leer sin esfuerzo; el menú es una escala con la aguja en la página actual; barras de progreso como un medidor S; cascada con los colores de un SDR; nuevos iconos e imagen para compartir.
+
 ### Añadido
 - **Versión en inglés** de toda la web en `/radio/en/` (`en/listen/`, `en/understand/`, `en/practice/`, `en/exam/`, `en/start/`), con los mismos módulos, secciones y progreso guardado.
 - **Selector ES/EN** en la cabecera de cada página, que lleva a la misma página y sección en el otro idioma.

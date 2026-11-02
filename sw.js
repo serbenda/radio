@@ -52,7 +52,7 @@ const PRECACHE = [
   './en/', './en/listen/', './en/understand/', './en/practice/', './en/exam/', './en/start/', './js/en/exam-data.js',
   './css/style.css', './manifest.webmanifest',
   './img/icono-192.png', './img/icono-512.png', './img/favicon-64.png',
-  './fonts/fraunces.woff2', './fonts/ibm-plex-sans.woff2', './fonts/ibm-plex-mono-400.woff2', './fonts/ibm-plex-mono-600.woff2',
+  './fonts/barlow-condensed-600.woff2', './fonts/barlow-condensed-700.woff2', './fonts/barlow-condensed-800.woff2', './fonts/atkinson-400.woff2', './fonts/atkinson-400-italic.woff2', './fonts/atkinson-700.woff2', './fonts/ibm-plex-mono-400.woff2', './fonts/ibm-plex-mono-600.woff2',
   './js/core.js', './js/data.js', './js/journey.js', './js/glossary.js', './js/backup.js', './js/install.js', './js/classroom.js', './js/beacons.js', './js/sats.js', './js/repeater.js', './js/antenna.js',
   './js/dial.js', './js/guided.js', './js/bands.js', './js/stations.js', './js/live.js', './js/sounds.js', './js/recordings.js',
   './js/lessons.js', './js/propagation.js', './js/iss.js', './js/morse.js', './js/morse-ui.js', './js/koch.js',

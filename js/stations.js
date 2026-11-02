@@ -151,7 +151,7 @@
     // interactive: false para que los clics atraviesen la sombra y lleguen a los puntos de emisoras.
     if (night) night.setLatLngs(pts);
     else night = L.polygon(pts, {
-      stroke: true, color: '#8be0c2', weight: 1, opacity: 0.35,
+      stroke: true, color: '#f2b33d', weight: 1, opacity: 0.35,
       fillColor: '#000', fillOpacity: 0.38, interactive: false,
     }).addTo(map);
     night.bringToBack();
@@ -234,7 +234,7 @@
     withGeo.forEach(s => {
       // radius en píxeles de pantalla: el punto mide lo mismo con cualquier zoom.
       const m = L.circleMarker([s.geo_lat, s.geo_long], {
-        radius: 6, color: '#8be0c2', weight: 1, fillColor: '#8be0c2', fillOpacity: 0.65,
+        radius: 6, color: '#f2b33d', weight: 1, fillColor: '#f2b33d', fillOpacity: 0.65,
       }).addTo(layer);
       m.bindTooltip(esc(s.name.trim()));
       m.on('click', () => play(s));
