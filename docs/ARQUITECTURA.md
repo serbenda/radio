@@ -32,7 +32,7 @@ flowchart TB
 
   subgraph GitHub["GitHub"]
     R[Repositorio<br/>serbenda/radio]
-    GP[GitHub Pages<br/>bendi.dev/radio]
+    GP[GitHub Pages<br/>radio.bendi.dev]
     GA[GitHub Actions<br/>comprobaciones]
     R -- rama main --> GP
     R -- cada PR --> GA
@@ -95,6 +95,8 @@ radio/
 ├── sw.js                     Service worker: modo sin conexión
 ├── manifest.webmanifest      Datos para instalar la web en el móvil
 ├── sitemap.xml               Mapa del sitio para buscadores
+├── robots.txt                Permite indexar y anuncia el sitemap
+├── CNAME                     Dominio propio para GitHub Pages: radio.bendi.dev
 ├── .nojekyll                 Le dice a GitHub Pages que no procese nada
 │
 ├── tools/
@@ -113,7 +115,7 @@ radio/
 ├── LICENSE (MIT, código) · LICENSE-CONTENIDO.md (CC BY-SA 4.0, contenido)
 ```
 
-**Regla de las carpetas:** cada página es una carpeta con su `index.html`. Así las direcciones quedan limpias (`/radio/examen/` en vez de `/radio/examen.html`) y GitHub Pages las sirve sin configuración.
+**Regla de las carpetas:** cada página es una carpeta con su `index.html`. Así las direcciones quedan limpias (`/examen/` en vez de `/examen.html`) y GitHub Pages las sirve sin configuración.
 
 ## 4. Páginas y recorrido
 
@@ -192,7 +194,7 @@ sequenceDiagram
   participant M as Módulos
   participant X as Servicios externos
 
-  N->>SW: pide /radio/escuchar/
+  N->>SW: pide /escuchar/
   SW->>GP: primero la red
   GP-->>SW: HTML
   SW-->>N: HTML (y guarda copia)
@@ -470,11 +472,13 @@ flowchart LR
   E -- rojo --> A
   E -- verde --> F[Revisar y fusionar]
   F --> G[GitHub Pages publica main<br/>en 1-2 minutos]
-  G --> H[bendi.dev/radio actualizado]
+  G --> H[radio.bendi.dev actualizado]
 ```
 
 - **Nunca** se trabaja directamente en `main`: todo pasa por `development` y una pull request. GitHub lo impone: `main` está protegida (pull request obligatoria con la comprobación `comprobar` en verde, sin `push --force` ni borrado, también para administradores) y `development` no se puede forzar ni borrar.
-- GitHub Pages está configurado como "Deploy from a branch" → `main` → `/ (root)`. El dominio `bendi.dev` está configurado en el repositorio de la web personal; esta web vive en la subcarpeta `/radio/`.
+- GitHub Pages está configurado como "Deploy from a branch" → `main` → `/ (root)`, con el **dominio propio `radio.bendi.dev`** (archivo `CNAME` en la raíz del repositorio y "Enforce HTTPS" activado en Settings → Pages).
+- **DNS:** los servidores de nombres de `bendi.dev` son los de **Porkbun** (donde está registrado), así que los registros se cambian en Porkbun → Domain Management → `bendi.dev` → DNS, no en el panel de Cloudflare. Hay un `CNAME` `radio` → `serbenda.github.io`, igual que `www`, `hucha` y `bolsillo`.
+- Hasta la versión 2.4 la web vivía en `bendi.dev/radio/`. Esa dirección sigue funcionando: GitHub Pages redirige sola `bendi.dev/radio/…` a `radio.bendi.dev/…` (con la misma página). Por qué se cambió: [DECISIONES.md](DECISIONES.md) D21.
 - Paso a paso: [TUTORIAL.md](TUTORIAL.md). Normas: [../CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ## 13. Rendimiento

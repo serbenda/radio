@@ -18,7 +18,7 @@ gitGraph
   merge development id: "pull request"
 ```
 
-- **`main`** es lo que está publicado en `bendi.dev/radio`. **Nadie hace commits directos en `main`.**
+- **`main`** es lo que está publicado en `radio.bendi.dev`. **Nadie hace commits directos en `main`.**
 - **`development`** es donde se trabaja. Los cambios llegan a `main` con una **pull request** que fusiona el responsable del proyecto.
 
 Las dos ramas están **protegidas en GitHub** (Settings → Branches), sin excepciones ni para administradores:

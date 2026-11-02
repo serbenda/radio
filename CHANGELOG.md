@@ -2,6 +2,19 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión corresponde a una pull request fusionada en `main`.
 
+## [2.5.0] · 2 de noviembre de 2026 · Dominio propio radio.bendi.dev
+
+### Cambiado
+- **La web se mueve a <https://radio.bendi.dev/>** (inglés en <https://radio.bendi.dev/en/>). Las direcciones antiguas `bendi.dev/radio/…` redirigen solas a la misma página en la nueva. Archivo `CNAME`, canónicas, `hreflang`, Open Graph, `sitemap.xml`, enlaces para compartir, tarjeta QSL, plantillas de aviso, comprobaciones y documentación apuntan al nuevo dominio. Motivo y consecuencias en `docs/DECISIONES.md` D21.
+- Las visitas se siguen apuntando en GoatCounter como `/radio/…`, para no mezclarlas con las de la web personal.
+- `404.html` y el `id` del manifest, en la raíz del nuevo dominio.
+
+### Publicado
+- El diseño "Dial nocturno" y las herramientas para radioaficionados (tu primera estación, repetidores y DMR, balizas y QO-100), anotados en la 2.4.0, se quedaron fuera de la pull request de esa versión y llegan con esta.
+
+### Corregido
+- Documentación de estilos (esquinas, antetítulos, chips) y créditos de tipografías del README, que seguían describiendo el diseño anterior.
+
 ## [2.4.0] · 1 de noviembre de 2026 · En inglés
 
 ### Cambiado

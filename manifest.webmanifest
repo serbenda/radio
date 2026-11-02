@@ -4,7 +4,7 @@
   "description": "Iniciación a la radioafición en español: escucha, entiende, practica y prepara el examen.",
   "lang": "es",
   "dir": "ltr",
-  "id": "/radio/",
+  "id": "/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

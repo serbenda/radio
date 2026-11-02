@@ -41,7 +41,7 @@
 // Número de versión de la web; tiene que coincidir con la última versión de CHANGELOG.md (lo vigila check.mjs).
 // check.mjs la lee con una expresión regular: no cambies la forma de la línea de abajo (nombre, espacios y
 // comillas simples) y no escribas esa misma línea de ejemplo en ningún comentario de este archivo, o la leería mal.
-const VERSION = '2.4.0';
+const VERSION = '2.5.0';
 // Nombre de la caché de esta versión. El prefijo 'radio-' sirve para borrar solo las cachés propias al activarse.
 const CACHE = `radio-${VERSION}`;
 // Archivos que se descargan y guardan al instalar, para que toda la web funcione sin conexión desde la primera
@@ -91,7 +91,7 @@ self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const u = new URL(req.url);
-  // "Propia": mismo origen y dentro de la carpeta de sw.js (p. ej. /radio/ en bendi.dev), para no
+  // "Propia": mismo origen y dentro de la carpeta de sw.js (la raíz en radio.bendi.dev), para no
   // interferir con otras webs del mismo dominio.
   const own = u.origin === self.location.origin && u.pathname.startsWith(new URL('./', self.location).pathname);
 

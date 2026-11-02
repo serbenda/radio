@@ -79,7 +79,7 @@ El proceso exacto está en [`tools/fuentes.py`](../tools/fuentes.py) (instruccio
 | --- | --- |
 | Ancho máximo del contenido | `main`: 1160 px centrado, con 24 px de margen lateral |
 | Margen lateral en móvil | 16 px (≤ 860 px) |
-| Radio de esquinas | `--radius` = 14 px (tarjetas, tablas); 999 px (botones y chips, forma de píldora) |
+| Radio de esquinas | `--radius` = 10 px (tarjetas, tablas, mapas); 6 px (botones y chips, como teclas); 999 px solo en el selector de nivel de las lecciones, el sello de apoyo y los avisos flotantes |
 | Separación entre secciones | `section`: 72 px arriba en ordenador, 56 px en móvil |
 | Tamaño mínimo de lo pulsable | 24 × 24 px (WCAG 2.2); los botones normales miden ≥ 40 px de alto |
 
@@ -113,9 +113,9 @@ Se diseña para **390 px** de ancho (móvil típico) y se comprueba también a 1
 | --- | --- | --- |
 | `.btn` | Tecla principal (ámbar, texto oscuro, esquina de 6 px, se hunde al pulsar) | `.ghost` (contorno), `.small`, `:disabled` |
 | `.card` | Tarjeta con fondo `--panel` y borde | `.link` (toda la tarjeta es un enlace) |
-| `.chip` | Filtro o etiqueta pequeña con forma de píldora | `.on` / `[aria-pressed="true"]` |
+| `.chip` | Filtro o etiqueta pequeña, en Barlow Condensed y con esquina de 6 px | `.on` / `[aria-pressed="true"]` |
 | `.opt` | Opción de respuesta (examen, lecciones, contactos) | `.wide`, `.right` (acierto), `.wrong` (fallo), `.picked` |
-| `.kicker` | Antetítulo en mayúsculas y monoespaciada | — |
+| `.kicker` | Antetítulo en frase normal, en ámbar, con una marca de escala delante | — |
 | `.section-head` | Bloque de título + entradilla de cada sección | — |
 | `.page-head` | Cabecera de página interior con `h1`, entradilla e índice | — |
 | `.next-page` | Enlace "Siguiente: …" al final de cada página | — |

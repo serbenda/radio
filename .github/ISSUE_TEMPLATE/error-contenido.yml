@@ -8,7 +8,7 @@ body:
     attributes:
       label: Página
       description: Se rellena sola si vienes desde el enlace del pie.
-      placeholder: "https://bendi.dev/radio/entender/"
+      placeholder: "https://radio.bendi.dev/entender/"
     validations:
       required: true
   - type: dropdown

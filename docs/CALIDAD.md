@@ -60,7 +60,7 @@ Qué se ha aplicado, por qué, y qué limitaciones conocidas quedan.
 
 - Título, descripción y URL canónica propios en cada página.
 - Etiquetas Open Graph y Twitter con imagen de 1200 × 630 (`og.png`).
-- `sitemap.xml` con las seis páginas. Nota: los buscadores leen `robots.txt` solo en la raíz del dominio (`bendi.dev/robots.txt`); para que encuentren este sitemap hay que añadir allí `Sitemap: https://bendi.dev/radio/sitemap.xml` o darlo de alta en Google Search Console.
+- `sitemap.xml` con las doce páginas (seis en castellano y seis en inglés) y `robots.txt` propio que lo anuncia. Desde la 2.5 la web tiene su dominio (`radio.bendi.dev`), así que su `robots.txt` es el de este repositorio; para que Google la indexe antes, dala de alta en Google Search Console como propiedad nueva.
 
 ## Limitaciones conocidas
 

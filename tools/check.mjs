@@ -112,14 +112,14 @@ for (const p of PAGES) {
   //   <html lang="es">                     literal.
   //   <title>[^<]+<\/title>                título con al menos un carácter: '<title>Radio</title>'.
   //   content="[^"]{50,}"                  descripción de 50 caracteres o más.
-  //   href="https:\/\/bendi\.dev\/radio\/  canónica bajo https://bendi.dev/radio/ (los puntos van escapados).
+  //   href="https:\/\/radio\.bendi\.dev\/  canónica bajo https://radio.bendi.dev/ (los puntos van escapados).
   //   <h1[\s>]                             '<h1>' o '<h1 class="…">' (y no, por ejemplo, '<h1x'); deben ser exactamente 1.
   //   radio-root" content="([^"]+)"        captura el valor del meta para compararlo con rootExpected.
   //   <body data-page="[a-z]+">            data-page en minúsculas sin espacios: '<body data-page="examen">'.
   if (!new RegExp(`<html lang="${langOf(p)}">`).test(s)) problems.push(`sin lang="${langOf(p)}"`);
   if (!/<title>[^<]+<\/title>/.test(s)) problems.push('sin <title>');
   if (!/<meta name="description" content="[^"]{50,}">/.test(s)) problems.push('descripción ausente o corta');
-  if (!/<link rel="canonical" href="https:\/\/bendi\.dev\/radio\/[^"]*">/.test(s)) problems.push('sin canónica');
+  if (!/<link rel="canonical" href="https:\/\/radio\.bendi\.dev\/[^"]*">/.test(s)) problems.push('sin canónica');
   if ((s.match(/<h1[\s>]/g) || []).length !== 1) problems.push('no tiene exactamente un <h1>');
   const rootMeta = (s.match(/<meta name="radio-root" content="([^"]+)">/) || [])[1];
   if (rootMeta !== rootExpected) problems.push(`radio-root "${rootMeta}" (debería ser "${rootExpected}")`);
@@ -282,12 +282,17 @@ section('7. Enlaces de "Tu primer mes"');
 
 /* ---------- 8. sitemap.xml ---------- */
 
-// Cada página debe aparecer como <loc>https://bendi.dev/radio/<carpeta>/</loc> (la portada, sin carpeta).
+// Cada página debe aparecer como <loc>https://radio.bendi.dev/<carpeta>/</loc> (la portada, sin carpeta).
 section('8. sitemap.xml');
 {
   const sm = read('sitemap.xml');
-  const missing = PAGES.map(p => 'https://bendi.dev/radio/' + p.replace('index.html', '')).filter(u => !sm.includes(`<loc>${u}</loc>`));
+  const missing = PAGES.map(p => 'https://radio.bendi.dev/' + p.replace('index.html', '')).filter(u => !sm.includes(`<loc>${u}</loc>`));
   expect(!missing.length, `incluye las ${PAGES.length} páginas${missing.length ? ' (faltan: ' + missing.join(', ') + ')' : ''}`);
+  // El archivo CNAME le dice a GitHub Pages que sirva la web en radio.bendi.dev (docs/DECISIONES.md D21).
+  // Si falta o cambia, la web vuelve a bendi.dev/radio/ y las canónicas de arriba dejan de ser verdad.
+  let cname = '';
+  try { cname = read('CNAME').trim(); } catch { /* sin CNAME */ }
+  expect(cname === 'radio.bendi.dev', `CNAME con radio.bendi.dev${cname && cname !== 'radio.bendi.dev' ? ' (dice: ' + cname + ')' : cname ? '' : ' (no existe)'}`);
 }
 
 /* ---------- 9. Instalable y sin conexión ---------- */

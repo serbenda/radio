@@ -38,10 +38,10 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const MD = process.argv.includes('--md');
 // SKIP: expresiones regulares; una URL que case con cualquiera de ellas no se revisa. Para dejar de revisar
 // un dominio, añade aquí su regex con los puntos escapados (p. ej. /ejemplo\.com/).
-// /\$\{/ descarta las URL de plantilla con ${…}; /bendi\.dev\/radio/ las de esta misma web.
+// /\$\{/ descarta las URL de plantilla con ${…}; /radio\.bendi\.dev/ las de esta misma web.
 // Servicios que la web consulta en directo (no son enlaces para la persona) o raíces sin página.
 const SKIP = [/api\.radio-browser\.info/, /hamqth\.com\/api/, /celestrak\.org\/NORAD/, /goatcounter\.com/, /gc\.zgo\.at/,
-  /arcgisonline\.com/, /prop\.kc2g\.com\/renders/, /cdnjs\.cloudflare\.com/, /upload\.wikimedia\.org/, /\$\{/, /bendi\.dev\/radio/,
+  /arcgisonline\.com/, /prop\.kc2g\.com\/renders/, /cdnjs\.cloudflare\.com/, /upload\.wikimedia\.org/, /\$\{/, /radio\.bendi\.dev/,
   /github\.com\/serbenda\/radio\/issues\/new/];
 
 /* ---------- Recogida de URL ---------- */
@@ -94,7 +94,7 @@ async function probe(url) {
     for (const method of ['HEAD', 'GET']) {
       try {
         const r = await fetch(url, { method, redirect: 'follow', signal: AbortSignal.timeout(20000),
-          headers: { 'User-Agent': 'Mozilla/5.0 (comprobador de enlaces de bendi.dev/radio)' } });
+          headers: { 'User-Agent': 'Mozilla/5.0 (comprobador de enlaces de radio.bendi.dev)' } });
         if (r.status === 405 || r.status === 501) { last = String(r.status); continue; } // no admite HEAD
         return { code: r.status };
       } catch (e) { last = e.cause?.code || e.name; }

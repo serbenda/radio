@@ -574,7 +574,7 @@
     g.fillStyle = mint; g.font = '800 44px "Barlow Condensed", "Arial Narrow", sans-serif';
     g.fillText('Tnx QSO · 73!', 52, 506);
     g.fillStyle = muted; g.font = '400 15px "IBM Plex Mono", monospace';
-    g.textAlign = 'right'; g.fillText(t('Contacto simulado · bendi.dev/radio', 'Simulated contact · bendi.dev/radio/en'), W - 52, 506); g.textAlign = 'left';
+    g.textAlign = 'right'; g.fillText(t('Contacto simulado · radio.bendi.dev', 'Simulated contact · radio.bendi.dev/en'), W - 52, 506); g.textAlign = 'left';
 
     $('qsoQsl').hidden = false;
     $('qsoQsl').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -597,8 +597,8 @@
       const file = new File([blob], `QSL_${dx.call}_${me.call}.png`, { type: 'image/png' });
       try {
         await navigator.share({ files: [file], title: t('Mi primer QSO', 'My first QSO'),
-          text: t(`¡He hecho mi primer contacto por radio con ${dx.country}! 📻 73. Pruébalo en https://bendi.dev/radio/`,
-            `I have made my first radio contact with ${dx.country}! 📻 73. Try it at https://bendi.dev/radio/en/`) });
+          text: t(`¡He hecho mi primer contacto por radio con ${dx.country}! 📻 73. Pruébalo en https://radio.bendi.dev/`,
+            `I have made my first radio contact with ${dx.country}! 📻 73. Try it at https://radio.bendi.dev/en/`) });
       } catch (e) { /* cancelado */ }
     }, 'image/png');
   });
