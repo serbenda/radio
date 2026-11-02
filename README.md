@@ -41,17 +41,22 @@
     <td><img src="docs/img/examen.png" alt="Examen: tarjeta de pregunta con explicación"></td>
     <td><img src="docs/img/english.png" alt="Versión en inglés de la portada"></td>
   </tr>
+  <tr>
+    <td><img src="docs/img/espectro.png" alt="Espectro: mapa del espectro por usos, con la ficha de la banda de PMR en UHF"></td>
+    <td><img src="docs/img/antenas.png" alt="Las antenas: tarjetas con la forma y el diagrama de radiación de cada tipo"></td>
+  </tr>
 </table>
 
 ## Lo que hay dentro
 
-> Cinco pasos, del oído a la licencia. Cada uno se marca solo en **Tu primer mes** (4 semanas, 14 pasos, insignias) a medida que haces cosas, no a medida que lees.
+> Cinco pasos, del oído a la licencia, y una página para ver todo el espectro. Cada paso se marca solo en **Tu primer mes** (4 semanas, 14 pasos, insignias) a medida que haces cosas, no a medida que lees.
 
 | | Paso | Lo que puedes hacer |
 | :-: | --- | --- |
 | 🏠 | **[Inicio](https://radio.bendi.dev/)** | Mover un dial de onda corta de verdad · qué es la radioafición en un minuto · **Tu primer mes** · guardar tu progreso en un archivo · instalar la app |
 | 🎧 | **[Escuchar](https://radio.bendi.dev/escuchar/)** | Mapa de emisoras del mundo con reproductor · escucha guiada en un receptor real · **Ahora en el aire**: quién habla con quién, en directo · **¿Qué es este sonido?**: Morse, SSB, FT8, SSTV… con cascada y 11 grabaciones reales |
 | 🌍 | **[Entender](https://radio.bendi.dev/entender/)** | Cuatro lecciones interactivas en tres niveles · bandas · propagación de hoy en lenguaje llano · **balizas en directo** · pases de la ISS sobre tu casa · **QO-100** y **satélites FM** |
+| 📡 | **[Espectro](https://radio.bendi.dev/espectro/)** | **Quién habla en cada frecuencia**: mapa del espectro · CB-27 a fondo, PMR446 · redes **TETRA**, DMR y TETRAPOL · aviones y barcos (ADS-B, AIS) · satélites del tiempo y radiosondas · **así suenan** 7 señales con su cascada · receptores · qué es legal escuchar · repetidores · **las antenas**: qué son, 18 tipos con dibujo y diagrama de radiación |
 | 🎙️ | **[Practicar](https://radio.bendi.dev/practicar/)** | Morse con el método Koch a velocidad real · alfabeto fonético y jerga · **repetidores y radio digital** (DMR, C4FM, D-STAR, APRS) con calculadora · cinco contactos simulados con voz y tarjeta QSL |
 | 📝 | **[Examen](https://radio.bendi.dev/examen/)** | **169 preguntas** escritas a partir de la Orden IET/1311/2013 · tarjetas que repiten lo que fallas · simulacro de dos partes como el real (60 preguntas, corrección al final) |
 | 🚀 | **[Empezar](https://radio.bendi.dev/empezar/)** | El trámite en cifras · CB-27 y walkies sin licencia · qué radio comprar (y cuál es legal) · **tu primera estación con calculadora de antenas** · radioclubes de la URE en un mapa · calendario · familias · **la radio en clase** con ficha imprimible · Hispanoamérica |
@@ -85,17 +90,17 @@ Se instala en **Android, iPhone, iPad y ordenador** (botón "Instalar la app" de
 
 | | | | |
 | :-: | :-: | :-: | :-: |
-| **12** páginas | **2** idiomas | **169** preguntas de examen | **14** pasos con insignias |
+| **14** páginas | **2** idiomas | **169** preguntas de examen | **14** pasos con insignias |
 | **0** dependencias | **0** cookies | **0** servidores propios | **0** pasos de compilación |
-| **≈ 85 KB** por página (gzip) | **108** comprobaciones automáticas | **22** decisiones documentadas | **11** runbooks de operación |
+| **≈ 85 KB** por página (gzip) | **116** comprobaciones automáticas | **23** decisiones documentadas | **11** runbooks de operación |
 
 ## Cómo está hecha
 
 ```mermaid
 flowchart LR
   subgraph Persona["📱 Navegador de la persona"]
-    H[12 páginas HTML<br/>ES · EN] --> C[core.js<br/>objeto Radio]
-    C --> M[34 módulos JS<br/>uno por función]
+    H[14 páginas HTML<br/>ES · EN] --> C[core.js<br/>objeto Radio]
+    C --> M[36 módulos JS<br/>uno por función]
     M <--> L[(localStorage<br/>su progreso)]
     S[[sw.js<br/>sin conexión]]
   end
@@ -122,7 +127,7 @@ Explicación completa con diagramas: [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md
 ```bash
 git clone https://github.com/serbenda/radio.git && cd radio
 python3 -m http.server 8000      # abre http://localhost:8000/
-node tools/check.mjs             # 108 comprobaciones (Node 18+)
+node tools/check.mjs             # 116 comprobaciones (Node 18+)
 ```
 
 No hay nada que instalar. **¿Primera vez?** El [tutorial](docs/TUTORIAL.md) te lleva de cero a tu primer cambio publicado en 30 minutos.
@@ -178,8 +183,8 @@ Normas completas en [CONTRIBUTING.md](CONTRIBUTING.md).
 ## Estructura
 
 ```
-index.html  escuchar/  entender/  practicar/  examen/  empezar/    Las seis páginas en castellano
-en/  (index, listen, understand, practice, exam, start)            Las seis en inglés
+index.html  escuchar/  entender/  espectro/  practicar/  …       Las siete páginas en castellano
+en/  (index, listen, understand, spectrum, practice, exam, start) Las siete en inglés
 404.html  offline.html                                             Error y sin conexión (bilingües)
 css/style.css                                                      Estilos "Dial nocturno" (una sola hoja)
 js/                                                                Un módulo por funcionalidad (+ js/en/)

@@ -15,7 +15,7 @@ Términos técnicos que aparecen en el código y en la documentación, explicado
 | **CDN** | Servidor que reparte librerías populares por todo el mundo | cdnjs (Leaflet, satellite.js) |
 | **Commit** | Un cambio guardado en Git, con mensaje y autor | — |
 | **CORS** | Regla del navegador: una web solo puede pedir datos a otro dominio si ese dominio lo permite | Por eso solo se usan APIs con CORS abierto |
-| **CSP (Content-Security-Policy)** | Lista de qué puede cargar la página y desde dónde; el navegador bloquea el resto | `<meta>` en las seis páginas |
+| **CSP (Content-Security-Policy)** | Lista de qué puede cargar la página y desde dónde; el navegador bloquea el resto | `<meta>` en todas las páginas |
 | **CSS** | Lenguaje de estilos (colores, tamaños, posiciones) | `css/style.css` |
 | **DOM** | La página tal como la ve JavaScript: un árbol de elementos que se puede cambiar | Todos los módulos |
 | **Evento** | Aviso que se lanza cuando pasa algo (un clic, un logro) | `radio:event`, `radio:qso`… ([ARQUITECTURA §8](ARQUITECTURA.md#8-comunicación-entre-módulos-eventos)) |

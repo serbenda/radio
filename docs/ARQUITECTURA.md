@@ -70,10 +70,11 @@ radio/
 ├── index.html                Inicio (portada)
 ├── escuchar/index.html       Paso 1 · Escuchar
 ├── entender/index.html       Paso 2 · Entender
+├── espectro/index.html       Espectro (fuera de los cinco pasos: quién usa cada frecuencia y antenas)
 ├── practicar/index.html      Paso 3 · Practicar
 ├── examen/index.html         Paso 4 · Examen
 ├── empezar/index.html        Paso 5 · Empezar
-├── en/                       Versión en inglés: index.html, listen/, understand/, practice/, exam/, start/
+├── en/                       Versión en inglés: index.html, listen/, understand/, spectrum/, practice/, exam/, start/
 ├── 404.html                  Página "no existe" (GitHub Pages la usa sola)
 ├── offline.html              Lo que se ve sin conexión en una página no visitada
 │
@@ -125,7 +126,8 @@ La web sigue el camino de alguien que no sabe nada de radio hasta que se saca la
 flowchart LR
   I[🏠 Inicio<br/>dial · qué es · tu primer mes] --> E1[👂 Escuchar<br/>emisoras · receptor real · en directo · sonidos]
   E1 --> E2[🤓 Entender<br/>lecciones · bandas · propagación · ISS]
-  E2 --> E3[🎙️ Practicar<br/>Morse · jerga · contactos simulados]
+  E2 --> ES[📡 Espectro<br/>quién usa cada frecuencia · señales · antenas]
+  ES --> E3[🎙️ Practicar<br/>Morse · jerga · contactos simulados]
   E3 --> E4[📝 Examen<br/>tarjetas · simulacro]
   E4 --> E5[📻 Empezar<br/>trámite · CB-27 · qué comprar · radioclubes]
 ```
@@ -135,6 +137,7 @@ flowchart LR
 | Inicio | `/` | `inicio`, `mes`, `paginas`, `instalar`, `apoya` (+ `backup` dentro de `mes`) | dial, backup |
 | Escuchar | `/escuchar/` | `emisoras`, `directo`, `ahora`, `sonidos` (+ `grabaciones`) | stations, guided, live, morse, sounds, recordings |
 | Entender | `/entender/` | `como-funciona`, `bandas`, `propagacion`, `balizas`, `iss`, `satelites` | lessons, bands, propagation, iss, beacons, sats |
+| Espectro | `/espectro/` | `mapa`, `sin-licencia`, `profesional`, `transporte`, `cielo`, `difusion`, `senales`, `receptores`, `ley`, `repetidores-redes`, `antenas` | spectrum, antennas |
 | Practicar | `/practicar/` | `morse`, `jerga`, `repetidores`, `qso` | morse, morse-ui, koch, jargon, repeater, qso |
 | Examen | `/examen/` | `test` | exam-data, exam |
 | Empezar | `/empezar/` | `empezar`, `cb27`, `equipo`, `estacion`, `clubes`, `familias`, `docentes`, `hispanoamerica`, `emergencias`, `faq` | clubs-data, clubs, family, checklist, faq, classroom, antenna |
@@ -177,7 +180,7 @@ Todas cargan además `core.js`, `data.js`, `journey.js`, `install.js` y `glossar
 </html>
 ```
 
-`tools/check.mjs` comprueba que la cabecera y el pie son idénticos en las seis páginas (sin contar las rutas `./` o `../`): si cambias el menú, cámbialo en todas.
+`tools/check.mjs` comprueba que la cabecera y el pie son idénticos en todas las páginas (sin contar las rutas `./` o `../`): si cambias el menú, cámbialo en todas.
 
 ### Versión en inglés
 
@@ -448,7 +451,7 @@ flowchart LR
 | Sin datos personales de terceros | `clubs-data.js` | `check.mjs` §6 |
 | Permisos mínimos en Actions | `permissions:` de cada flujo | Revisión |
 
-**Si añades un servicio externo nuevo**, añádelo a `connect-src` (si usas `fetch`) o `script-src` (si cargas un script) de la CSP **en las seis páginas**; si no, el navegador lo bloqueará y verás un error "Refused to connect" en la consola.
+**Si añades un servicio externo nuevo**, añádelo a `connect-src` (si usas `fetch`) o `script-src` (si cargas un script) de la CSP **en todas las páginas**; si no, el navegador lo bloqueará y verás un error "Refused to connect" en la consola.
 
 ## 12. Publicación
 

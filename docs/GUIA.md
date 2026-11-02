@@ -271,7 +271,7 @@ Ver [ESTILOS.md](ESTILOS.md): colores en `:root` de `css/style.css`; tipografía
 
 ### Cambiar el menú o el pie
 
-Cámbialo **igual en las seis páginas** de cada idioma (en castellano la portada usa `./` y las demás `../`; en inglés, `en/index.html` usa `./` y las demás `../`). Truco: haz el cambio en una y cópialo con cuidado; `check.mjs` (§2) te dirá cuál ha quedado distinta.
+Cámbialo **igual en todas las páginas** de cada idioma (en castellano la portada usa `./` y las demás `../`; en inglés, `en/index.html` usa `./` y las demás `../`). Truco: haz el cambio en una y cópialo con cuidado; `check.mjs` (§2) te dirá cuál ha quedado distinta.
 
 ### Cambiar un texto en los dos idiomas
 
@@ -330,7 +330,7 @@ No uses `git push --force` sobre `main`.
 Cada sección muestra un mensaje si su servicio falla, así que la web no se rompe. Para diagnosticar:
 
 1. Abre la página, F12 → pestaña **Consola** y **Red**. Busca la petición en rojo.
-2. Si dice **"Refused to connect… Content Security Policy"**, el servicio ha cambiado de dominio: actualiza la CSP de las seis páginas y la constante del módulo.
+2. Si dice **"Refused to connect… Content Security Policy"**, el servicio ha cambiado de dominio: actualiza la CSP de todas las páginas y la constante del módulo.
 3. Si da **error de CORS** o **401/403**, el servicio ha empezado a exigir clave o ha cerrado el acceso desde navegadores: busca una alternativa en [DATOS.md](DATOS.md) (cada servicio tiene su plan B).
 4. Si da **404**, ha cambiado la dirección de la API: consulta su documentación.
 

@@ -35,7 +35,7 @@ Cada `✗` dice qué y dónde. Los más comunes:
 
 | Lo que ves | Causa | Solución |
 | --- | --- | --- |
-| `Refused to connect … violates … Content Security Policy` | El dominio no está en `connect-src` | Añádelo a la CSP de las seis páginas ([GUIA](GUIA.md#añadir-un-servicio-externo)) |
+| `Refused to connect … violates … Content Security Policy` | El dominio no está en `connect-src` | Añádelo a la CSP de todas las páginas ([GUIA](GUIA.md#añadir-un-servicio-externo)) |
 | `blocked by CORS policy` | El servicio ya no permite peticiones desde navegadores | Buscar alternativa ([DATOS.md](DATOS.md)) |
 | `401` / `403` | Ahora pide clave | Buscar alternativa |
 | `429` | Demasiadas peticiones | Revisa que el módulo respeta el intervalo; espera |

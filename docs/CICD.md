@@ -115,7 +115,7 @@ Un solo script de Node 18+ sin dependencias, que también se usa en local. Sale 
 | § | Qué protege | Ejemplo de fallo que para |
 | --- | --- | --- |
 | 1 | Estructura de cada página: `lang`, título, descripción, canónica en `radio.bendi.dev`, un `<h1>`, `radio-root` | Una página nueva sin canónica |
-| 2 | Cabecera y pie idénticos en las 12 páginas | Un enlace del menú cambiado solo en una |
+| 2 | Cabecera y pie idénticos en todas las páginas | Un enlace del menú cambiado solo en una |
 | 3 | Todo enlace o recurso local existe, incluidos los `#anclajes` | Enlace a `#balizas` que ya no existe |
 | 4 | Orden de los scripts y que cada `.js` se usa | Un módulo olvidado en la carpeta |
 | 5 | Sintaxis de todo el JavaScript (`node --check`) | Una llave sin cerrar |

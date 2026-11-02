@@ -72,7 +72,7 @@ Formato STRIDE simplificado: amenaza → defensa → riesgo que queda.
 
 ## 4. Content-Security-Policy, directiva a directiva
 
-Igual en las 12 páginas (lo exige `check.mjs` §11). Va en `<meta http-equiv>` porque GitHub Pages no admite cabeceras propias.
+Igual en todas las páginas (lo exige `check.mjs` §11). Va en `<meta http-equiv>` porque GitHub Pages no admite cabeceras propias.
 
 | Directiva | Valor | Por qué |
 | --- | --- | --- |
@@ -161,7 +161,7 @@ Lo que más protege esta web no es el código, sino las cuentas:
 
 - [ ] ¿Algún texto nuevo que venga de una API se pinta sin `Radio.esc`?
 - [ ] ¿Algún `onclick=`, `<script>` en línea o `eval`? (`check.mjs` lo detecta)
-- [ ] ¿Dominio nuevo? → CSP en las 12 páginas, tabla de [INFRAESTRUCTURA.md](INFRAESTRUCTURA.md#7-servicios-de-terceros) y [DATOS.md](DATOS.md)
+- [ ] ¿Dominio nuevo? → CSP en todas las páginas, tabla de [INFRAESTRUCTURA.md](INFRAESTRUCTURA.md#7-servicios-de-terceros) y [DATOS.md](DATOS.md)
 - [ ] ¿Librería nueva? → versión exacta + SRI, y en `STATIC_HOSTS` de `sw.js` solo si debe funcionar sin conexión
 - [ ] ¿Se guarda algo nuevo? → clave `radio.*`, sin datos personales, en [PRIVACIDAD.md](PRIVACIDAD.md)
 - [ ] ¿Hito nuevo? → nombre fijo (`check.mjs` §10)

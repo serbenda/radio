@@ -2,6 +2,23 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión corresponde a una pull request fusionada en `main`.
 
+## [2.6.0] · 2 de noviembre de 2026 · Espectro: quién habla en cada frecuencia y todo sobre las antenas
+
+### Añadido
+- **Página nueva "Espectro"** (`espectro/` y `en/spectrum/`), entre Entender y Practicar:
+  - **Mapa del espectro** interactivo de 100 kHz a 12 GHz, por usos: radiodifusión, radioaficionados, sin licencia, profesional y emergencias, aviones y barcos, satélites y ciencia, telefonía.
+  - **Radio sin licencia**: la CB-27 a fondo (canales, modos, alcance, equipo), PMR446 (y por qué los "códigos de privacidad" no son privados) y dispositivos de corto alcance.
+  - **Redes profesionales y de emergencia**: PMR analógico, DMR, dPMR/NXDN y **TETRA** explicado a fondo (cómo funciona, quién lo usa en España, cómo se ve), TETRAPOL (SIRDEE), banda ancha de misión crítica y REMER.
+  - **Aviones y barcos** (banda aérea, ADS-B, VHF marina, AIS), **satélites y globos** (Meteor-M, fin de los NOAA en 2025, radiosondas) y **radiodifusión**.
+  - **Así suenan**: siete señales imitadas con su cascada (TETRA, DMR, POCSAG, AIS, radiosonda, satélite NOAA y canal FM vacío), con enlace a grabaciones reales.
+  - **Con qué se escucha** (receptores y precios orientativos) y **qué se puede escuchar y qué no** según la ley.
+  - **Repetidores** en cada servicio, con diagrama.
+  - **Las antenas**: qué es una antena, medidor "¿cuánto mide la antena?", nueve conceptos clave, **18 tipos en siete familias** con dibujo y diagrama de radiación, filtro por uso, tabla "¿cuál elijo?" y seguridad.
+- Glosario: TETRA, TETRAPOL, DMR, ADS-B, AIS, CTCSS, radiosonda, Yagi, dBi, ROE y polarización.
+
+### Cambiado
+- Menú con siete entradas; la aguja bajo el título de cada página se recoloca. Entender lleva ahora a Espectro, y la CB-27 de Empezar enlaza a la página nueva.
+
 ## [2.5.1] · 2 de noviembre de 2026 · La web no habla de código y documentación por papeles
 
 ### Cambiado

@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://*.api.radio-browser.info https://www.hamqth.com https://celestrak.org https://serbenda.goatcounter.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Espectro · Radio</title>
+  <meta name="description" content="Quién habla en cada frecuencia: CB-27, walkies PMR446, redes TETRA y DMR, aviones, barcos, satélites y radiosondas. Cómo suenan, con qué se escuchan, qué es legal y todo sobre las antenas.">
+  <meta name="radio-root" content="../">
+  <meta name="theme-color" content="#0f1b2d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="radio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="canonical" href="https://radio.bendi.dev/espectro/">
+  <link rel="alternate" hreflang="es" href="https://radio.bendi.dev/espectro/">
+  <link rel="alternate" hreflang="en" href="https://radio.bendi.dev/en/spectrum/">
+  <link rel="alternate" hreflang="x-default" href="https://radio.bendi.dev/espectro/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="radio · bendi.dev">
+  <meta property="og:title" content="Espectro · Radio">
+  <meta property="og:description" content="Quién habla en cada frecuencia: CB-27, walkies PMR446, redes TETRA y DMR, aviones, barcos, satélites y radiosondas. Cómo suenan, con qué se escuchan, qué es legal y todo sobre las antenas.">
+  <meta property="og:url" content="https://radio.bendi.dev/espectro/">
+  <meta property="og:image" content="https://radio.bendi.dev/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dial de radio con una señal y el texto: Hay miles de voces en el aire. Escúchalas.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Espectro · Radio">
+  <meta name="twitter:description" content="Quién habla en cada frecuencia: CB-27, walkies PMR446, redes TETRA y DMR, aviones, barcos, satélites y radiosondas. Cómo suenan, con qué se escuchan, qué es legal y todo sobre las antenas.">
+  <meta name="twitter:image" content="https://radio.bendi.dev/og.png">
+  <link rel="icon" href="../img/favicon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preload" href="../fonts/atkinson-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="espectro">
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header class="top">
+    <a class="brand" href="../" aria-label="radio, ir a la portada">📻 <span>radio</span></a>
+    <nav aria-label="Principal">
+      <a href="../" data-page="inicio">Inicio</a>
+      <a href="../escuchar/" data-page="escuchar">Escuchar</a>
+      <a href="../entender/" data-page="entender">Entender</a>
+      <a href="../espectro/" data-page="espectro">Espectro</a>
+      <a href="../practicar/" data-page="practicar">Practicar</a>
+      <a href="../examen/" data-page="examen">Examen</a>
+      <a href="../empezar/" data-page="empezar">Empezar</a>
+    </nav>
+    <a class="lang-switch" id="langSwitch" href="../en/spectrum/" hreflang="en" lang="en" title="Read this page in English" aria-label="English version of this page">EN</a>
+    <div class="utc" title="Los radioaficionados siempre usan la hora UTC"><small>UTC</small> <span id="utc">--:--</span></div>
+  </header>
+
+  <main id="contenido">
+    <noscript><p class="noscript">Los textos se leen sin JavaScript, pero el dial, los mapas, los sonidos, el Morse, los contactos y el examen lo necesitan. Actívalo para usarlos.</p></noscript>
+    <header class="page-head">
+      <p class="kicker">Más allá de la radioafición</p>
+      <h1>Espectro</h1>
+      <p class="lead">El aire está repartido como un callejero: cada frecuencia tiene dueño. Aquí verás quién habla en cada una (la CB, los walkies, las redes de emergencias, los aviones, los barcos, los satélites), cómo suenan, con qué se escuchan, qué es legal escuchar y, al final, todo sobre las antenas.</p>
+      <nav class="toc" aria-label="En esta página"><a href="#mapa">El mapa del espectro</a> · <a href="#sin-licencia">Radio sin licencia</a> · <a href="#profesional">Redes profesionales y de emergencia</a> · <a href="#transporte">Aviones y barcos</a> · <a href="#cielo">Satélites y globos</a> · <a href="#difusion">Radiodifusión</a> · <a href="#senales">Así suenan</a> · <a href="#receptores">Con qué se escucha</a> · <a href="#ley">Qué se puede escuchar</a> · <a href="#repetidores-redes">Repetidores</a> · <a href="#antenas">Las antenas</a></nav>
+    </header>
+
+    <!-- MAPA DEL ESPECTRO -->
+    <section id="mapa">
+      <div class="section-head">
+        <p class="kicker">Un callejero invisible</p>
+        <h2>El mapa del espectro</h2>
+        <p>De 100 kHz a 12 GHz, ordenado por quién lo usa. La escala es logarítmica: cada marca multiplica la frecuencia por diez. Pulsa una franja para saber qué es y dónde se explica.</p>
+      </div>
+      <div class="card spec-card">
+        <div class="spec-map" id="specMap" role="group" aria-label="Mapa del espectro por usos"></div>
+        <div class="spec-axis" aria-hidden="true"><span>100 kHz</span><span>1 MHz</span><span>10 MHz</span><span>100 MHz</span><span>1 GHz</span><span>10 GHz</span></div>
+        <div class="spec-detail" id="specDetail" aria-live="polite"><p class="note">Elige una franja del mapa.</p></div>
+      </div>
+      <p class="note">Rangos aproximados según el Cuadro Nacional de Atribución de Frecuencias y los acuerdos europeos. En cada banda conviven más servicios de los que caben en un dibujo.</p>
+    </section>
+
+    <!-- SIN LICENCIA -->
+    <section id="sin-licencia">
+      <div class="section-head">
+        <p class="kicker">Para cualquiera</p>
+        <h2>Radio sin licencia</h2>
+        <p>Hay bandas de <strong>uso común</strong>: cualquiera puede emitir en ellas, sin examen ni papeleo, siempre que use un equipo homologado y respete la potencia. Son la puerta de entrada de mucha gente a la radio.</p>
+      </div>
+
+      <article class="card topic">
+        <span class="tag">27 MHz · uso común</span>
+        <h3>CB-27, la Banda Ciudadana</h3>
+        <p>Nació en Estados Unidos tras la Segunda Guerra Mundial, se popularizó allí en los años 70 y en España en los 80, cuando los camioneros la llenaron de apodos y charlas de carretera. Hoy sigue viva entre camioneros, gente del campo, aficionados al <em>DX</em> (contactos lejanos) y quien quiere hablar por radio sin examen.</p>
+        <div class="cards two">
+          <div>
+            <h4>Cómo funciona</h4>
+            <ul class="cb-facts">
+              <li><b>40 canales</b> de 10 kHz entre 26,960 y 27,410 MHz.</li>
+              <li><b>Tres modos</b>: AM (el clásico), FM (más limpio a corta distancia) y BLU, banda lateral (llega más lejos con la misma potencia y es la preferida para contactos lejanos).</li>
+              <li><b>Potencia</b>: 4 W en AM y FM; 12 W de pico en BLU.</li>
+              <li><b>Canal 9 (27,065 MHz)</b>: socorro. Se deja libre siempre que haya una emergencia.</li>
+              <li><b>Solo directo</b>: de equipo a equipo, sin repetidores ni enlaces a internet o al teléfono.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Hasta dónde llega</h4>
+            <p>Con una emisora en el coche, de 5 a 20 km según el terreno; desde una casa con buena antena, más. Como está pegada a la banda de radioaficionado de 10 metros, se comporta igual: en los años buenos del ciclo solar la <span>ionosfera</span> la devuelve a tierra y se oyen estaciones de otros países, y en verano hay aperturas repentinas por la capa E esporádica.</p>
+            <h4>El equipo</h4>
+            <p>Una emisora móvil o de base homologada (marcado CE, norma europea EN 300 433) y, sobre todo, una buena antena: la longitud de onda es de 11 metros, así que una vertical de cuarto de onda mide unos 2,7 m. Las del coche suelen ser más cortas, con una bobina que las "alarga" eléctricamente a costa de algo de rendimiento. Más en <a href="#antenas">las antenas</a>.</p>
+          </div>
+        </div>
+        <p class="note">Prohibido en la CB-27: amplificadores, superar la potencia, repetidores, conectarla a la red telefónica y emitir una portadora continua. Desde 2015 no hace falta licencia ni indicativo (Orden IET/614/2015, nota UN-3 del Cuadro Nacional de Atribución de Frecuencias).</p>
+      </article>
+
+      <div class="cards two">
+        <article class="card topic">
+          <span class="tag">446 MHz · uso común</span>
+          <h3>Walkies PMR446</h3>
+          <p>Los walkies de juguetería, de excursión o de obra. <b>16 canales analógicos en FM</b> entre 446,0 y 446,2 MHz, <b>0,5 W</b> y antena fija (no se puede cambiar). Hay versiones <b>digitales</b> (dPMR446 y DMR446) en la misma banda, que no se entienden con las analógicas.</p>
+          <p><b>Alcance:</b> de unos cientos de metros entre edificios a varios kilómetros con visión directa; desde una cumbre, mucho más.</p>
+          <p><b>Los "códigos de privacidad" no son privados.</b> Son subtonos (CTCSS o DCS): tu walkie solo abre el altavoz si llega el tono elegido, pero cualquiera en el mismo canal sin tono te oye perfectamente. Sirven para no oír a los demás, no para que no te oigan.</p>
+        </article>
+        <article class="card topic">
+          <span class="tag">433 MHz y más · corto alcance</span>
+          <h3>Dispositivos de corto alcance</h3>
+          <p>Mandos de garaje, timbres inalámbricos, estaciones meteorológicas caseras, sensores y los walkies LPD de 10 mW usan bandas como la de <b>433 MHz</b> (433,05–434,79 MHz) o la de 868 MHz, con potencias muy bajas y sin licencia.</p>
+          <p>El <b>wifi</b> y el <b>Bluetooth</b> también son radio sin licencia, en 2,4 y 5 GHz. Con un receptor SDR barato puedes ver todo esto en la <span>cascada</span>: ráfagas cortas cada vez que alguien abre un garaje o un sensor envía la temperatura.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- PROFESIONAL Y EMERGENCIAS -->
+    <section id="profesional">
+      <div class="section-head">
+        <p class="kicker">Con licencia de empresa</p>
+        <h2>Redes profesionales y de emergencia</h2>
+        <p>Taxis, ambulancias, policía, bomberos, metros, puertos o una obra grande usan radio porque es inmediata: pulsas y te oye todo tu grupo a la vez, sin marcar ni esperar, y funciona aunque se caiga la red móvil. Cada organización tiene frecuencias concedidas por el Ministerio. Estas redes <strong>no están destinadas al público</strong> (ver <a href="#ley">qué se puede escuchar</a>).</p>
+      </div>
+
+      <div class="cards three">
+        <article class="card topic">
+          <span class="tag">Analógico</span>
+          <h3>PMR analógico</h3>
+          <p>La radio de toda la vida: FM en canales de 12,5 kHz en VHF (en torno a 146–174 MHz) y UHF (400–470 MHz), con repetidores en lo alto. Barata y sencilla; se usa en seguridad privada, obras, ayuntamientos o transportes. Cada vez más se pasa a digital.</p>
+        </article>
+        <article class="card topic">
+          <span class="tag">Digital · 12,5 kHz</span>
+          <h3>DMR</h3>
+          <p>El estándar europeo (ETSI) más usado en empresas: en cada canal de 12,5 kHz caben <b>dos conversaciones a la vez</b>, repartiéndose el tiempo en turnos de 30 milisegundos. Tiene tres niveles: DMR446 (sin licencia), convencional y troncal (una red que reparte los canales). Los radioaficionados lo usan también, en sus propias bandas.</p>
+        </article>
+        <article class="card topic">
+          <span class="tag">Digital · 6,25 kHz</span>
+          <h3>dPMR y NXDN</h3>
+          <p>Hermanos del DMR que, en vez de turnarse, usan canales más estrechos, de 6,25 kHz. Populares en empresas pequeñas, hostelería y eventos.</p>
+        </article>
+      </div>
+
+      <article class="card topic tetra">
+        <span class="tag">Digital troncal · misión crítica</span>
+        <h3>TETRA, la radio de las emergencias</h3>
+        <p><b>TETRA</b> (Terrestrial Trunked Radio) es un estándar europeo de 1995 pensado para servicios de emergencia. No funciona como un walkie sino como una <b>red de telefonía para walkies</b>: muchas estaciones base, un sistema central que reparte los canales y terminales que se mueven de una celda a otra sin cortar.</p>
+        <div class="cards two">
+          <div>
+            <h4>Qué lo hace especial</h4>
+            <ul class="cb-facts">
+              <li><b>Llamadas de grupo instantáneas</b>: pulsas y te oyen todos los de tu grupo (una comisaría, una dotación de bomberos) en menos de un segundo.</li>
+              <li><b>Cuatro conversaciones por canal</b>: cada canal de 25 kHz se reparte en cuatro turnos (TDMA), con una modulación digital de fase (π/4-DQPSK) a 36 kbit/s en bruto.</li>
+              <li><b>Botón de emergencia</b> que se abre paso sobre cualquier otra llamada.</li>
+              <li><b>Modo directo</b>: si no hay red (un incendio forestal, un túnel), los terminales hablan entre sí como walkies.</li>
+              <li><b>Cifrado</b> del aire y de extremo a extremo: las conversaciones de policía no se pueden oír.</li>
+              <li><b>Datos lentos</b>: mensajes, posición GPS y estado, pero nada de vídeo (unos 28,8 kbit/s como mucho).</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Quién lo usa en España</h4>
+            <ul class="cb-facts">
+              <li><b>Redes autonómicas de emergencia</b>, en la banda de 380–400 MHz que Europa reserva a la seguridad pública. Por ejemplo, RESCAT en Cataluña: más de 60.000 usuarios (Mossos, policías locales, bomberos, sanitarios, Protección Civil) y 321 estaciones base.</li>
+              <li><b>Policías locales, bomberos y Protección Civil</b> de muchos municipios.</li>
+              <li><b>Transporte y grandes instalaciones</b>: metros, aeropuertos, puertos, en otras bandas de 400 MHz.</li>
+              <li>La red del Estado, <b>SIRDEE</b> (Policía Nacional, Guardia Civil y otros, más de 150.000 usuarios), usa <b>TETRAPOL</b>, un sistema hermano de origen francés que reparte los canales por frecuencia en lugar de por turnos.</li>
+            </ul>
+            <h4>Cómo se ve</h4>
+            <p>En la cascada de un receptor SDR, una estación base TETRA es un <b>bloque ancho de 25 kHz que no se apaga nunca</b>: emite sin parar su canal de control para que los terminales sepan que hay red. Si lo sintonizas en FM, se oye un zumbido áspero continuo. Lo puedes oír imitado en <a href="#senales">así suenan</a>.</p>
+          </div>
+        </div>
+        <p class="note"><b>El futuro:</b> las redes de emergencia están empezando a pasar a <b>banda ancha de misión crítica</b> (pulsar para hablar, vídeo y datos sobre 4G y 5G con prioridad). TETRA seguirá años como red de voz de respaldo, porque funciona aunque se caiga todo lo demás.</p>
+      </article>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Comparativa de sistemas de radio profesional">
+        <table class="countries cmp wrap">
+          <thead><tr><th scope="col"><span class="sr-only">Característica</span></th><th>PMR analógico</th><th>DMR</th><th>TETRA</th><th>TETRAPOL</th></tr></thead>
+          <tbody>
+            <tr><td>Tipo</td><td>Analógico FM</td><td>Digital</td><td>Digital troncal</td><td>Digital troncal</td></tr>
+            <tr><td>Ancho del canal</td><td>12,5 kHz</td><td>12,5 kHz</td><td>25 kHz</td><td>12,5 kHz</td></tr>
+            <tr><td>Conversaciones por canal</td><td>1</td><td>2 (turnos)</td><td>4 (turnos)</td><td>1</td></tr>
+            <tr><td>Cifrado</td><td>No</td><td>Opcional</td><td>Sí</td><td>Sí</td></tr>
+            <tr><td>Uso típico</td><td>Obras, seguridad privada</td><td>Empresas, radioaficionados</td><td>Emergencias autonómicas y locales, metros</td><td>SIRDEE (Policía Nacional, Guardia Civil)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <article class="card topic">
+        <span class="tag">Voluntariado</span>
+        <h3>Cuando todo falla: la radioafición en emergencias</h3>
+        <p>Si caen la luz, el móvil e internet, una emisora con batería y una antena de hilo siguen funcionando. Por eso Protección Civil cuenta con la <b>REMER</b> (Red Radio de Emergencia), formada por radioaficionados voluntarios, y muchos radioclubes hacen simulacros. Es una de las mejores razones para sacarse la licencia: <a href="../empezar/">empezar</a>.</p>
+      </article>
+    </section>
+
+    <!-- TRANSPORTE -->
+    <section id="transporte">
+      <div class="section-head">
+        <p class="kicker">Lo que vuela y lo que navega</p>
+        <h2>Aviones y barcos</h2>
+        <p>La aviación y la marina usan radio por voz desde hace un siglo, y hoy además emiten su <strong>posición automáticamente</strong>, para que los vean otros aviones, otros barcos y cualquiera con un receptor.</p>
+      </div>
+      <div class="cards two">
+        <article class="card topic">
+          <span class="tag">118–137 MHz · AM</span>
+          <h3>✈️ Banda aérea</h3>
+          <p>Pilotos y controladores hablan en <b>AM</b>, no en FM. Es a propósito: si dos transmiten a la vez, en AM se oyen los dos montados (y alguien se da cuenta); en FM el más fuerte taparía al otro sin que nadie lo supiera. En Europa los canales están separados 8,33 kHz.</p>
+          <p><b>121,5 MHz</b> es la frecuencia internacional de emergencia, que todos los aviones vigilan.</p>
+          <h4>ADS-B, 1090 MHz</h4>
+          <p>Cada avión comercial emite cada segundo su identificación, posición, altura y velocidad. Las webs de seguimiento de vuelos se alimentan de miles de receptores de voluntarios: con un SDR de 30 € y una antena de 7 cm puedes ser uno de ellos.</p>
+        </article>
+        <article class="card topic">
+          <span class="tag">156–162 MHz · FM</span>
+          <h3>⚓ VHF marina</h3>
+          <p>Barcos, puertos y salvamento hablan en canales numerados de FM. El <b>canal 16 (156,800 MHz)</b> es el de socorro y llamada: todos lo escuchan y se pasa a otro canal para hablar. El <b>canal 70</b> se reserva a la llamada selectiva digital (DSC), el "botón rojo" de las emisoras de barco.</p>
+          <h4>AIS, 161,975 y 162,025 MHz</h4>
+          <p>Los barcos emiten su nombre, posición, rumbo y velocidad en ráfagas digitales muy cortas. Así funcionan los mapas de tráfico marítimo en directo, también hechos con receptores de voluntarios en la costa.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CIELO -->
+    <section id="cielo">
+      <div class="section-head">
+        <p class="kicker">Señales que caen del cielo</p>
+        <h2>Satélites y globos</h2>
+        <p>Algunas de las señales más fáciles y emocionantes de recibir vienen de arriba. Los satélites de radioaficionado y la Estación Espacial están en <a href="../entender/#iss">Entender</a>; aquí, los del tiempo.</p>
+      </div>
+      <div class="cards two">
+        <article class="card topic">
+          <span class="tag">137 MHz</span>
+          <h3>🛰️ Satélites meteorológicos</h3>
+          <p>Durante décadas, los satélites americanos <b>NOAA</b> mandaron fotos de las nubes en 137 MHz que cualquiera podía recibir con una antena casera: se oían como un "tic-tac" rítmico. <b>Se apagaron en 2025</b> (el NOAA-18 en junio, el NOAA-19 el 13 de agosto y el NOAA-15 el 19 de agosto).</p>
+          <p>Siguen emitiendo en la misma banda los rusos <b>Meteor-M</b>, en digital (LRPT): con un SDR, una antena para satélites y el programa adecuado se obtienen imágenes en color de la Península al paso del satélite.</p>
+        </article>
+        <article class="card topic">
+          <span class="tag">400–406 MHz</span>
+          <h3>🎈 Radiosondas</h3>
+          <p>Dos veces al día, a las 00 y las 12 UTC, AEMET y los servicios meteorológicos de todo el mundo sueltan <b>globos con una radiosonda</b>: una cajita que mide temperatura, humedad, presión y viento mientras sube hasta 30 km, y lo transmite cada segundo.</p>
+          <p>Se pueden seguir en directo en mapas colaborativos como SondeHub, alimentados por aficionados. Cuando el globo revienta, la sonda cae en paracaídas y hay quien sale a buscarla: es la "caza de radiosondas".</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- RADIODIFUSIÓN -->
+    <section id="difusion">
+      <div class="section-head">
+        <p class="kicker">Para todos</p>
+        <h2>Radiodifusión</h2>
+        <p>La radio "de siempre": emisoras pensadas para que las oiga todo el mundo. Es lo único del espectro que está expresamente <strong>destinado al público</strong>.</p>
+      </div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Bandas de radiodifusión">
+        <table class="countries wrap">
+          <thead><tr><th>Banda</th><th>Frecuencias</th><th>Qué oirás</th><th>Alcance</th></tr></thead>
+          <tbody>
+            <tr><td>Onda larga</td><td>148,5–283,5 kHz</td><td>Pocas emisoras ya; algunas europeas de noche</td><td>Cientos de km por onda de superficie</td></tr>
+            <tr><td>Onda media (AM)</td><td>531–1.602 kHz</td><td>Emisoras nacionales y locales; de noche, media Europa</td><td>De día, tu región; de noche, el continente</td></tr>
+            <tr><td>Onda corta</td><td>Bandas entre 2,3 y 26 MHz (49, 41, 31, 25, 19 metros…)</td><td>Emisoras internacionales, religiosas, de otros continentes</td><td>El mundo, rebotando en la ionosfera</td></tr>
+            <tr><td>FM</td><td>87,5–108 MHz</td><td>Música y noticias con buena calidad</td><td>Hasta el horizonte (50–100 km)</td></tr>
+            <tr><td>DAB+</td><td>174–240 MHz</td><td>Radio digital (en España, poca oferta)</td><td>Como la FM</td></tr>
+            <tr><td>TDT</td><td>470–694 MHz</td><td>Televisión digital</td><td>Como la FM</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">¿Quieres oír emisoras de todo el mundo ahora? <a href="../escuchar/#emisoras">Mapa de emisoras</a> y <a href="../escuchar/#directo">receptor real de onda corta</a>.</p>
+    </section>
+
+    <!-- SEÑALES -->
+    <section id="senales">
+      <div class="section-head">
+        <p class="kicker">Aprende a reconocerlas</p>
+        <h2>Así suenan</h2>
+        <p>Cuando pasas por estas bandas con un receptor no oyes voces: oyes zumbidos, chirridos y ráfagas. Cada sistema tiene su "firma". Pulsa una señal para oír una <strong>imitación</strong> generada en tu navegador y ver cómo se dibuja.</p>
+      </div>
+      <div class="sounds">
+        <div class="wf card">
+          <div class="wf-head"><span id="sigNow">Elige una señal</span><button class="btn small ghost" id="sigStop" type="button">■ Parar</button></div>
+          <canvas id="sigFall" width="640" height="220" aria-label="Cascada: espectrograma de la señal que suena"></canvas>
+          <div class="wf-axis" aria-hidden="true"><span>0 Hz</span><span>2.000</span><span>4.000</span><span>6.000 Hz</span></div>
+          <p class="note">Es lo que sale por el altavoz de un receptor en FM al sintonizar cada señal: el contenido no se entiende (y en las redes cifradas no se puede entender). Las grabaciones reales están en el enlace de cada una.</p>
+        </div>
+        <div>
+          <div class="sound-grid" id="sigGrid"></div>
+          <div class="sound-info card" id="sigInfo"><p class="note">Las señales se generan imitando su ritmo y su forma. Identificar señales es una afición en sí misma: hay catálogos con cientos de ellas.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECEPTORES -->
+    <section id="receptores">
+      <div class="section-head">
+        <p class="kicker">El equipo</p>
+        <h2>Con qué se escucha</h2>
+        <p>Para escuchar no hace falta licencia (sí para emitir, salvo en las bandas de uso común). Estos son los receptores, de más sencillo a más versátil. Precios orientativos.</p>
+      </div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Tipos de receptor">
+        <table class="countries wrap">
+          <thead><tr><th>Receptor</th><th>Qué capta</th><th>Precio</th><th>Para quién</th></tr></thead>
+          <tbody>
+            <tr><td><b>Receptor web</b> (WebSDR, KiwiSDR)</td><td>Lo que capte una antena de otra persona, en cualquier parte del mundo</td><td>Gratis</td><td>Para empezar hoy mismo, sin comprar nada</td></tr>
+            <tr><td><b>Radio multibanda</b> portátil</td><td>Onda media, onda corta y FM; con BLU, también radioaficionados</td><td>30–150 €</td><td>Escuchar emisoras del mundo en el sofá</td></tr>
+            <tr><td><b>SDR USB</b> (tipo RTL-SDR)</td><td>De unos 24 MHz a 1,7 GHz; los modelos recientes, también onda corta. Ves la cascada en el ordenador</td><td>30–40 €</td><td>La mejor puerta de entrada: aviones, barcos, satélites, radiosondas, walkies…</td></tr>
+            <tr><td><b>SDR de calidad</b></td><td>Onda corta y más, con mucho menos ruido y más margen</td><td>100–300 €</td><td>Escucha seria de onda corta y DX</td></tr>
+            <tr><td><b>Escáner</b></td><td>Barre canales de VHF y UHF analógicos; los digitales entienden algunos sistemas sin cifrar</td><td>150–500 €</td><td>Quien quiere algo de bolsillo y sin ordenador</td></tr>
+            <tr><td><b>Walkie o emisora CB</b></td><td>Su banda de uso común</td><td>30–200 €</td><td>Para hablar, no solo escuchar</td></tr>
+            <tr><td><b>Emisora de radioaficionado</b></td><td>Muchas reciben casi todo, de onda larga a UHF</td><td>Desde 30 € (walkie) a miles</td><td>Con licencia, para emitir</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Con un SDR se usan programas gratuitos como SDR++, SDR# o GQRX. Y recuerda: <b>la antena importa más que el receptor</b>. Uno barato con buena antena oye más que uno caro con una mala.</p>
+    </section>
+
+    <!-- LEY -->
+    <section id="ley">
+      <div class="section-head">
+        <p class="kicker">Antes de encender el receptor</p>
+        <h2>Qué se puede escuchar (y qué no)</h2>
+        <p>Tener un receptor es legal. Lo que importa es <strong>qué escuchas y qué haces con ello</strong>. La Constitución protege el secreto de las comunicaciones, y la Ley General de Telecomunicaciones sanciona como infracción muy grave interceptar sin autorización comunicaciones <strong>no destinadas al público en general</strong>, y también divulgar lo que se haya oído.</p>
+      </div>
+      <div class="cards three law">
+        <article class="card law-ok">
+          <h3>✅ Libre</h3>
+          <ul class="cb-facts">
+            <li>Radiodifusión: onda larga, media y corta, FM, DAB+.</li>
+            <li>Radioaficionados: hablan en abierto y les gusta que les escuchen.</li>
+            <li>CB-27 y PMR446: uso común.</li>
+            <li>Balizas, satélites de aficionado y meteorológicos.</li>
+            <li>Radiosondas, ADS-B de los aviones y AIS de los barcos: emisiones de posición pensadas para que cualquiera las reciba.</li>
+          </ul>
+        </article>
+        <article class="card law-care">
+          <h3>⚠️ Comunicaciones de servicio</h3>
+          <p>Voz de aviación, marina, taxis, empresas, seguridad privada. Mucha gente las sintoniza con escáneres, pero <b>no están destinadas al público</b> y la ley no hace excepciones: no las grabes, no las difundas y no uses lo que oigas.</p>
+        </article>
+        <article class="card law-no">
+          <h3>⛔ No</h3>
+          <ul class="cb-facts">
+            <li>Policía, emergencias y sanidad (TETRA, TETRAPOL, DMR de servicios): además van cifradas, e intentar descifrarlas es mucho más grave.</li>
+            <li>Telefonía móvil, inalámbricos y cualquier comunicación privada.</li>
+          </ul>
+          <p class="note">Ver una señal en la cascada no es escuchar su contenido: reconocer una red TETRA por su forma es identificación de señales, no interceptación.</p>
+        </article>
+      </div>
+      <p class="note">Esto es una guía general, no asesoramiento jurídico. Y para <b>emitir</b>, fuera de las bandas de uso común, hace falta licencia: <a href="../empezar/">cómo conseguirla</a>.</p>
+    </section>
+
+    <!-- REPETIDORES -->
+    <section id="repetidores-redes">
+      <div class="section-head">
+        <p class="kicker">Más alcance</p>
+        <h2>Repetidores: cómo llega una señal más lejos</h2>
+        <p>En VHF y UHF las ondas van en línea recta y se paran en el horizonte o detrás de un monte. La solución es poner algo <strong>muy alto</strong> que reciba y vuelva a emitir.</p>
+      </div>
+      <div class="rep-diagram card" aria-hidden="true">
+        <svg viewBox="0 0 640 200" role="presentation">
+          <path d="M0 190 L150 150 L260 60 L320 30 L380 60 L500 150 L640 190 Z" fill="#13233a" stroke="#27405f"/>
+          <line x1="320" y1="30" x2="320" y2="6" stroke="#f2b33d" stroke-width="3"/>
+          <circle cx="320" cy="6" r="4" fill="#ff5a4e"/>
+          <path d="M70 168 Q190 40 312 14" fill="none" stroke="#7cc7ff" stroke-width="2" stroke-dasharray="6 5"/>
+          <path d="M328 14 Q450 40 570 168" fill="none" stroke="#f2b33d" stroke-width="2" stroke-dasharray="6 5"/>
+          <rect x="62" y="160" width="14" height="24" rx="3" fill="#7cc7ff"/><line x1="69" y1="160" x2="69" y2="146" stroke="#7cc7ff" stroke-width="2"/>
+          <rect x="563" y="160" width="14" height="24" rx="3" fill="#f2b33d"/><line x1="570" y1="160" x2="570" y2="146" stroke="#f2b33d" stroke-width="2"/>
+          <text x="24" y="40" fill="#7cc7ff" font-size="14" font-family="monospace">entrada 145,000</text>
+          <text x="470" y="40" fill="#f2b33d" font-size="14" font-family="monospace">salida 145,600</text>
+        </svg>
+      </div>
+      <p>El repetidor <b>escucha en una frecuencia y retransmite a la vez en otra</b>, con mucha más potencia y desde un monte. Tu walkie transmite en la de entrada y escucha en la de salida: tu radio hace el cambio sola si configuras el desplazamiento.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Repetidores en cada servicio">
+        <table class="countries wrap">
+          <thead><tr><th>Servicio</th><th>¿Repetidores?</th><th>Cómo son</th></tr></thead>
+          <tbody>
+            <tr><td>Radioaficionados</td><td>Sí, cientos</td><td>Analógicos FM (en 2 m se transmite 600 kHz más abajo; en 70 cm, 7,6 MHz) con un tono de acceso, y digitales (DMR, C4FM, D-STAR) enlazados por internet. Los mantienen los radioclubes. <a href="../practicar/#repetidores">Cómo se usan y calculadora</a></td></tr>
+            <tr><td>Satélites de aficionado</td><td>Sí, en órbita</td><td>Los satélites FM son repetidores a 500–800 km de altura: con un walkie se habla con quien esté a 2.000 km. <a href="../entender/#satelites">Satélites</a></td></tr>
+            <tr><td>Empresas (PMR y DMR)</td><td>Sí</td><td>Repetidores propios en lo alto, con licencia; en DMR, uno solo lleva dos conversaciones.</td></tr>
+            <tr><td>TETRA y TETRAPOL</td><td>Red de estaciones base</td><td>No son repetidores sueltos sino una red como la del móvil, con un sistema central y repetidores de cobertura en túneles y edificios.</td></tr>
+            <tr><td>CB-27 y PMR446</td><td>No</td><td>Prohibidos: solo comunicación directa entre equipos.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ANTENAS -->
+    <section id="antenas">
+      <div class="section-head">
+        <p class="kicker">Lo más importante de la estación</p>
+        <h2>Las antenas</h2>
+        <p>Una radio sin antena es sorda y muda. La antena decide hasta dónde llegas y qué oyes, mucho más que la radio. Y es lo más divertido de construir: con un trozo de cable bien cortado se habla con otros continentes.</p>
+      </div>
+
+      <div class="cards two">
+        <article class="card topic">
+          <h3>¿Qué es una antena?</h3>
+          <p>Un trozo de metal con la <b>forma y el tamaño justos</b> para convertir una corriente eléctrica que va y viene muy deprisa en <b>ondas de radio</b> que se van por el aire (al emitir), y al revés (al recibir). La misma antena sirve para las dos cosas.</p>
+          <p>Funciona como la cuerda de una guitarra: vibra mejor a la frecuencia para la que tiene el tamaño justo. Por eso una antena mide más o menos <b>media longitud de onda</b> o un cuarto, y por eso las de onda corta son enormes y la del móvil cabe dentro del teléfono.</p>
+          <p class="formula"><b>Longitud de onda (m) = 300 ÷ frecuencia (MHz)</b></p>
+        </article>
+        <article class="card topic size-tool" id="sizeTool">
+          <h3>📏 ¿Cuánto mide la antena?</h3>
+          <label for="sizeFreq">Frecuencia: <b id="sizeFreqOut">7,1 MHz</b></label>
+          <input type="range" id="sizeFreq" min="0" max="1000" value="305" aria-describedby="sizeOut">
+          <div class="size-bars" id="sizeBars" aria-hidden="true"></div>
+          <p id="sizeOut" aria-live="polite"></p>
+          <p class="note">Medidas teóricas en el aire; en la práctica se cortan un 5 % más cortas y se ajustan. Calculadora detallada en <a href="../empezar/#estacion">tu primera estación</a>.</p>
+        </article>
+      </div>
+
+      <h3 class="sub">Lo que hay que saber de cualquier antena</h3>
+      <div class="cards three">
+        <div class="card concept"><h4>🎯 Resonancia</h4><p>Una antena "resuena" a una frecuencia, como la cuerda. Fuera de ella, la energía no sale y vuelve hacia la radio.</p></div>
+        <div class="card concept"><h4>🔌 Impedancia</h4><p>La resistencia que presenta al cable. Radios y cables usan 50 Ω: si la antena también, toda la potencia pasa.</p></div>
+        <div class="card concept"><h4>📉 ROE</h4><p>Relación de ondas estacionarias: mide cuánta energía rebota. 1:1 es perfecto, menos de 1,5 es muy bueno, más de 3 es malo.</p></div>
+        <div class="card concept"><h4>🔦 Ganancia</h4><p>Una antena no crea energía: la <b>concentra</b> hacia unas direcciones, como el reflector de una linterna. Se mide en dBi (frente a una antena ideal que radia igual en todas direcciones) o dBd (frente a un dipolo). +3 dB es el doble.</p></div>
+        <div class="card concept"><h4>🌸 Diagrama de radiación</h4><p>El dibujo de hacia dónde radia. <b>Omnidireccional</b>: igual en todas las direcciones del horizonte. <b>Directiva</b>: mucho hacia un lado, poco hacia los demás.</p></div>
+        <div class="card concept"><h4>↕️ Polarización</h4><p>La orientación de la onda: vertical (walkies, coches, repetidores), horizontal (contactos lejanos en VHF, TV) o circular (satélites). Si no coincide, se pierde muchísima señal.</p></div>
+        <div class="card concept"><h4>📶 Ancho de banda</h4><p>Cuánto puedes alejarte de la frecuencia ideal sin que la ROE suba demasiado. Las antenas gruesas y las de banda ancha toleran más.</p></div>
+        <div class="card concept"><h4>🏔️ Altura y entorno</h4><p>En VHF y UHF, cada metro de altura cuenta: la señal va hasta el horizonte. En onda corta, la altura sobre el suelo cambia el ángulo con el que sale hacia la ionosfera.</p></div>
+        <div class="card concept"><h4>👂 Recibir y emitir</h4><p>Para <b>escuchar</b>, casi cualquier cable sirve. Para <b>emitir</b>, la antena tiene que estar ajustada, o la radio se protege bajando potencia (o se estropea).</p></div>
+      </div>
+
+      <h3 class="sub">¿Cuántos tipos hay?</h3>
+      <p>Cientos de variantes, pero casi todas pertenecen a <b>siete familias</b>: dipolos, verticales, directivas, de hilo, bucles, de banda ancha y reflectoras. Estas son las 18 que más vas a ver. Filtra por lo que quieres hacer:</p>
+      <div class="chips ant-filter" id="antFilter" role="group" aria-label="Filtrar antenas por uso">
+        <button class="chip" type="button" data-f="all" aria-pressed="true">Todas</button>
+        <button class="chip" type="button" data-f="hf" aria-pressed="false">Onda corta</button>
+        <button class="chip" type="button" data-f="vu" aria-pressed="false">VHF y UHF</button>
+        <button class="chip" type="button" data-f="sat" aria-pressed="false">Satélites</button>
+        <button class="chip" type="button" data-f="rx" aria-pressed="false">Solo escuchar</button>
+        <button class="chip" type="button" data-f="small" aria-pressed="false">Poco espacio</button>
+      </div>
+      <p class="note" id="antCount" aria-live="polite"></p>
+
+      <div class="ant-grid" id="antGrid">
+        <article class="card ant" data-ant="dipole" data-f="hf vu">
+          <div class="ant-pics"></div>
+          <span class="tag">Dipolos</span><h4>Dipolo de media onda</h4>
+          <p>Dos hilos iguales en línea, alimentados por el centro. La antena de referencia: sencilla, barata y eficaz.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Onda corta a UHF</dd><dt>Ganancia</dt><dd>2,15 dBi</dd><dt>Radia</dt><dd>En forma de ocho, hacia los lados</dd><dt>Ideal para</dt><dd>La primera antena de onda corta, colgada entre dos puntos</dd></dl>
+        </article>
+        <article class="card ant" data-ant="invv" data-f="hf small">
+          <div class="ant-pics"></div>
+          <span class="tag">Dipolos</span><h4>V invertida</h4>
+          <p>Un dipolo con el centro en lo alto de un solo mástil y los brazos bajando en V. Necesita menos espacio y un solo apoyo.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Onda corta</dd><dt>Ganancia</dt><dd>≈ 2 dBi</dd><dt>Radia</dt><dd>Casi en todas direcciones</dd><dt>Ideal para</dt><dd>Jardines y portable</dd></dl>
+        </article>
+        <article class="card ant" data-ant="gp" data-f="hf vu">
+          <div class="ant-pics"></div>
+          <span class="tag">Verticales</span><h4>Vertical de cuarto de onda</h4>
+          <p>Una varilla vertical y unos hilos (radiales) que hacen de "espejo" en el suelo. Ocupa poco en planta.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Onda corta a UHF</dd><dt>Ganancia</dt><dd>≈ 2–5 dBi</dd><dt>Radia</dt><dd>Igual en todo el horizonte, ángulo bajo</dd><dt>Ideal para</dt><dd>Contactos lejanos, CB, base de VHF</dd></dl>
+        </article>
+        <article class="card ant" data-ant="whip" data-f="vu small">
+          <div class="ant-pics"></div>
+          <span class="tag">Verticales</span><h4>Látigo y antena de walkie</h4>
+          <p>La goma flexible del walkie o la varilla del coche: una vertical acortada con una bobina. Cómoda, pero pierde rendimiento.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>VHF y UHF, CB en el coche</dd><dt>Ganancia</dt><dd>Negativa: −2 a 0 dBi</dd><dt>Radia</dt><dd>En todas direcciones</dd><dt>Ideal para</dt><dd>Llevarla encima</dd></dl>
+        </article>
+        <article class="card ant" data-ant="jpole" data-f="vu">
+          <div class="ant-pics"></div>
+          <span class="tag">Verticales</span><h4>J-pole y Slim Jim</h4>
+          <p>Una vertical de media onda que no necesita radiales, con forma de J. Se hace en casa con tubo de cobre o cinta de dos hilos.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>VHF y UHF</dd><dt>Ganancia</dt><dd>≈ 2–3 dBi</dd><dt>Radia</dt><dd>En todas direcciones</dd><dt>Ideal para</dt><dd>El repetidor desde casa, primer proyecto</dd></dl>
+        </article>
+        <article class="card ant" data-ant="colinear" data-f="vu">
+          <div class="ant-pics"></div>
+          <span class="tag">Verticales</span><h4>Colineal</h4>
+          <p>Varias medias ondas apiladas en un tubo de fibra. Aplasta la radiación hacia el horizonte: más alcance sin dirección preferida.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>VHF, UHF, 1090 MHz</dd><dt>Ganancia</dt><dd>≈ 5–9 dBi</dd><dt>Radia</dt><dd>En todas direcciones, muy plana</dd><dt>Ideal para</dt><dd>Tejados, repetidores, recibir aviones</dd></dl>
+        </article>
+        <article class="card ant" data-ant="yagi" data-f="vu sat">
+          <div class="ant-pics"></div>
+          <span class="tag">Directivas</span><h4>Yagi</h4>
+          <p>La "espina de pescado" de los tejados: un elemento alimentado, un reflector detrás y directores delante. Cuantos más elementos, más ganancia y más estrecho el haz.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Onda corta alta a microondas</dd><dt>Ganancia</dt><dd>6–17 dBi</dd><dt>Radia</dt><dd>Hacia delante</dd><dt>Ideal para</dt><dd>Contactos lejanos en VHF, satélites a mano</dd></dl>
+        </article>
+        <article class="card ant" data-ant="moxon" data-f="hf vu">
+          <div class="ant-pics"></div>
+          <span class="tag">Directivas</span><h4>Moxon y cuadro (quad)</h4>
+          <p>Directivas compactas: la Moxon es un rectángulo de hilo doblado; la quad, uno o varios cuadrados de hilo. Mucha relación delante/detrás en poco espacio.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Onda corta alta, VHF</dd><dt>Ganancia</dt><dd>≈ 5–8 dBi</dd><dt>Radia</dt><dd>Hacia delante, casi nada detrás</dd><dt>Ideal para</dt><dd>Directiva casera ligera</dd></dl>
+        </article>
+        <article class="card ant" data-ant="lpda" data-f="vu rx">
+          <div class="ant-pics"></div>
+          <span class="tag">Banda ancha</span><h4>Log-periódica</h4>
+          <p>Parece una Yagi, pero sus elementos crecen poco a poco: cada pareja trabaja en una parte de la banda. Directiva y muy ancha de banda.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Por ejemplo 100 MHz–1,3 GHz</dd><dt>Ganancia</dt><dd>≈ 6–8 dBi</dd><dt>Radia</dt><dd>Hacia delante</dd><dt>Ideal para</dt><dd>Escuchar muchas bandas con una antena</dd></dl>
+        </article>
+        <article class="card ant" data-ant="discone" data-f="vu rx">
+          <div class="ant-pics"></div>
+          <span class="tag">Banda ancha</span><h4>Discono</h4>
+          <p>Un disco encima de un cono de varillas. Recibe con decencia de 25 MHz a más de 1 GHz sin ajustar nada.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>≈ 25–1.300 MHz</dd><dt>Ganancia</dt><dd>≈ 0–2 dBi</dd><dt>Radia</dt><dd>En todas direcciones</dd><dt>Ideal para</dt><dd>El escáner o el SDR en el tejado</dd></dl>
+        </article>
+        <article class="card ant" data-ant="efhw" data-f="hf small">
+          <div class="ant-pics"></div>
+          <span class="tag">De hilo</span><h4>Media onda alimentada en el extremo</h4>
+          <p>Un hilo de media onda con un transformador en una punta. Funciona en varias bandas de onda corta y se cuelga de un árbol en minutos.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Varias de onda corta</dd><dt>Ganancia</dt><dd>≈ 2 dBi</dd><dt>Radia</dt><dd>Variable según la banda</dd><dt>Ideal para</dt><dd>Portable, montaña, parques (POTA)</dd></dl>
+        </article>
+        <article class="card ant" data-ant="longwire" data-f="hf rx small">
+          <div class="ant-pics"></div>
+          <span class="tag">De hilo</span><h4>Hilo largo</h4>
+          <p>Un cable tan largo como quepa, lo más alto posible. Para escuchar onda corta, imbatible por precio. Para emitir necesita un acoplador.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Onda larga a onda corta</dd><dt>Ganancia</dt><dd>Variable</dd><dt>Radia</dt><dd>Depende de la longitud</dd><dt>Ideal para</dt><dd>La primera antena de escucha</dd></dl>
+        </article>
+        <article class="card ant" data-ant="delta" data-f="hf">
+          <div class="ant-pics"></div>
+          <span class="tag">Bucles</span><h4>Bucle de onda completa (delta)</h4>
+          <p>Un triángulo o cuadrado de hilo de una longitud de onda de perímetro. Algo más de ganancia que un dipolo y menos ruido.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Onda corta</dd><dt>Ganancia</dt><dd>≈ 3–4 dBi</dd><dt>Radia</dt><dd>Hacia los dos lados del bucle</dd><dt>Ideal para</dt><dd>Quien tiene un poco de terreno</dd></dl>
+        </article>
+        <article class="card ant" data-ant="magloop" data-f="hf rx small">
+          <div class="ant-pics"></div>
+          <span class="tag">Bucles</span><h4>Bucle magnético</h4>
+          <p>Un aro de tubo de cobre de uno o dos metros con un condensador variable. Muy pequeño para onda corta y poco ruidoso, pero hay que resintonizarlo a cada cambio de frecuencia.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Onda corta</dd><dt>Ganancia</dt><dd>Algo menos que un dipolo</dd><dt>Radia</dt><dd>Hacia los lados del aro</dd><dt>Ideal para</dt><dd>Balcones y pisos</dd></dl>
+        </article>
+        <article class="card ant" data-ant="active" data-f="hf rx small">
+          <div class="ant-pics"></div>
+          <span class="tag">Recepción</span><h4>Antena activa</h4>
+          <p>Una varilla corta con un amplificador. Solo recibe, pero cubre de onda larga a onda corta en un palo de medio metro.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Onda larga a 30 MHz</dd><dt>Ganancia</dt><dd>La da el amplificador</dd><dt>Radia</dt><dd>No emite</dd><dt>Ideal para</dt><dd>Escuchar onda corta con un SDR</dd></dl>
+        </article>
+        <article class="card ant" data-ant="ferrite" data-f="rx small">
+          <div class="ant-pics"></div>
+          <span class="tag">Recepción</span><h4>Varilla de ferrita</h4>
+          <p>La que llevan dentro las radios de onda media: una bobina sobre una barra de ferrita. Por eso al girar la radio la emisora sube o baja.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Onda larga y media</dd><dt>Ganancia</dt><dd>Muy baja</dd><dt>Radia</dt><dd>No emite; recibe de dos lados</dd><dt>Ideal para</dt><dd>Radios portátiles</dd></dl>
+        </article>
+        <article class="card ant" data-ant="qfh" data-f="sat rx">
+          <div class="ant-pics"></div>
+          <span class="tag">Satélites</span><h4>Helicoidal cuadrifilar (QFH) y helicoidal</h4>
+          <p>Hélices de hilo con polarización circular, que reciben el satélite esté donde esté sin moverlas. La QFH es la clásica para satélites meteorológicos en 137 MHz.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>VHF a microondas</dd><dt>Ganancia</dt><dd>≈ 2–12 dBi</dd><dt>Radia</dt><dd>Hacia el cielo (QFH) o hacia delante</dd><dt>Ideal para</dt><dd>Satélites del tiempo, GPS</dd></dl>
+        </article>
+        <article class="card ant" data-ant="dish" data-f="sat">
+          <div class="ant-pics"></div>
+          <span class="tag">Reflectoras</span><h4>Parabólica</h4>
+          <p>Un plato que concentra la señal en un punto, como un espejo. A frecuencias altas da ganancias enormes con un tamaño razonable.</p>
+          <dl class="ant-facts"><dt>Bandas</dt><dd>Microondas (GHz)</dd><dt>Ganancia</dt><dd>25–40 dBi</dd><dt>Radia</dt><dd>Un haz muy estrecho</dd><dt>Ideal para</dt><dd>QO-100, televisión por satélite</dd></dl>
+        </article>
+      </div>
+
+      <h3 class="sub">¿Cuál elijo?</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Qué antena elegir según lo que quieres hacer">
+        <table class="countries wrap">
+          <thead><tr><th>Quiero…</th><th>Antena</th></tr></thead>
+          <tbody>
+            <tr><td>Escuchar onda corta desde un piso</td><td>Hilo largo por la ventana, antena activa o bucle magnético en el balcón</td></tr>
+            <tr><td>Empezar con un SDR (aviones, barcos, FM, walkies)</td><td>El dipolo telescópico que suele traer el SDR, junto a una ventana; después, un discono en el tejado</td></tr>
+            <tr><td>Ver aviones (ADS-B)</td><td>Una vertical de cuarto de onda para 1090 MHz (6,9 cm) o una colineal casera, lo más alta posible</td></tr>
+            <tr><td>Satélites meteorológicos</td><td>QFH o dipolo en V para 137 MHz, en exterior y con cielo despejado</td></tr>
+            <tr><td>Satélites de aficionado con un walkie</td><td>Una Yagi pequeña de mano para 2 m y 70 cm, apuntando al satélite</td></tr>
+            <tr><td>CB-27 en el coche</td><td>Vertical con base magnética, cuanto más larga mejor (la de cuarto de onda mide unos 2,7 m)</td></tr>
+            <tr><td>Repetidores de 2 m y 70 cm desde casa</td><td>Colineal o J-pole en el tejado</td></tr>
+            <tr><td>Onda corta con licencia, en casa</td><td>Dipolo o V invertida para una banda; media onda en el extremo para varias</td></tr>
+            <tr><td>QO-100</td><td>Parabólica de 60 a 120 cm con un LNB de televisión para recibir</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <article class="card topic warn">
+        <h3>⚡ Seguridad, antes que nada</h3>
+        <ul class="cb-facts">
+          <li><b>Nunca cerca de líneas eléctricas</b>: ni al montarla ni si se cae. Es la causa de los accidentes graves con antenas.</li>
+          <li><b>Toma de tierra y protección contra rayos</b> en antenas exteriores. Si hay tormenta, desconecta la antena de la radio.</li>
+          <li><b>No toques una antena mientras emite</b>: las de alta potencia pueden quemar.</li>
+          <li><b>Tejados y comunidades</b>: los radioaficionados con licencia tienen derecho a instalar antenas en el edificio, con condiciones. Lo explicamos en <a href="../empezar/#estacion">tu primera estación</a>.</li>
+        </ul>
+      </article>
+
+      <p class="note">Fuentes: Cuadro Nacional de Atribución de Frecuencias; Orden IET/614/2015 (CB-27); Decisión ECC/DEC/(15)05 (PMR446); ETSI EN 300 392 (TETRA) y TS 102 361 (DMR); NOAA/NESDIS (fin de los satélites NOAA, 2025); diario Ara (RESCAT) y Ministerio del Interior (SIRDEE). Consultado el 2 de noviembre de 2026.</p>
+    </section>
+
+    <nav class="next-page" aria-label="Siguiente paso"><a href="../practicar/">Siguiente: Practicar →</a></nav>
+  </main>
+
+  <footer>
+    <p class="footer-actions"><button class="btn ghost small" id="shareSite" type="button">📤 Compartir esta web</button> <button class="btn small" id="installApp" type="button" hidden>📲 Instalar la app</button></p>
+    <p>📻 radio · un proyecto de <a href="https://bendi.dev">Bendi</a> · 73! <small>(«saludos» en jerga de radio)</small></p>
+    <p class="sponsor"><a class="sponsor-pill" id="sponsorLink" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span class="beat" aria-hidden="true">💚</span> ¿Te es útil? <b>Apoya el proyecto</b> en GitHub Sponsors</a></p>
+    <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">¿Ves un error o algo desactualizado? Avísanos</a></p>
+  </footer>
+
+  <script src="../js/core.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/journey.js"></script>
+  <script src="../js/spectrum.js"></script>
+  <script src="../js/antennas.js"></script>
+  <script src="../js/install.js"></script>
+  <script src="../js/glossary.js"></script>
+  <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

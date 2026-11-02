@@ -67,6 +67,14 @@ Las comprobaciones de CORS se hicieron desde `https://bendi.dev` el **1 de novie
 | Satélites FM (SO-50, AO-91, ISS) y estado de AO-91 | [AMSAT](https://www.amsat.org/live-fm-satellites/), [AO-91](https://www.amsat.org/two-way-satellites/ao-91/) | `entender/`, `js/sats.js` |
 | Desplazamiento de repetidores (−600 kHz en 2 m, −7,6 MHz en 70 cm) | Plan de banda IARU Región 1 | `js/repeater.js` |
 | Ley 19/1983 de antenas de radioaficionado | [BOE](https://www.boe.es/eli/es/l/1983/11/16/19/con) | `empezar/` |
+| CB-27: 40 canales 26,960–27,410 MHz, 4 W AM/FM y 12 W BLU, canal 9 socorro, uso común | Orden IET/614/2015 (nota UN-3 del CNAF), norma EN 300 433 | `espectro/`, `empezar/` |
+| PMR446: 446,0–446,2 MHz, 16 canales analógicos, 0,5 W, antena fija; dPMR446 y DMR446 | Decisión ECC/DEC/(15)05, [Wikipedia](https://en.wikipedia.org/wiki/PMR446) | `espectro/` |
+| TETRA (25 kHz, 4 turnos TDMA, π/4-DQPSK, 36 kbit/s brutos) y DMR (12,5 kHz, 2 turnos) | ETSI EN 300 392 y TS 102 361 | `espectro/`, `js/spectrum.js` |
+| RESCAT: TETRA, más de 60.000 usuarios, 321 estaciones base | [Ara](https://en.ara.cat/media/rescat-the-catalan-invisible-network-that-never-fails_1_5677611.html) | `espectro/` |
+| SIRDEE: más de 150.000 usuarios; tecnología TETRAPOL (España figura entre los países con redes TETRAPOL) | [Airbus](https://www.criticalcommunications.airbus.com/en/customer-story/spain/nationwide-public-safety-network-in-spain), [Wikipedia: TETRAPOL](https://en.wikipedia.org/wiki/TETRAPOL) | `espectro/` · **confirmar con una fuente oficial si aparece** |
+| Fin de los satélites NOAA: NOAA-18 (6 jun 2025), NOAA-19 (13 ago) y NOAA-15 (19 ago) | [NOAA NESDIS](https://www.nesdis.noaa.gov/news/suspension-of-poes-data-users-after-june-16-2025-and-decommissioning) | `espectro/`, `js/spectrum.js` |
+| Interceptar comunicaciones no destinadas al público es infracción muy grave | Ley General de Telecomunicaciones (texto comprobado en la versión de 2014, art. 76.10; la vigente es la Ley 11/2022) y art. 18.3 de la Constitución | `espectro/#ley` · **comprobar el artículo de la Ley 11/2022** |
+| Bandas de radiodifusión, aérea, marina, AIS, ADS-B, radiosondas, telefonía (mapa del espectro) | Cuadro Nacional de Atribución de Frecuencias (CNAF) y acuerdos de la CEPT | `js/spectrum.js` (BANDS) |
 
 ## Recursos alojados en el propio repositorio
 
@@ -77,7 +85,7 @@ Las comprobaciones de CORS se hicieron desde `https://bendi.dev` el **1 de novie
 
 ## Política de seguridad de contenido
 
-Todos los dominios a los que la web se conecta deben estar en la Content-Security-Policy de las seis páginas: `script-src` (cdnjs, GoatCounter), `connect-src` (Radio Browser, HamQTH, CelesTrak, GoatCounter). Imágenes y audio admiten cualquier `https:` (teselas, KC2G, emisoras, Commons). Ver [ARQUITECTURA.md §11](ARQUITECTURA.md#11-seguridad).
+Todos los dominios a los que la web se conecta deben estar en la Content-Security-Policy de todas las páginas: `script-src` (cdnjs, GoatCounter), `connect-src` (Radio Browser, HamQTH, CelesTrak, GoatCounter). Imágenes y audio admiten cualquier `https:` (teselas, KC2G, emisoras, Commons). Ver [ARQUITECTURA.md §11](ARQUITECTURA.md#11-seguridad).
 
 ## Datos guardados en el repositorio
 

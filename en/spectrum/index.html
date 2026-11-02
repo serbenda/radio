@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://*.api.radio-browser.info https://www.hamqth.com https://celestrak.org https://serbenda.goatcounter.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Spectrum · Radio</title>
+  <meta name="description" content="Who talks on each frequency: CB, PMR446 walkie-talkies, TETRA and DMR networks, aircraft, ships, satellites and radiosondes. How they sound, what to listen with, what is legal and all about antennas.">
+  <meta name="radio-root" content="../../">
+  <meta name="theme-color" content="#0f1b2d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="radio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="canonical" href="https://radio.bendi.dev/en/spectrum/">
+  <link rel="alternate" hreflang="es" href="https://radio.bendi.dev/espectro/">
+  <link rel="alternate" hreflang="en" href="https://radio.bendi.dev/en/spectrum/">
+  <link rel="alternate" hreflang="x-default" href="https://radio.bendi.dev/espectro/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="radio · bendi.dev">
+  <meta property="og:title" content="Spectrum · Radio">
+  <meta property="og:description" content="Who talks on each frequency: CB, PMR446 walkie-talkies, TETRA and DMR networks, aircraft, ships, satellites and radiosondes. How they sound, what to listen with, what is legal and all about antennas.">
+  <meta property="og:url" content="https://radio.bendi.dev/en/spectrum/">
+  <meta property="og:image" content="https://radio.bendi.dev/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A radio dial with a signal and the words: There are thousands of voices on the air. Listen to them.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Spectrum · Radio">
+  <meta name="twitter:description" content="Who talks on each frequency: CB, PMR446 walkie-talkies, TETRA and DMR networks, aircraft, ships, satellites and radiosondes. How they sound, what to listen with, what is legal and all about antennas.">
+  <meta name="twitter:image" content="https://radio.bendi.dev/og.png">
+  <link rel="icon" href="../../img/favicon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="preload" href="../../fonts/atkinson-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-page="espectro">
+  <a class="skip" href="#contenido">Skip to content</a>
+  <header class="top">
+    <a class="brand" href="../" aria-label="radio, go to the home page">📻 <span>radio</span></a>
+    <nav aria-label="Main">
+      <a href="../" data-page="inicio">Home</a>
+      <a href="../listen/" data-page="escuchar">Listen</a>
+      <a href="../understand/" data-page="entender">Understand</a>
+      <a href="../spectrum/" data-page="espectro">Spectrum</a>
+      <a href="../practice/" data-page="practicar">Practice</a>
+      <a href="../exam/" data-page="examen">Exam</a>
+      <a href="../start/" data-page="empezar">Get started</a>
+    </nav>
+    <a class="lang-switch" id="langSwitch" href="../../espectro/" hreflang="es" lang="es" title="Leer esta página en castellano" aria-label="Versión en castellano de esta página">ES</a>
+    <div class="utc" title="Radio amateurs always use UTC time"><small>UTC</small> <span id="utc">--:--</span></div>
+  </header>
+
+  <main id="contenido">
+    <noscript><p class="noscript">You can read the text without JavaScript, but the dial, maps, sounds, Morse, contacts and exam all need it. Turn it on to use them.</p></noscript>
+    <header class="page-head">
+      <p class="kicker">Beyond amateur radio</p>
+      <h1>Spectrum</h1>
+      <p class="lead">The airwaves are divided up like a street map: every frequency has an owner. Here you'll see who talks on each one (CB, walkie-talkies, emergency networks, aircraft, ships, satellites), how they sound, what to listen with, what is legal to listen to and, at the end, everything about antennas.</p>
+      <nav class="toc" aria-label="On this page"><a href="#mapa">The spectrum map</a> · <a href="#sin-licencia">Licence-free radio</a> · <a href="#profesional">Professional and emergency networks</a> · <a href="#transporte">Aircraft and ships</a> · <a href="#cielo">Satellites and balloons</a> · <a href="#difusion">Broadcasting</a> · <a href="#senales">How they sound</a> · <a href="#receptores">What to listen with</a> · <a href="#ley">What you may listen to</a> · <a href="#repetidores-redes">Repeaters</a> · <a href="#antenas">Antennas</a></nav>
+    </header>
+
+    <!-- SPECTRUM MAP -->
+    <section id="mapa">
+      <div class="section-head">
+        <p class="kicker">An invisible street map</p>
+        <h2>The spectrum map</h2>
+        <p>From 100 kHz to 12 GHz, arranged by who uses it. The scale is logarithmic: each mark multiplies the frequency by ten. Tap a band to find out what it is and where it's explained.</p>
+      </div>
+      <div class="card spec-card">
+        <div class="spec-map" id="specMap" role="group" aria-label="Spectrum map by use"></div>
+        <div class="spec-axis" aria-hidden="true"><span>100 kHz</span><span>1 MHz</span><span>10 MHz</span><span>100 MHz</span><span>1 GHz</span><span>10 GHz</span></div>
+        <div class="spec-detail" id="specDetail" aria-live="polite"><p class="note">Choose a band on the map.</p></div>
+      </div>
+      <p class="note">Approximate ranges based on Spain's national frequency allocation table and European agreements. Each band holds more services than fit in a drawing.</p>
+    </section>
+
+    <!-- LICENCE-FREE -->
+    <section id="sin-licencia">
+      <div class="section-head">
+        <p class="kicker">For anyone</p>
+        <h2>Licence-free radio</h2>
+        <p>Some bands are for <strong>common use</strong>: anyone may transmit on them, with no exam or paperwork, as long as they use type-approved equipment and stick to the power limit. They are many people's way into radio.</p>
+      </div>
+
+      <article class="card topic">
+        <span class="tag">27 MHz · common use</span>
+        <h3>CB, Citizens Band</h3>
+        <p>It was born in the United States after the Second World War, became a craze there in the 1970s and in Spain in the 1980s, when lorry drivers filled it with nicknames and road talk. It's still alive among lorry drivers, country folk, <em>DX</em> fans (long-distance contacts) and anyone who wants to talk on the radio without an exam.</p>
+        <div class="cards two">
+          <div>
+            <h4>How it works</h4>
+            <ul class="cb-facts">
+              <li><b>40 channels</b> of 10 kHz between 26.960 and 27.410 MHz.</li>
+              <li><b>Three modes</b>: AM (the classic), FM (cleaner over short distances) and SSB, single sideband (goes further with the same power; the favourite for long-distance contacts).</li>
+              <li><b>Power</b>: 4 W in AM and FM; 12 W peak in SSB.</li>
+              <li><b>Channel 9 (27.065 MHz)</b>: distress. It is always kept clear when there's an emergency.</li>
+              <li><b>Direct only</b>: radio to radio, with no repeaters and no links to the internet or the phone network.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>How far it goes</h4>
+            <p>With a radio in the car, 5 to 20 km depending on the terrain; from a house with a good antenna, more. As it sits right next to the 10-metre amateur band, it behaves the same way: in the good years of the solar cycle the <span>ionosphere</span> bounces it back to earth and you hear stations from other countries, and in summer there are sudden openings thanks to sporadic E.</p>
+            <h4>The equipment</h4>
+            <p>A type-approved mobile or base radio (CE marking, European standard EN 300 433) and, above all, a good antenna: the wavelength is 11 metres, so a quarter-wave vertical is about 2.7 m long. Car antennas are usually shorter, with a coil that "lengthens" them electrically at some cost in performance. More in <a href="#antenas">antennas</a>.</p>
+          </div>
+        </div>
+        <p class="note">Not allowed on CB in Spain: amplifiers, exceeding the power limit, repeaters, connecting it to the phone network and transmitting a continuous carrier. Since 2015 no licence or call sign is needed (Orden IET/614/2015, note UN-3 of the national frequency allocation table).</p>
+      </article>
+
+      <div class="cards two">
+        <article class="card topic">
+          <span class="tag">446 MHz · common use</span>
+          <h3>PMR446 walkie-talkies</h3>
+          <p>The walkie-talkies from toy shops, hiking stores and building sites. <b>16 analogue FM channels</b> between 446.0 and 446.2 MHz, <b>0.5 W</b> and a fixed antenna (it can't be changed). There are <b>digital</b> versions (dPMR446 and DMR446) in the same band, which can't talk to the analogue ones.</p>
+          <p><b>Range:</b> from a few hundred metres among buildings to several kilometres with a clear line of sight; from a summit, much further.</p>
+          <p><b>"Privacy codes" are not private.</b> They are sub-tones (CTCSS or DCS): your walkie only opens its speaker when the chosen tone arrives, but anyone on the same channel without a tone hears you perfectly. They stop you hearing others, not others hearing you.</p>
+        </article>
+        <article class="card topic">
+          <span class="tag">433 MHz and more · short range</span>
+          <h3>Short-range devices</h3>
+          <p>Garage remotes, wireless doorbells, home weather stations, sensors and 10 mW LPD walkie-talkies use bands such as <b>433 MHz</b> (433.05–434.79 MHz) or 868 MHz, at very low power and with no licence.</p>
+          <p><b>Wifi</b> and <b>Bluetooth</b> are licence-free radio too, at 2.4 and 5 GHz. With a cheap SDR receiver you can see all of this on the <span>waterfall</span>: short bursts every time someone opens a garage or a sensor sends the temperature.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- PROFESSIONAL AND EMERGENCY -->
+    <section id="profesional">
+      <div class="section-head">
+        <p class="kicker">With a business licence</p>
+        <h2>Professional and emergency networks</h2>
+        <p>Taxis, ambulances, police, fire brigades, metros, ports or a big building site use radio because it's instant: press and your whole group hears you at once, with no dialling or waiting, and it works even if the mobile network goes down. Each organisation has frequencies assigned by the authorities. These networks are <strong>not intended for the public</strong> (see <a href="#ley">what you may listen to</a>).</p>
+      </div>
+
+      <div class="cards three">
+        <article class="card topic">
+          <span class="tag">Analogue</span>
+          <h3>Analogue PMR</h3>
+          <p>Good old radio: FM on 12.5 kHz channels in VHF (around 146–174 MHz) and UHF (400–470 MHz), with repeaters on high ground. Cheap and simple; used by private security, building sites, councils and transport. More and more of it is going digital.</p>
+        </article>
+        <article class="card topic">
+          <span class="tag">Digital · 12.5 kHz</span>
+          <h3>DMR</h3>
+          <p>The European (ETSI) standard most used by businesses: each 12.5 kHz channel carries <b>two conversations at once</b>, taking turns in 30-millisecond slots. It has three tiers: DMR446 (licence-free), conventional and trunked (a network that shares out the channels). Radio amateurs use it too, on their own bands.</p>
+        </article>
+        <article class="card topic">
+          <span class="tag">Digital · 6.25 kHz</span>
+          <h3>dPMR and NXDN</h3>
+          <p>DMR's siblings which, instead of taking turns, use narrower 6.25 kHz channels. Popular with small businesses, hospitality and events.</p>
+        </article>
+      </div>
+
+      <article class="card topic tetra">
+        <span class="tag">Digital trunked · mission-critical</span>
+        <h3>TETRA, the radio of the emergency services</h3>
+        <p><b>TETRA</b> (Terrestrial Trunked Radio) is a European standard from 1995 designed for the emergency services. It doesn't work like a walkie-talkie but like a <b>mobile phone network for walkie-talkies</b>: many base stations, a central system that shares out the channels, and terminals that move from one cell to another without dropping.</p>
+        <div class="cards two">
+          <div>
+            <h4>What makes it special</h4>
+            <ul class="cb-facts">
+              <li><b>Instant group calls</b>: press and everyone in your group (a police station, a fire crew) hears you in under a second.</li>
+              <li><b>Four conversations per channel</b>: each 25 kHz channel is split into four time slots (TDMA), with digital phase modulation (π/4-DQPSK) at 36 kbit/s gross.</li>
+              <li><b>Emergency button</b> that overrides any other call.</li>
+              <li><b>Direct mode</b>: with no network (a forest fire, a tunnel), terminals talk to each other like walkie-talkies.</li>
+              <li><b>Encryption</b> over the air and end to end: police conversations can't be heard.</li>
+              <li><b>Slow data</b>: messages, GPS position and status, but no video (about 28.8 kbit/s at most).</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Who uses it in Spain</h4>
+            <ul class="cb-facts">
+              <li><b>Regional emergency networks</b>, in the 380–400 MHz band that Europe reserves for public safety. For example RESCAT in Catalonia: over 60,000 users (regional police, local police, firefighters, paramedics, civil protection) and 321 base stations.</li>
+              <li><b>Local police, fire brigades and civil protection</b> in many towns.</li>
+              <li><b>Transport and large sites</b>: metros, airports, ports, on other 400 MHz bands.</li>
+              <li>The national network, <b>SIRDEE</b> (National Police, Guardia Civil and others, over 150,000 users), uses <b>TETRAPOL</b>, a sibling system of French origin that shares channels out by frequency rather than by time slot.</li>
+            </ul>
+            <h4>What it looks like</h4>
+            <p>On an SDR receiver's waterfall, a TETRA base station is a <b>25 kHz-wide block that never switches off</b>: it transmits its control channel non-stop so terminals know there's a network. Tuned in FM, it sounds like a continuous raspy buzz. You can hear an imitation in <a href="#senales">how they sound</a>.</p>
+          </div>
+        </div>
+        <p class="note"><b>The future:</b> emergency networks are starting to move to <b>mission-critical broadband</b> (push-to-talk, video and data over 4G and 5G with priority). TETRA will stay for years as the backup voice network, because it keeps working when everything else fails.</p>
+      </article>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Comparison of professional radio systems">
+        <table class="countries cmp wrap">
+          <thead><tr><th scope="col"><span class="sr-only">Feature</span></th><th>Analogue PMR</th><th>DMR</th><th>TETRA</th><th>TETRAPOL</th></tr></thead>
+          <tbody>
+            <tr><td>Type</td><td>Analogue FM</td><td>Digital</td><td>Digital trunked</td><td>Digital trunked</td></tr>
+            <tr><td>Channel width</td><td>12.5 kHz</td><td>12.5 kHz</td><td>25 kHz</td><td>12.5 kHz</td></tr>
+            <tr><td>Conversations per channel</td><td>1</td><td>2 (slots)</td><td>4 (slots)</td><td>1</td></tr>
+            <tr><td>Encryption</td><td>No</td><td>Optional</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td>Typical use</td><td>Building sites, private security</td><td>Businesses, radio amateurs</td><td>Regional and local emergency services, metros</td><td>SIRDEE (National Police, Guardia Civil)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <article class="card topic">
+        <span class="tag">Volunteering</span>
+        <h3>When everything fails: amateur radio in emergencies</h3>
+        <p>If power, mobile and internet go down, a battery-powered radio and a wire antenna keep working. That's why Spain's civil protection has <b>REMER</b> (the emergency radio network), made up of volunteer radio amateurs, and many clubs run drills. It's one of the best reasons to get licensed: <a href="../start/">get started</a>.</p>
+      </article>
+    </section>
+
+    <!-- TRANSPORT -->
+    <section id="transporte">
+      <div class="section-head">
+        <p class="kicker">What flies and what sails</p>
+        <h2>Aircraft and ships</h2>
+        <p>Aviation and shipping have used voice radio for a century, and today they also broadcast their <strong>position automatically</strong>, so other aircraft, other ships and anyone with a receiver can see them.</p>
+      </div>
+      <div class="cards two">
+        <article class="card topic">
+          <span class="tag">118–137 MHz · AM</span>
+          <h3>✈️ Airband</h3>
+          <p>Pilots and controllers talk in <b>AM</b>, not FM. That's deliberate: if two transmit at once, in AM you hear both on top of each other (and someone notices); in FM the stronger one would blot out the other without anyone knowing. In Europe channels are 8.33 kHz apart.</p>
+          <p><b>121.5 MHz</b> is the international emergency frequency, which every aircraft monitors.</p>
+          <h4>ADS-B, 1090 MHz</h4>
+          <p>Every airliner broadcasts its identity, position, altitude and speed every second. Flight-tracking websites are fed by thousands of volunteers' receivers: with a €30 SDR and a 7 cm antenna you can be one of them.</p>
+        </article>
+        <article class="card topic">
+          <span class="tag">156–162 MHz · FM</span>
+          <h3>⚓ Marine VHF</h3>
+          <p>Ships, ports and rescue services talk on numbered FM channels. <b>Channel 16 (156.800 MHz)</b> is for distress and calling: everyone listens to it and moves to another channel to talk. <b>Channel 70</b> is reserved for digital selective calling (DSC), the "red button" on ship radios.</p>
+          <h4>AIS, 161.975 and 162.025 MHz</h4>
+          <p>Ships broadcast their name, position, course and speed in very short digital bursts. That's how live ship-tracking maps work, also built from volunteers' receivers along the coast.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKY -->
+    <section id="cielo">
+      <div class="section-head">
+        <p class="kicker">Signals falling from the sky</p>
+        <h2>Satellites and balloons</h2>
+        <p>Some of the easiest and most exciting signals to receive come from above. Amateur satellites and the Space Station are in <a href="../understand/#iss">Understand</a>; here, the weather ones.</p>
+      </div>
+      <div class="cards two">
+        <article class="card topic">
+          <span class="tag">137 MHz</span>
+          <h3>🛰️ Weather satellites</h3>
+          <p>For decades the American <b>NOAA</b> satellites sent pictures of the clouds on 137 MHz that anyone could receive with a home-made antenna: they sounded like a rhythmic "tick-tock". <b>They were switched off in 2025</b> (NOAA-18 in June, NOAA-19 on 13 August and NOAA-15 on 19 August).</p>
+          <p>The Russian <b>Meteor-M</b> satellites still transmit on the same band, digitally (LRPT): with an SDR, a satellite antenna and the right software you get colour images of your region as the satellite passes over.</p>
+        </article>
+        <article class="card topic">
+          <span class="tag">400–406 MHz</span>
+          <h3>🎈 Radiosondes</h3>
+          <p>Twice a day, at 00 and 12 UTC, Spain's AEMET and weather services around the world release <b>balloons carrying a radiosonde</b>: a little box that measures temperature, humidity, pressure and wind as it climbs to 30 km, transmitting every second.</p>
+          <p>You can follow them live on collaborative maps such as SondeHub, fed by hobbyists. When the balloon bursts, the sonde falls by parachute and some people go and look for it: it's called "radiosonde hunting".</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- BROADCASTING -->
+    <section id="difusion">
+      <div class="section-head">
+        <p class="kicker">For everyone</p>
+        <h2>Broadcasting</h2>
+        <p>Radio "as we know it": stations meant to be heard by everybody. It's the only part of the spectrum explicitly <strong>intended for the public</strong>.</p>
+      </div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Broadcasting bands">
+        <table class="countries wrap">
+          <thead><tr><th>Band</th><th>Frequencies</th><th>What you'll hear</th><th>Range</th></tr></thead>
+          <tbody>
+            <tr><td>Long wave</td><td>148.5–283.5 kHz</td><td>Few stations left; some European ones at night</td><td>Hundreds of km by ground wave</td></tr>
+            <tr><td>Medium wave (AM)</td><td>531–1,602 kHz</td><td>National and local stations; at night, half of Europe</td><td>By day, your region; at night, the continent</td></tr>
+            <tr><td>Shortwave</td><td>Bands between 2.3 and 26 MHz (49, 41, 31, 25, 19 metres…)</td><td>International and religious stations, from other continents</td><td>The world, bouncing off the ionosphere</td></tr>
+            <tr><td>FM</td><td>87.5–108 MHz</td><td>Music and news in good quality</td><td>Up to the horizon (50–100 km)</td></tr>
+            <tr><td>DAB+</td><td>174–240 MHz</td><td>Digital radio (little choice in Spain)</td><td>Like FM</td></tr>
+            <tr><td>Digital TV</td><td>470–694 MHz</td><td>Digital terrestrial television</td><td>Like FM</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Want to hear stations from all over the world now? <a href="../listen/#emisoras">Station map</a> and <a href="../listen/#directo">a real shortwave receiver</a>.</p>
+    </section>
+
+    <!-- SIGNALS -->
+    <section id="senales">
+      <div class="section-head">
+        <p class="kicker">Learn to recognise them</p>
+        <h2>How they sound</h2>
+        <p>Tune through these bands with a receiver and you don't hear voices: you hear buzzes, screeches and bursts. Each system has its own "signature". Tap a signal to hear an <strong>imitation</strong> generated in your browser and see how it's drawn.</p>
+      </div>
+      <div class="sounds">
+        <div class="wf card">
+          <div class="wf-head"><span id="sigNow">Choose a signal</span><button class="btn small ghost" id="sigStop" type="button">■ Stop</button></div>
+          <canvas id="sigFall" width="640" height="220" aria-label="Waterfall: spectrogram of the signal that is playing"></canvas>
+          <div class="wf-axis" aria-hidden="true"><span>0 Hz</span><span>2,000</span><span>4,000</span><span>6,000 Hz</span></div>
+          <p class="note">This is what comes out of an FM receiver's speaker when you tune to each signal: you can't make out the content (and on encrypted networks you can't decode it). Real recordings are behind each signal's link.</p>
+        </div>
+        <div>
+          <div class="sound-grid" id="sigGrid"></div>
+          <div class="sound-info card" id="sigInfo"><p class="note">The signals are generated by imitating their rhythm and shape. Identifying signals is a hobby in itself: there are catalogues with hundreds of them.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECEIVERS -->
+    <section id="receptores">
+      <div class="section-head">
+        <p class="kicker">The gear</p>
+        <h2>What to listen with</h2>
+        <p>You don't need a licence to listen (you do to transmit, except on the common-use bands). These are the receivers, from simplest to most versatile. Prices are a rough guide.</p>
+      </div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Types of receiver">
+        <table class="countries wrap">
+          <thead><tr><th>Receiver</th><th>What it picks up</th><th>Price</th><th>Who it's for</th></tr></thead>
+          <tbody>
+            <tr><td><b>Web receiver</b> (WebSDR, KiwiSDR)</td><td>Whatever someone else's antenna picks up, anywhere in the world</td><td>Free</td><td>Starting today, without buying anything</td></tr>
+            <tr><td><b>Portable multiband radio</b></td><td>Medium wave, shortwave and FM; with SSB, radio amateurs too</td><td>€30–150</td><td>Listening to world stations from the sofa</td></tr>
+            <tr><td><b>USB SDR</b> (RTL-SDR type)</td><td>From about 24 MHz to 1.7 GHz; recent models also shortwave. You see the waterfall on your computer</td><td>€30–40</td><td>The best way in: aircraft, ships, satellites, radiosondes, walkie-talkies…</td></tr>
+            <tr><td><b>Quality SDR</b></td><td>Shortwave and more, with much less noise and more headroom</td><td>€100–300</td><td>Serious shortwave listening and DX</td></tr>
+            <tr><td><b>Scanner</b></td><td>Sweeps analogue VHF and UHF channels; digital ones understand some unencrypted systems</td><td>€150–500</td><td>Anyone wanting something pocket-sized with no computer</td></tr>
+            <tr><td><b>Walkie-talkie or CB radio</b></td><td>Its common-use band</td><td>€30–200</td><td>To talk, not just listen</td></tr>
+            <tr><td><b>Amateur radio transceiver</b></td><td>Many receive almost everything, from long wave to UHF</td><td>From €30 (handheld) to thousands</td><td>With a licence, to transmit</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">With an SDR you use free programs such as SDR++, SDR# or GQRX. And remember: <b>the antenna matters more than the receiver</b>. A cheap one with a good antenna hears more than an expensive one with a poor antenna.</p>
+    </section>
+
+    <!-- LAW -->
+    <section id="ley">
+      <div class="section-head">
+        <p class="kicker">Before you switch on the receiver</p>
+        <h2>What you may listen to (and what not)</h2>
+        <p>Owning a receiver is legal. What matters is <strong>what you listen to and what you do with it</strong>. In Spain the Constitution protects the secrecy of communications, and the General Telecommunications Act treats intercepting communications <strong>not intended for the general public</strong> without authorisation as a very serious offence, and also disclosing what was heard. Most countries have similar rules.</p>
+      </div>
+      <div class="cards three law">
+        <article class="card law-ok">
+          <h3>✅ Free</h3>
+          <ul class="cb-facts">
+            <li>Broadcasting: long, medium and short wave, FM, DAB+.</li>
+            <li>Radio amateurs: they talk in the open and like being listened to.</li>
+            <li>CB and PMR446: common use.</li>
+            <li>Beacons, amateur and weather satellites.</li>
+            <li>Radiosondes, aircraft ADS-B and ship AIS: position broadcasts designed for anyone to receive.</li>
+          </ul>
+        </article>
+        <article class="card law-care">
+          <h3>⚠️ Service communications</h3>
+          <p>Aviation and marine voice, taxis, businesses, private security. Plenty of people tune in with scanners, but they are <b>not intended for the public</b> and Spanish law makes no exceptions: don't record them, don't share them and don't use what you hear.</p>
+        </article>
+        <article class="card law-no">
+          <h3>⛔ No</h3>
+          <ul class="cb-facts">
+            <li>Police, emergency and health services (TETRA, TETRAPOL, service DMR): they are also encrypted, and trying to decrypt them is far more serious.</li>
+            <li>Mobile phones, cordless phones and any private communication.</li>
+          </ul>
+          <p class="note">Seeing a signal on the waterfall isn't listening to its content: recognising a TETRA network by its shape is signal identification, not interception.</p>
+        </article>
+      </div>
+      <p class="note">This is general guidance, not legal advice. And to <b>transmit</b>, outside the common-use bands, you need a licence: <a href="../start/">how to get one</a>.</p>
+    </section>
+
+    <!-- REPEATERS -->
+    <section id="repetidores-redes">
+      <div class="section-head">
+        <p class="kicker">More range</p>
+        <h2>Repeaters: how a signal gets further</h2>
+        <p>On VHF and UHF, waves travel in a straight line and stop at the horizon or behind a hill. The solution is to put something <strong>very high up</strong> that receives and transmits again.</p>
+      </div>
+      <div class="rep-diagram card" aria-hidden="true">
+        <svg viewBox="0 0 640 200" role="presentation">
+          <path d="M0 190 L150 150 L260 60 L320 30 L380 60 L500 150 L640 190 Z" fill="#13233a" stroke="#27405f"/>
+          <line x1="320" y1="30" x2="320" y2="6" stroke="#f2b33d" stroke-width="3"/>
+          <circle cx="320" cy="6" r="4" fill="#ff5a4e"/>
+          <path d="M70 168 Q190 40 312 14" fill="none" stroke="#7cc7ff" stroke-width="2" stroke-dasharray="6 5"/>
+          <path d="M328 14 Q450 40 570 168" fill="none" stroke="#f2b33d" stroke-width="2" stroke-dasharray="6 5"/>
+          <rect x="62" y="160" width="14" height="24" rx="3" fill="#7cc7ff"/><line x1="69" y1="160" x2="69" y2="146" stroke="#7cc7ff" stroke-width="2"/>
+          <rect x="563" y="160" width="14" height="24" rx="3" fill="#f2b33d"/><line x1="570" y1="160" x2="570" y2="146" stroke="#f2b33d" stroke-width="2"/>
+          <text x="24" y="40" fill="#7cc7ff" font-size="14" font-family="monospace">input 145.000</text>
+          <text x="470" y="40" fill="#f2b33d" font-size="14" font-family="monospace">output 145.600</text>
+        </svg>
+      </div>
+      <p>The repeater <b>listens on one frequency and retransmits on another at the same time</b>, with much more power and from a hilltop. Your handheld transmits on the input and listens on the output: your radio switches by itself if you set the offset.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Repeaters in each service">
+        <table class="countries wrap">
+          <thead><tr><th>Service</th><th>Repeaters?</th><th>What they're like</th></tr></thead>
+          <tbody>
+            <tr><td>Radio amateurs</td><td>Yes, hundreds</td><td>Analogue FM (on 2 m you transmit 600 kHz lower; on 70 cm, 7.6 MHz lower in Spain) with an access tone, and digital ones (DMR, C4FM, D-STAR) linked over the internet. Clubs look after them. <a href="../practice/#repetidores">How to use them and calculator</a></td></tr>
+            <tr><td>Amateur satellites</td><td>Yes, in orbit</td><td>FM satellites are repeaters 500–800 km up: with a handheld you can talk to someone 2,000 km away. <a href="../understand/#satelites">Satellites</a></td></tr>
+            <tr><td>Businesses (PMR and DMR)</td><td>Yes</td><td>Their own licensed repeaters on high ground; in DMR, one repeater carries two conversations.</td></tr>
+            <tr><td>TETRA and TETRAPOL</td><td>A network of base stations</td><td>Not standalone repeaters but a network like the mobile phone one, with a central system and coverage repeaters in tunnels and buildings.</td></tr>
+            <tr><td>CB and PMR446</td><td>No</td><td>Not allowed: only direct radio-to-radio contact.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ANTENNAS -->
+    <section id="antenas">
+      <div class="section-head">
+        <p class="kicker">The most important part of the station</p>
+        <h2>Antennas</h2>
+        <p>A radio without an antenna is deaf and dumb. The antenna decides how far you get and what you hear, far more than the radio does. And it's the most fun thing to build: with a well-cut piece of wire you can talk to other continents.</p>
+      </div>
+
+      <div class="cards two">
+        <article class="card topic">
+          <h3>What is an antenna?</h3>
+          <p>A piece of metal with <b>just the right shape and size</b> to turn an electric current flowing back and forth very fast into <b>radio waves</b> that travel through the air (when transmitting), and the other way round (when receiving). The same antenna does both.</p>
+          <p>It works like a guitar string: it vibrates best at the frequency it's sized for. That's why an antenna is roughly <b>half a wavelength</b> or a quarter long, and why shortwave antennas are huge while the one in your phone fits inside it.</p>
+          <p class="formula"><b>Wavelength (m) = 300 ÷ frequency (MHz)</b></p>
+        </article>
+        <article class="card topic size-tool" id="sizeTool">
+          <h3>📏 How long is the antenna?</h3>
+          <label for="sizeFreq">Frequency: <b id="sizeFreqOut">7.1 MHz</b></label>
+          <input type="range" id="sizeFreq" min="0" max="1000" value="305" aria-describedby="sizeOut">
+          <div class="size-bars" id="sizeBars" aria-hidden="true"></div>
+          <p id="sizeOut" aria-live="polite"></p>
+          <p class="note">Theoretical lengths in free air; in practice you cut them about 5% shorter and trim. Detailed calculator in <a href="../start/#estacion">your first station</a>.</p>
+        </article>
+      </div>
+
+      <h3 class="sub">What you need to know about any antenna</h3>
+      <div class="cards three">
+        <div class="card concept"><h4>🎯 Resonance</h4><p>An antenna "resonates" at one frequency, like the string. Away from it, the energy doesn't get out and comes back to the radio.</p></div>
+        <div class="card concept"><h4>🔌 Impedance</h4><p>The resistance it presents to the cable. Radios and cables use 50 Ω: if the antenna does too, all the power goes through.</p></div>
+        <div class="card concept"><h4>📉 SWR</h4><p>Standing wave ratio: how much energy bounces back. 1:1 is perfect, under 1.5 is very good, over 3 is bad.</p></div>
+        <div class="card concept"><h4>🔦 Gain</h4><p>An antenna doesn't create energy: it <b>concentrates</b> it in some directions, like a torch reflector. Measured in dBi (against an ideal antenna that radiates equally everywhere) or dBd (against a dipole). +3 dB is double.</p></div>
+        <div class="card concept"><h4>🌸 Radiation pattern</h4><p>The drawing of where it radiates. <b>Omnidirectional</b>: equally all round the horizon. <b>Directional</b>: strongly one way, weakly the others.</p></div>
+        <div class="card concept"><h4>↕️ Polarisation</h4><p>The orientation of the wave: vertical (handhelds, cars, repeaters), horizontal (long-distance VHF, TV) or circular (satellites). If it doesn't match, you lose a lot of signal.</p></div>
+        <div class="card concept"><h4>📶 Bandwidth</h4><p>How far you can move from the ideal frequency before the SWR rises too much. Thick antennas and broadband ones are more forgiving.</p></div>
+        <div class="card concept"><h4>🏔️ Height and surroundings</h4><p>On VHF and UHF every metre of height counts: the signal goes as far as the horizon. On shortwave, height above ground changes the angle at which it heads for the ionosphere.</p></div>
+        <div class="card concept"><h4>👂 Receiving and transmitting</h4><p>To <b>listen</b>, almost any wire will do. To <b>transmit</b>, the antenna must be tuned, or the radio protects itself by cutting power (or gets damaged).</p></div>
+      </div>
+
+      <h3 class="sub">How many types are there?</h3>
+      <p>Hundreds of variants, but almost all belong to <b>seven families</b>: dipoles, verticals, directional antennas, wire antennas, loops, broadband antennas and reflectors. These are the 18 you'll see most. Filter by what you want to do:</p>
+      <div class="chips ant-filter" id="antFilter" role="group" aria-label="Filter antennas by use">
+        <button class="chip" type="button" data-f="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-f="hf" aria-pressed="false">Shortwave</button>
+        <button class="chip" type="button" data-f="vu" aria-pressed="false">VHF and UHF</button>
+        <button class="chip" type="button" data-f="sat" aria-pressed="false">Satellites</button>
+        <button class="chip" type="button" data-f="rx" aria-pressed="false">Listening only</button>
+        <button class="chip" type="button" data-f="small" aria-pressed="false">Little space</button>
+      </div>
+      <p class="note" id="antCount" aria-live="polite"></p>
+
+      <div class="ant-grid" id="antGrid">
+        <article class="card ant" data-ant="dipole" data-f="hf vu">
+          <div class="ant-pics"></div>
+          <span class="tag">Dipoles</span><h4>Half-wave dipole</h4>
+          <p>Two equal wires in a line, fed in the centre. The reference antenna: simple, cheap and effective.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Shortwave to UHF</dd><dt>Gain</dt><dd>2.15 dBi</dd><dt>Radiates</dt><dd>In a figure of eight, to the sides</dd><dt>Ideal for</dt><dd>Your first shortwave antenna, strung between two points</dd></dl>
+        </article>
+        <article class="card ant" data-ant="invv" data-f="hf small">
+          <div class="ant-pics"></div>
+          <span class="tag">Dipoles</span><h4>Inverted V</h4>
+          <p>A dipole with its centre at the top of a single mast and the arms sloping down in a V. Needs less space and one support.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Shortwave</dd><dt>Gain</dt><dd>≈ 2 dBi</dd><dt>Radiates</dt><dd>Almost in all directions</dd><dt>Ideal for</dt><dd>Gardens and portable use</dd></dl>
+        </article>
+        <article class="card ant" data-ant="gp" data-f="hf vu">
+          <div class="ant-pics"></div>
+          <span class="tag">Verticals</span><h4>Quarter-wave vertical</h4>
+          <p>A vertical rod and some wires (radials) that act as a "mirror" on the ground. Small footprint.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Shortwave to UHF</dd><dt>Gain</dt><dd>≈ 2–5 dBi</dd><dt>Radiates</dt><dd>Equally all round, low angle</dd><dt>Ideal for</dt><dd>Long-distance contacts, CB, VHF base</dd></dl>
+        </article>
+        <article class="card ant" data-ant="whip" data-f="vu small">
+          <div class="ant-pics"></div>
+          <span class="tag">Verticals</span><h4>Whip and handheld antenna</h4>
+          <p>The flexible rubber antenna on a walkie-talkie or the rod on a car: a shortened vertical with a coil. Convenient, but less efficient.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>VHF and UHF, CB in the car</dd><dt>Gain</dt><dd>Negative: −2 to 0 dBi</dd><dt>Radiates</dt><dd>In all directions</dd><dt>Ideal for</dt><dd>Carrying around</dd></dl>
+        </article>
+        <article class="card ant" data-ant="jpole" data-f="vu">
+          <div class="ant-pics"></div>
+          <span class="tag">Verticals</span><h4>J-pole and Slim Jim</h4>
+          <p>A half-wave vertical that needs no radials, shaped like a J. Made at home from copper pipe or twin-lead ribbon.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>VHF and UHF</dd><dt>Gain</dt><dd>≈ 2–3 dBi</dd><dt>Radiates</dt><dd>In all directions</dd><dt>Ideal for</dt><dd>Reaching the repeater from home, a first project</dd></dl>
+        </article>
+        <article class="card ant" data-ant="colinear" data-f="vu">
+          <div class="ant-pics"></div>
+          <span class="tag">Verticals</span><h4>Collinear</h4>
+          <p>Several half-waves stacked inside a fibreglass tube. It squashes the radiation towards the horizon: more range with no preferred direction.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>VHF, UHF, 1090 MHz</dd><dt>Gain</dt><dd>≈ 5–9 dBi</dd><dt>Radiates</dt><dd>In all directions, very flat</dd><dt>Ideal for</dt><dd>Rooftops, repeaters, receiving aircraft</dd></dl>
+        </article>
+        <article class="card ant" data-ant="yagi" data-f="vu sat">
+          <div class="ant-pics"></div>
+          <span class="tag">Directional</span><h4>Yagi</h4>
+          <p>The "fishbone" on rooftops: a driven element, a reflector behind and directors in front. The more elements, the more gain and the narrower the beam.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Upper shortwave to microwave</dd><dt>Gain</dt><dd>6–17 dBi</dd><dt>Radiates</dt><dd>Forwards</dd><dt>Ideal for</dt><dd>Long-distance VHF, hand-held satellite work</dd></dl>
+        </article>
+        <article class="card ant" data-ant="moxon" data-f="hf vu">
+          <div class="ant-pics"></div>
+          <span class="tag">Directional</span><h4>Moxon and quad</h4>
+          <p>Compact directional antennas: the Moxon is a folded wire rectangle; the quad, one or more wire squares. Good front-to-back ratio in little space.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Upper shortwave, VHF</dd><dt>Gain</dt><dd>≈ 5–8 dBi</dd><dt>Radiates</dt><dd>Forwards, almost nothing behind</dd><dt>Ideal for</dt><dd>A light home-made beam</dd></dl>
+        </article>
+        <article class="card ant" data-ant="lpda" data-f="vu rx">
+          <div class="ant-pics"></div>
+          <span class="tag">Broadband</span><h4>Log-periodic</h4>
+          <p>It looks like a Yagi, but its elements grow gradually: each pair works on part of the band. Directional and very wideband.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>For example 100 MHz–1.3 GHz</dd><dt>Gain</dt><dd>≈ 6–8 dBi</dd><dt>Radiates</dt><dd>Forwards</dd><dt>Ideal for</dt><dd>Listening to many bands with one antenna</dd></dl>
+        </article>
+        <article class="card ant" data-ant="discone" data-f="vu rx">
+          <div class="ant-pics"></div>
+          <span class="tag">Broadband</span><h4>Discone</h4>
+          <p>A disc on top of a cone of rods. It receives decently from 25 MHz to over 1 GHz with no tuning at all.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>≈ 25–1,300 MHz</dd><dt>Gain</dt><dd>≈ 0–2 dBi</dd><dt>Radiates</dt><dd>In all directions</dd><dt>Ideal for</dt><dd>A scanner or SDR on the roof</dd></dl>
+        </article>
+        <article class="card ant" data-ant="efhw" data-f="hf small">
+          <div class="ant-pics"></div>
+          <span class="tag">Wire</span><h4>End-fed half-wave</h4>
+          <p>A half-wave wire with a transformer at one end. It works on several shortwave bands and hangs from a tree in minutes.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Several shortwave bands</dd><dt>Gain</dt><dd>≈ 2 dBi</dd><dt>Radiates</dt><dd>Varies with the band</dd><dt>Ideal for</dt><dd>Portable, mountains, parks (POTA)</dd></dl>
+        </article>
+        <article class="card ant" data-ant="longwire" data-f="hf rx small">
+          <div class="ant-pics"></div>
+          <span class="tag">Wire</span><h4>Long wire</h4>
+          <p>A wire as long as will fit, as high as possible. For listening to shortwave, unbeatable for the price. To transmit it needs a tuner.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Long wave to shortwave</dd><dt>Gain</dt><dd>Variable</dd><dt>Radiates</dt><dd>Depends on the length</dd><dt>Ideal for</dt><dd>Your first listening antenna</dd></dl>
+        </article>
+        <article class="card ant" data-ant="delta" data-f="hf">
+          <div class="ant-pics"></div>
+          <span class="tag">Loops</span><h4>Full-wave loop (delta)</h4>
+          <p>A triangle or square of wire one wavelength round. A little more gain than a dipole and less noise.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Shortwave</dd><dt>Gain</dt><dd>≈ 3–4 dBi</dd><dt>Radiates</dt><dd>To both sides of the loop</dd><dt>Ideal for</dt><dd>Anyone with a bit of land</dd></dl>
+        </article>
+        <article class="card ant" data-ant="magloop" data-f="hf rx small">
+          <div class="ant-pics"></div>
+          <span class="tag">Loops</span><h4>Magnetic loop</h4>
+          <p>A ring of copper pipe one or two metres across with a variable capacitor. Very small for shortwave and quiet, but it has to be retuned every time you change frequency.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Shortwave</dd><dt>Gain</dt><dd>A little less than a dipole</dd><dt>Radiates</dt><dd>Out of the sides of the ring</dd><dt>Ideal for</dt><dd>Balconies and flats</dd></dl>
+        </article>
+        <article class="card ant" data-ant="active" data-f="hf rx small">
+          <div class="ant-pics"></div>
+          <span class="tag">Receiving</span><h4>Active antenna</h4>
+          <p>A short rod with an amplifier. It only receives, but covers long wave to shortwave on a half-metre stick.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Long wave to 30 MHz</dd><dt>Gain</dt><dd>From the amplifier</dd><dt>Radiates</dt><dd>Doesn't transmit</dd><dt>Ideal for</dt><dd>Shortwave listening with an SDR</dd></dl>
+        </article>
+        <article class="card ant" data-ant="ferrite" data-f="rx small">
+          <div class="ant-pics"></div>
+          <span class="tag">Receiving</span><h4>Ferrite rod</h4>
+          <p>The one inside medium-wave radios: a coil on a ferrite bar. That's why turning the radio makes a station louder or quieter.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Long and medium wave</dd><dt>Gain</dt><dd>Very low</dd><dt>Radiates</dt><dd>Doesn't transmit; receives from two sides</dd><dt>Ideal for</dt><dd>Portable radios</dd></dl>
+        </article>
+        <article class="card ant" data-ant="qfh" data-f="sat rx">
+          <div class="ant-pics"></div>
+          <span class="tag">Satellites</span><h4>Quadrifilar helix (QFH) and helical</h4>
+          <p>Wire helices with circular polarisation that receive the satellite wherever it is without moving them. The QFH is the classic for 137 MHz weather satellites.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>VHF to microwave</dd><dt>Gain</dt><dd>≈ 2–12 dBi</dd><dt>Radiates</dt><dd>Towards the sky (QFH) or forwards</dd><dt>Ideal for</dt><dd>Weather satellites, GPS</dd></dl>
+        </article>
+        <article class="card ant" data-ant="dish" data-f="sat">
+          <div class="ant-pics"></div>
+          <span class="tag">Reflectors</span><h4>Dish</h4>
+          <p>A dish that focuses the signal on one point, like a mirror. At high frequencies it gives huge gain at a reasonable size.</p>
+          <dl class="ant-facts"><dt>Bands</dt><dd>Microwave (GHz)</dd><dt>Gain</dt><dd>25–40 dBi</dd><dt>Radiates</dt><dd>A very narrow beam</dd><dt>Ideal for</dt><dd>QO-100, satellite TV</dd></dl>
+        </article>
+      </div>
+
+      <h3 class="sub">Which one should I choose?</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Which antenna to choose for what you want to do">
+        <table class="countries wrap">
+          <thead><tr><th>I want to…</th><th>Antenna</th></tr></thead>
+          <tbody>
+            <tr><td>Listen to shortwave from a flat</td><td>A long wire out of the window, an active antenna or a magnetic loop on the balcony</td></tr>
+            <tr><td>Start with an SDR (aircraft, ships, FM, walkie-talkies)</td><td>The telescopic dipole that usually comes with the SDR, near a window; later, a discone on the roof</td></tr>
+            <tr><td>Track aircraft (ADS-B)</td><td>A quarter-wave vertical for 1090 MHz (6.9 cm) or a home-made collinear, as high as possible</td></tr>
+            <tr><td>Weather satellites</td><td>A QFH or V-dipole for 137 MHz, outdoors with a clear sky</td></tr>
+            <tr><td>Amateur satellites with a handheld</td><td>A small hand-held Yagi for 2 m and 70 cm, pointed at the satellite</td></tr>
+            <tr><td>CB in the car</td><td>A vertical on a magnetic mount, the longer the better (a quarter-wave is about 2.7 m)</td></tr>
+            <tr><td>2 m and 70 cm repeaters from home</td><td>A collinear or J-pole on the roof</td></tr>
+            <tr><td>Licensed shortwave at home</td><td>A dipole or inverted V for one band; an end-fed half-wave for several</td></tr>
+            <tr><td>QO-100</td><td>A 60 to 120 cm dish with a TV LNB to receive</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <article class="card topic warn">
+        <h3>⚡ Safety first</h3>
+        <ul class="cb-facts">
+          <li><b>Never near power lines</b>: neither while putting it up nor if it falls. That's the cause of serious antenna accidents.</li>
+          <li><b>Earthing and lightning protection</b> for outdoor antennas. In a storm, disconnect the antenna from the radio.</li>
+          <li><b>Don't touch an antenna while it's transmitting</b>: high-power ones can burn.</li>
+          <li><b>Roofs and neighbours</b>: in Spain, licensed radio amateurs have the right to put up antennas on their building, with conditions. We explain it in <a href="../start/#estacion">your first station</a>.</li>
+        </ul>
+      </article>
+
+      <p class="note">Sources: Spain's national frequency allocation table (CNAF); Orden IET/614/2015 (CB); ECC Decision (15)05 (PMR446); ETSI EN 300 392 (TETRA) and TS 102 361 (DMR); NOAA/NESDIS (end of the NOAA satellites, 2025); Ara newspaper (RESCAT) and Spain's Ministry of the Interior (SIRDEE). Checked on 2 November 2026.</p>
+    </section>
+
+    <nav class="next-page" aria-label="Next step"><a href="../practice/">Next: Practise →</a></nav>
+  </main>
+
+  <footer>
+    <p class="footer-actions"><button class="btn ghost small" id="shareSite" type="button">📤 Share this site</button> <button class="btn small" id="installApp" type="button" hidden>📲 Install the app</button></p>
+    <p>📻 radio · a project by <a href="https://bendi.dev">Bendi</a> · 73! <small>(“best regards” in radio slang)</small></p>
+    <p class="sponsor"><a class="sponsor-pill" id="sponsorLink" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span class="beat" aria-hidden="true">💚</span> Find it useful? <b>Support the project</b> on GitHub Sponsors</a></p>
+    <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">Spotted a mistake or something out of date? Let us know</a></p>
+  </footer>
+
+  <script src="../../js/core.js"></script>
+  <script src="../../js/data.js"></script>
+  <script src="../../js/journey.js"></script>
+  <script src="../../js/spectrum.js"></script>
+  <script src="../../js/antennas.js"></script>
+  <script src="../../js/install.js"></script>
+  <script src="../../js/glossary.js"></script>
+  <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
