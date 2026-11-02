@@ -104,7 +104,9 @@ flowchart LR
 | `lessons.js` | `#como-funciona` | Cuatro lecciones interactivas en tres niveles con 3 preguntas | — | `radio.lessons`, `radio:progress` |
 | `bands.js` | `#bands` | Bandas de 160 m a 70 cm | — | — |
 | `propagation.js` | `#propagacion` | Frase y semáforo de bandas con datos solares; mapa de la MUF | HamQTH, KC2G | `prop` |
-| `iss.js` | `#iss` | Posición de la ISS y próximos pases | CelesTrak, satellite.js, Leaflet, Esri | `iss` |
+| `iss.js` | `#iss` | Posición de la ISS y próximos pases; avisa del lugar elegido con `radio:home` | CelesTrak, satellite.js, Leaflet, Esri | `iss`, `radio:home` |
+| `beacons.js` | `#balizas` | Qué baliza NCDXF transmite en cada frecuencia, calculado con la hora (sin red) | WebSDR (enlace) | — |
+| `sats.js` | `#satelites` | Orientación de la parabólica al QO-100 y pases de SO-50 y AO-91 | CelesTrak, satellite.js | escucha `radio:home` |
 
 ### Practicar
 
@@ -113,6 +115,7 @@ flowchart LR
 | `morse-ui.js` | `#morseIn` | Traductor a Morse con sonido | — |
 | `koch.js` | `#kochStart` | Entrenador Koch con reconocimiento instantáneo | `radio.koch`, `radio:progress` |
 | `jargon.js` | `#phoneticIn` | Deletreo fonético y glosario en lista | — |
+| `repeater.js` | `#repOut` | Calculadora de desplazamiento de repetidores (2 m y 70 cm) | — |
 | `qso.js` | `#qso` | Cinco contactos simulados y tarjeta QSL | `radio:qso` |
 
 ### Examen
@@ -125,6 +128,7 @@ flowchart LR
 
 | Archivo | Raíz | Qué hace | Externo | Guarda / eventos |
 | --- | --- | --- | --- | --- |
+| `antenna.js` | `#antBand` | Calculadora de antenas (dipolo, vertical) y de pérdidas del coaxial | — | — |
 | `checklist.js` | `#checklist` | Lista "de cero a indicativo" | — | `radio.checklist`, `radio:progress` |
 | `clubs.js` | `#clubes` | Mapa de radioclubes por provincia y calendario de eventos | Leaflet, Esri | — |
 | `family.js` | `#fitQs` | Autotest "¿Es para mí?" | — | — |

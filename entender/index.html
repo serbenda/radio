@@ -60,7 +60,7 @@
       <p class="kicker">Paso 2</p>
       <h1>Entender</h1>
       <p class="lead">Cómo viaja la radio, qué son las bandas, cómo está hoy la propagación y cuándo pasa la Estación Espacial sobre ti.</p>
-      <nav class="toc" aria-label="En esta página"><a href="#como-funciona">Cómo funciona la radio</a> · <a href="#bandas">Las bandas: un mapa del espectro</a> · <a href="#propagacion">¿Cómo está hoy la propagación?</a> · <a href="#iss">¿Cuándo pasa la Estación Espacial sobre ti?</a></nav>
+      <nav class="toc" aria-label="En esta página"><a href="#como-funciona">Cómo funciona la radio</a> · <a href="#bandas">Las bandas: un mapa del espectro</a> · <a href="#propagacion">¿Cómo está hoy la propagación?</a> · <a href="#balizas">Las balizas, ahora</a> · <a href="#iss">¿Cuándo pasa la Estación Espacial sobre ti?</a> · <a href="#satelites">Más satélites</a></nav>
     </header>
 
     <!-- CÓMO FUNCIONA -->
@@ -125,6 +125,24 @@
         </div>
       </div>
     </section>
+    <!-- BALIZAS -->
+    <section id="balizas">
+      <div class="section-head">
+        <p class="kicker">Comprueba la propagación con tus oídos</p>
+        <h2>Las balizas, ahora mismo</h2>
+        <p>Dieciocho balizas repartidas por el mundo transmiten por turnos, cada 3 minutos, en cinco frecuencias de onda corta: su indicativo en Morse y cuatro rayas cada vez más débiles (100, 10, 1 y 0,1 vatios). Si oyes la de Japón en 20 metros, la banda está abierta hacia Japón; si oyes hasta la última raya, con una décima de vatio llegarías.</p>
+      </div>
+      <div class="card beacons">
+        <div class="beacon-top"><b class="mono" id="beaconClock">--:--:-- UTC</b> <span class="note" id="beaconNext" aria-live="polite"></span></div>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Qué baliza transmite en cada frecuencia">
+          <table class="cmp beacon-table">
+            <thead><tr><th>Frecuencia</th><th>Transmite ahora</th><th><span class="sr-only">Escuchar</span></th></tr></thead>
+            <tbody id="beaconBoard"></tbody>
+          </table>
+        </div>
+        <p class="note">Red de balizas de la <a href="https://www.ncdxf.org/beacon/" target="_blank" rel="noopener">NCDXF y la IARU</a>, sincronizada por GPS: el horario se calcula en tu navegador con la hora. El botón abre el receptor de Twente ya sintonizado en Morse; si la baliza no se oye, esa banda no está abierta desde Europa hacia allí.</p>
+      </div>
+    </section>
     <!-- ISS -->
     <section id="iss">
       <div class="section-head">
@@ -155,6 +173,44 @@
       </div>
       <p class="note">Órbita de <a href="https://celestrak.org/" target="_blank" rel="noopener">CelesTrak</a>, calculada en tu navegador. Con una antena de mano y paciencia se oyen los contactos con colegios que organiza <a href="https://www.ariss.org/" target="_blank" rel="noopener">ARISS</a>; los pases altos se oyen mejor. Al acercarse y alejarse, la frecuencia se desplaza unos kHz (efecto Doppler).</p>
     </section>
+    <!-- SATÉLITES -->
+    <section id="satelites">
+      <div class="section-head">
+        <p class="kicker">Más allá de la ISS</p>
+        <h2>Satélites de radioaficionado</h2>
+        <p>Hay decenas de satélites hechos por y para radioaficionados. Estos son los dos caminos más fáciles para empezar desde España.</p>
+      </div>
+      <div class="cards two">
+        <article class="card">
+          <h3>📡 QO-100 · el satélite que no se mueve</h3>
+          <p>Es'hail-2, a 36.000 km sobre el ecuador, en 25,9° Este: siempre en el mismo punto del cielo y visible desde Europa, África, Oriente Medio y parte de Asia, Brasil e India. Lleva el primer transpondedor geoestacionario de radioaficionados.</p>
+          <p class="qo-aim" id="qoAim" aria-live="polite"></p>
+          <ul class="facts-list">
+            <li><b>Para escucharlo (sin licencia):</b> una antena parabólica de TV de 60 a 80 cm, un LNB y un receptor SDR. La bajada de banda estrecha va de 10489,500 a 10490,000 MHz, con balizas en los extremos y en el centro.</li>
+            <li><b>Para transmitir:</b> subida en 2400,005 a 2400,490 MHz. En España esa banda está autorizada a los radioaficionados <b>de forma temporal y experimental hasta el 26 de diciembre de 2026</b> (2400 a 2410 MHz, máximo 1500 W de PIRE, antena directiva de al menos 21,5 dBi, sin causar interferencias).</li>
+            <li><b>Sin conexión real:</b> hay receptores web del QO-100 para oírlo desde el navegador, como el de la BATC.</li>
+          </ul>
+          <p class="note">Fuentes: <a href="https://amsat-dl.org/en/p4-a-nb-transponder-bandplan-and-operating-guidelines" target="_blank" rel="noopener">plan de banda de AMSAT-DL</a> y <a href="https://www.ure.es/autorizadas-de-la-banda-de-24-ghz/" target="_blank" rel="noopener">URE: autorización de 2,4 GHz</a>. Receptor web: <a href="https://eshail.batc.org.uk/nb/" target="_blank" rel="noopener">BATC</a>.</p>
+        </article>
+        <article class="card">
+          <h3>🛰️ Satélites FM: como un repetidor que vuela</h3>
+          <p>Pasan 10 o 15 minutos y repiten en FM lo que les llega. Con un walkie de doble banda y una antena direccional de mano (tipo Arrow o Yagi casera) se hacen contactos de cientos de kilómetros. Para escucharlos basta un receptor en la frecuencia de bajada.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Frecuencias de los satélites FM">
+            <table class="cmp">
+              <thead><tr><th>Satélite</th><th>Subes en</th><th>Escuchas en</th></tr></thead>
+              <tbody>
+                <tr><td><b>SO-50</b></td><td class="mono">145,850 MHz · tono 67,0 Hz</td><td class="mono">436,795 MHz</td></tr>
+                <tr><td><b>AO-91</b><br><small>batería agotada: solo con sol</small></td><td class="mono">435,250 MHz · tono 67,0 Hz</td><td class="mono">145,960 MHz</td></tr>
+                <tr><td><b>ISS</b></td><td class="mono">145,990 MHz · tono 67,0 Hz</td><td class="mono">437,800 MHz</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h4>Próximos pases útiles desde <span id="satWhere">Madrid</span></h4>
+          <ol class="iss-passes" id="fmPasses"><li>Calculando…</li></ol>
+          <p class="note">Usa el lugar elegido arriba para la ISS. Solo pases que suben más de 10°. Por el efecto Doppler, la bajada en 70 cm se desplaza unos ±10 kHz: empieza un poco por encima y baja durante el pase. Estado y frecuencias: <a href="https://www.amsat.org/live-fm-satellites/" target="_blank" rel="noopener">AMSAT</a>.</p>
+        </article>
+      </div>
+    </section>
 
     <nav class="next-page" aria-label="Siguiente paso"><a href="../practicar/">Siguiente: Practicar →</a></nav>
   </main>
@@ -175,6 +231,8 @@
   <script src="../js/bands.js"></script>
   <script src="../js/propagation.js"></script>
   <script src="../js/iss.js"></script>
+  <script src="../js/beacons.js"></script>
+  <script src="../js/sats.js"></script>
   <script src="../js/install.js"></script>
   <script src="../js/glossary.js"></script>
   <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>

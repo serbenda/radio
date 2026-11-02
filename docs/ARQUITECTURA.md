@@ -132,10 +132,10 @@ flowchart LR
 | --- | --- | --- | --- |
 | Inicio | `/` | `inicio`, `mes`, `paginas`, `instalar`, `apoya` (+ `backup` dentro de `mes`) | dial, backup |
 | Escuchar | `/escuchar/` | `emisoras`, `directo`, `ahora`, `sonidos` (+ `grabaciones`) | stations, guided, live, morse, sounds, recordings |
-| Entender | `/entender/` | `como-funciona`, `bandas`, `propagacion`, `iss` | lessons, bands, propagation, iss |
-| Practicar | `/practicar/` | `morse`, `jerga`, `qso` | morse, morse-ui, koch, jargon, qso |
+| Entender | `/entender/` | `como-funciona`, `bandas`, `propagacion`, `balizas`, `iss`, `satelites` | lessons, bands, propagation, iss, beacons, sats |
+| Practicar | `/practicar/` | `morse`, `jerga`, `repetidores`, `qso` | morse, morse-ui, koch, jargon, repeater, qso |
 | Examen | `/examen/` | `test` | exam-data, exam |
-| Empezar | `/empezar/` | `empezar`, `cb27`, `equipo`, `clubes`, `familias`, `docentes`, `hispanoamerica`, `emergencias`, `faq` | clubs-data, clubs, family, checklist, faq, classroom |
+| Empezar | `/empezar/` | `empezar`, `cb27`, `equipo`, `estacion`, `clubes`, `familias`, `docentes`, `hispanoamerica`, `emergencias`, `faq` | clubs-data, clubs, family, checklist, faq, classroom, antenna |
 
 Todas cargan además `core.js`, `data.js`, `journey.js`, `install.js` y `glossary.js`.
 
@@ -309,6 +309,7 @@ flowchart LR
 | `radio:qso` | qso.js al terminar un contacto | `{ scenario }` (`primero`, `concurso`, `pota`, `emergencia`, `iss`) | journey.js |
 | `radio:mock` | exam.js al corregir un simulacro | `{ pass }` (`true`/`false`) | journey.js |
 | `radio:progress` | lessons, koch, exam, checklist | ninguno: "vuelve a calcular" | journey.js |
+| `radio:home` | iss.js al elegir lugar | `{ lat, lon, name }` | sats.js (QO-100 y pases FM) |
 | `radio:waterfall` | recordings.js al reproducir una grabación | `{ el: <audio>, label }` | sounds.js (la dibuja en la cascada) |
 
 ### Ejemplo completo: "Escucha 3 emisoras"

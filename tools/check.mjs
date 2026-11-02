@@ -379,6 +379,10 @@ section('11. Seguridad y recursos externos');
   // Tipografías: ninguna página carga Google Fonts, y cada url('../fonts/…') de css/style.css existe.
   //   /url\('\.\.\/(fonts\/[^']+)'\)/g: "url('../fonts/fraunces.woff2')" → 'fonts/fraunces.woff2'.
   expect(PAGES.every(p => !/fonts\.googleapis|fonts\.gstatic/.test(html[p])), 'sin tipografías de terceros (todas en fonts/)');
+  // Atributos de evento en el HTML (onclick="…", onsubmit="…"): la CSP los bloquea (no hay 'unsafe-inline' en
+  // script-src), así que no funcionarían. Regex: espacio + on + letras + =".
+  const inline = PAGES.filter(p => /\son[a-z]+="/i.test(html[p]));
+  expect(!inline.length, `sin manejadores de eventos en el HTML (la CSP los bloquearía)${inline.length ? ' (en: ' + inline.join(', ') + ')' : ''}`);
   const faces = [...read('css/style.css').matchAll(/url\('\.\.\/(fonts\/[^']+)'\)/g)].map(m => m[1]);
   const missing = faces.filter(f => !existsSync(join(ROOT, f)));
   expect(faces.length >= 3 && !missing.length, `tipografías de @font-face presentes${missing.length ? ' (faltan: ' + missing.join(', ') + ')' : ''}`);

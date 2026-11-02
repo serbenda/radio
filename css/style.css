@@ -59,9 +59,10 @@
  * 45. Grabaciones reales ........ tarjetas de audio de Wikimedia Commons.
  * 46. Aviso sin JavaScript ...... mensaje de <noscript>.
  * 47. Instalar y apoyar ......... pasos para instalar la app y tarjeta de GitHub Sponsors (+ pie).
- * 48. La radio en clase ......... plan de la sesión y ficha imprimible (solo al imprimir).
- * 49. Selector de idioma ........ enlace ES/EN de la cabecera.
- * 50. Movimiento reducido ....... con "reducir movimiento", ninguna animación ni transición dura.
+ * 48. Estación, repetidores, balizas y satélites  calculadoras y tablas nuevas de Empezar, Practicar y Entender.
+ * 49. La radio en clase ......... plan de la sesión y ficha imprimible (solo al imprimir).
+ * 50. Selector de idioma ........ enlace ES/EN de la cabecera.
+ * 51. Movimiento reducido ....... con "reducir movimiento", ninguna animación ni transición dura.
  *
  * CAPAS (z-index), de abajo arriba:
  *   -1    ondas del receptor (.receiver::before/::after), detrás del contenido de la tarjeta.
@@ -86,7 +87,7 @@
  *
  * MOVIMIENTO: con "reducir movimiento" activado en el sistema (prefers-reduced-motion: reduce) se
  *   desactivan el desplazamiento suave, el ecualizador del reproductor y las ondas del receptor (secciones
- *   17 y 18), y la sección 50 anula cualquier otra animación o transición (latido de los sonidos,
+ *   17 y 18), y la sección 51 anula cualquier otra animación o transición (latido de los sonidos,
  *   medidor del QSO, botones, .toast). Los lienzos animados los controla JavaScript con
  *   Radio.reducedMotion (js/core.js).
  *
@@ -903,6 +904,24 @@ footer .report, footer .sponsor { font-size: .88rem; }
 }
 .sponsor-pill:hover { background: #ea4aaa26; border-color: #ea4aaa; color: #fff; }
 .sponsor-pill .beat { display: inline-block; animation: sponsorBeat 1.6s ease-in-out infinite; }
+
+/* ---------- Estación, repetidores, balizas y satélites ----------
+   Bloques de Empezar (#estacion: calculadora de antenas), Practicar (#repetidores: calculadora de
+   desplazamiento) y Entender (#balizas: reloj de balizas NCDXF; #satelites: QO-100 y satélites FM). */
+.facts-list { padding-left: 18px; display: grid; gap: 8px; color: #d4d5db; }
+.mono { font-family: var(--mono); }
+.beacon-top { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; margin-bottom: 12px; }
+.beacon-top b { color: var(--hot); font-size: 1.1rem; }
+.beacon-table td { vertical-align: middle; }
+.beacon-table small { color: var(--muted); }
+.qo-aim { padding: 12px 14px; border-radius: 12px; background: var(--accent-soft); color: var(--ink); }
+.rep-calc label, .antenna-calc label { color: var(--muted); font-size: .85rem; }
+.rep-calc input { margin-top: 6px; max-width: 200px; display: block; }
+.rep-result, .ant-loss { margin: 10px 0 0; color: var(--ink); }
+.ant-out { margin: 12px 0; padding: 12px 14px; border-radius: 12px; background: var(--bg2); }
+.ant-out p { margin: 0 0 8px; }
+.antenna-calc .row { margin-bottom: 8px; }
+.antenna-calc select { width: auto; }
 
 /* ---------- La radio en clase ----------
    Plan de la sesión y ficha imprimible (#docentes). La ficha (#worksheet) no se ve en pantalla: solo se

@@ -194,6 +194,8 @@
   function setHome(lat, lon, name) {
     home = { lat, lon, name };
     $('issWhere').textContent = name;
+    // Avisa a sats.js (QO-100 y satélites FM), que usa el mismo lugar.
+    document.dispatchEvent(new CustomEvent('radio:home', { detail: { lat, lon, name } }));
     if (!satrec) return;
     homeMark.setLatLng([lat, lon]);
     findPasses(); renderPasses(); update();

@@ -11,7 +11,7 @@ Las comprobaciones de CORS se hicieron desde `https://bendi.dev` el **1 de novie
 | [HamQTH spots](https://www.hamqth.com/developers.php) | Avisos en directo | No | Sí (`*`) | Máx. 1 consulta / 15 s; citar | Cada 60 s y solo con la sección visible; "Spots: HamQTH.com" en el mapa | Mensaje y reintento al minuto |
 | [HamQTH solar](https://www.hamqth.com/developers.php) | Datos solares | No | Sí (`*`) | Máx. 1 consulta / 5 min | Al llegar a la sección y luego cada 15 min | Mensaje "No se han podido cargar" |
 | [KC2G](https://prop.kc2g.com/) | Mapa de la MUF | No | No hace falta (`<img>`) | Citar | Enlace a KC2G bajo el mapa | Se oculta la tarjeta del mapa |
-| [CelesTrak](https://celestrak.org/) | Órbita de la ISS (TLE) | No | Sí | Uso razonable | Una descarga por visita | Mensaje "No se han podido descargar los datos" |
+| [CelesTrak](https://celestrak.org/) | Órbitas de la ISS, SO-50 y AO-91 (TLE) | No | Sí | Uso razonable | Una descarga por satélite y visita | Mensaje "No se han podido descargar los datos" |
 | [satellite.js](https://github.com/shashwatak/satellite-js) 5.0.0 | Cálculo orbital (SGP4) | — | cdnjs | Licencia MIT | Versión fija e `integrity` (SRI) | Mensaje "No se ha podido cargar el calculador" |
 | [Leaflet](https://leafletjs.com) 1.9.4 | Mapas | — | cdnjs | Licencia BSD-2 | Atribución en el mapa; versión fija e `integrity` (SRI) | La sección muestra el listado sin mapa |
 | [Esri World Dark Gray](https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer) | Teselas del mapa | No | No hace falta | Atribución obligatoria | "Mapa © Esri…" en cada mapa | Mapa sin fondo; datos visibles |
@@ -56,6 +56,17 @@ Las comprobaciones de CORS se hicieron desde `https://bendi.dev` el **1 de novie
 - Comprobado el 1 de noviembre de 2026: abre ya sintonizado.
 - Es HTTP, pero solo se enlaza (se abre en otra pestaña), así que no hay contenido mixto.
 - Alternativas que se ofrecen: la lista de todos los WebSDR (`websdr.org`) y el mapa de KiwiSDR.
+
+### Datos fijos de radio (comprobados el 2 nov 2026)
+
+| Qué | Fuente | Dónde |
+| --- | --- | --- |
+| Horario de las 18 balizas NCDXF/IARU y sus 5 frecuencias | [NCDXF](https://www.ncdxf.org/beacon/), [Wikipedia](https://en.wikipedia.org/wiki/International_Beacon_Project) (lista de enero de 2024) | `js/beacons.js` |
+| Plan de banda del QO-100 (subida 2400,005-2400,490; bajada 10489,500-10490,000 MHz) | [AMSAT-DL](https://amsat-dl.org/en/p4-a-nb-transponder-bandplan-and-operating-guidelines) | `entender/` |
+| Autorización española de 2,4 GHz (temporal hasta el 26 dic 2026) | [URE](https://www.ure.es/autorizadas-de-la-banda-de-24-ghz/) | `entender/` · **revisar al acabar 2026** |
+| Satélites FM (SO-50, AO-91, ISS) y estado de AO-91 | [AMSAT](https://www.amsat.org/live-fm-satellites/), [AO-91](https://www.amsat.org/two-way-satellites/ao-91/) | `entender/`, `js/sats.js` |
+| Desplazamiento de repetidores (−600 kHz en 2 m, −7,6 MHz en 70 cm) | Plan de banda IARU Región 1 | `js/repeater.js` |
+| Ley 19/1983 de antenas de radioaficionado | [BOE](https://www.boe.es/eli/es/l/1983/11/16/19/con) | `empezar/` |
 
 ## Recursos alojados en el propio repositorio
 

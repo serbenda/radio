@@ -59,7 +59,7 @@
       <p class="kicker">Paso 3</p>
       <h1>Practicar</h1>
       <p class="lead">Morse, la forma de hablar por radio y contactos simulados para perder el miedo antes de salir al aire.</p>
-      <nav class="toc" aria-label="En esta página"><a href="#morse">Morse: el idioma más viejo de la radio</a> · <a href="#jerga">Deletrear, códigos Q y jerga</a> · <a href="#qso">Haz tu primer contacto</a></nav>
+      <nav class="toc" aria-label="En esta página"><a href="#morse">Morse: el idioma más viejo de la radio</a> · <a href="#jerga">Deletrear, códigos Q y jerga</a> · <a href="#repetidores">Repetidores y radio digital</a> · <a href="#qso">Haz tu primer contacto</a></nav>
     </header>
 
     <!-- MORSE -->
@@ -110,6 +110,40 @@
           <h3>Lo que vas a oír</h3>
           <dl class="glossary" id="glossary"></dl>
         </div>
+      </div>
+    </section>
+    <!-- REPETIDORES -->
+    <section id="repetidores">
+      <div class="section-head">
+        <p class="kicker">Lo primero que harás con licencia</p>
+        <h2>Repetidores y radio digital</h2>
+        <p>Un walkie llega a pocos kilómetros. Un <strong>repetidor</strong>, instalado en un monte, recibe tu señal en una frecuencia y la retransmite a la vez en otra con mucha más cobertura: con un walkie de bolsillo hablas con toda tu provincia. Casi todos los radioclubes mantienen uno.</p>
+      </div>
+      <div class="cards two">
+        <article class="card">
+          <h3>🔁 Cómo se usa</h3>
+          <ul class="facts-list">
+            <li><b>Desplazamiento:</b> escuchas en la frecuencia de salida y transmites en otra. En 2 m se transmite 600 kHz más abajo; en 70 cm, 7,6 MHz más abajo. Tu radio lo hace sola si configuras el desplazamiento (−).</li>
+            <li><b>Tono (CTCSS):</b> muchos repetidores solo se abren si tu radio envía un tono subaudible concreto (por ejemplo 77,0 Hz). Está en la ficha de cada repetidor.</li>
+            <li><b>Para entrar:</b> escucha un rato y di solo tu indicativo y que estás a la escucha: «EA4XYZ a la escucha». Si alguien contesta, adelante.</li>
+            <li><b>Etiqueta:</b> deja una pausa de un par de segundos entre cambios (por si alguien tiene una urgencia), no acapares, cambia a una frecuencia directa (símplex) si la charla se alarga e identifícate cada 10 minutos.</li>
+          </ul>
+          <div class="rep-calc" id="repCalc">
+            <label>Frecuencia de salida del repetidor (MHz) <input type="text" id="repOut" inputmode="decimal" placeholder="145.650" autocomplete="off"></label>
+            <p class="rep-result" id="repResult" aria-live="polite"></p>
+          </div>
+        </article>
+        <article class="card">
+          <h3>💻 Voz digital e internet</h3>
+          <p>Muchos repetidores son digitales y están unidos por internet: hablas con un walkie en Madrid y te oyen en Buenos Aires. Hay tres sistemas, que no se entienden entre sí:</p>
+          <ul class="facts-list">
+            <li><b>DMR</b> (el más extendido en España, radios económicas): se elige un <em>grupo de conversación</em>. En la red BrandMeister, el 214 es España (el código de país de España), el 91 es mundial y el 9990 es un «loro» que te devuelve tu audio para probar.</li>
+            <li><b>C4FM / Fusion</b> (Yaesu) y <b>D-STAR</b> (Icom): parecidos, cada uno con sus salas.</li>
+            <li><b>EchoLink</b>: une repetidores FM normales por internet. Con licencia, puedes usar su aplicación en el móvil.</li>
+            <li><b>APRS</b> en 144,800 MHz: tu radio envía su posición y mensajes cortos que se ven en mapas como aprs.fi.</li>
+          </ul>
+          <p class="note">Para encontrar los repetidores de tu zona, pregunta en tu radioclub (la información cambia a menudo) o consulta los listados de la URE y de los grupos de cada red. Todo esto requiere licencia para transmitir; escuchar es libre.</p>
+        </article>
       </div>
     </section>
     <!-- PRIMER CONTACTO -->
@@ -174,6 +208,7 @@
   <script src="../js/morse-ui.js"></script>
   <script src="../js/koch.js"></script>
   <script src="../js/jargon.js"></script>
+  <script src="../js/repeater.js"></script>
   <script src="../js/qso.js"></script>
   <script src="../js/install.js"></script>
   <script src="../js/glossary.js"></script>
