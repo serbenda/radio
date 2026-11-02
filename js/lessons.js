@@ -60,7 +60,7 @@
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
   };
   /**
-   * Lee el valor de una variable CSS de la página (por ejemplo css('--accent') → "#8be0c2").
+   * Lee el valor de una variable CSS de la página (por ejemplo css('--accent') → "#f2b33d").
    * Así los lienzos usan los colores del tema actual. Se lee en cada fotograma, por si cambia el tema.
    * @param {string} v Nombre de la variable, con los dos guiones.
    * @returns {string}

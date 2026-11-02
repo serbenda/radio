@@ -2,7 +2,23 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión corresponde a una pull request fusionada en `main`.
 
+## [2.5.0] · 2 de noviembre de 2026 · Dominio propio radio.bendi.dev
+
+### Cambiado
+- **La web se mueve a <https://radio.bendi.dev/>** (inglés en <https://radio.bendi.dev/en/>). Las direcciones antiguas `bendi.dev/radio/…` redirigen solas a la misma página en la nueva. Archivo `CNAME`, canónicas, `hreflang`, Open Graph, `sitemap.xml`, enlaces para compartir, tarjeta QSL, plantillas de aviso, comprobaciones y documentación apuntan al nuevo dominio. Motivo y consecuencias en `docs/DECISIONES.md` D21.
+- Las visitas se siguen apuntando en GoatCounter como `/radio/…`, para no mezclarlas con las de la web personal.
+- `404.html` y el `id` del manifest, en la raíz del nuevo dominio.
+
+### Publicado
+- El diseño "Dial nocturno" y las herramientas para radioaficionados (tu primera estación, repetidores y DMR, balizas y QO-100), anotados en la 2.4.0, se quedaron fuera de la pull request de esa versión y llegan con esta.
+
+### Corregido
+- Documentación de estilos (esquinas, antetítulos, chips) y créditos de tipografías del README, que seguían describiendo el diseño anterior.
+
 ## [2.4.0] · 1 de noviembre de 2026 · En inglés
+
+### Cambiado
+- **Nuevo diseño "Dial nocturno"**: la web se ve como un receptor de válvulas de noche. Azul medianoche, ámbar de la lámpara del dial y aguja roja; titulares condensados como los rótulos de los equipos y texto en Atkinson Hyperlegible, pensada para leer sin esfuerzo; el menú es una escala con la aguja en la página actual; barras de progreso como un medidor S; cascada con los colores de un SDR; nuevos iconos e imagen para compartir.
 
 ### Añadido
 - **Versión en inglés** de toda la web en `/radio/en/` (`en/listen/`, `en/understand/`, `en/practice/`, `en/exam/`, `en/start/`), con los mismos módulos, secciones y progreso guardado.
@@ -13,6 +29,10 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). C
 - `tools/check.mjs` §12: cada página tiene su versión en inglés con las mismas secciones, y el examen en inglés coincide con el castellano.
 - `docs/IDIOMAS.md`: cómo está hecha la versión en inglés y cómo traducir algo nuevo.
 - **Grabaciones reales en la cascada:** al reproducir una grabación de Wikimedia Commons, se dibuja en la cascada de "¿Qué es este sonido?" para compararla con la imitación.
+- **Tu primera estación** (Empezar): qué hace falta (fuente, coaxial, medidor de ROE, seguridad, vecinos) y **calculadora de antenas** (dipolo y vertical de cuarto de onda para cualquier banda) y de pérdidas del cable.
+- **Repetidores y radio digital** (Practicar): cómo se usa un repetidor (desplazamiento, tono, etiqueta), DMR, C4FM, D-STAR, EchoLink y APRS, con **calculadora de desplazamiento**.
+- **Las balizas, ahora mismo** (Entender): qué baliza de la red NCDXF/IARU está en cada frecuencia en este segundo, con enlace para escucharla.
+- **Más satélites** (Entender): **QO-100** con hacia dónde apuntar la parabólica desde tu ciudad, sus frecuencias y la autorización española de 2,4 GHz (hasta el 26 de diciembre de 2026), y **satélites FM** (SO-50, AO-91) con sus frecuencias y próximos pases.
 - **La radio en clase** (Empezar): plan de una sesión de 50 minutos para 10 a 16 años y ficha A4 imprimible (alfabeto fonético, Morse, guion de contacto y libro de guardia), en los dos idiomas.
 
 ## [2.3.0] · 1 de noviembre de 2026 · Instalable en Android e iPhone, buenas prácticas y documentación completa

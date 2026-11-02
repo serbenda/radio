@@ -8,33 +8,33 @@
   <title>Understand · Radio</title>
   <meta name="description" content="How radio works in interactive lessons, the amateur radio bands, today's propagation and the ISS passes over your city.">
   <meta name="radio-root" content="../../">
-  <meta name="theme-color" content="#111214">
+  <meta name="theme-color" content="#0f1b2d">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="radio">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <link rel="canonical" href="https://bendi.dev/radio/en/understand/">
-  <link rel="alternate" hreflang="es" href="https://bendi.dev/radio/entender/">
-  <link rel="alternate" hreflang="en" href="https://bendi.dev/radio/en/understand/">
-  <link rel="alternate" hreflang="x-default" href="https://bendi.dev/radio/entender/">
+  <link rel="canonical" href="https://radio.bendi.dev/en/understand/">
+  <link rel="alternate" hreflang="es" href="https://radio.bendi.dev/entender/">
+  <link rel="alternate" hreflang="en" href="https://radio.bendi.dev/en/understand/">
+  <link rel="alternate" hreflang="x-default" href="https://radio.bendi.dev/entender/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_GB">
   <meta property="og:site_name" content="radio · bendi.dev">
   <meta property="og:title" content="Understand · Radio">
   <meta property="og:description" content="How radio works in interactive lessons, the amateur radio bands, today's propagation and the ISS passes over your city.">
-  <meta property="og:url" content="https://bendi.dev/radio/en/understand/">
-  <meta property="og:image" content="https://bendi.dev/radio/og.png">
+  <meta property="og:url" content="https://radio.bendi.dev/en/understand/">
+  <meta property="og:image" content="https://radio.bendi.dev/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="A radio dial with a signal and the words: There are thousands of voices on the air. Listen to them.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Understand · Radio">
   <meta name="twitter:description" content="How radio works in interactive lessons, the amateur radio bands, today's propagation and the ISS passes over your city.">
-  <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
+  <meta name="twitter:image" content="https://radio.bendi.dev/og.png">
   <link rel="icon" href="../../img/favicon-64.png" type="image/png">
   <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
   <link rel="manifest" href="../../manifest.webmanifest">
-  <link rel="preload" href="../../fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../../fonts/atkinson-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link rel="stylesheet" href="../../css/style.css">
 </head>
@@ -60,7 +60,7 @@
       <p class="kicker">Step 2</p>
       <h1>Understand</h1>
       <p class="lead">How radio travels, what the bands are, what propagation is like today and when the Space Station passes over you.</p>
-      <nav class="toc" aria-label="On this page"><a href="#como-funciona">How radio works</a> · <a href="#bandas">The bands: a map of the spectrum</a> · <a href="#propagacion">What's propagation like today?</a> · <a href="#iss">When does the Space Station pass over you?</a></nav>
+      <nav class="toc" aria-label="On this page"><a href="#como-funciona">How radio works</a> · <a href="#bandas">The bands: a map of the spectrum</a> · <a href="#propagacion">What's propagation like today?</a> · <a href="#balizas">The beacons, now</a> · <a href="#iss">When does the Space Station pass over you?</a> · <a href="#satelites">More satellites</a></nav>
     </header>
 
     <!-- CÓMO FUNCIONA -->
@@ -125,6 +125,24 @@
         </div>
       </div>
     </section>
+    <!-- BALIZAS -->
+    <section id="balizas">
+      <div class="section-head">
+        <p class="kicker">Check propagation with your own ears</p>
+        <h2>The beacons, right now</h2>
+        <p>Eighteen beacons around the world take turns, every 3 minutes, on five shortwave frequencies: their callsign in Morse and four dashes getting weaker (100, 10, 1 and 0.1 watts). If you hear the Japanese one on 20 metres, the band is open towards Japan; if you hear even the last dash, a tenth of a watt would get you there.</p>
+      </div>
+      <div class="card beacons">
+        <div class="beacon-top"><b class="mono" id="beaconClock">--:--:-- UTC</b> <span class="note" id="beaconNext" aria-live="polite"></span></div>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Which beacon is on each frequency">
+          <table class="cmp beacon-table">
+            <thead><tr><th>Frequency</th><th>On the air now</th><th><span class="sr-only">Listen</span></th></tr></thead>
+            <tbody id="beaconBoard"></tbody>
+          </table>
+        </div>
+        <p class="note">The <a href="https://www.ncdxf.org/beacon/" target="_blank" rel="noopener">NCDXF/IARU beacon network</a>, synchronised by GPS: the schedule is worked out in your browser from the time. The button opens the Twente receiver already tuned in CW; if you can’t hear the beacon, that band isn’t open from Europe towards it.</p>
+      </div>
+    </section>
     <!-- ISS -->
     <section id="iss">
       <div class="section-head">
@@ -155,6 +173,44 @@
       </div>
       <p class="note">Orbit from <a href="https://celestrak.org/" target="_blank" rel="noopener">CelesTrak</a>, calculated in your browser. With a handheld antenna and some patience you can hear the school contacts arranged by <a href="https://www.ariss.org/" target="_blank" rel="noopener">ARISS</a>; high passes are easier to hear. As it approaches and moves away, the frequency shifts by a few kHz (the Doppler effect).</p>
     </section>
+    <!-- SATÉLITES -->
+    <section id="satelites">
+      <div class="section-head">
+        <p class="kicker">Beyond the ISS</p>
+        <h2>Amateur radio satellites</h2>
+        <p>There are dozens of satellites built by and for radio amateurs. These are the two easiest ways in from Spain.</p>
+      </div>
+      <div class="cards two">
+        <article class="card">
+          <h3>📡 QO-100 · the satellite that never moves</h3>
+          <p>Es’hail-2, 36,000 km above the equator at 25.9° East: always at the same point in the sky and visible from Europe, Africa, the Middle East and parts of Asia, Brazil and India. It carries the first geostationary amateur transponder.</p>
+          <p class="qo-aim" id="qoAim" aria-live="polite"></p>
+          <ul class="facts-list">
+            <li><b>To listen (no licence needed):</b> a 60–80 cm TV satellite dish, an LNB and an SDR receiver. The narrowband downlink runs from 10489.500 to 10490.000 MHz, with beacons at both ends and in the middle.</li>
+            <li><b>To transmit:</b> uplink on 2400.005–2400.490 MHz. In Spain that band is authorised for radio amateurs <b>on a temporary, experimental basis until 26 December 2026</b> (2400–2410 MHz, maximum 1500 W EIRP, directional antenna of at least 21.5 dBi, no interference).</li>
+            <li><b>Without any kit:</b> there are web receivers for QO-100 you can hear in your browser, such as the BATC one.</li>
+          </ul>
+          <p class="note">Sources: <a href="https://amsat-dl.org/en/p4-a-nb-transponder-bandplan-and-operating-guidelines" target="_blank" rel="noopener">AMSAT-DL band plan</a> and <a href="https://www.ure.es/autorizadas-de-la-banda-de-24-ghz/" target="_blank" rel="noopener">URE: 2.4 GHz authorisation</a> (in Spanish). Web receiver: <a href="https://eshail.batc.org.uk/nb/" target="_blank" rel="noopener">BATC</a>.</p>
+        </article>
+        <article class="card">
+          <h3>🛰️ FM satellites: a flying repeater</h3>
+          <p>They pass for 10–15 minutes and repeat in FM whatever they receive. With a dual-band handheld and a handheld directional antenna (an Arrow or a home-made Yagi) you can make contacts hundreds of kilometres away. To listen, any receiver on the downlink frequency will do.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="FM satellite frequencies">
+            <table class="cmp">
+              <thead><tr><th>Satellite</th><th>Uplink</th><th>Downlink</th></tr></thead>
+              <tbody>
+                <tr><td><b>SO-50</b></td><td class="mono">145.850 MHz · 67.0 Hz tone</td><td class="mono">436.795 MHz</td></tr>
+                <tr><td><b>AO-91</b><br><small>battery worn out: sunlight only</small></td><td class="mono">435.250 MHz · 67.0 Hz tone</td><td class="mono">145.960 MHz</td></tr>
+                <tr><td><b>ISS</b></td><td class="mono">145.990 MHz · 67.0 Hz tone</td><td class="mono">437.800 MHz</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h4>Next useful passes from <span id="satWhere">Madrid</span></h4>
+          <ol class="iss-passes" id="fmPasses"><li>Calculating…</li></ol>
+          <p class="note">Uses the location chosen above for the ISS. Only passes higher than 10°. Because of the Doppler effect, the 70 cm downlink shifts by about ±10 kHz: start a little high and tune down during the pass. Status and frequencies: <a href="https://www.amsat.org/live-fm-satellites/" target="_blank" rel="noopener">AMSAT</a>.</p>
+        </article>
+      </div>
+    </section>
 
     <nav class="next-page" aria-label="Next step"><a href="../practice/">Next: Practise →</a></nav>
   </main>
@@ -175,6 +231,8 @@
   <script src="../../js/bands.js"></script>
   <script src="../../js/propagation.js"></script>
   <script src="../../js/iss.js"></script>
+  <script src="../../js/beacons.js"></script>
+  <script src="../../js/sats.js"></script>
   <script src="../../js/install.js"></script>
   <script src="../../js/glossary.js"></script>
   <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>

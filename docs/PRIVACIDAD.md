@@ -48,7 +48,7 @@ Al visitar la web, tu navegador se conecta a servicios de terceros, que como cua
 
 ## Visitas
 
-Las visitas se cuentan con [GoatCounter](https://www.goatcounter.com/), que no usa cookies ni guarda datos personales. Sirve para saber qué páginas se usan; los datos se ven en el panel de visitas de bendi.dev.
+Las visitas se cuentan con [GoatCounter](https://www.goatcounter.com/), que no usa cookies ni guarda datos personales. Sirve para saber qué páginas se usan; los datos se ven en el panel de visitas de bendi.dev. Como ese panel es común a todas las webs de bendi.dev, las páginas de esta se apuntan con el prefijo `/radio` (`radio.bendi.dev/escuchar/` aparece como `/radio/escuchar/`); el ajuste está al principio de `js/core.js` y no añade ningún dato.
 
 ## Métricas de hitos
 

@@ -1,6 +1,6 @@
 # Tutorial: tu primer cambio, de principio a fin
 
-Un recorrido completo, desde no tener nada instalado hasta ver tu cambio publicado en `bendi.dev/radio`. Como ejemplo, corregiremos una pregunta frecuente. Tiempo: unos 30 minutos la primera vez.
+Un recorrido completo, desde no tener nada instalado hasta ver tu cambio publicado en `radio.bendi.dev`. Como ejemplo, corregiremos una pregunta frecuente. Tiempo: unos 30 minutos la primera vez.
 
 ```mermaid
 flowchart LR
@@ -112,7 +112,7 @@ Si la comprobación sale en **rojo**, pulsa en "Details" para ver qué falla, ar
 
 ## 9. Verlo publicado
 
-GitHub Pages publica `main` en 1-2 minutos. Puedes seguirlo en la pestaña **Actions** → "pages build and deployment". Después abre <https://bendi.dev/radio/empezar/#faq> y recarga forzando.
+GitHub Pages publica `main` en 1-2 minutos. Puedes seguirlo en la pestaña **Actions** → "pages build and deployment". Después abre <https://radio.bendi.dev/empezar/#faq> y recarga forzando.
 
 ## Lo que acabas de hacer
 
@@ -122,7 +122,7 @@ sequenceDiagram
   participant D as GitHub · development
   participant A as GitHub Actions
   participant M as GitHub · main
-  participant P as bendi.dev/radio
+  participant P as radio.bendi.dev
   T->>T: editar + node tools/check.mjs
   T->>D: git push
   D->>A: pull request → comprobaciones

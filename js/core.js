@@ -33,7 +33,7 @@
  *  - Radio.track(hito)           → cuenta un hito en GoatCounter (nombre fijo, sin datos personales).
  *
  * Además, al cargar:
- *  - Redirige los enlaces antiguos de la web de una sola página (bendi.dev/radio/#ahora → escuchar/#ahora).
+ *  - Redirige los enlaces antiguos de la web de una sola página (radio.bendi.dev/#ahora → escuchar/#ahora).
  *  - Pone en hora el reloj UTC de la cabecera.
  *  - Marca en el menú la página actual (aria-current="page").
  *  - Rellena el enlace "¿Ves un error?" con la página actual.
@@ -56,6 +56,15 @@
  */
 (() => {
   'use strict';
+
+  /* ---------- Métricas ---------- */
+
+  // La web vive en radio.bendi.dev, pero el panel de GoatCounter es el mismo para todas las webs de
+  // bendi.dev. Para que sus visitas no se mezclen con las de la portada personal, cada página se cuenta
+  // con el prefijo /radio (radio.bendi.dev/escuchar/ → /radio/escuchar/), como cuando vivía en
+  // bendi.dev/radio/. core.js se carga antes que count.js (que es async y va al final), así que
+  // GoatCounter encuentra este ajuste al arrancar. Documentado en docs/PRIVACIDAD.md.
+  window.goatcounter = Object.assign(window.goatcounter || {}, { path: p => '/radio' + p });
 
   /* ---------- Utilidades básicas ---------- */
 
@@ -122,7 +131,7 @@
   /**
    * Raíz del sitio relativa a la página actual. Cada página la declara en
    * <meta name="radio-root" content="../"> (la portada usa "./").
-   * Así los enlaces funcionan igual en bendi.dev/radio/, en local y abriendo el archivo directamente.
+   * Así los enlaces funcionan igual en radio.bendi.dev/, en local y abriendo el archivo directamente.
    */
   const root = (document.querySelector('meta[name="radio-root"]') || {}).content || './';
 
@@ -257,7 +266,7 @@
   window.Radio = { $, esc, store, emit, url, root, lang, locale, t, counterpart, SLUGS, SLUGS_ES, reducedMotion, whileVisible, onceVisible, report, track };
 
   /* ---------- Enlaces antiguos ---------- */
-  // Hasta noviembre de 2026 todo estaba en una sola página: bendi.dev/radio/#ahora, #test…
+  // Hasta noviembre de 2026 todo estaba en una sola página: radio.bendi.dev/#ahora, #test…
   // Si alguien llega a la portada con uno de esos anclajes, lo llevamos a su nueva página.
   // Formato: idDeSección: 'carpeta de la página donde vive ahora'.
   const MOVED = {
@@ -323,7 +332,7 @@
      * portapapeles y cambia el texto del botón durante 2,5 s. Si tampoco hay portapapeles, muestra la URL.
      */
     share.addEventListener('click', async () => {
-      const data = { title: t('Radio · Descubre la radioafición', 'Radio · Discover amateur radio'), text: t('Escucha emisoras de todo el mundo y haz tu primer contacto por radio 📻', 'Listen to stations from all over the world and make your first radio contact 📻'), url: t('https://bendi.dev/radio/', 'https://bendi.dev/radio/en/') };
+      const data = { title: t('Radio · Descubre la radioafición', 'Radio · Discover amateur radio'), text: t('Escucha emisoras de todo el mundo y haz tu primer contacto por radio 📻', 'Listen to stations from all over the world and make your first radio contact 📻'), url: t('https://radio.bendi.dev/', 'https://radio.bendi.dev/en/') };
       if (navigator.share) { try { await navigator.share(data); } catch (e) { /* cancelado */ } return; }
       try { await navigator.clipboard.writeText(data.url); share.textContent = t('✅ Enlace copiado', '✅ Link copied'); } catch (e) { share.textContent = data.url; }
       setTimeout(() => { share.textContent = label; }, 2500);

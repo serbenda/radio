@@ -69,13 +69,9 @@ y abre <http://localhost:8000/>. También funciona abriendo `index.html` directa
 
 ### Probar el modo sin conexión
 
-El service worker solo funciona por `http://localhost` o HTTPS, y su alcance es la carpeta donde está. Para probarlo como en `bendi.dev/radio/`:
+El service worker solo funciona por `http://localhost` o HTTPS, y su alcance es la carpeta donde está. Como la web vive en la raíz de `radio.bendi.dev/`, basta con el mismo servidor de antes (`python3 -m http.server 8000` desde la raíz del repositorio).
 
-```bash
-mkdir -p /tmp/srv && ln -sfn "$PWD" /tmp/srv/radio && cd /tmp/srv && python3 -m http.server 8000
-```
-
-Abre <http://localhost:8000/radio/>, recarga una vez, y en las herramientas del navegador (Aplicación → Service workers) marca "Sin conexión": las seis páginas deben abrirse y una dirección inventada debe mostrar "Sin propagación". Tras cambiar archivos, sube `VERSION` en `sw.js` o marca "Update on reload".
+Abre <http://localhost:8000/>, recarga una vez, y en las herramientas del navegador (Aplicación → Service workers) marca "Sin conexión": las seis páginas deben abrirse y una dirección inventada debe mostrar "Sin propagación". Tras cambiar archivos, sube `VERSION` en `sw.js` o marca "Update on reload".
 
 ## Lista de comprobación manual antes de fusionar
 
@@ -116,6 +112,6 @@ Hacerla en ordenador y en un móvil (o en el modo móvil del navegador, 390 px d
 
 ## Probar los datos en directo
 
-Los servicios externos responden a peticiones desde `https://bendi.dev`. Para probar una rama sin publicarla, abre `https://bendi.dev/radio/` en el navegador y, desde la consola, puedes cargar el código de la rama con `fetch` a `raw.githubusercontent.com` y ejecutarlo; así se probaron "Ahora en el aire" y la ISS antes de publicarlas.
+Los servicios externos responden a peticiones desde `https://bendi.dev`. Para probar una rama sin publicarla, abre `https://radio.bendi.dev/` en el navegador y, desde la consola, puedes cargar el código de la rama con `fetch` a `raw.githubusercontent.com` y ejecutarlo; así se probaron "Ahora en el aire" y la ISS antes de publicarlas.
 
 **Desde la versión 2.2 la CSP impide ejecutar así el código descargado (no permite `eval` ni insertar scripts en línea).** Para probar datos en directo de una rama, publícala en un fork con GitHub Pages o prueba en local: los servicios con CORS abierto (`*`) también responden a `http://localhost`.

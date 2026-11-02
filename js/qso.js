@@ -536,9 +536,9 @@
     const time = now.toISOString().slice(11, 16);
     const c = $('qslCanvas'), g = c.getContext('2d');
     const W = c.width, H = c.height;
-    const ink = '#f2f2f4', mint = '#8be0c2', muted = '#9c9ea6';
+    const ink = '#eaf0f7', mint = '#f2b33d', muted = '#9db0c7';
 
-    g.fillStyle = '#16171a'; g.fillRect(0, 0, W, H);
+    g.fillStyle = '#0d1828'; g.fillRect(0, 0, W, H);
     // ondas decorativas
     g.strokeStyle = 'rgba(139,224,194,.12)'; g.lineWidth = 2;
     for (let r = 60; r < 700; r += 46) { g.beginPath(); g.arc(W - 90, 90, r, 0, Math.PI * 2); g.stroke(); }
@@ -546,14 +546,14 @@
 
     g.fillStyle = mint; g.font = '600 18px "IBM Plex Mono", monospace';
     g.fillText(`${dx.country.toUpperCase()} · ${dx.city.toUpperCase()}`, 52, 76);
-    g.fillStyle = ink; g.font = '800 104px Fraunces, Georgia, serif';
+    g.fillStyle = ink; g.font = '800 112px "Barlow Condensed", "Arial Narrow", sans-serif';
     g.fillText(dx.call, 46, 180);
-    g.font = '400 24px "IBM Plex Sans", sans-serif'; g.fillStyle = muted;
+    g.font = '400 24px "Atkinson Hyperlegible", sans-serif'; g.fillStyle = muted;
     g.fillText(`${t('Operador', 'Operator')}: ${dx.op}`, 52, 222);
 
-    g.fillStyle = ink; g.font = '600 26px "IBM Plex Sans", sans-serif';
+    g.fillStyle = ink; g.font = '600 26px "Atkinson Hyperlegible", sans-serif';
     g.fillText(`${t('Para', 'To')}: ${me.call} · ${me.name} (${me.city})`, 52, 290);
-    g.fillStyle = muted; g.font = '400 20px "IBM Plex Sans", sans-serif';
+    g.fillStyle = muted; g.font = '400 20px "Atkinson Hyperlegible", sans-serif';
     g.fillText(t('Confirmando nuestro QSO:', 'Confirming our QSO:'), 52, 326);
 
     // Tabla de seis casillas [título, valor]. `weights` reparte el ancho: FECHA es la más ancha y RST la más
@@ -561,7 +561,7 @@
     const cols = [[t('FECHA', 'DATE'), date], ['UTC', time], [t('BANDA', 'BAND'), band], ['MHz', freq], [t('MODO', 'MODE'), mode], ['RST', rst]];
     const x0 = 52, y0 = 352, weights = [1.7, 1, 1, 1.15, 0.95, 0.8];
     const unit = (W - 104) / weights.reduce((a, b) => a + b, 0);
-    g.strokeStyle = '#3a3d44'; g.lineWidth = 1.5;
+    g.strokeStyle = '#34507a'; g.lineWidth = 1.5;
     let x = x0;
     cols.forEach(([k, v], i) => {
       const cw = weights[i] * unit;
@@ -571,10 +571,10 @@
       x += cw;
     });
 
-    g.fillStyle = mint; g.font = 'italic 800 40px Fraunces, Georgia, serif';
+    g.fillStyle = mint; g.font = '800 44px "Barlow Condensed", "Arial Narrow", sans-serif';
     g.fillText('Tnx QSO · 73!', 52, 506);
     g.fillStyle = muted; g.font = '400 15px "IBM Plex Mono", monospace';
-    g.textAlign = 'right'; g.fillText(t('Contacto simulado · bendi.dev/radio', 'Simulated contact · bendi.dev/radio/en'), W - 52, 506); g.textAlign = 'left';
+    g.textAlign = 'right'; g.fillText(t('Contacto simulado · radio.bendi.dev', 'Simulated contact · radio.bendi.dev/en'), W - 52, 506); g.textAlign = 'left';
 
     $('qsoQsl').hidden = false;
     $('qsoQsl').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -597,8 +597,8 @@
       const file = new File([blob], `QSL_${dx.call}_${me.call}.png`, { type: 'image/png' });
       try {
         await navigator.share({ files: [file], title: t('Mi primer QSO', 'My first QSO'),
-          text: t(`¡He hecho mi primer contacto por radio con ${dx.country}! 📻 73. Pruébalo en https://bendi.dev/radio/`,
-            `I have made my first radio contact with ${dx.country}! 📻 73. Try it at https://bendi.dev/radio/en/`) });
+          text: t(`¡He hecho mi primer contacto por radio con ${dx.country}! 📻 73. Pruébalo en https://radio.bendi.dev/`,
+            `I have made my first radio contact with ${dx.country}! 📻 73. Try it at https://radio.bendi.dev/en/`) });
       } catch (e) { /* cancelado */ }
     }, 'image/png');
   });

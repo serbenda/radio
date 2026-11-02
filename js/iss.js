@@ -178,7 +178,7 @@
     const segs = [[]];
     pts.forEach((p, i) => { if (i && Math.abs(p[1] - pts[i - 1][1]) > 180) segs.push([]); segs.at(-1).push(p); });
     if (track) track.remove();
-    track = L.layerGroup(segs.map(s => L.polyline(s, { color: '#8be0c2', weight: 1.5, opacity: 0.6, dashArray: '4 5' }))).addTo(map);
+    track = L.layerGroup(segs.map(s => L.polyline(s, { color: '#f2b33d', weight: 1.5, opacity: 0.6, dashArray: '4 5' }))).addTo(map);
   }
 
   /* ---------- Lugar del observador ---------- */
@@ -194,6 +194,8 @@
   function setHome(lat, lon, name) {
     home = { lat, lon, name };
     $('issWhere').textContent = name;
+    // Avisa a sats.js (QO-100 y satélites FM), que usa el mismo lugar.
+    document.dispatchEvent(new CustomEvent('radio:home', { detail: { lat, lon, name } }));
     if (!satrec) return;
     homeMark.setLatLng([lat, lon]);
     findPasses(); renderPasses(); update();
@@ -220,7 +222,7 @@
     map = L.map('issMap', { worldCopyJump: true, scrollWheelZoom: false, attributionControl: true }).setView([30, 0], 1);
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: t('Mapa &copy; Esri · Órbita: CelesTrak', 'Map &copy; Esri · Orbit: CelesTrak'), maxZoom: 8 }).addTo(map);
     marker = L.marker([0, 0], { icon: L.divIcon({ className: 'iss-icon', html: '🛰️', iconSize: [28, 28], iconAnchor: [14, 14] }) }).addTo(map);
-    homeMark = L.circleMarker([home.lat, home.lon], { radius: 6, color: '#ffd27a', fillColor: '#ffd27a', fillOpacity: 1 }).bindTooltip(t('Tú', 'You')).addTo(map);
+    homeMark = L.circleMarker([home.lat, home.lon], { radius: 6, color: '#ffe2a0', fillColor: '#ffe2a0', fillOpacity: 1 }).bindTooltip(t('Tú', 'You')).addTo(map);
     findPasses(); renderPasses(); drawTrack(); update();
     tick = setInterval(update, 1000);
     setInterval(drawTrack, 5 * 60e3);

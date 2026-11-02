@@ -208,7 +208,7 @@
       const badges = WEEKS.filter((w, i) => st.badges[i]).map(w => w.badge).join(' ');
       const text = t(`📻 Estoy aprendiendo radioafición: ${$('journeyMeta').textContent}${badges ? ' · ' + badges : ''}. ¿Te apuntas?`,
         `📻 I’m learning amateur radio: ${$('journeyMeta').textContent}${badges ? ' · ' + badges : ''}. Fancy joining me?`);
-      const link = t('https://bendi.dev/radio/#mes', 'https://bendi.dev/radio/en/#mes');
+      const link = t('https://radio.bendi.dev/#mes', 'https://radio.bendi.dev/en/#mes');
       if (navigator.share) { try { await navigator.share({ text, url: link }); } catch (e) { /* cancelado */ } return; }
       try { await navigator.clipboard.writeText(text + ' ' + link); $('journeyShare').textContent = t('✅ Copiado', '✅ Copied'); setTimeout(() => { $('journeyShare').textContent = t('📤 Compartir mi progreso', '📤 Share my progress'); }, 2500); } catch (e) { /* sin portapapeles */ }
     });

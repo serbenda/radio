@@ -2,7 +2,7 @@
 
 **Web de iniciación a la radioafición en español:** de "¿qué es esto?" a tu indicativo. Para quien no ha tocado nunca una radio.
 
-**👉 https://bendi.dev/radio** · 🇬🇧 **English:** https://bendi.dev/radio/en/
+**👉 https://radio.bendi.dev** · 🇬🇧 **English:** https://radio.bendi.dev/en/
 
 [![Comprobaciones](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml/badge.svg)](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml)
 [![Enlaces externos](https://github.com/serbenda/radio/actions/workflows/enlaces.yml/badge.svg)](https://github.com/serbenda/radio/actions/workflows/enlaces.yml)
@@ -18,14 +18,14 @@ Una web estática, sin registro, sin cookies y que funciona sin conexión, que a
 
 | Paso | Página | Qué hay |
 | --- | --- | --- |
-| — | [Inicio](https://bendi.dev/radio/) | Dial de onda corta, qué es la radioafición y **Tu primer mes**: 4 semanas, 14 pasos que se marcan solos e insignias. Guardar y recuperar el progreso, instalar la app y apoyar el proyecto |
-| 1 | [Escuchar](https://bendi.dev/radio/escuchar/) | Mapa de emisoras con reproductor, escucha guiada en un receptor real, **Ahora en el aire** (quién habla con quién, en directo), **¿Qué es este sonido?** con cascada y 11 grabaciones reales |
-| 2 | [Entender](https://bendi.dev/radio/entender/) | Cuatro lecciones interactivas en tres niveles, bandas, propagación de hoy en lenguaje llano y pases de la ISS sobre tu ciudad |
-| 3 | [Practicar](https://bendi.dev/radio/practicar/) | Entrenador de Morse con método Koch, alfabeto fonético y jerga, y cinco contactos simulados con tarjeta QSL |
-| 4 | [Examen](https://bendi.dev/radio/examen/) | 169 preguntas revisadas contra la Orden IET/1311/2013, tarjetas que repiten lo que fallas y simulacro como el real |
-| 5 | [Empezar](https://bendi.dev/radio/empezar/) | El trámite en cifras, CB-27 y walkies, qué radio comprar (y qué es legal), radioclubes de la URE, calendario, familias, **la radio en clase** (ficha imprimible) e Hispanoamérica |
+| — | [Inicio](https://radio.bendi.dev/) | Dial de onda corta, qué es la radioafición y **Tu primer mes**: 4 semanas, 14 pasos que se marcan solos e insignias. Guardar y recuperar el progreso, instalar la app y apoyar el proyecto |
+| 1 | [Escuchar](https://radio.bendi.dev/escuchar/) | Mapa de emisoras con reproductor, escucha guiada en un receptor real, **Ahora en el aire** (quién habla con quién, en directo), **¿Qué es este sonido?** con cascada y 11 grabaciones reales |
+| 2 | [Entender](https://radio.bendi.dev/entender/) | Cuatro lecciones interactivas en tres niveles, bandas, propagación de hoy en lenguaje llano, **las balizas en directo**, pases de la ISS y **QO-100 y satélites FM** |
+| 3 | [Practicar](https://radio.bendi.dev/practicar/) | Entrenador de Morse con método Koch, alfabeto fonético y jerga, **repetidores y radio digital** y cinco contactos simulados con tarjeta QSL |
+| 4 | [Examen](https://radio.bendi.dev/examen/) | 169 preguntas revisadas contra la Orden IET/1311/2013, tarjetas que repiten lo que fallas y simulacro como el real |
+| 5 | [Empezar](https://radio.bendi.dev/empezar/) | El trámite en cifras, CB-27 y walkies, qué radio comprar (y qué es legal), **tu primera estación con calculadora de antenas**, radioclubes de la URE, calendario, familias, **la radio en clase** (ficha imprimible) e Hispanoamérica |
 
-📲 **Se instala como una app** en Android, iPhone, iPad y ordenador (botón "Instalar la app" del pie o pasos en la [portada](https://bendi.dev/radio/#instalar)) y funciona sin conexión.
+📲 **Se instala como una app** en Android, iPhone, iPad y ordenador (botón "Instalar la app" del pie o pasos en la [portada](https://radio.bendi.dev/#instalar)) y funciona sin conexión.
 
 <table>
   <tr>
@@ -100,7 +100,8 @@ index.html  escuchar/  entender/  practicar/  examen/  empezar/    Las seis pág
 css/style.css                                                      Estilos (una sola hoja)
 js/                                                                Un módulo por funcionalidad
 fonts/  img/  og.png                                               Tipografías, iconos, imagen para redes
-sw.js  manifest.webmanifest  sitemap.xml                           Sin conexión, instalación, buscadores
+sw.js  manifest.webmanifest  sitemap.xml  robots.txt               Sin conexión, instalación, buscadores
+CNAME                                                              Dominio propio: radio.bendi.dev
 tools/                                                             Comprobaciones y utilidades
 .github/                                                           Actions, formularios de aviso, plantilla de PR
 docs/                                                              Documentación
@@ -113,7 +114,7 @@ docs/                                                              Documentació
 1. Se trabaja en la rama **`development`**; nunca directamente en `main`.
 2. Antes de subir: `node tools/check.mjs` sin fallos y la lista manual de [docs/PRUEBAS.md](docs/PRUEBAS.md).
 3. Los cambios llegan a `main` con una **pull request**; GitHub Actions ejecuta las comprobaciones.
-4. Al fusionar, GitHub Pages publica `main` en bendi.dev/radio en uno o dos minutos.
+4. Al fusionar, GitHub Pages publica `main` en radio.bendi.dev en uno o dos minutos.
 5. Cada versión sube `VERSION` en `sw.js` y se anota en [CHANGELOG.md](CHANGELOG.md).
 
 Normas completas en [CONTRIBUTING.md](CONTRIBUTING.md).
@@ -131,7 +132,7 @@ Normas completas en [CONTRIBUTING.md](CONTRIBUTING.md).
 | Grabaciones reales | [Wikimedia Commons](https://commons.wikimedia.org/wiki/Category:Audio_files_of_amateur_radio) | CC0, CC BY, CC BY-SA; autor y licencia en cada una |
 | Secciones de radioclub | [URE](https://www.ure.es/secciones/) | Solo datos públicos de cada sección |
 | Preguntas de examen | Escritas a partir de la [Orden IET/1311/2013](https://www.boe.es/buscar/doc.php?id=BOE-A-2013-7624) | Propias |
-| Tipografías | [Fraunces](https://github.com/undercasetype/Fraunces), [IBM Plex](https://github.com/IBM/plex) | SIL Open Font License (`fonts/`) |
+| Tipografías | [Barlow Condensed](https://github.com/jpt/barlow), [Atkinson Hyperlegible](https://www.brailleinstitute.org/freefont/), [IBM Plex Mono](https://github.com/IBM/plex) | SIL Open Font License (`fonts/`) |
 | Visitas y hitos | [GoatCounter](https://www.goatcounter.com/) | Sin cookies ni datos personales |
 
 Detalle en [docs/DATOS.md](docs/DATOS.md).

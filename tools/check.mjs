@@ -112,14 +112,14 @@ for (const p of PAGES) {
   //   <html lang="es">                     literal.
   //   <title>[^<]+<\/title>                título con al menos un carácter: '<title>Radio</title>'.
   //   content="[^"]{50,}"                  descripción de 50 caracteres o más.
-  //   href="https:\/\/bendi\.dev\/radio\/  canónica bajo https://bendi.dev/radio/ (los puntos van escapados).
+  //   href="https:\/\/radio\.bendi\.dev\/  canónica bajo https://radio.bendi.dev/ (los puntos van escapados).
   //   <h1[\s>]                             '<h1>' o '<h1 class="…">' (y no, por ejemplo, '<h1x'); deben ser exactamente 1.
   //   radio-root" content="([^"]+)"        captura el valor del meta para compararlo con rootExpected.
   //   <body data-page="[a-z]+">            data-page en minúsculas sin espacios: '<body data-page="examen">'.
   if (!new RegExp(`<html lang="${langOf(p)}">`).test(s)) problems.push(`sin lang="${langOf(p)}"`);
   if (!/<title>[^<]+<\/title>/.test(s)) problems.push('sin <title>');
   if (!/<meta name="description" content="[^"]{50,}">/.test(s)) problems.push('descripción ausente o corta');
-  if (!/<link rel="canonical" href="https:\/\/bendi\.dev\/radio\/[^"]*">/.test(s)) problems.push('sin canónica');
+  if (!/<link rel="canonical" href="https:\/\/radio\.bendi\.dev\/[^"]*">/.test(s)) problems.push('sin canónica');
   if ((s.match(/<h1[\s>]/g) || []).length !== 1) problems.push('no tiene exactamente un <h1>');
   const rootMeta = (s.match(/<meta name="radio-root" content="([^"]+)">/) || [])[1];
   if (rootMeta !== rootExpected) problems.push(`radio-root "${rootMeta}" (debería ser "${rootExpected}")`);
@@ -282,12 +282,17 @@ section('7. Enlaces de "Tu primer mes"');
 
 /* ---------- 8. sitemap.xml ---------- */
 
-// Cada página debe aparecer como <loc>https://bendi.dev/radio/<carpeta>/</loc> (la portada, sin carpeta).
+// Cada página debe aparecer como <loc>https://radio.bendi.dev/<carpeta>/</loc> (la portada, sin carpeta).
 section('8. sitemap.xml');
 {
   const sm = read('sitemap.xml');
-  const missing = PAGES.map(p => 'https://bendi.dev/radio/' + p.replace('index.html', '')).filter(u => !sm.includes(`<loc>${u}</loc>`));
+  const missing = PAGES.map(p => 'https://radio.bendi.dev/' + p.replace('index.html', '')).filter(u => !sm.includes(`<loc>${u}</loc>`));
   expect(!missing.length, `incluye las ${PAGES.length} páginas${missing.length ? ' (faltan: ' + missing.join(', ') + ')' : ''}`);
+  // El archivo CNAME le dice a GitHub Pages que sirva la web en radio.bendi.dev (docs/DECISIONES.md D21).
+  // Si falta o cambia, la web vuelve a bendi.dev/radio/ y las canónicas de arriba dejan de ser verdad.
+  let cname = '';
+  try { cname = read('CNAME').trim(); } catch { /* sin CNAME */ }
+  expect(cname === 'radio.bendi.dev', `CNAME con radio.bendi.dev${cname && cname !== 'radio.bendi.dev' ? ' (dice: ' + cname + ')' : cname ? '' : ' (no existe)'}`);
 }
 
 /* ---------- 9. Instalable y sin conexión ---------- */
@@ -377,8 +382,12 @@ section('11. Seguridad y recursos externos');
   }
   expect(!blank.length, `enlaces que abren pestaña nueva con rel="noopener"${blank.length ? ' (faltan: ' + blank.slice(0, 5).join(' | ') + ')' : ''}`);
   // Tipografías: ninguna página carga Google Fonts, y cada url('../fonts/…') de css/style.css existe.
-  //   /url\('\.\.\/(fonts\/[^']+)'\)/g: "url('../fonts/fraunces.woff2')" → 'fonts/fraunces.woff2'.
+  //   /url\('\.\.\/(fonts\/[^']+)'\)/g: "url('../fonts/atkinson-400.woff2')" → 'fonts/atkinson-400.woff2'.
   expect(PAGES.every(p => !/fonts\.googleapis|fonts\.gstatic/.test(html[p])), 'sin tipografías de terceros (todas en fonts/)');
+  // Atributos de evento en el HTML (onclick="…", onsubmit="…"): la CSP los bloquea (no hay 'unsafe-inline' en
+  // script-src), así que no funcionarían. Regex: espacio + on + letras + =".
+  const inline = PAGES.filter(p => /\son[a-z]+="/i.test(html[p]));
+  expect(!inline.length, `sin manejadores de eventos en el HTML (la CSP los bloquearía)${inline.length ? ' (en: ' + inline.join(', ') + ')' : ''}`);
   const faces = [...read('css/style.css').matchAll(/url\('\.\.\/(fonts\/[^']+)'\)/g)].map(m => m[1]);
   const missing = faces.filter(f => !existsSync(join(ROOT, f)));
   expect(faces.length >= 3 && !missing.length, `tipografías de @font-face presentes${missing.length ? ' (faltan: ' + missing.join(', ') + ')' : ''}`);

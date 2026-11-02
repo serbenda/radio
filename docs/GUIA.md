@@ -218,7 +218,7 @@ Al cambiar una cifra, actualiza también la fecha en la tabla "Datos guardados e
 2. En `nueva/index.html` cambia: `<title>`, `description`, `canonical`, `og:*`, `twitter:*`, `data-page="nueva"`, el `page-head` y las secciones. Deja `radio-root` en `../`.
 3. Ajusta los `<script>` a los módulos que use (siempre `core`, `data`, `journey` al principio y `glossary` al final).
 4. Menú: añade `<a href="../nueva/" data-page="nueva">Nueva</a>` en la cabecera de **las siete** páginas (con `./nueva/` en la portada). `check.mjs` avisa si una difiere.
-5. `sitemap.xml`: añade `<url><loc>https://bendi.dev/radio/nueva/</loc></url>`.
+5. `sitemap.xml`: añade `<url><loc>https://radio.bendi.dev/nueva/</loc></url>`.
 6. `sw.js`: añade `'./nueva/'` a `PRECACHE`.
 7. Enlaza la página desde el "Siguiente" de la anterior.
 8. `node tools/check.mjs`.
@@ -295,7 +295,7 @@ flowchart LR
   E --> F[Pull request a main]
   F --> G[Comprobaciones en verde]
   G --> H[Fusionar]
-  H --> I[Esperar 1-2 min y abrir bendi.dev/radio]
+  H --> I[Esperar 1-2 min y abrir radio.bendi.dev]
 ```
 
 1. Elige número de versión ([versionado semántico](https://semver.org/lang/es/)): `2.2.1` para arreglos, `2.3.0` para algo nuevo, `3.0.0` para cambios que rompen (por ejemplo, URLs).

@@ -22,7 +22,7 @@ Términos técnicos que aparecen en el código y en la documentación, explicado
 | **fetch** | Función de JavaScript para pedir datos a una dirección web | Módulos con datos en directo |
 | **Git / GitHub** | Git guarda el historial de cambios; GitHub lo aloja en internet | — |
 | **GitHub Actions** | Tareas automáticas de GitHub (comprobar, revisar enlaces) | `.github/workflows/` |
-| **GitHub Pages** | Servicio de GitHub que publica una rama como web | Publica `main` en `bendi.dev/radio` |
+| **GitHub Pages** | Servicio de GitHub que publica una rama como web | Publica `main` en `radio.bendi.dev` |
 | **IIFE** | Función que se ejecuta sola nada más definirse: `(() => { … })();`. Evita que las variables se escapen al ámbito global | Todos los módulos |
 | **IntersectionObserver** | API del navegador que avisa cuando un elemento entra o sale de la pantalla | `Radio.whileVisible`, `Radio.onceVisible` |
 | **JSDoc** | Comentarios `/** … */` con `@param` y `@returns` que documentan funciones | Todo `js/` |

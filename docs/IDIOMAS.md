@@ -6,7 +6,7 @@ La web existe en **castellano** (raíz del sitio) y en **inglés** (carpeta `en/
 
 | Castellano | Inglés |
 | --- | --- |
-| `index.html` → `/radio/` | `en/index.html` → `/radio/en/` |
+| `index.html` → `/` | `en/index.html` → `/en/` |
 | `escuchar/` | `en/listen/` |
 | `entender/` | `en/understand/` |
 | `practicar/` | `en/practice/` |
@@ -16,10 +16,10 @@ La web existe en **castellano** (raíz del sitio) y en **inglés** (carpeta `en/
 
 ```mermaid
 flowchart LR
-  subgraph ES["Castellano · /radio/"]
+  subgraph ES["Castellano · /"]
     E1[index.html] --- E2[escuchar/] --- E3[entender/] --- E4[practicar/] --- E5[examen/] --- E6[empezar/]
   end
-  subgraph EN["Inglés · /radio/en/"]
+  subgraph EN["Inglés · /en/"]
     N1[index.html] --- N2[listen/] --- N3[understand/] --- N4[practice/] --- N5[exam/] --- N6[start/]
   end
   M[css · js · fonts · img<br/>compartidos] --> ES & EN

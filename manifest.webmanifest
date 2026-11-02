@@ -4,13 +4,13 @@
   "description": "Iniciación a la radioafición en español: escucha, entiende, practica y prepara el examen.",
   "lang": "es",
   "dir": "ltr",
-  "id": "/radio/",
+  "id": "/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#111214",
-  "theme_color": "#111214",
+  "background_color": "#0f1b2d",
+  "theme_color": "#0f1b2d",
   "categories": [
     "education",
     "entertainment"

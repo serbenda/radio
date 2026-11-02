@@ -8,7 +8,7 @@ ahora no están (por ejemplo, otro alfabeto). Explicación completa: docs/ESTILO
 Requisitos (una vez):
     pip install fonttools brotli
     git clone --depth 1 --filter=blob:none --sparse https://github.com/google/fonts /tmp/google-fonts
-    git -C /tmp/google-fonts sparse-checkout set ofl/fraunces ofl/ibmplexsans ofl/ibmplexmono
+    git -C /tmp/google-fonts sparse-checkout set ofl/barlowcondensed ofl/atkinsonhyperlegible ofl/ibmplexmono
 
 Uso (desde la raíz del repositorio):
     python3 tools/fuentes.py /tmp/google-fonts
@@ -37,8 +37,15 @@ UNICODES = ("U+0000-017F,U+0192,U+0218-021B,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0
 
 # (archivo original dentro de google/fonts, archivo de salida, límites de ejes o None si es estática)
 FONTS = [
-    ("ofl/fraunces/Fraunces[SOFT,WONK,opsz,wght].ttf", "fonts/fraunces.woff2", {"wght": (600, 800), "opsz": (9, 144)}),
-    ("ofl/ibmplexsans/IBMPlexSans[wdth,wght].ttf", "fonts/ibm-plex-sans.woff2", {"wght": (400, 600), "wdth": 100}),
+    # Titulares: Barlow Condensed (condensada, como los rótulos grabados de los equipos de radio).
+    ("ofl/barlowcondensed/BarlowCondensed-SemiBold.ttf", "fonts/barlow-condensed-600.woff2", None),
+    ("ofl/barlowcondensed/BarlowCondensed-Bold.ttf", "fonts/barlow-condensed-700.woff2", None),
+    ("ofl/barlowcondensed/BarlowCondensed-ExtraBold.ttf", "fonts/barlow-condensed-800.woff2", None),
+    # Texto: Atkinson Hyperlegible (diseñada para baja visión: letras que no se confunden).
+    ("ofl/atkinsonhyperlegible/AtkinsonHyperlegible-Regular.ttf", "fonts/atkinson-400.woff2", None),
+    ("ofl/atkinsonhyperlegible/AtkinsonHyperlegible-Italic.ttf", "fonts/atkinson-400-italic.woff2", None),
+    ("ofl/atkinsonhyperlegible/AtkinsonHyperlegible-Bold.ttf", "fonts/atkinson-700.woff2", None),
+    # Frecuencias, horas e indicativos: IBM Plex Mono.
     ("ofl/ibmplexmono/IBMPlexMono-Regular.ttf", "fonts/ibm-plex-mono-400.woff2", None),
     ("ofl/ibmplexmono/IBMPlexMono-SemiBold.ttf", "fonts/ibm-plex-mono-600.woff2", None),
 ]

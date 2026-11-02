@@ -32,7 +32,7 @@ flowchart TB
 
   subgraph GitHub["GitHub"]
     R[Repositorio<br/>serbenda/radio]
-    GP[GitHub Pages<br/>bendi.dev/radio]
+    GP[GitHub Pages<br/>radio.bendi.dev]
     GA[GitHub Actions<br/>comprobaciones]
     R -- rama main --> GP
     R -- cada PR --> GA
@@ -95,6 +95,8 @@ radio/
 ├── sw.js                     Service worker: modo sin conexión
 ├── manifest.webmanifest      Datos para instalar la web en el móvil
 ├── sitemap.xml               Mapa del sitio para buscadores
+├── robots.txt                Permite indexar y anuncia el sitemap
+├── CNAME                     Dominio propio para GitHub Pages: radio.bendi.dev
 ├── .nojekyll                 Le dice a GitHub Pages que no procese nada
 │
 ├── tools/
@@ -113,7 +115,7 @@ radio/
 ├── LICENSE (MIT, código) · LICENSE-CONTENIDO.md (CC BY-SA 4.0, contenido)
 ```
 
-**Regla de las carpetas:** cada página es una carpeta con su `index.html`. Así las direcciones quedan limpias (`/radio/examen/` en vez de `/radio/examen.html`) y GitHub Pages las sirve sin configuración.
+**Regla de las carpetas:** cada página es una carpeta con su `index.html`. Así las direcciones quedan limpias (`/examen/` en vez de `/examen.html`) y GitHub Pages las sirve sin configuración.
 
 ## 4. Páginas y recorrido
 
@@ -132,10 +134,10 @@ flowchart LR
 | --- | --- | --- | --- |
 | Inicio | `/` | `inicio`, `mes`, `paginas`, `instalar`, `apoya` (+ `backup` dentro de `mes`) | dial, backup |
 | Escuchar | `/escuchar/` | `emisoras`, `directo`, `ahora`, `sonidos` (+ `grabaciones`) | stations, guided, live, morse, sounds, recordings |
-| Entender | `/entender/` | `como-funciona`, `bandas`, `propagacion`, `iss` | lessons, bands, propagation, iss |
-| Practicar | `/practicar/` | `morse`, `jerga`, `qso` | morse, morse-ui, koch, jargon, qso |
+| Entender | `/entender/` | `como-funciona`, `bandas`, `propagacion`, `balizas`, `iss`, `satelites` | lessons, bands, propagation, iss, beacons, sats |
+| Practicar | `/practicar/` | `morse`, `jerga`, `repetidores`, `qso` | morse, morse-ui, koch, jargon, repeater, qso |
 | Examen | `/examen/` | `test` | exam-data, exam |
-| Empezar | `/empezar/` | `empezar`, `cb27`, `equipo`, `clubes`, `familias`, `docentes`, `hispanoamerica`, `emergencias`, `faq` | clubs-data, clubs, family, checklist, faq, classroom |
+| Empezar | `/empezar/` | `empezar`, `cb27`, `equipo`, `estacion`, `clubes`, `familias`, `docentes`, `hispanoamerica`, `emergencias`, `faq` | clubs-data, clubs, family, checklist, faq, classroom, antenna |
 
 Todas cargan además `core.js`, `data.js`, `journey.js`, `install.js` y `glossary.js`.
 
@@ -192,7 +194,7 @@ sequenceDiagram
   participant M as Módulos
   participant X as Servicios externos
 
-  N->>SW: pide /radio/escuchar/
+  N->>SW: pide /escuchar/
   SW->>GP: primero la red
   GP-->>SW: HTML
   SW-->>N: HTML (y guarda copia)
@@ -309,6 +311,7 @@ flowchart LR
 | `radio:qso` | qso.js al terminar un contacto | `{ scenario }` (`primero`, `concurso`, `pota`, `emergencia`, `iss`) | journey.js |
 | `radio:mock` | exam.js al corregir un simulacro | `{ pass }` (`true`/`false`) | journey.js |
 | `radio:progress` | lessons, koch, exam, checklist | ninguno: "vuelve a calcular" | journey.js |
+| `radio:home` | iss.js al elegir lugar | `{ lat, lon, name }` | sats.js (QO-100 y pases FM) |
 | `radio:waterfall` | recordings.js al reproducir una grabación | `{ el: <audio>, label }` | sounds.js (la dibuja en la cascada) |
 
 ### Ejemplo completo: "Escucha 3 emisoras"
@@ -469,11 +472,13 @@ flowchart LR
   E -- rojo --> A
   E -- verde --> F[Revisar y fusionar]
   F --> G[GitHub Pages publica main<br/>en 1-2 minutos]
-  G --> H[bendi.dev/radio actualizado]
+  G --> H[radio.bendi.dev actualizado]
 ```
 
 - **Nunca** se trabaja directamente en `main`: todo pasa por `development` y una pull request. GitHub lo impone: `main` está protegida (pull request obligatoria con la comprobación `comprobar` en verde, sin `push --force` ni borrado, también para administradores) y `development` no se puede forzar ni borrar.
-- GitHub Pages está configurado como "Deploy from a branch" → `main` → `/ (root)`. El dominio `bendi.dev` está configurado en el repositorio de la web personal; esta web vive en la subcarpeta `/radio/`.
+- GitHub Pages está configurado como "Deploy from a branch" → `main` → `/ (root)`, con el **dominio propio `radio.bendi.dev`** (archivo `CNAME` en la raíz del repositorio y "Enforce HTTPS" activado en Settings → Pages).
+- **DNS:** los servidores de nombres de `bendi.dev` son los de **Porkbun** (donde está registrado), así que los registros se cambian en Porkbun → Domain Management → `bendi.dev` → DNS, no en el panel de Cloudflare. Hay un `CNAME` `radio` → `serbenda.github.io`, igual que `www`, `hucha` y `bolsillo`.
+- Hasta la versión 2.4 la web vivía en `bendi.dev/radio/`. Esa dirección sigue funcionando: GitHub Pages redirige sola `bendi.dev/radio/…` a `radio.bendi.dev/…` (con la misma página). Por qué se cambió: [DECISIONES.md](DECISIONES.md) D21.
 - Paso a paso: [TUTORIAL.md](TUTORIAL.md). Normas: [../CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ## 13. Rendimiento
@@ -481,7 +486,7 @@ flowchart LR
 - **Carga perezosa:** mapas y datos externos esperan a que su sección se acerque a la pantalla (`Radio.onceVisible`, 300 px antes).
 - **Animaciones solo en pantalla:** dial, lecciones y cascada se paran fuera de la vista o con la pestaña oculta (`Radio.whileVisible`), y no se animan con "reducir movimiento".
 - **Consultas medidas:** avisos en directo cada 60 s, solo con la sección visible y la pestaña activa, y nunca dos en menos de 15 s (HamQTH pide ≥ 15 s); datos solares al llegar y cada 15 min (pide ≥ 5 min).
-- **Tipografías propias recortadas:** cuatro archivos WOFF2 (≈ 145 KB en total), solo latín; la de texto se precarga.
+- **Tipografías propias recortadas:** ocho archivos WOFF2 (≈ 165 KB en total), solo latín; la de texto se precarga.
 - **Cada página carga solo sus módulos.** Sin frameworks: el JavaScript propio de la página más pesada son unas decenas de KB.
 - **Sin conexión:** tras la primera visita, CSS, JS y fuentes salen de la caché.
 
