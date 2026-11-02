@@ -49,14 +49,16 @@
    */
   const page = f => 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(f.replace(/ /g, '_'));
 
-  /* ---------- Tarjetas ---------- */
+  /* ---------- Tarjetas ----------
+   * crossorigin="anonymous": Wikimedia Commons sirve los audios con CORS, lo que permite pasar el sonido
+   * por el analizador de sounds.js y verlo en la cascada (evento radio:waterfall). */
   // Se pintan todas de una vez al cargar. data-i guarda la posición en RECORDINGS para saber cuál suena.
   // Primero el Ogg; si el navegador no lo puede reproducir, prueba el MP3 (orden de las <source>).
   list.innerHTML = RECORDINGS.map((r, i) => `
     <li class="rec card">
       <p class="rec-kind">${esc(r.kind)} · ${r.secs} s</p>
       <p>${esc(r.text)}</p>
-      <audio controls preload="none" data-i="${i}" aria-label="${esc(r.kind)}: ${esc(r.text)}">
+      <audio controls preload="none" crossorigin="anonymous" data-i="${i}" aria-label="${esc(r.kind)}: ${esc(r.text)}">
         <source src="${esc(r.src)}" type="audio/ogg">
         <source src="${esc(mp3(r.src))}" type="audio/mpeg">
       </audio>
@@ -73,6 +75,9 @@
     list.querySelectorAll('audio').forEach(a => { if (a !== e.target) a.pause(); });
     const r = RECORDINGS[e.target.dataset.i];
     if (r) Radio.emit('sound', 'real-' + r.file);
+    // Que sounds.js la dibuje en la cascada de arriba. Solo si se cargó con CORS (crossorigin): sin él,
+    // el navegador entregaría silencio al analizador y no se oiría nada.
+    if (r && e.target.crossOrigin) document.dispatchEvent(new CustomEvent('radio:waterfall', { detail: { el: e.target, label: `${r.kind}: ${r.text}` } }));
   }, true);
   // Si fallan las dos fuentes, el error llega en la última <source>.
   /**
@@ -83,6 +88,9 @@
   list.addEventListener('error', e => {
     const el = e.target;
     if (el.tagName !== 'SOURCE' || el.nextElementSibling) return;
+    // Si falló pidiéndolo con CORS, se reintenta una vez sin CORS: se oirá, aunque no se dibuje en la cascada.
+    const audioEl = el.parentElement;
+    if (audioEl.crossOrigin) { audioEl.removeAttribute('crossorigin'); audioEl.load(); audioEl.play().catch(() => {}); return; }
     el.parentElement.insertAdjacentHTML('afterend', `<p class="note bad">${t('No se ha podido cargar. Prueba desde la página del archivo.', 'It could not be loaded. Try from the file’s page.')}</p>`);
   }, true);
 })();

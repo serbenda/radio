@@ -135,7 +135,7 @@ flowchart LR
 | Entender | `/entender/` | `como-funciona`, `bandas`, `propagacion`, `iss` | lessons, bands, propagation, iss |
 | Practicar | `/practicar/` | `morse`, `jerga`, `qso` | morse, morse-ui, koch, jargon, qso |
 | Examen | `/examen/` | `test` | exam-data, exam |
-| Empezar | `/empezar/` | `empezar`, `cb27`, `equipo`, `clubes`, `familias`, `hispanoamerica`, `emergencias`, `faq` | clubs-data, clubs, family, checklist, faq |
+| Empezar | `/empezar/` | `empezar`, `cb27`, `equipo`, `clubes`, `familias`, `docentes`, `hispanoamerica`, `emergencias`, `faq` | clubs-data, clubs, family, checklist, faq, classroom |
 
 Todas cargan además `core.js`, `data.js`, `journey.js`, `install.js` y `glossary.js`.
 
@@ -309,6 +309,7 @@ flowchart LR
 | `radio:qso` | qso.js al terminar un contacto | `{ scenario }` (`primero`, `concurso`, `pota`, `emergencia`, `iss`) | journey.js |
 | `radio:mock` | exam.js al corregir un simulacro | `{ pass }` (`true`/`false`) | journey.js |
 | `radio:progress` | lessons, koch, exam, checklist | ninguno: "vuelve a calcular" | journey.js |
+| `radio:waterfall` | recordings.js al reproducir una grabación | `{ el: <audio>, label }` | sounds.js (la dibuja en la cascada) |
 
 ### Ejemplo completo: "Escucha 3 emisoras"
 

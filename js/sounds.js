@@ -360,6 +360,34 @@
     timer = setTimeout(stop, (end - ctx.currentTime) * 1000 + 200);
   }
 
+  /* ---------- Grabaciones reales en la cascada ----------
+   * recordings.js avisa con el evento 'radio:waterfall' ({ el: <audio>, label }) al reproducir una grabación.
+   * Se conecta ese <audio> a la misma cadena (master → analizador → altavoces) que los sonidos sintéticos,
+   * así la grabación real se dibuja en la cascada y se puede comparar con la imitación.
+   * Un <audio> solo admite un createMediaElementSource en toda su vida: se guarda en SOURCES para reutilizarlo.
+   * Mientras suena, un "nodo" falso en `playing` mantiene viva la cascada; stop() lo pausa. */
+  const SOURCES = new WeakMap();
+  document.addEventListener('radio:waterfall', e => {
+    const { el, label } = e.detail || {};
+    if (!el) return;
+    try {
+      audio();
+      stop();
+      if (!SOURCES.has(el)) { const src = ctx.createMediaElementSource(el); src.connect(master); SOURCES.set(el, src); }
+    } catch (err) { return; } // si el navegador no lo permite, la grabación suena igual por su cuenta
+    const node = { stop: () => el.pause() };
+    playing.push(node);
+    const done = () => {
+      playing = playing.filter(n => n !== node);
+      tailUntil = performance.now() + 1500;
+      el.removeEventListener('pause', done); el.removeEventListener('ended', done);
+      if (!playing.length) $('soundNow').textContent = t('Elige un sonido para oírlo y verlo', 'Choose a sound to hear it and see it');
+    };
+    el.addEventListener('pause', done); el.addEventListener('ended', done);
+    $('soundNow').textContent = `▶ ${label}`;
+    if (!raf) draw();
+  });
+
   /* ---------- Botones ---------- */
   // Un botón por sonido; el icono va con aria-hidden para que el lector de pantalla lea solo el nombre.
   $('soundGrid').innerHTML = SOUNDS.map(s =>

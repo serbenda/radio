@@ -12,6 +12,8 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). C
 - `hreflang` en todas las páginas y en `sitemap.xml`; páginas de error y sin conexión bilingües.
 - `tools/check.mjs` §12: cada página tiene su versión en inglés con las mismas secciones, y el examen en inglés coincide con el castellano.
 - `docs/IDIOMAS.md`: cómo está hecha la versión en inglés y cómo traducir algo nuevo.
+- **Grabaciones reales en la cascada:** al reproducir una grabación de Wikimedia Commons, se dibuja en la cascada de "¿Qué es este sonido?" para compararla con la imitación.
+- **La radio en clase** (Empezar): plan de una sesión de 50 minutos para 10 a 16 años y ficha A4 imprimible (alfabeto fonético, Morse, guion de contacto y libro de guardia), en los dos idiomas.
 
 ## [2.3.0] · 1 de noviembre de 2026 · Instalable en Android e iPhone, buenas prácticas y documentación completa
 
