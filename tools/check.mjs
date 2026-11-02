@@ -362,6 +362,12 @@ section('11. Seguridad y recursos externos');
   const csp = p => (html[p].match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/) || [])[1];
   const base = csp('index.html');
   expect(base && PAGES.every(p => csp(p) === base), 'misma Content-Security-Policy en todas las páginas');
+  // La web no enseña el código (decisión D22): ningún enlace al repositorio salvo para avisar de un error
+  // (…/issues/new…). /https:\/\/github\.com\/serbenda\/radio(?!\/issues\/new)/ encuentra
+  // 'https://github.com/serbenda/radio' o '…/radio/blob/…' pero no '…/radio/issues/new/choose'.
+  // GitHub Sponsors (github.com/sponsors/serbenda) no es el repositorio y se permite.
+  const codeLinks = PAGES.filter(p => /https:\/\/github\.com\/serbenda\/radio(?!\/issues\/new)/.test(html[p]));
+  expect(!codeLinks.length, `sin enlaces al código en las páginas${codeLinks.length ? ' (hay en: ' + codeLinks.join(', ') + ')' : ''}`);
   // Librerías de cdnjs: /<(?:script|link)[^>]+(?:src|href)="(https:\/\/cdnjs[^"]+)"/g captura la URL de cada
   // <script> o <link> que apunta a cdnjs, y /\/\d+\.\d+\.\d+\// exige una versión exacta en la ruta:
   //   '…/ajax/libs/leaflet/1.9.4/leaflet.js' sí; '…/leaflet/latest/leaflet.js' no.

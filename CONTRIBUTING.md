@@ -60,10 +60,14 @@ Si solo cambias comentarios, `tools/solo-comentarios.sh` confirma que no has toc
 | --- | --- |
 | Un módulo o creas uno | Su cabecera, [docs/MODULOS.md](docs/MODULOS.md) |
 | Lo que se guarda en el navegador o las métricas | [docs/PRIVACIDAD.md](docs/PRIVACIDAD.md) |
-| Un servicio externo | [docs/DATOS.md](docs/DATOS.md), la CSP de las seis páginas |
+| Un servicio externo | [docs/DATOS.md](docs/DATOS.md), la CSP de las doce páginas, [docs/INFRAESTRUCTURA.md](docs/INFRAESTRUCTURA.md#7-servicios-de-terceros) y, si puede fallar de una forma nueva, un runbook en [docs/OPERACIONES.md](docs/OPERACIONES.md#runbooks) |
 | La estructura, el flujo o la carga | [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md) |
 | Colores, tipografías o componentes | [docs/ESTILOS.md](docs/ESTILOS.md) |
 | Una decisión de diseño importante | Nueva entrada en [docs/DECISIONES.md](docs/DECISIONES.md) |
+| Dominio, DNS, GitHub Pages o cuentas | [docs/INFRAESTRUCTURA.md](docs/INFRAESTRUCTURA.md) |
+| Flujos de Actions, ramas, protecciones o el proceso de publicación | [docs/CICD.md](docs/CICD.md) |
+| CSP, librerías externas o cualquier cosa que afecte a la seguridad | [docs/SEGURIDAD.md](docs/SEGURIDAD.md) |
+| Algo con fecha de caducidad (autorizaciones, tasas) | Calendario de [docs/OPERACIONES.md](docs/OPERACIONES.md#calendario-de-mantenimiento) |
 | Cualquier cosa publicada | [CHANGELOG.md](CHANGELOG.md) |
 
 ## Licencia de las contribuciones

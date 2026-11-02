@@ -4,6 +4,16 @@ Las decisiones de diseño importantes, con su contexto y sus consecuencias, para
 
 ---
 
+## D22 · La web no enseña el código (2 nov 2026)
+
+**Contexto.** El pie de cada página enlazaba al repositorio ("código y fuentes de datos") y la portada pedía "dar una estrella" en GitHub. La web es para gente que no conoce la radio y, en su mayoría, tampoco GitHub: hablarle de código la saca de lo que ha venido a hacer y la manda a un sitio que no entiende.
+
+**Decisión.** Las páginas no enlazan ni mencionan el código ni el repositorio. Se mantienen: "Apoya el proyecto" (GitHub Sponsors), porque es una forma de ayudar que se entiende sin saber de programación, y "¿Ves un error? Avísanos", porque lleva directamente a un formulario. Las atribuciones de datos siguen en cada sección que los usa (Radio Browser, CelesTrak, KC2G, Esri, Commons…), que es donde las piden sus condiciones. El código sigue siendo abierto (MIT) y se llega a él desde GitHub, no desde la web.
+
+**Consecuencias.** `tools/check.mjs` §11 falla si una página enlaza a `github.com/serbenda/radio` salvo a `…/issues/new` (formularios de aviso). Para quien quiera contribuir, la puerta es el README del repositorio.
+
+---
+
 ## D21 · Dominio propio radio.bendi.dev (2 nov 2026)
 
 **Contexto.** La web vivía en `bendi.dev/radio/`, una subcarpeta de la web personal. Eso la ataba a esa web: las páginas de error (`404.html`) eran las de la web personal salvo truco, las rutas absolutas llevaban `/radio/` delante, la app instalada compartía origen (y por tanto almacenamiento y permisos) con todo lo demás de `bendi.dev`, y la dirección era más difícil de decir en voz alta en un radioclub.
