@@ -2,7 +2,7 @@
 
 **Web de iniciación a la radioafición en español:** de "¿qué es esto?" a tu indicativo. Para quien no ha tocado nunca una radio.
 
-**👉 https://bendi.dev/radio**
+**👉 https://bendi.dev/radio** · 🇬🇧 **English:** https://bendi.dev/radio/en/
 
 [![Comprobaciones](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml/badge.svg)](https://github.com/serbenda/radio/actions/workflows/comprobaciones.yml)
 [![Enlaces externos](https://github.com/serbenda/radio/actions/workflows/enlaces.yml/badge.svg)](https://github.com/serbenda/radio/actions/workflows/enlaces.yml)
@@ -23,7 +23,7 @@ Una web estática, sin registro, sin cookies y que funciona sin conexión, que a
 | 2 | [Entender](https://bendi.dev/radio/entender/) | Cuatro lecciones interactivas en tres niveles, bandas, propagación de hoy en lenguaje llano y pases de la ISS sobre tu ciudad |
 | 3 | [Practicar](https://bendi.dev/radio/practicar/) | Entrenador de Morse con método Koch, alfabeto fonético y jerga, y cinco contactos simulados con tarjeta QSL |
 | 4 | [Examen](https://bendi.dev/radio/examen/) | 169 preguntas revisadas contra la Orden IET/1311/2013, tarjetas que repiten lo que fallas y simulacro como el real |
-| 5 | [Empezar](https://bendi.dev/radio/empezar/) | El trámite en cifras, CB-27 y walkies, qué radio comprar (y qué es legal), radioclubes de la URE, calendario, familias e Hispanoamérica |
+| 5 | [Empezar](https://bendi.dev/radio/empezar/) | El trámite en cifras, CB-27 y walkies, qué radio comprar (y qué es legal), radioclubes de la URE, calendario, familias, **la radio en clase** (ficha imprimible) e Hispanoamérica |
 
 📲 **Se instala como una app** en Android, iPhone, iPad y ordenador (botón "Instalar la app" del pie o pasos en la [portada](https://bendi.dev/radio/#instalar)) y funciona sin conexión.
 
@@ -86,6 +86,7 @@ Todo está documentado para poder mantenerlo sin ayuda. Índice completo y orden
 | Arreglar algo que falla | [Solución de problemas](docs/PROBLEMAS.md) |
 | Saber de dónde salen los datos | [Datos y servicios](docs/DATOS.md) · [Contenido](docs/CONTENIDO.md) |
 | Cambiar el diseño | [Estilos](docs/ESTILOS.md) |
+| Traducir o tocar la versión en inglés | [Idiomas](docs/IDIOMAS.md) |
 | Saber por qué se hizo así | [Decisiones](docs/DECISIONES.md) · [Estudio](docs/ESTUDIO.md) |
 | Comprobar la calidad | [Pruebas](docs/PRUEBAS.md) · [Calidad](docs/CALIDAD.md) · [Privacidad](docs/PRIVACIDAD.md) |
 | Entender un término | [Glosario](docs/GLOSARIO.md) |

@@ -9,7 +9,8 @@
  *
  * Elementos: ninguno con id. Recorre `main > section` y crea él mismo el bocadillo
  *   (<div class="term-tip" role="tooltip">) al final de <body>. Estilos en css/style.css (.term, .term-tip).
- * Dependencias: ninguna (ni siquiera Radio); no guarda nada ni emite eventos.
+ * Dependencias: solo Radio.lang (core.js), para elegir la lista de términos del idioma; no guarda nada ni emite eventos.
+ * Idiomas: TERMS tiene una lista en inglés (términos tal como aparecen en el texto inglés) y otra en castellano.
  * Límite: solo marca lo que ya está en la página al cargar. Lo que otro módulo pinte después
  *   (respuestas de una API, el detalle de una banda al pulsarla…) no se marca.
  * Rendimiento: recorre el texto una vez al cargar; los manejadores del bocadillo están delegados en `document`
@@ -18,7 +19,7 @@
  *   así que se puede usar solo con teclado.
  *
  * Cómo modificarlo:
- *  - Añadir un término: una fila más en TERMS: [término, definición] o [término, definición, 'i'].
+ *  - Añadir un término: una fila más en TERMS (en las dos listas, la inglesa y la castellana): [término, definición] o [término, definición, 'i'].
  *    'i' = no distinguir mayúsculas (para palabras normales como "frecuencia"); sin 'i' solo casa
  *    exactamente (siglas como "CQ", para no marcar "cq" dentro de otra cosa).
  *    Un término nunca casa dentro de otra palabra ("SDR" no se marca dentro de "WebSDR"), así que el
@@ -30,7 +31,54 @@
   /* ---------- Términos ---------- */
   // Forma de cada fila: [término tal como se busca, definición en texto plano, banderas opcionales ('i')].
   // La definición se pinta con innerHTML en el bocadillo: es contenido propio, no pongas "<" sueltos.
-  const TERMS = [
+  const TERMS = Radio.lang === 'en' ? [
+    ['CQ', 'General call: “does anyone want to talk to me?”.'],
+    ['QSO', 'A radio contact or conversation.'],
+    ['QTH', 'Your location: the town or place you are transmitting from.'],
+    ['QSL', 'Confirmation of a contact. Also the postcard that is exchanged to prove it.'],
+    ['QRP', 'Transmitting with very low power, 5 watts or less.'],
+    ['QRM', 'Interference caused by other stations or devices.'],
+    ['QRN', 'Natural noise, mainly from thunderstorms.'],
+    ['QRL', '“Is this frequency in use?” You ask it before calling.'],
+    ['QRT', 'To stop transmitting and close down the station.'],
+    ['DX', 'A long-distance contact, or one with an unusual country.'],
+    ['73', 'Best regards: the usual way radio amateurs say goodbye.'],
+    ['RST', 'Signal report: readability (1-5), strength (1-9) and, in Morse, tone (1-9). “5 and 9” is the best on voice.'],
+    ['callsign', 'Your official “name” on the air, for example EA4ABC. It is issued by the authorities with your licence.', 'i'],
+    ['shortwave', 'Frequencies between 3 and 30 MHz. They bounce off the ionosphere and can go right round the world.', 'i'],
+    ['HF', 'High frequency: 3 to 30 MHz, shortwave.'],
+    ['VHF', 'Very high frequency: 30 to 300 MHz. Local range, like walkie-talkies.'],
+    ['UHF', 'Ultra high frequency: 300 MHz to 3 GHz.'],
+    ['MHz', 'Megahertz: a million oscillations per second. This is how frequency is measured.'],
+    ['kHz', 'Kilohertz: a thousand oscillations per second.'],
+    ['frequency', 'How many times per second the wave oscillates. It is the “number on the dial”.', 'i'],
+    ['wavelength', 'The distance between two crests of the wave. Work it out as 300 divided by the frequency in MHz.', 'i'],
+    ['ionosphere', 'A layer of the atmosphere, 60 to 500 km up, charged by the Sun. It acts as a mirror for shortwave.', 'i'],
+    ['propagation', 'How the signal travels from one place to another: in a straight line, bouncing off the ionosphere, and so on.', 'i'],
+    ['grey line', 'The strip between day and night. Along it, shortwave signals travel especially far.', 'i'],
+    ['MUF', 'Maximum usable frequency: above it the wave does not bounce back and escapes into space.'],
+    ['SFI', 'Solar flux index. The higher it is, the better the higher bands work.'],
+    ['K-index', 'Measures how disturbed the Earth’s magnetic field is. High means noise and closed bands.'],
+    ['SDR', 'Software-defined radio: the computer does the receiver’s job.'],
+    ['WebSDR', 'A real receiver connected to the internet that anyone can control from a web browser.'],
+    ['waterfall', 'A colour chart that shows signals: frequency runs from side to side and time falls downwards.', 'i'],
+    ['SSB', 'Single sideband: the most widely used voice mode on shortwave.'],
+    ['CW', 'Telegraphy: Morse sent with a wave that is switched on and off.'],
+    ['FT8', 'A very popular digital mode: the computer makes contacts with signals so weak the ear cannot hear them.'],
+    ['RTTY', 'Radioteletype: text sent with two alternating tones.'],
+    ['dipole', 'The simplest aerial: two equal wires in a line, fed in the middle.', 'i'],
+    ['repeater', 'A station on high ground that retransmits your signal so it travels further.', 'i'],
+    ['beacon', 'An automatic transmitter that always sends the same thing, to check how far signals are getting.', 'i'],
+    ['HAREC', 'The harmonised European certificate you get when you pass the amateur radio exam.'],
+    ['URE', 'Unión de Radioaficionados Españoles, Spain’s national amateur radio society.'],
+    ['UTC', 'Coordinated Universal Time: the time used by radio amateurs all over the world. In winter it is the same as UK time and one hour behind mainland Spain.'],
+    ['POTA', 'Parks on the Air: transmitting from nature parks, as a game with points and awards.'],
+    ['YOTA', 'Youngsters On The Air: amateur radio activities for people under 26.'],
+    ['SWL', 'Shortwave listener: someone who listens to the radio without transmitting. No licence needed.'],
+    ['CB-27', 'Citizens Band: 40 channels around 27 MHz that anyone can use without a licence with approved equipment.'],
+    ['PMR446', 'Licence-free walkie-talkies on 446 MHz, with 0.5 W and a fixed aerial. No licence needed.'],
+    ['Morse', 'A code of dots and dashes for sending letters. On the radio it is called CW or telegraphy.'],
+  ] : [
     ['CQ', 'Llamada general: “¿alguien quiere hablar conmigo?”.'],
     ['QSO', 'Un contacto o conversación por radio.'],
     ['QTH', 'Tu localización: la ciudad o el lugar desde donde transmites.'],

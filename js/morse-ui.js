@@ -14,6 +14,8 @@
  * Accesibilidad: los lectores de pantalla no leen bien "•—", así que #morseOut lleva un aria-label con el
  *   código dicho en palabras ("punto raya …"). El botón se desactiva mientras suena para evitar dobles clics.
  *
+ * Textos visibles: en castellano e inglés con Radio.t(es, en) (ver docs/IDIOMAS.md).
+ *
  * Cómo modificarlo:
  *  - Cambiar los símbolos que se ven (• y —): las dos llamadas a replace() de render().
  *  - Cambiar el rango de velocidad: atributos min/max/value de #wpm en practicar/index.html.
@@ -21,7 +23,7 @@
  */
 (() => {
   'use strict';
-  const { $ } = Radio;
+  const { $, t } = Radio;
   const input = $('morseIn');
   if (!input) return;
 
@@ -37,8 +39,8 @@
     const code = Morse.encode(input.value);
     $('morseOut').innerHTML = code
       ? code.split(' ').map(w => w === '/' ? '<i class="gap"></i>' : `<span>${w.replace(/\./g, '•').replace(/-/g, '—')}</span>`).join('')
-      : '<em>Escribe algo arriba</em>';
-    $('morseOut').setAttribute('aria-label', code ? `En Morse: ${code.replace(/\./g, 'punto ').replace(/-/g, 'raya ')}` : 'Vacío');
+      : t('<em>Escribe algo arriba</em>', '<em>Type something above</em>');
+    $('morseOut').setAttribute('aria-label', code ? t(`En Morse: ${code.replace(/\./g, 'punto ').replace(/-/g, 'raya ')}`, `In Morse: ${code.replace(/\./g, 'dot ').replace(/-/g, 'dash ')}`) : t('Vacío', 'Empty'));
   };
   input.addEventListener('input', render);
   render();
@@ -51,8 +53,8 @@
   // Espera a que acabe el sonido (Promise de Morse.play) para volver a activar el botón.
   $('morsePlay').addEventListener('click', async () => {
     const btn = $('morsePlay');
-    btn.disabled = true; btn.textContent = '♪ Sonando…';
+    btn.disabled = true; btn.textContent = t('♪ Sonando…', '♪ Playing…');
     await Morse.play(input.value, +$('wpm').value);
-    btn.disabled = false; btn.textContent = '▶ Escuchar';
+    btn.disabled = false; btn.textContent = t('▶ Escuchar', '▶ Listen');
   });
 })();

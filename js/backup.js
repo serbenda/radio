@@ -15,6 +15,7 @@
  * Solo se aceptan claves que empiecen por "radio." y el archivo nunca sale del dispositivo
  * (se genera y se lee en el navegador; no hay ninguna petición de red salvo la métrica de GoatCounter).
  * Métricas: Radio.track('progreso/guardar') y Radio.track('progreso/recuperar').
+ * Textos: mensajes y confirmaciones en los dos idiomas con Radio.t (el nombre del archivo es el mismo).
  *
  * Cómo modificarlo:
  *  - Un módulo nuevo que guarde progreso entra solo en la copia si su clave empieza por "radio.".
@@ -24,7 +25,7 @@
  */
 (() => {
   'use strict';
-  const { $, store } = Radio;
+  const { $, store, t } = Radio;
   const save = $('backupSave');
   if (!save) return;
 
@@ -37,10 +38,10 @@
   const keys = () => { const k = []; try { for (let i = 0; i < localStorage.length; i++) { const key = localStorage.key(i); if (key.startsWith(PREFIX)) k.push(key); } } catch (e) { /* sin almacenamiento */ } return k; };
   /**
    * Escribe un mensaje bajo los botones.
-   * @param {string} t  Texto del mensaje.
+   * @param {string} msg  Texto del mensaje.
    * @param {boolean} [ok=true]  false lo marca como error (clase CSS "bad").
    */
-  const note = (t, ok = true) => { $('backupNote').textContent = t; $('backupNote').classList.toggle('bad', !ok); };
+  const note = (msg, ok = true) => { $('backupNote').textContent = msg; $('backupNote').classList.toggle('bad', !ok); };
 
   /* ---------- Guardar ---------- */
   /**
@@ -50,7 +51,7 @@
    */
   save.addEventListener('click', () => {
     const datos = Object.fromEntries(keys().map(k => [k, store.get(k)]));
-    if (!Object.keys(datos).length) { note('Todavía no hay progreso que guardar.', false); return; }
+    if (!Object.keys(datos).length) { note(t('Todavía no hay progreso que guardar.', 'There is no progress to save yet.'), false); return; }
     const fecha = new Date().toISOString().slice(0, 10);
     // JSON con sangría de 2 espacios para que una persona pueda abrirlo y leerlo.
     const blob = new Blob([JSON.stringify({ app: 'radio', version: 1, fecha, datos }, null, 2)], { type: 'application/json' });
@@ -60,7 +61,8 @@
     Radio.track('progreso/guardar');
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    note(`Guardado: ${Object.keys(datos).length} apartados de progreso. Ábrelo en otro dispositivo con “Recuperar progreso”.`);
+    note(t(`Guardado: ${Object.keys(datos).length} apartados de progreso. Ábrelo en otro dispositivo con “Recuperar progreso”.`,
+      `Saved: ${Object.keys(datos).length} sections of progress. Open it on another device with “Restore progress”.`));
   });
 
   /* ---------- Recuperar ---------- */
@@ -79,16 +81,17 @@
     if (!file) return;
     try {
       const json = JSON.parse(await file.text());
-      if (json.app !== 'radio' || typeof json.datos !== 'object') throw new Error('no es un archivo de progreso de esta web');
+      if (json.app !== 'radio' || typeof json.datos !== 'object') throw new Error(t('no es un archivo de progreso de esta web', 'it is not a progress file from this site'));
       const entries = Object.entries(json.datos).filter(([k]) => k.startsWith(PREFIX));
-      if (!entries.length) throw new Error('el archivo no tiene progreso');
-      if (!confirm(`¿Recuperar el progreso guardado el ${json.fecha || 'día desconocido'}? Sustituye al de este navegador.`)) return;
+      if (!entries.length) throw new Error(t('el archivo no tiene progreso', 'the file has no progress in it'));
+      if (!confirm(t(`¿Recuperar el progreso guardado el ${json.fecha || 'día desconocido'}? Sustituye al de este navegador.`,
+        `Restore the progress saved on ${json.fecha || 'an unknown date'}? It will replace the progress in this browser.`))) return;
       entries.forEach(([k, v]) => store.set(k, v));
-      note('Progreso recuperado. Recargando…');
+      note(t('Progreso recuperado. Recargando…', 'Progress restored. Reloading…'));
       Radio.track('progreso/recuperar');
       setTimeout(() => location.reload(), 600);
     } catch (err) {
-      note(`No se ha podido recuperar: ${err.message}.`, false);
+      note(t(`No se ha podido recuperar: ${err.message}.`, `Could not restore it: ${err.message}.`), false);
     }
   });
 })();

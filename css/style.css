@@ -59,7 +59,9 @@
  * 45. Grabaciones reales ........ tarjetas de audio de Wikimedia Commons.
  * 46. Aviso sin JavaScript ...... mensaje de <noscript>.
  * 47. Instalar y apoyar ......... pasos para instalar la app y tarjeta de GitHub Sponsors (+ pie).
- * 48. Movimiento reducido ....... con "reducir movimiento", ninguna animación ni transición dura.
+ * 48. La radio en clase ......... plan de la sesión y ficha imprimible (solo al imprimir).
+ * 49. Selector de idioma ........ enlace ES/EN de la cabecera.
+ * 50. Movimiento reducido ....... con "reducir movimiento", ninguna animación ni transición dura.
  *
  * CAPAS (z-index), de abajo arriba:
  *   -1    ondas del receptor (.receiver::before/::after), detrás del contenido de la tarjeta.
@@ -84,7 +86,7 @@
  *
  * MOVIMIENTO: con "reducir movimiento" activado en el sistema (prefers-reduced-motion: reduce) se
  *   desactivan el desplazamiento suave, el ecualizador del reproductor y las ondas del receptor (secciones
- *   17 y 18), y la sección 48 anula cualquier otra animación o transición (latido de los sonidos,
+ *   17 y 18), y la sección 50 anula cualquier otra animación o transición (latido de los sonidos,
  *   medidor del QSO, botones, .toast). Los lienzos animados los controla JavaScript con
  *   Radio.reducedMotion (js/core.js).
  *
@@ -901,6 +903,40 @@ footer .report, footer .sponsor { font-size: .88rem; }
 }
 .sponsor-pill:hover { background: #ea4aaa26; border-color: #ea4aaa; color: #fff; }
 .sponsor-pill .beat { display: inline-block; animation: sponsorBeat 1.6s ease-in-out infinite; }
+
+/* ---------- La radio en clase ----------
+   Plan de la sesión y ficha imprimible (#docentes). La ficha (#worksheet) no se ve en pantalla: solo se
+   imprime cuando se pulsa "Imprimir la ficha" (classroom.js pone la clase printing-sheet en <body>). */
+.lesson-plan { padding-left: 20px; display: grid; gap: 8px; color: #d4d5db; }
+.worksheet { display: none; }
+@media print {
+  /* Se oculta todo menos la cadena body → main → #docentes → #worksheet, para que la ficha quepa en una hoja. */
+  body.printing-sheet { background: #fff !important; }
+  body.printing-sheet > *:not(main), body.printing-sheet main > *:not(#docentes), body.printing-sheet #docentes > *:not(#worksheet) { display: none !important; }
+  body.printing-sheet main, body.printing-sheet #docentes { padding: 0; margin: 0; max-width: none; }
+  body.printing-sheet #worksheet, body.printing-sheet #worksheet * { color: #000 !important; background: none !important; box-shadow: none !important; }
+  body.printing-sheet #worksheet { display: block; font: 10.5pt/1.35 var(--sans); }
+  #worksheet h2 { font: 700 16pt var(--serif); margin: 0 0 6pt; }
+  #worksheet h3 { font: 600 10.5pt var(--sans); margin: 10pt 0 4pt; }
+  #worksheet .ws-grid { display: grid; grid-template-columns: 34% 1fr; gap: 14pt; }
+  #worksheet table { border-collapse: collapse; width: 100%; }
+  #worksheet .ws-table td, #worksheet .ws-table th { border: 0.5pt solid #999; padding: 1pt 4pt; font-size: 9pt; }
+  #worksheet .mono, #worksheet .ws-nums .mono { font-family: var(--mono); letter-spacing: 1pt; }
+  #worksheet .ws-nums { font-size: 9pt; display: grid; grid-template-columns: repeat(5, auto); gap: 2pt 10pt; justify-content: start; }
+  #worksheet .ws-lines { line-height: 2.2; }
+  #worksheet .ws-log td, #worksheet .ws-log th { border: 0.5pt solid #999; padding: 3pt; height: 16pt; }
+  #worksheet .ws-foot { margin-top: 10pt; font-size: 8pt; }
+  @page { size: A4; margin: 12mm; }
+}
+
+/* ---------- Selector de idioma ----------
+   Enlace ES/EN de la cabecera (id langSwitch). Lleva a la misma página en el otro idioma; core.js le
+   añade el #anclaje actual al pulsarlo. */
+.lang-switch {
+  font: 600 .8rem var(--mono); letter-spacing: .06em; color: var(--ink); text-decoration: none;
+  padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px; white-space: nowrap;
+}
+.lang-switch:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ---------- Movimiento reducido ----------
    Red de seguridad: si el sistema pide "reducir movimiento", ninguna animación ni transición dura

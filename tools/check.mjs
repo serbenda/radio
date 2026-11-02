@@ -18,6 +18,8 @@
  *  9. Modo sin conexión: manifest e iconos válidos, sw.js guarda todas las páginas y módulos, y su
  *     VERSION coincide con la última del CHANGELOG (si no, los navegadores no renuevan la caché).
  * 10. Métricas: cada Radio.track() usa un nombre de hito fijo (sin datos que escriba la persona).
+ * 12. Idiomas: cada página en castellano tiene su versión en inglés con las mismas secciones, hreflang y
+ *     selector; el examen en inglés tiene las mismas preguntas, opciones y respuestas.
  * 11. Seguridad: misma Content-Security-Policy en todas las páginas, librerías externas con versión fija,
  *     con integridad (SRI), enlaces target="_blank" con rel="noopener", sin tipografías de terceros y tipografías propias presentes.
  *
@@ -75,10 +77,19 @@ const expect = (cond, msg) => (cond ? ok(msg) : fail(msg));
 const section = t => console.log(`\n${t}`);
 
 /* ---------- Páginas ---------- */
-// PAGES: la portada más cada carpeta de primer nivel (que no empiece por '.') con un index.html dentro.
-// Ejemplo: ['index.html', 'empezar/index.html', 'entender/index.html', …]. Una página nueva entra sola.
+// PAGES: la portada más cada carpeta de primer nivel (que no empiece por '.') con un index.html dentro,
+// y lo mismo dentro de en/ (versión inglesa). Ejemplo: ['index.html', 'empezar/index.html', …,
+// 'en/index.html', 'en/listen/index.html', …]. Una página nueva entra sola.
 // html: { 'empezar/index.html': '<!doctype html>…', … } (contenido de cada página, leído una vez).
-const PAGES = ['index.html', ...readdirSync(ROOT).filter(d => !d.startsWith('.') && existsSync(join(ROOT, d, 'index.html')) && statSync(join(ROOT, d)).isDirectory()).map(d => `${d}/index.html`)];
+/** Páginas (carpetas con index.html) dentro de `base` ('' = raíz), sin carpetas ocultas ni en/. */
+const pagesIn = base => [`${base}index.html`, ...readdirSync(join(ROOT, base || '.')).filter(d => !d.startsWith('.') && d !== 'en' && statSync(join(ROOT, base, d)).isDirectory() && existsSync(join(ROOT, base, d, 'index.html'))).map(d => `${base}${d}/index.html`)];
+const PAGES = [...pagesIn(''), ...(existsSync(join(ROOT, 'en', 'index.html')) ? pagesIn('en/') : [])];
+/** Idioma de una página según su carpeta: 'en' dentro de en/, si no 'es'. */
+const langOf = p => (p.startsWith('en/') ? 'en' : 'es');
+/** Todos los .js de js/ y sus subcarpetas (js/en/…), como rutas 'js/…'. */
+const JSFILES = (function walk(dir) {
+  return readdirSync(join(ROOT, dir)).flatMap(f => statSync(join(ROOT, dir, f)).isDirectory() ? walk(`${dir}/${f}`) : f.endsWith('.js') ? [`${dir}/${f}`] : []);
+})('js');
 const html = Object.fromEntries(PAGES.map(p => [p, read(p)]));
 /**
  * Todos los id="…" de un HTML.
@@ -105,7 +116,7 @@ for (const p of PAGES) {
   //   <h1[\s>]                             '<h1>' o '<h1 class="…">' (y no, por ejemplo, '<h1x'); deben ser exactamente 1.
   //   radio-root" content="([^"]+)"        captura el valor del meta para compararlo con rootExpected.
   //   <body data-page="[a-z]+">            data-page en minúsculas sin espacios: '<body data-page="examen">'.
-  if (!/<html lang="es">/.test(s)) problems.push('sin lang="es"');
+  if (!new RegExp(`<html lang="${langOf(p)}">`).test(s)) problems.push(`sin lang="${langOf(p)}"`);
   if (!/<title>[^<]+<\/title>/.test(s)) problems.push('sin <title>');
   if (!/<meta name="description" content="[^"]{50,}">/.test(s)) problems.push('descripción ausente o corta');
   if (!/<link rel="canonical" href="https:\/\/bendi\.dev\/radio\/[^"]*">/.test(s)) problems.push('sin canónica');
@@ -131,10 +142,17 @@ section('2. Cabecera y pie comunes');
 const norm = (s, re) => (s.match(re) || [''])[0].replace(/(href|src)="(\.\.\/)+/g, '$1="').replace(/(href|src)="\.\//g, '$1="');
 // <header class="top">[\s\S]*?<\/header>: desde la apertura hasta el PRIMER cierre; [\s\S] incluye saltos
 // de línea y *? es "lo mínimo posible". Igual con <footer>…</footer>.
-for (const [name, re] of [['cabecera', /<header class="top">[\s\S]*?<\/header>/], ['pie', /<footer>[\s\S]*?<\/footer>/]]) {
-  const base = norm(html['index.html'], re);
-  const diff = PAGES.filter(p => norm(html[p], re) !== base);
-  expect(base && !diff.length, `${name} idéntica en las ${PAGES.length} páginas${diff.length ? ' (distinta en: ' + diff.join(', ') + ')' : ''}`);
+// Se compara dentro de cada idioma (la cabecera inglesa tiene otros textos). El selector de idioma
+// (<a class="lang-switch" …>) se quita antes de comparar, porque apunta a una página distinta en cada una.
+const noSwitch = s => s.replace(/<a class="lang-switch"[^>]*>[^<]*<\/a>/, '');
+for (const lg of ['es', 'en']) {
+  const group = PAGES.filter(p => langOf(p) === lg);
+  if (!group.length) continue;
+  for (const [name, re] of [['cabecera', /<header class="top">[\s\S]*?<\/header>/], ['pie', /<footer>[\s\S]*?<\/footer>/]]) {
+    const base = noSwitch(norm(html[group[0]], re));
+    const diff = group.filter(p => noSwitch(norm(html[p], re)) !== base);
+    expect(base && !diff.length, `${name} idéntica en las ${group.length} páginas en ${lg}${diff.length ? ' (distinta en: ' + diff.join(', ') + ')' : ''}`);
+  }
 }
 
 /* ---------- 3. Enlaces y recursos locales ---------- */
@@ -171,20 +189,21 @@ for (const p of PAGES) {
 section('4. Scripts');
 const used = new Set();
 for (const p of PAGES) {
-  const local = [...html[p].matchAll(/<script src="(?:\.\.\/|\.\/)?js\/([^"]+)"/g)].map(m => m[1]);
+  // (?:(?:\.\.\/)+|\.\/)? admite '../../js/…' (páginas en inglés) y captura también 'en/exam-data.js'.
+  const local = [...html[p].matchAll(/<script src="(?:(?:\.\.\/)+|\.\/)?js\/([^"]+)"/g)].map(m => m[1]);
   local.forEach(f => used.add(f));
   // core.js primero porque define Radio, que usan los demás; glossary.js último porque marca la jerga en
   // el texto que los otros módulos ya han pintado.
   expect(local[0] === 'core.js' && local.at(-1) === 'glossary.js', `${p}: core.js primero y glossary.js último`);
 }
-const unused = readdirSync(join(ROOT, 'js')).filter(f => f.endsWith('.js') && !used.has(f));
+const unused = JSFILES.map(f => f.slice(3)).filter(f => !used.has(f));
 expect(!unused.length, `todo archivo de js/ se usa en alguna página${unused.length ? ' (sin usar: ' + unused.join(', ') + ')' : ''}`);
 
 /* ---------- 5. Sintaxis de JavaScript ---------- */
 
 // node --check analiza el archivo sin ejecutarlo. tools/enlaces.mjs no está en la lista.
 section('5. Sintaxis de JavaScript');
-const jsFiles = readdirSync(join(ROOT, 'js')).filter(f => f.endsWith('.js')).map(f => `js/${f}`).concat('tools/check.mjs');
+const jsFiles = JSFILES.concat('tools/check.mjs');
 for (const f of jsFiles) {
   try { execFileSync(process.execPath, ['--check', join(ROOT, f)], { stdio: 'pipe' }); ok(f); }
   catch (e) { fail(`${f}: ${String(e.stderr || e.message).split('\n').slice(0, 3).join(' ')}`); }
@@ -209,6 +228,15 @@ const D = sandbox.__;
   const bad = E.filter(q => ![1, 2].includes(q.p) || !q.t || !q.q || !Array.isArray(q.a) || q.a.length < 3 || !(q.ok >= 0 && q.ok < q.a.length) || !q.why || new Set(q.a).size !== q.a.length);
   expect(!bad.length, `examen: todas tienen parte, tema, ≥3 opciones distintas, respuesta válida y explicación${bad.length ? ' (fallan: ' + bad.map(q => q.id).join(', ') + ')' : ''}`);
   for (const p of [1, 2]) { const n = E.filter(q => q.p === p).length; expect(n >= 30, `examen: parte ${p} tiene ${n} preguntas (el simulacro necesita 30)`); }
+  // Versión inglesa (js/en/exam-data.js): mismas preguntas, mismo orden de opciones y misma respuesta.
+  // Si no coinciden, el progreso guardado (por id) y la corrección serían distintos en cada idioma.
+  if (existsSync(join(ROOT, 'js/en/exam-data.js'))) {
+    const sb = {}; vm.createContext(sb);
+    vm.runInContext(read('js/en/exam-data.js') + '\n;globalThis.__E=EXAM;', sb, { filename: 'js/en/exam-data.js' });
+    const EN = sb.__E, byId = Object.fromEntries(EN.map(q => [q.id, q]));
+    const off = E.filter(q => { const x = byId[q.id]; return !x || x.p !== q.p || x.ok !== q.ok || x.a.length !== q.a.length || !x.q || !x.why || new Set(x.a).size !== x.a.length; });
+    expect(EN.length === E.length && !off.length, `examen en inglés: las ${E.length} preguntas con el mismo id, parte, número de opciones y respuesta${off.length ? ' (revisar: ' + off.map(q => q.id).slice(0, 12).join(', ') + ')' : ''}${EN.length !== E.length ? ` (hay ${EN.length})` : ''}`);
+  }
 }
 {
   // Radioclubes. Regex:
@@ -279,7 +307,7 @@ section('9. Instalable y sin conexión');
   const missingFiles = pre.filter(f => !existsSync(join(ROOT, f.endsWith('/') ? f + 'index.html' : f)));
   expect(!missingFiles.length, `sw.js: todo lo de PRECACHE existe${missingFiles.length ? ' (faltan: ' + missingFiles.join(', ') + ')' : ''}`);
   const pagesOut = PAGES.map(p => './' + p.replace('index.html', '')).filter(p => !pre.includes(p));
-  const jsOut = readdirSync(join(ROOT, 'js')).filter(f => f.endsWith('.js')).map(f => `./js/${f}`).filter(f => !pre.includes(f));
+  const jsOut = JSFILES.map(f => `./${f}`).filter(f => !pre.includes(f));
   expect(!pagesOut.length && !jsOut.length, `sw.js guarda las ${PAGES.length} páginas y todos los módulos${pagesOut.length || jsOut.length ? ' (faltan: ' + [...pagesOut, ...jsOut].join(', ') + ')' : ''}`);
   // /^const VERSION = '([^']+)'/m  captura la versión de sw.js: "const VERSION = '2.2.0'" → '2.2.0'.
   //                              Solo al principio de una línea, para no leer ejemplos dentro de comentarios.
@@ -344,7 +372,7 @@ section('11. Seguridad y recursos externos');
   // Se buscan en las páginas y también en js/, porque los módulos generan enlaces dentro de plantillas.
   // Cada una debe tener rel="… noopener …" para que la página abierta no pueda controlar esta.
   const blank = [];
-  for (const f of [...PAGES, ...readdirSync(join(ROOT, 'js')).map(f => `js/${f}`)]) {
+  for (const f of [...PAGES, ...JSFILES]) {
     for (const m of read(f).matchAll(/<a\b[^>]*target="_blank"[^>]*>/g)) if (!/rel="[^"]*noopener/.test(m[0])) blank.push(`${f}: ${m[0].slice(0, 60)}`);
   }
   expect(!blank.length, `enlaces que abren pestaña nueva con rel="noopener"${blank.length ? ' (faltan: ' + blank.slice(0, 5).join(' | ') + ')' : ''}`);
@@ -359,5 +387,28 @@ section('11. Seguridad y recursos externos');
 /* ---------- Resumen y código de salida ---------- */
 
 // Código 1 si algo ha fallado: GitHub Actions marca la pull request en rojo.
+/* ---------- 12. Idiomas ---------- */
+// Cada página en castellano tiene su versión en inglés (en/<carpeta inglesa>/) con las mismas secciones
+// (mismos id de <section>), el mismo idioma declarado, enlaces hreflang en las dos y el selector de idioma.
+section('12. Idiomas');
+if (existsSync(join(ROOT, 'en', 'index.html'))) {
+  const SLUGS = { escuchar: 'listen', entender: 'understand', practicar: 'practice', examen: 'exam', empezar: 'start' };
+  const es = PAGES.filter(p => langOf(p) === 'es');
+  const pairOf = p => (p === 'index.html' ? 'en/index.html' : `en/${SLUGS[p.split('/')[0]] || p.split('/')[0]}/index.html`);
+  const missing = es.filter(p => !html[pairOf(p)]);
+  expect(!missing.length, `cada página tiene su versión en inglés${missing.length ? ' (faltan: ' + missing.map(pairOf).join(', ') + ')' : ''}`);
+  // /<section id="([^"]+)"/g: id de cada <section>. Las dos versiones deben tener las mismas y en el mismo orden.
+  const secs = s => [...s.matchAll(/<section id="([^"]+)"/g)].map(m => m[1]).join(',');
+  const diffSec = es.filter(p => html[pairOf(p)] && secs(html[p]) !== secs(html[pairOf(p)]));
+  expect(!diffSec.length, `mismas secciones en castellano y en inglés${diffSec.length ? ' (distintas en: ' + diffSec.join(', ') + ')' : ''}`);
+  const dp = s => (s.match(/<body data-page="([a-z]+)">/) || [])[1];
+  const diffPage = es.filter(p => html[pairOf(p)] && dp(html[p]) !== dp(html[pairOf(p)]));
+  expect(!diffPage.length, `mismo data-page en las dos versiones${diffPage.length ? ' (distinto en: ' + diffPage.join(', ') + ')' : ''}`);
+  const noAlt = PAGES.filter(p => !/hreflang="es"/.test(html[p]) || !/hreflang="en"/.test(html[p]) || !/hreflang="x-default"/.test(html[p]));
+  expect(!noAlt.length, `enlaces hreflang es, en y x-default en todas${noAlt.length ? ' (faltan en: ' + noAlt.join(', ') + ')' : ''}`);
+  const noSw = PAGES.filter(p => !/id="langSwitch"/.test(html[p]));
+  expect(!noSw.length, `selector de idioma en todas${noSw.length ? ' (falta en: ' + noSw.join(', ') + ')' : ''}`);
+}
+
 console.log(`\n${failures ? '✗' : '✓'} ${checks - failures} de ${checks} comprobaciones correctas${failures ? `, ${failures} fallan` : ''}.`);
 process.exit(failures ? 1 : 0);

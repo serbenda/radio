@@ -41,7 +41,7 @@
 // Número de versión de la web; tiene que coincidir con la última versión de CHANGELOG.md (lo vigila check.mjs).
 // check.mjs la lee con una expresión regular: no cambies la forma de la línea de abajo (nombre, espacios y
 // comillas simples) y no escribas esa misma línea de ejemplo en ningún comentario de este archivo, o la leería mal.
-const VERSION = '2.3.0';
+const VERSION = '2.4.0';
 // Nombre de la caché de esta versión. El prefijo 'radio-' sirve para borrar solo las cachés propias al activarse.
 const CACHE = `radio-${VERSION}`;
 // Archivos que se descargan y guardan al instalar, para que toda la web funcione sin conexión desde la primera
@@ -49,10 +49,11 @@ const CACHE = `radio-${VERSION}`;
 // la instalación entera falla (así funciona cache.addAll) y se reintenta en la siguiente visita.
 const PRECACHE = [
   './', './escuchar/', './entender/', './practicar/', './examen/', './empezar/', './offline.html',
+  './en/', './en/listen/', './en/understand/', './en/practice/', './en/exam/', './en/start/', './js/en/exam-data.js',
   './css/style.css', './manifest.webmanifest',
   './img/icono-192.png', './img/icono-512.png', './img/favicon-64.png',
   './fonts/fraunces.woff2', './fonts/ibm-plex-sans.woff2', './fonts/ibm-plex-mono-400.woff2', './fonts/ibm-plex-mono-600.woff2',
-  './js/core.js', './js/data.js', './js/journey.js', './js/glossary.js', './js/backup.js', './js/install.js',
+  './js/core.js', './js/data.js', './js/journey.js', './js/glossary.js', './js/backup.js', './js/install.js', './js/classroom.js',
   './js/dial.js', './js/guided.js', './js/bands.js', './js/stations.js', './js/live.js', './js/sounds.js', './js/recordings.js',
   './js/lessons.js', './js/propagation.js', './js/iss.js', './js/morse.js', './js/morse-ui.js', './js/koch.js',
   './js/jargon.js', './js/qso.js', './js/exam-data.js', './js/exam.js', './js/checklist.js',

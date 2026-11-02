@@ -3,14 +3,15 @@
  *
  * Página: Escuchar (#ahora). Necesita: #liveMap, #liveStories, #liveBands, #liveSummary, #liveStatus. Depende de: Leaflet.
  *   Leaflet (global L, desde cdnjs) se carga antes que este archivo. Si Leaflet no ha cargado, no hay mapa,
- *   pero las frases, los filtros y el resumen se pintan igual. Usa Radio.emit y Radio.whileVisible.
+ *   pero las frases, los filtros y el resumen se pintan igual. Usa Radio.emit, Radio.whileVisible, Radio.t y Radio.locale.
+ *   Textos en los dos idiomas con Radio.t; en inglés el país sale tal como lo da HamQTH (ya en inglés).
  *
  * Datos: https://www.hamqth.com/api/v2/spots?limit=100&include=locations (CORS abierto, sin clave).
  * HamQTH pide no consultar más de una vez cada 15 s y citar la fuente: aquí se consulta cada 60 s y SOLO
  * mientras la sección está en pantalla y la pestaña visible (Radio.whileVisible); la atribución sale
  * en el mapa y bajo él. Al salir de la sección o al ocultar la pestaña se para el temporizador. Al volver se
  * consulta al momento, pero load() nunca repite antes de 15 s, así que entrar y salir deprisa no supera el límite.
- * Cada aviso se cuenta como una frase en español (país traducido, modo en palabras, distancia por haversine)
+ * Cada aviso se cuenta como una frase (país traducido en castellano, modo en palabras, distancia por haversine)
  * y lleva un enlace para escucharlo en el WebSDR de Twente si es de onda corta.
  * Logro: Radio.emit('live') al filtrar por banda o abrir un aviso.
  *
@@ -31,6 +32,7 @@
   'use strict';
   if (!document.getElementById('ahora')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
+  const { t } = Radio;
   // limit=100: últimos 100 avisos; include=locations: añade las coordenadas de cada indicativo.
   const API = 'https://www.hamqth.com/api/v2/spots?limit=100&include=locations';
   // Copia de WEBSDR de data.js (este módulo no depende de data.js). Si cambia, cámbiala en los dos sitios.
@@ -60,16 +62,17 @@
     'Senegal': 'Senegal', 'Egypt': 'Egipto', 'Antarctica': 'Antártida', 'Hawaii': 'Hawái', 'Alaska': 'Alaska', 'Azores': 'Azores', 'Madeira Islands': 'Madeira' };
   /**
    * @param {string} c  País en inglés tal como lo da HamQTH.
-   * @returns {string} Nombre en español si está en ES; si no, el original; si viene vacío, 'un país lejano'.
+   * @returns {string} Nombre en español si está en ES (en la página inglesa, siempre el original); si no, el original;
+   *   si viene vacío, 'un país lejano'.
    */
-  const country = c => ES[c] || c || 'un país lejano';
+  const country = c => (Radio.lang === 'en' ? c : ES[c] || c) || t('un país lejano', 'a faraway country');
   /**
    * Modo de emisión en palabras para la frase. Cualquier modo que no sea CW, SSB, FM o AM (FT8, RTTY, PSK…)
    * se cuenta como "en modo digital".
    * @param {string} m  Modo tal como lo da HamQTH.
    * @returns {string}
    */
-  const MODE = m => ({ CW: 'en Morse', SSB: 'en voz', FM: 'en FM', AM: 'en AM' })[m] || 'en modo digital';
+  const MODE = m => ({ CW: t('en Morse', 'in Morse'), SSB: t('en voz', 'on voice'), FM: t('en FM', 'on FM'), AM: t('en AM', 'on AM') })[m] || t('en modo digital', 'in a digital mode');
   // Banda (como la da HamQTH) → color de líneas, puntos y botones. El orden de las claves es el de los botones.
   const BANDCOL = { '160M': '#b39ddb', '80M': '#9fa8da', '40M': '#8be0c2', '30M': '#80deea', '20M': '#ffd27a', '17M': '#ffab91', '15M': '#f48fb1', '12M': '#ce93d8', '10M': '#ff6b5a', '6M': '#e6ee9c' };
   /**
@@ -101,12 +104,12 @@
   /**
    * Cuánto hace de un aviso, en minutos (60000 ms = 1 min). Nunca negativo, por si el reloj del
    * dispositivo va algo atrasado respecto al servidor.
-   * @param {string} t  Fecha del aviso (texto ISO que entiende Date.parse).
+   * @param {string} time  Fecha del aviso (texto ISO que entiende Date.parse).
    * @returns {string} 'ahora mismo' o 'hace N min'.
    */
-  function ago(t) {
-    const m = Math.max(0, Math.round((Date.now() - Date.parse(t)) / 60000));
-    return m < 1 ? 'ahora mismo' : `hace ${m} min`;
+  function ago(time) {
+    const m = Math.max(0, Math.round((Date.now() - Date.parse(time)) / 60000));
+    return m < 1 ? t('ahora mismo', 'just now') : t(`hace ${m} min`, `${m} min ago`);
   }
   /**
    * Enlace al WebSDR de Twente sintonizado en la frecuencia y el modo del aviso.
@@ -132,13 +135,13 @@
   function initMap() {
     map = L.map('liveMap', { worldCopyJump: true, scrollWheelZoom: false }).setView([35, 0], 2);
     const esri = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/';
-    L.tileLayer(esri + 'World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: 'Mapa &copy; Esri &middot; Spots: HamQTH.com', maxZoom: 10 }).addTo(map);
+    L.tileLayer(esri + 'World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: t('Mapa', 'Map') + ' &copy; Esri &middot; Spots: HamQTH.com', maxZoom: 10 }).addTo(map);
     layer = L.layerGroup().addTo(map);
   }
 
   /* ---------- Pintado ---------- */
   /**
-   * Convierte un aviso en un elemento de lista con una frase en español.
+   * Convierte un aviso en un elemento de lista con una frase en el idioma de la página.
    * Dos casos: si quien avisa es la propia estación (spotter === dxcall), "X avisa de que está transmitiendo";
    * si no, "X oye a Y", con la distancia si se conocen las dos posiciones.
    * Si el comentario menciona POTA, SOTA o WWFF (programas de parques y cumbres), se dice en la frase.
@@ -153,9 +156,11 @@
     return `<li style="--band:${BANDCOL[s.band] || '#9c9ea6'}">
       <span class="ls-meta">${ago(s.time)} · <b>${bandName(s.band)}</b> · ${(s.freq / 1000).toFixed(3)} MHz</span>
       <p>${s.spotter === s.dxcall
-        ? `<b>${esc(s.dxcall)}</b> (${esc(country(s.country))}) avisa de que está transmitiendo ${MODE(s.mode)}${/POTA|SOTA|WWFF/i.test(s.comment || '') ? ' desde un parque o una cumbre' : ''}.`
-        : `<b>${esc(s.spotter)}</b> oye a <b>${esc(s.dxcall)}</b> (${esc(country(s.country))}) ${MODE(s.mode)}${dist ? `, a <b>${dist.toLocaleString('es-ES')} km</b>` : ''}.`}${s.comment ? ` <span class="ls-c">«${esc(s.comment.slice(0, 40))}»</span>` : ''}</p>
-      ${link ? `<a href="${link}" target="_blank" rel="noopener" class="ls-go" data-ev="websdr">🎧 Escúchalo</a>` : ''}
+        ? t(`<b>${esc(s.dxcall)}</b> (${esc(country(s.country))}) avisa de que está transmitiendo ${MODE(s.mode)}${/POTA|SOTA|WWFF/i.test(s.comment || '') ? ' desde un parque o una cumbre' : ''}.`,
+          `<b>${esc(s.dxcall)}</b> (${esc(country(s.country))}) says they are transmitting ${MODE(s.mode)}${/POTA|SOTA|WWFF/i.test(s.comment || '') ? ' from a park or a summit' : ''}.`)
+        : t(`<b>${esc(s.spotter)}</b> oye a <b>${esc(s.dxcall)}</b> (${esc(country(s.country))}) ${MODE(s.mode)}${dist ? `, a <b>${dist.toLocaleString(Radio.locale)} km</b>` : ''}.`,
+          `<b>${esc(s.spotter)}</b> hears <b>${esc(s.dxcall)}</b> (${esc(country(s.country))}) ${MODE(s.mode)}${dist ? `, <b>${dist.toLocaleString(Radio.locale)} km</b> away` : ''}.`)}${s.comment ? ` <span class="ls-c">«${esc(s.comment.slice(0, 40))}»</span>` : ''}</p>
+      ${link ? `<a href="${link}" target="_blank" rel="noopener" class="ls-go" data-ev="websdr">${t('🎧 Escúchalo', '🎧 Listen to it')}</a>` : ''}
     </li>`;
   }
 
@@ -180,16 +185,17 @@
       L.circleMarker([b.lat, b.lon], { radius: 4, color: c, fillColor: c, fillOpacity: 0.9, weight: 1 })
         .bindTooltip(`${esc(s.dxcall)} · ${esc(country(s.country))} · ${bandName(s.band)}`).addTo(layer);
     });
-    $('liveStories').innerHTML = list.slice(0, 7).map(story).join('') || '<li><p>No hay avisos en esta banda ahora mismo. Prueba otra.</p></li>';
+    $('liveStories').innerHTML = list.slice(0, 7).map(story).join('') || `<li><p>${t('No hay avisos en esta banda ahora mismo. Prueba otra.', 'No spots on this band right now. Try another one.')}</p></li>`;
     const conts = new Set(list.map(s => s.continent)).size;
     // Bandas presentes en los avisos que tienen color asignado, ordenadas como en BANDCOL.
     const bands = [...new Set(spots.map(s => s.band))].filter(b => BANDCOL[b]);
     const order = Object.keys(BANDCOL);
     bands.sort((x, y) => order.indexOf(x) - order.indexOf(y));
     // El botón activo lleva la clase "on". `b` viene de una lista fija (BANDCOL), por eso no se escapa.
-    $('liveBands').innerHTML = `<button type="button" class="chip${filter === 'all' ? ' on' : ''}" data-b="all" aria-pressed="${filter === 'all'}">Todas</button>` +
+    $('liveBands').innerHTML = `<button type="button" class="chip${filter === 'all' ? ' on' : ''}" data-b="all" aria-pressed="${filter === 'all'}">${t('Todas', 'All')}</button>` +
       bands.map(b => `<button type="button" class="chip${filter === b ? ' on' : ''}" data-b="${b}" aria-pressed="${filter === b}"><i class="sw" style="background:${BANDCOL[b]}" aria-hidden="true"></i>${bandName(b)}</button>`).join('');
-    $('liveSummary').innerHTML = `En los últimos minutos se han publicado <b>${list.length}</b> avisos${filter === 'all' ? '' : ` en ${bandName(filter)}`}, con estaciones de <b>${conts}</b> continente${conts === 1 ? '' : 's'}.`;
+    $('liveSummary').innerHTML = t(`En los últimos minutos se han publicado <b>${list.length}</b> avisos${filter === 'all' ? '' : ` en ${bandName(filter)}`}, con estaciones de <b>${conts}</b> continente${conts === 1 ? '' : 's'}.`,
+      `In the last few minutes <b>${list.length}</b> spots have been posted${filter === 'all' ? '' : ` on ${bandName(filter)}`}, with stations on <b>${conts}</b> continent${conts === 1 ? '' : 's'}.`);
   }
 
   /* ---------- Consulta a HamQTH ---------- */
@@ -212,9 +218,10 @@
       locs = {};
       (d.locations || []).forEach(l => { locs[l.call] = l; });
       render();
-      $('liveStatus').textContent = `Actualizado ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })} · se refresca cada minuto · datos de HamQTH.com`;
+      const hhmm = new Date().toLocaleTimeString(Radio.locale, { hour: '2-digit', minute: '2-digit' });
+      $('liveStatus').textContent = t(`Actualizado ${hhmm} · se refresca cada minuto · datos de HamQTH.com`, `Updated ${hhmm} · refreshes every minute · data from HamQTH.com`);
     } catch (e) {
-      $('liveStatus').textContent = 'No se han podido cargar los avisos ahora mismo. Se volverá a intentar en un minuto.';
+      $('liveStatus').textContent = t('No se han podido cargar los avisos ahora mismo. Se volverá a intentar en un minuto.', 'The spots could not be loaded right now. It will try again in a minute.');
     }
   }
 

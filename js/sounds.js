@@ -2,7 +2,7 @@
  * sounds.js · "¿Qué es este sonido?": galería de sonidos de la radio con cascada en directo.
  *
  * Página: Escuchar (#sonidos). Necesita: #waterfall (canvas), #soundGrid, #soundInfo, #soundNow, #soundStop.
- * Depende de: morse.js (tabla Morse.CODE para el Morse y la baliza). Usa Radio solo para Radio.emit.
+ * Depende de: morse.js (tabla Morse.CODE para el Morse y la baliza). Usa Radio para Radio.emit y Radio.t.
  *
  * Los ocho sonidos se SINTETIZAN con Web Audio imitando los reales (las grabaciones reales están en recordings.js):
  *   cw (Morse), ft8 (8-FSK, 6,25 Hz entre tonos, símbolos de 0,16 s), rtty (dos tonos a 170 Hz, 45,45 baudios),
@@ -21,6 +21,7 @@
  * se ve en la cascada) está en #soundInfo, así que el canvas es solo un apoyo visual (en el HTML lleva
  * un aria-label genérico que lo identifica como cascada).
  * Logro: Radio.emit('sound', id).
+ * Textos: en los dos idiomas con Radio.t (los sonidos son tonos sintéticos, no tienen idioma).
  * No guarda nada en localStorage ni usa servicios externos (el enlace al WebSDR solo se abre si se pulsa).
  *
  * Cómo modificarlo:
@@ -36,6 +37,7 @@
   'use strict';
   if (!document.getElementById('sonidos')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
+  const { t } = Radio;
   // Copia de WEBSDR de data.js (este módulo no depende de data.js). Si cambia, cámbiala en los dos sitios.
   const WEBSDR = 'http://websdr.ewi.utwente.nl:8901/?tune=';
 
@@ -44,29 +46,29 @@
   // donde suele oírse de verdad), what (qué es) y look (cómo se ve en la cascada). Textos propios, sin escapar.
   const SOUNDS = [
     { id: 'cw', icon: '📟', name: 'Morse (CW)', tune: '7020cw',
-      what: 'Pitidos cortos y largos de un solo tono. Es un radioaficionado llamando “CQ” en telegrafía.',
-      look: 'En la cascada: una raya fina y vertical que se corta y vuelve, como un código de barras.' },
+      what: t('Pitidos cortos y largos de un solo tono. Es un radioaficionado llamando “CQ” en telegrafía.', 'Short and long beeps on a single tone. It is a radio amateur calling “CQ” in telegraphy.'),
+      look: t('En la cascada: una raya fina y vertical que se corta y vuelve, como un código de barras.', 'On the waterfall: a thin vertical line that breaks off and comes back, like a barcode.') },
     { id: 'ft8', icon: '🤖', name: 'FT8 (digital)', tune: '14074usb',
-      what: 'Varios pitidos suaves que cambian de nota durante unos 13 segundos y luego paran. Son ordenadores haciendo contactos.',
-      look: 'En la cascada: escaleras estrechas, una al lado de otra, todas empezando y acabando a la vez.' },
-    { id: 'rtty', icon: '📠', name: 'Radioteletipo (RTTY)', tune: '14085usb',
-      what: 'Un “burbujeo” rápido entre dos notas. Es texto enviado letra a letra, como un télex.',
-      look: 'En la cascada: dos rayas paralelas muy juntas que parpadean.' },
-    { id: 'beacon', icon: '🗼', name: 'Baliza', tune: '14100cw',
-      what: 'Un indicativo en Morse y cuatro rayas largas cada vez más flojas. Sirven para comprobar hasta dónde llega la señal.',
-      look: 'En la cascada: el indicativo y luego cuatro trazos que se van apagando.' },
-    { id: 'pips', icon: '⏱️', name: 'Señal horaria', tune: '9996am',
-      what: 'Pitidos exactos cada segundo y uno más largo al final: marcan la hora en punto.',
-      look: 'En la cascada: puntos regulares, como las marcas de un reloj.' },
-    { id: 'tuning', icon: '🎛️', name: 'Portadora (silbido)', tune: '7100lsb',
-      what: 'Un silbido que sube o baja de tono. Es una señal sin modular mientras alguien gira el dial.',
-      look: 'En la cascada: una línea que se inclina hacia un lado.' },
-    { id: 'qrn', icon: '⛈️', name: 'Estática (QRN)', tune: '3700lsb',
-      what: 'Ruido de fondo con chasquidos. Son tormentas, a veces a cientos de kilómetros.',
-      look: 'En la cascada: manchas horizontales que cruzan todo el ancho de golpe.' },
-    { id: 'buzz', icon: '🔌', name: 'Interferencia (QRM)', tune: '7100lsb',
-      what: 'Un zumbido áspero. Suele venir de cargadores, LED o fuentes baratas de casa.',
-      look: 'En la cascada: muchas rayas verticales a la misma distancia, como un peine.' },
+      what: t('Varios pitidos suaves que cambian de nota durante unos 13 segundos y luego paran. Son ordenadores haciendo contactos.', 'Several soft beeps that change note for about 13 seconds and then stop. These are computers making contacts.'),
+      look: t('En la cascada: escaleras estrechas, una al lado de otra, todas empezando y acabando a la vez.', 'On the waterfall: narrow staircases side by side, all starting and ending at the same time.') },
+    { id: 'rtty', icon: '📠', name: t('Radioteletipo (RTTY)', 'Radioteletype (RTTY)'), tune: '14085usb',
+      what: t('Un “burbujeo” rápido entre dos notas. Es texto enviado letra a letra, como un télex.', 'A fast “bubbling” between two notes. It is text sent letter by letter, like a telex.'),
+      look: t('En la cascada: dos rayas paralelas muy juntas que parpadean.', 'On the waterfall: two parallel lines, very close together, that flicker.') },
+    { id: 'beacon', icon: '🗼', name: t('Baliza', 'Beacon'), tune: '14100cw',
+      what: t('Un indicativo en Morse y cuatro rayas largas cada vez más flojas. Sirven para comprobar hasta dónde llega la señal.', 'A callsign in Morse and four long dashes, each one quieter. They are used to check how far signals are getting.'),
+      look: t('En la cascada: el indicativo y luego cuatro trazos que se van apagando.', 'On the waterfall: the callsign, then four strokes that fade away.') },
+    { id: 'pips', icon: '⏱️', name: t('Señal horaria', 'Time signal'), tune: '9996am',
+      what: t('Pitidos exactos cada segundo y uno más largo al final: marcan la hora en punto.', 'Precise beeps every second and a longer one at the end: they mark the exact hour.'),
+      look: t('En la cascada: puntos regulares, como las marcas de un reloj.', 'On the waterfall: evenly spaced dots, like the marks on a clock.') },
+    { id: 'tuning', icon: '🎛️', name: t('Portadora (silbido)', 'Carrier (whistle)'), tune: '7100lsb',
+      what: t('Un silbido que sube o baja de tono. Es una señal sin modular mientras alguien gira el dial.', 'A whistle that rises or falls in pitch. It is an unmodulated signal while someone turns the dial.'),
+      look: t('En la cascada: una línea que se inclina hacia un lado.', 'On the waterfall: a line that slants to one side.') },
+    { id: 'qrn', icon: '⛈️', name: t('Estática (QRN)', 'Static (QRN)'), tune: '3700lsb',
+      what: t('Ruido de fondo con chasquidos. Son tormentas, a veces a cientos de kilómetros.', 'Background noise with crackles. These are thunderstorms, sometimes hundreds of kilometres away.'),
+      look: t('En la cascada: manchas horizontales que cruzan todo el ancho de golpe.', 'On the waterfall: horizontal smudges that suddenly cross the whole width.') },
+    { id: 'buzz', icon: '🔌', name: t('Interferencia (QRM)', 'Interference (QRM)'), tune: '7100lsb',
+      what: t('Un zumbido áspero. Suele venir de cargadores, LED o fuentes baratas de casa.', 'A harsh buzz. It usually comes from chargers, LED lights or cheap power supplies at home.'),
+      look: t('En la cascada: muchas rayas verticales a la misma distancia, como un peine.', 'On the waterfall: lots of evenly spaced vertical lines, like a comb.') },
   ];
 
   // ctx: AudioContext; master: ganancia general; analyser: el que alimenta la cascada;
@@ -333,7 +335,7 @@
     clearTimeout(timer);
     tailUntil = performance.now() + 1500;
     document.querySelectorAll('.sound-card').forEach(c => { c.classList.remove('on'); c.setAttribute('aria-pressed', 'false'); });
-    $('soundNow').textContent = 'Elige un sonido para oírlo y verlo';
+    $('soundNow').textContent = t('Elige un sonido para oírlo y verlo', 'Choose a sound to hear it and see it');
   }
 
   /**
@@ -354,9 +356,37 @@
     Radio.emit('sound', s.id);
     $('soundNow').textContent = `▶ ${s.name}`;
     $('soundInfo').innerHTML = `<h3>${s.icon} ${s.name}</h3><p>${s.what}</p><p class="look">${s.look}</p>
-      <a class="btn small ghost" href="${WEBSDR + s.tune}" target="_blank" rel="noopener">🎧 Búscalo en un receptor de verdad</a>`;
+      <a class="btn small ghost" href="${WEBSDR + s.tune}" target="_blank" rel="noopener">${t('🎧 Búscalo en un receptor de verdad', '🎧 Find it on a real receiver')}</a>`;
     timer = setTimeout(stop, (end - ctx.currentTime) * 1000 + 200);
   }
+
+  /* ---------- Grabaciones reales en la cascada ----------
+   * recordings.js avisa con el evento 'radio:waterfall' ({ el: <audio>, label }) al reproducir una grabación.
+   * Se conecta ese <audio> a la misma cadena (master → analizador → altavoces) que los sonidos sintéticos,
+   * así la grabación real se dibuja en la cascada y se puede comparar con la imitación.
+   * Un <audio> solo admite un createMediaElementSource en toda su vida: se guarda en SOURCES para reutilizarlo.
+   * Mientras suena, un "nodo" falso en `playing` mantiene viva la cascada; stop() lo pausa. */
+  const SOURCES = new WeakMap();
+  document.addEventListener('radio:waterfall', e => {
+    const { el, label } = e.detail || {};
+    if (!el) return;
+    try {
+      audio();
+      stop();
+      if (!SOURCES.has(el)) { const src = ctx.createMediaElementSource(el); src.connect(master); SOURCES.set(el, src); }
+    } catch (err) { return; } // si el navegador no lo permite, la grabación suena igual por su cuenta
+    const node = { stop: () => el.pause() };
+    playing.push(node);
+    const done = () => {
+      playing = playing.filter(n => n !== node);
+      tailUntil = performance.now() + 1500;
+      el.removeEventListener('pause', done); el.removeEventListener('ended', done);
+      if (!playing.length) $('soundNow').textContent = t('Elige un sonido para oírlo y verlo', 'Choose a sound to hear it and see it');
+    };
+    el.addEventListener('pause', done); el.addEventListener('ended', done);
+    $('soundNow').textContent = `▶ ${label}`;
+    if (!raf) draw();
+  });
 
   /* ---------- Botones ---------- */
   // Un botón por sonido; el icono va con aria-hidden para que el lector de pantalla lea solo el nombre.

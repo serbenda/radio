@@ -15,6 +15,7 @@
  * (Radio.whileVisible), a unos 16 fotogramas por segundo, y no corre si el sistema pide reducir movimiento.
  * Accesibilidad: el control deslizante anuncia la frecuencia y la banda con aria-valuetext.
  * No guarda nada, no emite eventos y no usa servicios externos.
+ * Textos: en los dos idiomas con Radio.t.
  *
  * Cómo modificarlo:
  *  - Cambiar el comportamiento de una banda a esta hora: textos y grupos de bandas de mood().
@@ -25,7 +26,7 @@
  */
 (() => {
   'use strict';
-  const { $ } = Radio;
+  const { $, t } = Radio;
   const knob = $('dialKnob');
   if (!knob) return;
 
@@ -68,9 +69,9 @@
    */
   function mood(b) {
     const day = isDay();
-    if (['160 m', '80 m'].includes(b.name)) return day ? 'de día, poco que oír' : 'ahora: abierta, charlas cercanas';
-    if (['20 m', '17 m', '15 m', '12 m', '10 m'].includes(b.name)) return day ? 'ahora: abierta, DX lejano' : 'de noche suele cerrarse';
-    return day ? 'ahora: España y vecinos' : 'ahora: Europa entera';
+    if (['160 m', '80 m'].includes(b.name)) return day ? t('de día, poco que oír', 'little to hear by day') : t('ahora: abierta, charlas cercanas', 'now: open, nearby chats');
+    if (['20 m', '17 m', '15 m', '12 m', '10 m'].includes(b.name)) return day ? t('ahora: abierta, DX lejano', 'now: open, distant DX') : t('de noche suele cerrarse', 'usually closes at night');
+    return day ? t('ahora: España y vecinos', 'now: Spain and neighbours') : t('ahora: Europa entera', 'now: all of Europe');
   }
 
   /* ---------- Sintonía ---------- */
@@ -96,12 +97,12 @@
     if (band) text = `${band.name} · ${mood(band)}`;
     else {
       const near = DIAL_BANDS.reduce((a, b) => (Math.abs(pos(b.from) - p) < Math.abs(pos(a.from) - p) ? b : a));
-      text = `fuera de banda · la más cercana: ${near.name}`;
+      text = t(`fuera de banda · la más cercana: ${near.name}`, `out of band · nearest: ${near.name}`);
     }
     $('dialBand').textContent = text;
     $('dialBand').classList.toggle('hot', inBand);
     // Los lectores de pantalla leen este texto en lugar del número 0-1000 del control.
-    knob.setAttribute('aria-valuetext', `${f.toFixed(3)} megahercios, ${text}`);
+    knob.setAttribute('aria-valuetext', t(`${f.toFixed(3)} megahercios, ${text}`, `${f.toFixed(3)} megahertz, ${text}`));
     if (!running) drawWave(); // con la animación parada, al menos refleja el cambio
   }
 

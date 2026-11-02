@@ -45,6 +45,8 @@
  *   se anuncia por la región aria-live de #kochFeedback. Las teclas se ignoran si se está escribiendo en un
  *   campo de texto o se pulsa con Ctrl/Alt/Cmd, para no robar atajos del navegador.
  *
+ * Textos visibles: en castellano e inglés con Radio.t(es, en) (ver docs/IDIOMAS.md).
+ *
  * Cómo modificarlo:
  *  - Cambiar la velocidad: WPM (20). Bajarla facilita contar puntos, que es justo lo que el método evita.
  *  - Cambiar los umbrales para desbloquear: las condiciones del `if` bajo "¿desbloquear la siguiente?"
@@ -58,6 +60,7 @@
   if (!document.getElementById('kochStart')) return; // esta página no tiene la sección
   /* ---------- Configuración y estado guardado ---------- */
   const $ = id => document.getElementById(id);
+  const { t } = Radio;
   // Orden de Koch: las primeras son fáciles de distinguir entre sí; la X, última. 36 caracteres.
   const ORDER = 'KMURESNAPTLWIJZFOYVG5Q92H38B47C1D60X'.split('');
   // Velocidad de carácter en palabras por minuto (norma PARIS).
@@ -147,7 +150,9 @@
       return `<button class="kkey ${cls}" data-c="${c}">${c}</button>`;
     }).join('');
     const mins = Math.round(st.todaySec / 60);
-    $('kochStats').innerHTML = `Letras: <b>${st.level}/${ORDER.length}</b> · Racha: <b>${st.streak} día${st.streak === 1 ? '' : 's'}</b> · Hoy: <b>${mins} min</b>${mins >= 15 ? ' ✓' : ' de 15'}`;
+    $('kochStats').innerHTML = t(
+      `Letras: <b>${st.level}/${ORDER.length}</b> · Racha: <b>${st.streak} día${st.streak === 1 ? '' : 's'}</b> · Hoy: <b>${mins} min</b>${mins >= 15 ? ' ✓' : ' de 15'}`,
+      `Letters: <b>${st.level}/${ORDER.length}</b> · Streak: <b>${st.streak} day${st.streak === 1 ? '' : 's'}</b> · Today: <b>${mins} min</b>${mins >= 15 ? ' ✓' : ' of 15'}`);
   }
 
   /* ---------- Ronda: sonar y responder ---------- */
@@ -189,15 +194,15 @@
     $('kochPrompt').textContent = current;
     // Si fallas, se muestra el código correcto con • y — para que lo compares con lo que oíste.
     $('kochFeedback').innerHTML = ok
-      ? `✅ <b>${current}</b> en ${(ms / 1000).toFixed(1)} s${ms < 1000 ? ' ⚡' : ''}`
-      : `❌ Era <b>${current}</b> (${Morse.CODE[current].replace(/\./g, '•').replace(/-/g, '—')}), no ${c}`;
+      ? t(`✅ <b>${current}</b> en ${(ms / 1000).toFixed(1)} s${ms < 1000 ? ' ⚡' : ''}`, `✅ <b>${current}</b> in ${(ms / 1000).toFixed(1)} s${ms < 1000 ? ' ⚡' : ''}`)
+      : t(`❌ Era <b>${current}</b> (${Morse.CODE[current].replace(/\./g, '•').replace(/-/g, '—')}), no ${c}`, `❌ It was <b>${current}</b> (${Morse.CODE[current].replace(/\./g, '•').replace(/-/g, '—')}), not ${c}`);
     // ¿desbloquear la siguiente?
     const newest = unlocked().at(-1), nh = stats(newest);
     const recentOk = st.recent.length >= 10 && st.recent.filter(Boolean).length >= 9;
     if (st.level < ORDER.length && recentOk && nh.length >= 5 && nh.filter(x => x.ok).length >= 4) {
       st.level++; st.recent = [];
       if (st.level % 5 === 0) Radio.track(`morse/letras-${st.level}`);
-      $('kochFeedback').innerHTML += ` · 🎉 Nueva letra: <b>${ORDER[st.level - 1]}</b>`;
+      $('kochFeedback').innerHTML += t(` · 🎉 Nueva letra: <b>${ORDER[st.level - 1]}</b>`, ` · 🎉 New letter: <b>${ORDER[st.level - 1]}</b>`);
       document.dispatchEvent(new CustomEvent('radio:progress'));
     }
     tickDay();

@@ -14,6 +14,9 @@
   <meta name="apple-mobile-web-app-title" content="radio">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="canonical" href="https://bendi.dev/radio/empezar/">
+  <link rel="alternate" hreflang="es" href="https://bendi.dev/radio/empezar/">
+  <link rel="alternate" hreflang="en" href="https://bendi.dev/radio/en/start/">
+  <link rel="alternate" hreflang="x-default" href="https://bendi.dev/radio/empezar/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
   <meta property="og:site_name" content="radio · bendi.dev">
@@ -47,6 +50,7 @@
       <a href="../examen/" data-page="examen">Examen</a>
       <a href="../empezar/" data-page="empezar">Empezar</a>
     </nav>
+    <a class="lang-switch" id="langSwitch" href="../en/start/" hreflang="en" lang="en" title="Read this page in English" aria-label="English version of this page">EN</a>
     <div class="utc" title="Los radioaficionados siempre usan la hora UTC"><small>UTC</small> <span id="utc">--:--</span></div>
   </header>
 
@@ -56,7 +60,7 @@
       <p class="kicker">Paso 5</p>
       <h1>Dar el salto</h1>
       <p class="lead">El trámite en España, tu radioclub más cercano, las citas del año y todo lo que necesitas saber antes de empezar.</p>
-      <nav class="toc" aria-label="En esta página"><a href="#empezar">Cómo empezar en España</a> · <a href="#cb27">¿Y la CB-27 y los walkies?</a> · <a href="#equipo">Qué radio comprar (y qué es legal)</a> · <a href="#clubes">Encuentra tu radioclub</a> · <a href="#familias">¿Es para mí?</a> · <a href="#hispanoamerica">Si no estás en España</a> · <a href="#emergencias">La radio que no depende de nada</a> · <a href="#faq">Preguntas frecuentes</a></nav>
+      <nav class="toc" aria-label="En esta página"><a href="#empezar">Cómo empezar en España</a> · <a href="#cb27">¿Y la CB-27 y los walkies?</a> · <a href="#equipo">Qué radio comprar (y qué es legal)</a> · <a href="#clubes">Encuentra tu radioclub</a> · <a href="#familias">¿Es para mí?</a> · <a href="#docentes">La radio en clase</a> · <a href="#hispanoamerica">Si no estás en España</a> · <a href="#emergencias">La radio que no depende de nada</a> · <a href="#faq">Preguntas frecuentes</a></nav>
     </header>
 
     <!-- EMPEZAR -->
@@ -293,6 +297,57 @@
         </div>
       </div>
     </section>
+    <!-- DOCENTES -->
+    <section id="docentes">
+      <div class="section-head">
+        <p class="kicker">Para profesores y monitores</p>
+        <h2>La radio en clase</h2>
+        <p>Una sesión de 50 minutos para chicos y chicas de 10 a 16 años, con esta web y una ficha imprimible. No hace falta saber de radio ni tener equipos: basta un proyector o unos móviles.</p>
+      </div>
+      <div class="cards two">
+        <article class="card">
+          <h3>🕐 Plan de la sesión</h3>
+          <ol class="lesson-plan">
+            <li><b>5 min · Enganche:</b> mueve el dial de la portada y pon una emisora de otro continente.</li>
+            <li><b>10 min · ¿Qué es este sonido?:</b> pon sonidos sin decir cuál es; por grupos, adivinan mirando la cascada. Luego, una grabación real.</li>
+            <li><b>10 min · Morse:</b> cada uno escribe su nombre en Morse en la ficha y se lo «transmite» a su pareja con palmadas.</li>
+            <li><b>10 min · Deletrear como en la radio:</b> por parejas, deletrean una palabra con el alfabeto fonético; la otra persona la apunta.</li>
+            <li><b>10 min · Primer contacto:</b> por parejas, completan el guion de la ficha y lo leen en voz alta; después, el contacto simulado de la web.</li>
+            <li><b>5 min · Cierre:</b> ¿para qué sirve la radio cuando todo falla? Enlaza con «Emergencias».</li>
+          </ol>
+          <p class="note">Para ir más allá: invita a un radioclub cercano (ver «Encuentra tu radioclub»). Muchos hacen demostraciones en colegios y algunos ayudan a contactar con la ISS.</p>
+        </article>
+        <article class="card">
+          <h3>🖨️ Ficha para imprimir</h3>
+          <p>Una hoja A4 con el alfabeto fonético, la tabla Morse, el guion de un contacto con huecos y un libro de guardia para apuntar lo que escuchan.</p>
+          <button class="btn" id="printSheet" type="button">🖨️ Imprimir la ficha</button>
+          <p class="note">Se imprime solo la ficha, en blanco y negro. Licencia CC BY-SA 4.0: puedes copiarla y adaptarla.</p>
+        </article>
+      </div>
+      <div class="worksheet" id="worksheet" data-noglossary aria-label="Ficha para imprimir">
+        <h2>📻 La radio en clase · ficha</h2>
+        <p>Nombre: ______________________ &nbsp; Fecha: __________</p>
+        <div class="ws-grid">
+          <table class="ws-table">
+            <thead><tr><th>Letra</th><th>Fonético</th><th>Morse</th></tr></thead>
+            <tbody><tr><td><b>A</b></td><td>Alfa</td><td class="mono">·—</td></tr><tr><td><b>B</b></td><td>Bravo</td><td class="mono">—···</td></tr><tr><td><b>C</b></td><td>Charlie</td><td class="mono">—·—·</td></tr><tr><td><b>D</b></td><td>Delta</td><td class="mono">—··</td></tr><tr><td><b>E</b></td><td>Echo</td><td class="mono">·</td></tr><tr><td><b>F</b></td><td>Foxtrot</td><td class="mono">··—·</td></tr><tr><td><b>G</b></td><td>Golf</td><td class="mono">——·</td></tr><tr><td><b>H</b></td><td>Hotel</td><td class="mono">····</td></tr><tr><td><b>I</b></td><td>India</td><td class="mono">··</td></tr><tr><td><b>J</b></td><td>Juliett</td><td class="mono">·———</td></tr><tr><td><b>K</b></td><td>Kilo</td><td class="mono">—·—</td></tr><tr><td><b>L</b></td><td>Lima</td><td class="mono">·—··</td></tr><tr><td><b>M</b></td><td>Mike</td><td class="mono">——</td></tr><tr><td><b>N</b></td><td>November</td><td class="mono">—·</td></tr><tr><td><b>O</b></td><td>Oscar</td><td class="mono">———</td></tr><tr><td><b>P</b></td><td>Papa</td><td class="mono">·——·</td></tr><tr><td><b>Q</b></td><td>Quebec</td><td class="mono">——·—</td></tr><tr><td><b>R</b></td><td>Romeo</td><td class="mono">·—·</td></tr><tr><td><b>S</b></td><td>Sierra</td><td class="mono">···</td></tr><tr><td><b>T</b></td><td>Tango</td><td class="mono">—</td></tr><tr><td><b>U</b></td><td>Uniform</td><td class="mono">··—</td></tr><tr><td><b>V</b></td><td>Victor</td><td class="mono">···—</td></tr><tr><td><b>W</b></td><td>Whiskey</td><td class="mono">·——</td></tr><tr><td><b>X</b></td><td>X-ray</td><td class="mono">—··—</td></tr><tr><td><b>Y</b></td><td>Yankee</td><td class="mono">—·——</td></tr><tr><td><b>Z</b></td><td>Zulu</td><td class="mono">——··</td></tr></tbody>
+          </table>
+          <div>
+            <p class="ws-nums"><span><b>1</b> <span class="mono">·————</span></span><span><b>2</b> <span class="mono">··———</span></span><span><b>3</b> <span class="mono">···——</span></span><span><b>4</b> <span class="mono">····—</span></span><span><b>5</b> <span class="mono">·····</span></span><span><b>6</b> <span class="mono">—····</span></span><span><b>7</b> <span class="mono">——···</span></span><span><b>8</b> <span class="mono">———··</span></span><span><b>9</b> <span class="mono">————·</span></span><span><b>0</b> <span class="mono">—————</span></span></p>
+            <h3>1. Mi nombre en Morse</h3>
+            <p class="ws-lines">__________________________________________<br>__________________________________________</p>
+            <h3>2. Deletrea tu palabra</h3>
+            <p class="ws-lines">__________________________________________<br>__________________________________________</p>
+            <h3>3. Mi primer contacto</h3>
+            <p class="ws-script">«CQ, CQ, aquí ________ (indicativo), ________, ________.»<br>«________, aquí ________. Te recibo 5 y 9. Mi nombre es ________ y estoy en ________. ¿Cómo me recibes?»<br>«Recibido. Gracias por el contacto. 73.»</p>
+            <h3>4. Libro de guardia: ¿qué he oído?</h3>
+            <table class="ws-log"><thead><tr><th>Hora UTC</th><th>Frecuencia</th><th>Qué era</th><th>País</th></tr></thead>
+              <tbody><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody></table>
+          </div>
+        </div>
+        <p class="ws-foot">radio · bendi.dev/radio · CC BY-SA 4.0</p>
+      </div>
+    </section>
     <!-- HISPANOAMÉRICA -->
     <section id="hispanoamerica">
       <div class="section-head">
@@ -353,6 +408,7 @@
   <script src="../js/family.js"></script>
   <script src="../js/checklist.js"></script>
   <script src="../js/faq.js"></script>
+  <script src="../js/classroom.js"></script>
   <script src="../js/install.js"></script>
   <script src="../js/glossary.js"></script>
   <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>

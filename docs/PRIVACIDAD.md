@@ -64,6 +64,7 @@ Además de las visitas, se cuentan algunos **hitos** como eventos de GoatCounter
 | `radio/insignia/semana-<n>` | Ganas una insignia de "Tu primer mes" |
 | `radio/progreso/guardar` o `/recuperar` | Usas la copia de tu progreso |
 | `radio/apoyo/sponsors` y `radio/apoyo/sponsors-portada` | Pulsas "Apoya el proyecto" en el pie o en la portada (no se sabe si después apoyas ni quién eres) |
+| `radio/docentes/ficha` | Pulsas "Imprimir la ficha" de "La radio en clase" |
 | `radio/instalar/aceptada`, `/rechazada`, `/hecha` | Aceptas o rechazas la ventana de instalación, o la app termina de instalarse |
 
 Si bloqueas GoatCounter (por ejemplo, con un bloqueador de anuncios), no se cuenta nada y todo funciona igual.

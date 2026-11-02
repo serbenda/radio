@@ -43,10 +43,11 @@
  *  - Paso basado en lo que guarda otro módulo: añade una función de lectura junto a lessons()/koch()…
  *    y haz que ese módulo dispare `radio:progress` al guardar, para que la ruta se repinte.
  *  - Cambiar textos o insignias: campos `name`, `badge` y `text` de WEEKS (los textos van tal cual a innerHTML).
+ *    Todos los textos visibles van en los dos idiomas con t('castellano', 'English') (Radio.t).
  */
 (() => {
   'use strict';
-  const { $, store, url } = Radio;
+  const { $, store, url, t } = Radio;
   const KEY = 'radio.journey';
   // Estado completo de la ruta (forma descrita en la cabecera). Si no hay nada guardado, empieza hoy.
   let st = store.get(KEY) || { since: Date.now(), ev: {}, badges: {} };
@@ -98,27 +99,27 @@
    * El índice de la semana en esta lista es la clave de st.badges: no reordenes semanas o se mezclarán insignias.
    */
   const WEEKS = [
-    { name: 'Semana 1 · Escuchar', badge: '👂 Oyente', tasks: [
-      { text: 'Escucha 3 emisoras distintas del mapa', href: 'escuchar/#emisoras', done: () => count('station') >= 3, prog: () => `${Math.min(3, count('station'))}/3` },
-      { text: 'Abre un receptor real de onda corta', href: 'escuchar/#directo', done: () => count('websdr') >= 1 },
-      { text: 'Escucha y mira 4 sonidos en la cascada', href: 'escuchar/#sonidos', done: () => count('sound') >= 4, prog: () => `${Math.min(4, count('sound'))}/4` },
+    { name: t('Semana 1 · Escuchar', 'Week 1 · Listen'), badge: t('👂 Oyente', '👂 Listener'), tasks: [
+      { text: t('Escucha 3 emisoras distintas del mapa', 'Listen to 3 different stations on the map'), href: 'escuchar/#emisoras', done: () => count('station') >= 3, prog: () => `${Math.min(3, count('station'))}/3` },
+      { text: t('Abre un receptor real de onda corta', 'Open a real shortwave receiver'), href: 'escuchar/#directo', done: () => count('websdr') >= 1 },
+      { text: t('Escucha y mira 4 sonidos en la cascada', 'Listen to and watch 4 sounds on the waterfall'), href: 'escuchar/#sonidos', done: () => count('sound') >= 4, prog: () => `${Math.min(4, count('sound'))}/4` },
     ] },
-    { name: 'Semana 2 · Entender', badge: '🤓 Curioso', tasks: [
-      { text: 'Completa 2 lecciones de “Cómo funciona”', href: 'entender/#como-funciona', done: () => lessons() >= 2, prog: () => `${Math.min(2, lessons())}/2` },
-      { text: 'Toca una banda en la propagación de hoy para ver qué significa', href: 'entender/#propagacion', done: () => count('prop') >= 1 },
-      { text: 'Filtra el mapa “Ahora en el aire” o abre un aviso', href: 'escuchar/#ahora', done: () => count('live') >= 1 },
-      { text: 'Aprende 6 letras con el entrenador Koch', href: 'practicar/#morse', done: () => koch() >= 6, prog: () => `${Math.min(6, koch())}/6` },
+    { name: t('Semana 2 · Entender', 'Week 2 · Understand'), badge: t('🤓 Curioso', '🤓 Curious'), tasks: [
+      { text: t('Completa 2 lecciones de “Cómo funciona”', 'Complete 2 lessons from “How it works”'), href: 'entender/#como-funciona', done: () => lessons() >= 2, prog: () => `${Math.min(2, lessons())}/2` },
+      { text: t('Toca una banda en la propagación de hoy para ver qué significa', 'Tap a band in today’s propagation to see what it means'), href: 'entender/#propagacion', done: () => count('prop') >= 1 },
+      { text: t('Filtra el mapa “Ahora en el aire” o abre un aviso', 'Filter the “On the air now” map or open a spot'), href: 'escuchar/#ahora', done: () => count('live') >= 1 },
+      { text: t('Aprende 6 letras con el entrenador Koch', 'Learn 6 letters with the Koch trainer'), href: 'practicar/#morse', done: () => koch() >= 6, prog: () => `${Math.min(6, koch())}/6` },
     ] },
-    { name: 'Semana 3 · Practicar', badge: '🎙️ Operador', tasks: [
-      { text: 'Haz tu primer contacto simulado', href: 'practicar/#qso', done: () => (st.ev.qso || []).includes('primero') },
-      { text: 'Prueba 3 tipos de contacto distintos', href: 'practicar/#qso', done: () => count('qso') >= 3, prog: () => `${Math.min(3, count('qso'))}/3` },
-      { text: 'Responde 50 tarjetas del examen', href: 'examen/', done: () => examSeen() >= 50, prog: () => `${Math.min(50, examSeen())}/50` },
+    { name: t('Semana 3 · Practicar', 'Week 3 · Practise'), badge: t('🎙️ Operador', '🎙️ Operator'), tasks: [
+      { text: t('Haz tu primer contacto simulado', 'Make your first simulated contact'), href: 'practicar/#qso', done: () => (st.ev.qso || []).includes('primero') },
+      { text: t('Prueba 3 tipos de contacto distintos', 'Try 3 different kinds of contact'), href: 'practicar/#qso', done: () => count('qso') >= 3, prog: () => `${Math.min(3, count('qso'))}/3` },
+      { text: t('Responde 50 tarjetas del examen', 'Answer 50 exam cards'), href: 'examen/', done: () => examSeen() >= 50, prog: () => `${Math.min(50, examSeen())}/50` },
     ] },
-    { name: 'Semana 4 · Dar el salto', badge: '📻 Casi radioaficionado', tasks: [
-      { text: 'Lleva el termómetro del examen al 80 %', href: 'examen/', done: examReady },
-      { text: 'Saca APTO en un simulacro', href: 'examen/', done: () => count('apto') >= 1 },
-      { text: 'Calcula cuándo pasa la ISS sobre tu ciudad', href: 'entender/#iss', done: () => count('iss') >= 1 },
-      { text: 'Contacta con un radioclub', href: 'empezar/#clubes', done: () => checklist('club') },
+    { name: t('Semana 4 · Dar el salto', 'Week 4 · Take the leap'), badge: t('📻 Casi radioaficionado', '📻 Almost a radio amateur'), tasks: [
+      { text: t('Lleva el termómetro del examen al 80 %', 'Get the exam thermometer to 80%'), href: 'examen/', done: examReady },
+      { text: t('Saca APTO en un simulacro', 'Get a PASS in a mock exam'), href: 'examen/', done: () => count('apto') >= 1 },
+      { text: t('Calcula cuándo pasa la ISS sobre tu ciudad', 'Work out when the ISS passes over your town'), href: 'entender/#iss', done: () => count('iss') >= 1 },
+      { text: t('Contacta con un radioclub', 'Get in touch with a radio club'), href: 'empezar/#clubes', done: () => checklist('club') },
     ] },
   ];
 
@@ -160,14 +161,14 @@
     if (!weeksEl) return;
     let total = 0, done = 0;
     weeksEl.innerHTML = WEEKS.map((w, wi) => {
-      const ok = w.tasks.map(t => t.done());
+      const ok = w.tasks.map(k => k.done());
       total += ok.length; done += ok.filter(Boolean).length;
       const full = ok.every(Boolean);
       if (full && !st.badges[wi]) { st.badges[wi] = Date.now(); save(); celebrate(w.badge); Radio.track(`insignia/semana-${wi + 1}`); }
       return `<div class="week${full ? ' full' : ''}">
         <h3>${w.name}</h3>
-        <ul>${w.tasks.map((t, i) => `<li class="${ok[i] ? 'ok' : ''}"><span class="tick" aria-hidden="true">${ok[i] ? '✓' : ''}</span><a href="${url(t.href)}">${t.text}<span class="sr-only">${ok[i] ? ' (hecho)' : ' (pendiente)'}</span></a>${!ok[i] && t.prog ? `<small>${t.prog()}</small>` : ''}</li>`).join('')}</ul>
-        <p class="badge${full ? ' won' : ''}">${full ? 'Insignia: ' : 'Al terminar: '}<b>${w.badge}</b></p>
+        <ul>${w.tasks.map((k, i) => `<li class="${ok[i] ? 'ok' : ''}"><span class="tick" aria-hidden="true">${ok[i] ? '✓' : ''}</span><a href="${url(k.href)}">${k.text}<span class="sr-only">${ok[i] ? t(' (hecho)', ' (done)') : t(' (pendiente)', ' (to do)')}</span></a>${!ok[i] && k.prog ? `<small>${k.prog()}</small>` : ''}</li>`).join('')}</ul>
+        <p class="badge${full ? ' won' : ''}">${full ? t('Insignia: ', 'Badge: ') : t('Al terminar: ', 'When you finish: ')}<b>${w.badge}</b></p>
       </div>`;
     }).join('');
     const pct = Math.round(done / total * 100);
@@ -175,7 +176,7 @@
     $('journeyBar').parentElement.setAttribute('aria-valuenow', String(pct));
     // 864e5 = 86.400.000 ms = un día. Se suma 1 para que el primer día sea "día 1".
     const day = Math.floor((Date.now() - st.since) / 864e5) + 1;
-    $('journeyMeta').innerHTML = `<b>${done}</b> de ${total} pasos · <b>${pct}%</b> · día ${day} de tu ruta`;
+    $('journeyMeta').innerHTML = t(`<b>${done}</b> de ${total} pasos · <b>${pct}%</b> · día ${day} de tu ruta`, `<b>${done}</b> of ${total} steps · <b>${pct}%</b> · day ${day} of your journey`);
     $('journeyShare').hidden = done === 0;
   }
 
@@ -187,13 +188,13 @@
    *   se quita a los 3,5 s y el elemento se borra 400 ms después, cuando ha terminado la transición de salida.
    */
   function celebrate(badge) {
-    const t = document.createElement('div');
+    const toast = document.createElement('div');
     // role="status": los lectores de pantalla lo anuncian sin interrumpir lo que estén leyendo.
-    t.className = 'toast'; t.setAttribute('role', 'status');
-    t.innerHTML = `🎉 ¡Nueva insignia! <b>${badge}</b>`;
-    document.body.appendChild(t);
-    setTimeout(() => t.classList.add('show'), 20);
-    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
+    toast.className = 'toast'; toast.setAttribute('role', 'status');
+    toast.innerHTML = t(`🎉 ¡Nueva insignia! <b>${badge}</b>`, `🎉 New badge! <b>${badge}</b>`);
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 20);
+    setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3500);
   }
 
   /* ---------- Botones de la portada ---------- */
@@ -205,10 +206,11 @@
      */
     $('journeyShare').addEventListener('click', async () => {
       const badges = WEEKS.filter((w, i) => st.badges[i]).map(w => w.badge).join(' ');
-      const text = `📻 Estoy aprendiendo radioafición: ${$('journeyMeta').textContent}${badges ? ' · ' + badges : ''}. ¿Te apuntas?`;
-      const link = 'https://bendi.dev/radio/#mes';
+      const text = t(`📻 Estoy aprendiendo radioafición: ${$('journeyMeta').textContent}${badges ? ' · ' + badges : ''}. ¿Te apuntas?`,
+        `📻 I’m learning amateur radio: ${$('journeyMeta').textContent}${badges ? ' · ' + badges : ''}. Fancy joining me?`);
+      const link = t('https://bendi.dev/radio/#mes', 'https://bendi.dev/radio/en/#mes');
       if (navigator.share) { try { await navigator.share({ text, url: link }); } catch (e) { /* cancelado */ } return; }
-      try { await navigator.clipboard.writeText(text + ' ' + link); $('journeyShare').textContent = '✅ Copiado'; setTimeout(() => { $('journeyShare').textContent = '📤 Compartir mi progreso'; }, 2500); } catch (e) { /* sin portapapeles */ }
+      try { await navigator.clipboard.writeText(text + ' ' + link); $('journeyShare').textContent = t('✅ Copiado', '✅ Copied'); setTimeout(() => { $('journeyShare').textContent = t('📤 Compartir mi progreso', '📤 Share my progress'); }, 2500); } catch (e) { /* sin portapapeles */ }
     });
     /**
      * Empezar de cero: tras confirmar, borra SOLO radio.journey (logros e insignias) y repinta.
@@ -216,7 +218,7 @@
      * así que los pasos que dependen de ellos pueden volver a salir hechos.
      */
     $('journeyReset').addEventListener('click', () => {
-      if (!confirm('¿Empezar la ruta desde cero? Se borra el progreso de la ruta (no el del examen ni el de Morse).')) return;
+      if (!confirm(t('¿Empezar la ruta desde cero? Se borra el progreso de la ruta (no el del examen ni el de Morse).', 'Start the journey again from scratch? This clears your journey progress (not your exam or Morse progress).'))) return;
       st = { since: Date.now(), ev: {}, badges: {} }; save(); render();
     });
     render();

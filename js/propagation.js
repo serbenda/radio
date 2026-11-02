@@ -36,6 +36,8 @@
  * Accesibilidad: cada banda es un <button> con aria-expanded (true en la que se está explicando); el punto
  *   de color es decorativo (aria-hidden) porque el estado también va escrito ("Abierta", "Floja"…).
  *
+ * Textos visibles: en castellano e inglés con Radio.t(es, en) (ver docs/IDIOMAS.md).
+ *
  * Cómo modificarlo:
  *  - Cambiar umbrales o reglas: estimate() (y los textos de sunWord() y fieldWord() si cambias los cortes).
  *  - Añadir o quitar un grupo de bandas: GROUPS (campos explicados encima); estimate() debe saber tratarlo.
@@ -47,6 +49,7 @@
   'use strict';
   if (!document.getElementById('propagacion')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
+  const { t } = Radio;
   // Fuentes de datos (ver la cabecera y docs/DATOS.md).
   const SOLAR = 'https://www.hamqth.com/api/v2/solar';
   const MUF = 'https://prop.kc2g.com/renders/current/mufd-normal-now.svg';
@@ -64,13 +67,13 @@
    * Están ordenadas de menor a mayor frecuencia: load() usa ese orden para elegir "lo mejor ahora".
    */
   const GROUPS = [
-    { bands: '80 · 40 m', low: true, where: 'España y Europa' },
-    { bands: '30 · 20 m', mid: true, where: 'Europa, América, Asia' },
-    { bands: '17 · 15 m', high: 100, where: 'Otros continentes' },
-    { bands: '12 · 10 m', high: 140, where: 'Todo el mundo, con poca potencia' },
+    { bands: '80 · 40 m', low: true, where: t('España y Europa', 'Spain and Europe') },
+    { bands: '30 · 20 m', mid: true, where: t('Europa, América, Asia', 'Europe, the Americas, Asia') },
+    { bands: '17 · 15 m', high: 100, where: t('Otros continentes', 'Other continents') },
+    { bands: '12 · 10 m', high: 140, where: t('Todo el mundo, con poca potencia', 'The whole world, with little power') },
   ];
   // Texto y clase CSS (color del semáforo) de cada estado: índice 0 cerrada, 1 floja, 2 abierta.
-  const LABEL = ['Cerrada', 'Floja', 'Abierta'];
+  const LABEL = [t('Cerrada', 'Closed'), t('Floja', 'Weak'), t('Abierta', 'Open')];
   const CLASS = ['bad', 'fair', 'good'];
 
   /* ---------- Estimación ---------- */
@@ -97,13 +100,13 @@
    * @param {number} sfi Flujo solar.
    * @returns {string} "muy activo", "activo", "tranquilo" o "muy tranquilo".
    */
-  function sunWord(sfi) { return sfi >= 150 ? 'muy activo' : sfi >= 110 ? 'activo' : sfi >= 85 ? 'tranquilo' : 'muy tranquilo'; }
+  function sunWord(sfi) { return sfi >= 150 ? t('muy activo', 'very active') : sfi >= 110 ? t('activo', 'active') : sfi >= 85 ? t('tranquilo', 'quiet') : t('muy tranquilo', 'very quiet'); }
   /**
    * Describe el estado del campo magnético según el índice K (≥ 5 tormenta, 4 agitado, 3 inquieto, < 3 calma).
    * @param {number} k Índice K.
    * @returns {string} Trozo de frase para la frase resumen.
    */
-  function fieldWord(k) { return k >= 5 ? 'hay tormenta geomagnética' : k >= 4 ? 'el campo magnético está agitado' : k >= 3 ? 'el campo magnético está algo inquieto' : 'el campo magnético está en calma'; }
+  function fieldWord(k) { return k >= 5 ? t('hay tormenta geomagnética', 'there is a geomagnetic storm') : k >= 4 ? t('el campo magnético está agitado', 'the magnetic field is disturbed') : k >= 3 ? t('el campo magnético está algo inquieto', 'the magnetic field is a little unsettled') : t('el campo magnético está en calma', 'the magnetic field is calm'); }
 
   /* ---------- Carga de datos y pintado ---------- */
 
@@ -127,23 +130,31 @@
       if (!sfi || k == null) throw new Error('sin datos');
       const states = GROUPS.map(g => estimate(g, sfi, k, day));
       const best = GROUPS[states.lastIndexOf(Math.max(...states))];
-      $('propSentence').innerHTML = `Ahora es de <b>${day ? 'día' : 'noche'}</b>, el Sol está <b>${sunWord(sfi)}</b> (flujo ${sfi}) y ${fieldWord(k)} (K = ${k}). ` +
-        (Math.max(...states) === 2 ? `Lo mejor ahora: <b>${best.bands}</b>, para llegar a ${best.where.toLowerCase()}.` : 'Las bandas están flojas: buen momento para escuchar con paciencia.');
+      $('propSentence').innerHTML = t(
+        `Ahora es de <b>${day ? 'día' : 'noche'}</b>, el Sol está <b>${sunWord(sfi)}</b> (flujo ${sfi}) y ${fieldWord(k)} (K = ${k}). `,
+        `It is <b>${day ? 'daytime' : 'night-time'}</b> now, the Sun is <b>${sunWord(sfi)}</b> (flux ${sfi}) and ${fieldWord(k)} (K = ${k}). `) +
+        (Math.max(...states) === 2
+          ? t(`Lo mejor ahora: <b>${best.bands}</b>, para llegar a ${best.where.toLowerCase()}.`, `Best right now: <b>${best.bands}</b>, to reach ${best.where.replace(/^The /, 'the ')}.`)
+          : t('Las bandas están flojas: buen momento para escuchar con paciencia.', 'The bands are weak: a good time to listen patiently.'));
       $('propBands').innerHTML = GROUPS.map((g, i) =>
         `<button type="button" class="pb ${CLASS[states[i]]}" data-i="${i}" data-s="${states[i]}" aria-expanded="false"><span class="dot" aria-hidden="true"></span><b>${g.bands}</b><span>${LABEL[states[i]]}</span><small>${g.where}</small></button>`).join('');
-      $('propExplain').textContent = 'Toca una banda para ver qué significa para ti.';
-      $('propMeta').textContent = `Datos solares: HamQTH.com · actualizado ${new Date(s.fetchedAt || Date.now()).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}. Estimación orientativa.`;
+      $('propExplain').textContent = t('Toca una banda para ver qué significa para ti.', 'Tap a band to see what it means for you.');
+      const time = new Date(s.fetchedAt || Date.now()).toLocaleTimeString(Radio.locale, { hour: '2-digit', minute: '2-digit' });
+      $('propMeta').textContent = t(`Datos solares: HamQTH.com · actualizado ${time}. Estimación orientativa.`, `Solar data: HamQTH.com · updated ${time}. A rough estimate.`);
     } catch (e) {
-      $('propSentence').textContent = 'No se han podido cargar los datos solares ahora mismo. Vuelve a intentarlo en un rato.';
+      $('propSentence').textContent = t('No se han podido cargar los datos solares ahora mismo. Vuelve a intentarlo en un rato.', 'The solar data could not be loaded right now. Try again in a little while.');
     }
   }
 
   /* ---------- Explicación al tocar una banda ---------- */
   // Qué significa cada estado, en lenguaje llano
   const MEANING = [
-    'Ahora casi no se oye nada en estas bandas. No es tu radio: es el Sol o la hora. Prueba en otras o vuelve más tarde.',
-    'Se oye algo, con altibajos. Ten paciencia: las señales van y vienen (es el “fading”).',
-    'Buen momento: en un receptor web oirás estaciones lejanas con claridad. ¡Aprovecha!',
+    t('Ahora casi no se oye nada en estas bandas. No es tu radio: es el Sol o la hora. Prueba en otras o vuelve más tarde.',
+      'Almost nothing can be heard on these bands right now. It is not your radio: it is the Sun or the time of day. Try other bands or come back later.'),
+    t('Se oye algo, con altibajos. Ten paciencia: las señales van y vienen (es el “fading”).',
+      'You can hear something, with ups and downs. Be patient: signals come and go (this is called “fading”).'),
+    t('Buen momento: en un receptor web oirás estaciones lejanas con claridad. ¡Aprovecha!',
+      'A good moment: on a web receiver you will hear distant stations clearly. Make the most of it!'),
   ];
   // Un solo escuchador para todos los botones (se repintan en cada carga). data-i = posición en GROUPS,
   // data-s = estado calculado. Marca aria-expanded solo en el tocado y avisa del logro.

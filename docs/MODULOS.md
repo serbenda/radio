@@ -95,7 +95,7 @@ flowchart LR
 | `guided.js` | `#guided` | Escucha guiada en el WebSDR de Twente y receptores alternativos | WebSDR (enlace) | (`websdr` vía journey) |
 | `live.js` | `#ahora` | Avisos del DX cluster en directo, en mapa y como frases | HamQTH, Leaflet, Esri | `live` |
 | `sounds.js` | `#sonidos` | Ocho sonidos sintetizados con cascada en directo | — | `sound` |
-| `recordings.js` | `#recList` | Grabaciones reales con autor y licencia; una a la vez; Ogg con alternativa MP3 | Wikimedia Commons | `sound` |
+| `recordings.js` | `#recList` | Grabaciones reales con autor y licencia; una a la vez; Ogg con alternativa MP3; las pasa a la cascada de `sounds.js` con el evento `radio:waterfall` | Wikimedia Commons | `sound`, `radio:waterfall` |
 
 ### Entender
 
@@ -129,6 +129,7 @@ flowchart LR
 | `clubs.js` | `#clubes` | Mapa de radioclubes por provincia y calendario de eventos | Leaflet, Esri | — |
 | `family.js` | `#fitQs` | Autotest "¿Es para mí?" | — | — |
 | `faq.js` | `#faqList` | Preguntas frecuentes | — | — |
+| `classroom.js` | `#printSheet` | "La radio en clase": imprime solo la ficha (#worksheet) | — | Hito `docentes/ficha` |
 
 ## Cómo añadir un módulo nuevo
 

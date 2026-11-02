@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://*.api.radio-browser.info https://www.hamqth.com https://celestrak.org https://serbenda.goatcounter.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Exam · Radio</title>
+  <meta name="description" content="A practice simulator for the Spanish amateur radio exam: adaptive flashcards with explanations, mastery by topic and a two-part mock exam.">
+  <meta name="radio-root" content="../../">
+  <meta name="theme-color" content="#111214">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="radio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="canonical" href="https://bendi.dev/radio/en/exam/">
+  <link rel="alternate" hreflang="es" href="https://bendi.dev/radio/examen/">
+  <link rel="alternate" hreflang="en" href="https://bendi.dev/radio/en/exam/">
+  <link rel="alternate" hreflang="x-default" href="https://bendi.dev/radio/examen/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="radio · bendi.dev">
+  <meta property="og:title" content="Exam · Radio">
+  <meta property="og:description" content="A practice simulator for the Spanish amateur radio exam: adaptive flashcards with explanations, mastery by topic and a two-part mock exam.">
+  <meta property="og:url" content="https://bendi.dev/radio/en/exam/">
+  <meta property="og:image" content="https://bendi.dev/radio/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A radio dial with a signal and the text: There are thousands of voices in the air. Listen to them.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Exam · Radio">
+  <meta name="twitter:description" content="A practice simulator for the Spanish amateur radio exam: adaptive flashcards with explanations, mastery by topic and a two-part mock exam.">
+  <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
+  <link rel="icon" href="../../img/favicon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="preload" href="../../fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-page="examen">
+  <a class="skip" href="#contenido">Skip to content</a>
+  <header class="top">
+    <a class="brand" href="../" aria-label="radio, go to the home page">📻 <span>radio</span></a>
+    <nav aria-label="Main">
+      <a href="../" data-page="inicio">Home</a>
+      <a href="../listen/" data-page="escuchar">Listen</a>
+      <a href="../understand/" data-page="entender">Understand</a>
+      <a href="../practice/" data-page="practicar">Practice</a>
+      <a href="../exam/" data-page="examen">Exam</a>
+      <a href="../start/" data-page="empezar">Get started</a>
+    </nav>
+    <a class="lang-switch" id="langSwitch" href="../../examen/" hreflang="es" lang="es" title="Leer esta página en castellano" aria-label="Versión en castellano de esta página">ES</a>
+    <div class="utc" title="Radio amateurs always use UTC time"><small>UTC</small> <span id="utc">--:--</span></div>
+  </header>
+
+  <main id="contenido">
+    <noscript><p class="noscript">You can read the text without JavaScript, but the dial, maps, sounds, Morse, contacts and exam need it. Turn it on to use them.</p></noscript>
+    <header class="page-head">
+      <p class="kicker">Step 4</p>
+      <h1>Prepare for the exam</h1>
+      <p class="lead">Study with flashcards that bring back what you get wrong, and check whether you’re ready with a mock exam just like the real one.</p>
+      <nav class="toc" aria-label="On this page"><a href="#test">Amateur radio exam simulator</a></nav>
+    </header>
+
+    <!-- TEST -->
+    <section id="test">
+      <div class="section-head">
+        <p class="kicker">Get ready for the exam</p>
+        <h2>Amateur radio exam simulator</h2>
+        <p>Just like the real exam: two parts, electricity and radio on one side and regulations and operating on the other, and you pass with half the answers right in each. Study with the flashcards first, which bring back what you get wrong; when the thermometer reaches 80 %, take the mock exam. The real exam is taken in Spanish; these are practice questions translated from the Spanish question bank.</p>
+      </div>
+      <div class="exam card">
+        <div id="examDash"></div>
+        <div id="examStage" hidden></div>
+      </div>
+      <p class="note">Practice questions written from the official syllabus (Annex II of <a href="https://boe.es/boe/dias/2013/07/12/pdfs/BOE-A-2013-7624.pdf" target="_blank" rel="noopener">Order IET/1311/2013 (in Spanish)</a>), not the actual exam questions. Your progress is saved only in this browser.</p>
+    </section>
+
+    <nav class="next-page" aria-label="Next step"><a href="../start/">Next: Take the plunge →</a></nav>
+  </main>
+
+  <footer>
+    <p class="footer-actions"><button class="btn ghost small" id="shareSite" type="button">📤 Share this site</button> <button class="btn small" id="installApp" type="button" hidden>📲 Install the app</button></p>
+    <p>📻 radio · a project by <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">code and data sources</a> · 73! <small>(“best regards” in radio slang)</small></p>
+    <p class="sponsor"><a class="sponsor-pill" id="sponsorLink" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span class="beat" aria-hidden="true">💚</span> Find it useful? <b>Support the project</b> on GitHub Sponsors</a></p>
+    <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">Spotted a mistake or something out of date? Let us know</a></p>
+  </footer>
+
+  <script src="../../js/core.js"></script>
+  <script src="../../js/data.js"></script>
+  <script src="../../js/journey.js"></script>
+  <script src="../../js/en/exam-data.js"></script>
+  <script src="../../js/exam.js"></script>
+  <script src="../../js/install.js"></script>
+  <script src="../../js/glossary.js"></script>
+  <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

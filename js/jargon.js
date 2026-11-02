@@ -16,6 +16,8 @@
  *  - GLOSSARY: lista de pares [término, explicación]. La explicación puede llevar HTML sencillo (<b>, comillas
  *    tipográficas) porque se inserta tal cual: es contenido propio, nunca texto de la persona.
  *
+ * Textos visibles: en castellano e inglés con Radio.t(es, en) (ver docs/IDIOMAS.md).
+ *
  * Cómo modificarlo:
  *  - Añadir un término de jerga: una línea más en GLOSSARY de data.js, por ejemplo
  *    ['QRM', 'Interferencias causadas por otras estaciones.']. Aparece aquí sin tocar este archivo.
@@ -25,7 +27,7 @@
  */
 (() => {
   'use strict';
-  const { $, esc } = Radio;
+  const { $, esc, t } = Radio;
   const input = $('phoneticIn');
   if (!input) return;
 
@@ -43,7 +45,7 @@
     const txt = input.value.toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
     $('phoneticOut').innerHTML = txt.split('').map(c =>
       c === ' ' ? '<i class="gap"></i>' : PHONETIC[c] ? `<span><b>${esc(c)}</b>${PHONETIC[c]}</span>` : ''
-    ).join('') || '<em>Ejemplo: EA4 → Echo Alfa Cuatro</em>';
+    ).join('') || t('<em>Ejemplo: EA4 → Echo Alfa Cuatro</em>', '<em>Example: EA4 → Echo Alfa Four</em>');
   };
   input.addEventListener('input', render);
   render();
@@ -51,5 +53,5 @@
   /* ---------- Glosario ---------- */
 
   // Se pinta una sola vez al cargar. GLOSSARY es contenido propio (data.js), por eso no se escapa.
-  $('glossary').innerHTML = GLOSSARY.map(([t, d]) => `<dt>${t}</dt><dd>${d}</dd>`).join('');
+  $('glossary').innerHTML = GLOSSARY.map(([term, d]) => `<dt>${term}</dt><dd>${d}</dd>`).join('');
 })();

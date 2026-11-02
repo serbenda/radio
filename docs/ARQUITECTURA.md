@@ -73,6 +73,7 @@ radio/
 ├── practicar/index.html      Paso 3 · Practicar
 ├── examen/index.html         Paso 4 · Examen
 ├── empezar/index.html        Paso 5 · Empezar
+├── en/                       Versión en inglés: index.html, listen/, understand/, practice/, exam/, start/
 ├── 404.html                  Página "no existe" (GitHub Pages la usa sola)
 ├── offline.html              Lo que se ve sin conexión en una página no visitada
 │
@@ -88,6 +89,7 @@ radio/
 │   ├── glossary.js           Glosario emergente (va el ÚLTIMO)
 │   ├── exam-data.js          Banco de 169 preguntas
 │   ├── clubs-data.js         162 secciones de la URE (solo datos públicos)
+│   ├── en/exam-data.js       Las mismas 169 preguntas en inglés
 │   └── …                     Un módulo por funcionalidad (ver MODULOS.md)
 │
 ├── sw.js                     Service worker: modo sin conexión
@@ -133,7 +135,7 @@ flowchart LR
 | Entender | `/entender/` | `como-funciona`, `bandas`, `propagacion`, `iss` | lessons, bands, propagation, iss |
 | Practicar | `/practicar/` | `morse`, `jerga`, `qso` | morse, morse-ui, koch, jargon, qso |
 | Examen | `/examen/` | `test` | exam-data, exam |
-| Empezar | `/empezar/` | `empezar`, `cb27`, `equipo`, `clubes`, `familias`, `hispanoamerica`, `emergencias`, `faq` | clubs-data, clubs, family, checklist, faq |
+| Empezar | `/empezar/` | `empezar`, `cb27`, `equipo`, `clubes`, `familias`, `docentes`, `hispanoamerica`, `emergencias`, `faq` | clubs-data, clubs, family, checklist, faq, classroom |
 
 Todas cargan además `core.js`, `data.js`, `journey.js`, `install.js` y `glossary.js`.
 
@@ -174,6 +176,10 @@ Todas cargan además `core.js`, `data.js`, `journey.js`, `install.js` y `glossar
 ```
 
 `tools/check.mjs` comprueba que la cabecera y el pie son idénticos en las seis páginas (sin contar las rutas `./` o `../`): si cambias el menú, cámbialo en todas.
+
+### Versión en inglés
+
+Cada página tiene su pareja en `en/` (`escuchar/` ↔ `en/listen/`…), con la misma estructura e ids. Los módulos son los mismos: leen el idioma de `<html lang>` y eligen el texto con `Radio.t('castellano', 'English')`. Explicación completa en [IDIOMAS.md](IDIOMAS.md).
 
 ## 5. Cómo se carga una página
 
@@ -262,7 +268,10 @@ flowchart TD
 | `Radio.esc(texto)` | Escapar HTML de todo lo que venga de fuera | `` `<b>${esc(s.name)}</b>` `` |
 | `Radio.store.get(clave, defecto)` / `.set` / `.remove` | `localStorage` con JSON y sin excepciones | `store.get('radio.koch', {})` |
 | `Radio.emit(nombre, id)` | Avisar de un logro a "Tu primer mes" | `emit('station', uuid)` |
-| `Radio.url(ruta)` | Enlace correcto desde cualquier página | `url('examen/')` |
+| `Radio.url(ruta)` | Enlace correcto desde cualquier página y en su idioma | `url('examen/')` → `../../en/exam/` en inglés |
+| `Radio.lang` / `Radio.locale` | Idioma de la página (`es`/`en`) y formato regional (`es-ES`/`en-GB`) | — |
+| `Radio.t(es, en)` | Texto en el idioma de la página | `t('Cargando…', 'Loading…')` |
+| `Radio.counterpart(idioma)` | La misma página en el otro idioma | selector ES/EN |
 | `Radio.root` | Raíz relativa (`./` o `../`) | — |
 | `Radio.whileVisible(el, on, off)` | Arrancar y parar animaciones según se vean | dial, lecciones, cascada |
 | `Radio.onceVisible(el, cb)` | Carga perezosa | mapas, datos externos |
@@ -300,6 +309,7 @@ flowchart LR
 | `radio:qso` | qso.js al terminar un contacto | `{ scenario }` (`primero`, `concurso`, `pota`, `emergencia`, `iss`) | journey.js |
 | `radio:mock` | exam.js al corregir un simulacro | `{ pass }` (`true`/`false`) | journey.js |
 | `radio:progress` | lessons, koch, exam, checklist | ninguno: "vuelve a calcular" | journey.js |
+| `radio:waterfall` | recordings.js al reproducir una grabación | `{ el: <audio>, label }` | sounds.js (la dibuja en la cascada) |
 
 ### Ejemplo completo: "Escucha 3 emisoras"
 
@@ -462,7 +472,7 @@ flowchart LR
   G --> H[bendi.dev/radio actualizado]
 ```
 
-- **Nunca** se trabaja directamente en `main`: todo pasa por `development` y una pull request.
+- **Nunca** se trabaja directamente en `main`: todo pasa por `development` y una pull request. GitHub lo impone: `main` está protegida (pull request obligatoria con la comprobación `comprobar` en verde, sin `push --force` ni borrado, también para administradores) y `development` no se puede forzar ni borrar.
 - GitHub Pages está configurado como "Deploy from a branch" → `main` → `/ (root)`. El dominio `bendi.dev` está configurado en el repositorio de la web personal; esta web vive en la subcarpeta `/radio/`.
 - Paso a paso: [TUTORIAL.md](TUTORIAL.md). Normas: [../CONTRIBUTING.md](../CONTRIBUTING.md).
 

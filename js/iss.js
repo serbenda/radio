@@ -34,6 +34,8 @@
  * Rendimiento: no descarga nada ni crea el mapa hasta que la sección está a 300 px de verse. Después
  *   actualiza la posición cada segundo y la traza cada 5 minutos.
  *
+ * Textos visibles: en castellano e inglés con Radio.t(es, en) (ver docs/IDIOMAS.md).
+ *
  * Cómo modificarlo:
  *  - Cambiar la ventana o la precisión de los pases: 48 * 3600e3 (ms de ventana) y 20e3 (paso en ms) en
  *    findPasses(); el mínimo de 10° y el máximo de 6 pases están en la misma función.
@@ -45,6 +47,7 @@
   'use strict';
   if (!document.getElementById('iss')) return; // esta página no tiene la sección
   const $ = id => document.getElementById(id);
+  const { t } = Radio;
   // TLE actualizado de la ISS (3 líneas: nombre y las dos líneas de elementos).
   const TLE = 'https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=TLE';
   // Conversión entre radianes (lo que usa satellite.js) y grados (lo que usan Leaflet y las personas).
@@ -54,7 +57,8 @@
    * @param {number} az Acimut en RADIANES, medido desde el norte en sentido horario.
    * @returns {string} "norte", "noreste", …
    */
-  const DIRS = ['norte', 'noreste', 'este', 'sureste', 'sur', 'suroeste', 'oeste', 'noroeste'];
+  const DIRS = t(['norte', 'noreste', 'este', 'sureste', 'sur', 'suroeste', 'oeste', 'noroeste'],
+    ['north', 'north-east', 'east', 'south-east', 'south', 'south-west', 'west', 'north-west']);
   const dir = az => DIRS[Math.round(((az * deg) % 360) / 45) % 8];
 
   // Estado del módulo:
@@ -116,13 +120,13 @@
    * @param {number} t Milisegundos desde 1970.
    * @returns {string}
    */
-  const fmt = t => new Date(t).toLocaleString('es-ES', { weekday: 'long', hour: '2-digit', minute: '2-digit' });
+  const fmt = t => new Date(t).toLocaleString(Radio.locale, { weekday: 'long', hour: '2-digit', minute: '2-digit' });
   /**
    * Calidad de un pase según su elevación máxima: ≥ 60° excelente, ≥ 30° bueno, menos, bajo.
    * @param {number} el Elevación máxima en grados.
    * @returns {string}
    */
-  function quality(el) { return el >= 60 ? 'casi encima de ti: pase excelente' : el >= 30 ? 'buen pase' : 'pase bajo, cerca del horizonte'; }
+  function quality(el) { return el >= 60 ? t('casi encima de ti: pase excelente', 'almost overhead: excellent pass') : el >= 30 ? t('buen pase', 'good pass') : t('pase bajo, cerca del horizonte', 'low pass, close to the horizon'); }
 
   /**
    * Pinta la lista de próximos pases en #issPasses; el primero lleva la clase "next" para destacarlo.
@@ -131,10 +135,10 @@
    * @returns {void}
    */
   function renderPasses() {
-    if (!passes.length) { $('issPasses').innerHTML = '<li>No hay pases útiles en las próximas 48 horas.</li>'; return; }
+    if (!passes.length) { $('issPasses').innerHTML = t('<li>No hay pases útiles en las próximas 48 horas.</li>', '<li>No useful passes in the next 48 hours.</li>'); return; }
     $('issPasses').innerHTML = passes.map((p, i) => `<li class="${i ? '' : 'next'}">
       <b>${fmt(p.start)}</b>
-      <span>${Math.max(1, Math.round((p.end - p.start) / 60000))} min · altura máxima ${Math.round(p.maxEl)}° · aparece por el ${dir(p.azStart)} y se va por el ${dir(p.azEnd)}</span>
+      <span>${Math.max(1, Math.round((p.end - p.start) / 60000))} min · ${t(`altura máxima ${Math.round(p.maxEl)}° · aparece por el ${dir(p.azStart)} y se va por el ${dir(p.azEnd)}`, `max height ${Math.round(p.maxEl)}° · rises in the ${dir(p.azStart)} and sets in the ${dir(p.azEnd)}`)}</span>
       <small>${quality(p.maxEl)}</small></li>`).join('');
   }
 
@@ -147,14 +151,16 @@
   function update() {
     const now = new Date(), l = look(now); if (!l) return;
     marker.setLatLng([l.lat, l.lon]);
-    $('issNow').innerHTML = `Ahora sobrevuela <b>${l.lat.toFixed(1)}°, ${l.lon.toFixed(1)}°</b> a <b>${Math.round(l.alt)} km</b> de altura, a unos 27.600 km/h.` +
-      (l.el > 0 ? ` <b class="live">¡Está sobre tu horizonte ahora (${Math.round(l.el)}°)!</b>` : '');
+    $('issNow').innerHTML = t(
+      `Ahora sobrevuela <b>${l.lat.toFixed(1)}°, ${l.lon.toFixed(1)}°</b> a <b>${Math.round(l.alt)} km</b> de altura, a unos 27.600 km/h.`,
+      `It is now flying over <b>${l.lat.toFixed(1)}°, ${l.lon.toFixed(1)}°</b> at a height of <b>${Math.round(l.alt)} km</b>, at about 27,600 km/h.`) +
+      (l.el > 0 ? t(` <b class="live">¡Está sobre tu horizonte ahora (${Math.round(l.el)}°)!</b>`, ` <b class="live">It is above your horizon right now (${Math.round(l.el)}°)!</b>`) : '');
     const next = passes.find(p => p.end > now.getTime());
     if (next) {
       const s = Math.round((next.start - now) / 1000);
       $('issCount').textContent = s > 0
-        ? `Próximo pase en ${Math.floor(s / 3600)} h ${Math.floor((s % 3600) / 60)} min ${s % 60} s`
-        : 'Pasando ahora mismo: escucha 145,800 MHz';
+        ? t(`Próximo pase en ${Math.floor(s / 3600)} h ${Math.floor((s % 3600) / 60)} min ${s % 60} s`, `Next pass in ${Math.floor(s / 3600)} h ${Math.floor((s % 3600) / 60)} min ${s % 60} s`)
+        : t('Pasando ahora mismo: escucha 145,800 MHz', 'Passing right now: listen on 145.800 MHz');
     }
   }
 
@@ -205,16 +211,16 @@
    * @returns {Promise<void>}
    */
   async function init() {
-    if (typeof satellite === 'undefined' || typeof L === 'undefined') { $('issNow').textContent = 'No se ha podido cargar el calculador de órbitas.'; return; }
+    if (typeof satellite === 'undefined' || typeof L === 'undefined') { $('issNow').textContent = t('No se ha podido cargar el calculador de órbitas.', 'The orbit calculator could not be loaded.'); return; }
     try {
       const txt = await (await fetch(TLE)).text();
       const lines = txt.trim().split(/\r?\n/).map(s => s.trim());
       satrec = satellite.twoline2satrec(lines[1], lines[2]);
-    } catch (e) { $('issNow').textContent = 'No se han podido descargar los datos de la órbita. Inténtalo en un rato.'; return; }
+    } catch (e) { $('issNow').textContent = t('No se han podido descargar los datos de la órbita. Inténtalo en un rato.', 'The orbit data could not be downloaded. Try again in a little while.'); return; }
     map = L.map('issMap', { worldCopyJump: true, scrollWheelZoom: false, attributionControl: true }).setView([30, 0], 1);
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: 'Mapa &copy; Esri · Órbita: CelesTrak', maxZoom: 8 }).addTo(map);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: t('Mapa &copy; Esri · Órbita: CelesTrak', 'Map &copy; Esri · Orbit: CelesTrak'), maxZoom: 8 }).addTo(map);
     marker = L.marker([0, 0], { icon: L.divIcon({ className: 'iss-icon', html: '🛰️', iconSize: [28, 28], iconAnchor: [14, 14] }) }).addTo(map);
-    homeMark = L.circleMarker([home.lat, home.lon], { radius: 6, color: '#ffd27a', fillColor: '#ffd27a', fillOpacity: 1 }).bindTooltip('Tú').addTo(map);
+    homeMark = L.circleMarker([home.lat, home.lon], { radius: 6, color: '#ffd27a', fillColor: '#ffd27a', fillOpacity: 1 }).bindTooltip(t('Tú', 'You')).addTo(map);
     findPasses(); renderPasses(); drawTrack(); update();
     tick = setInterval(update, 1000);
     setInterval(drawTrack, 5 * 60e3);
@@ -224,10 +230,10 @@
   // reciente ya conocida) y timeout 10 s. Si falla o se deniega, se sigue con el lugar anterior.
   $('issGeo').addEventListener('click', () => {
     if (!navigator.geolocation) return;
-    $('issGeo').textContent = 'Buscando…';
+    $('issGeo').textContent = t('Buscando…', 'Searching…');
     navigator.geolocation.getCurrentPosition(
-      p => { setHome(p.coords.latitude, p.coords.longitude, 'tu ubicación'); $('issGeo').textContent = '📍 Ubicación actualizada'; },
-      () => { $('issGeo').textContent = '📍 No se pudo; sigo con Madrid'; },
+      p => { setHome(p.coords.latitude, p.coords.longitude, t('tu ubicación', 'your location')); $('issGeo').textContent = t('📍 Ubicación actualizada', '📍 Location updated'); },
+      () => { $('issGeo').textContent = t('📍 No se pudo; sigo con Madrid', '📍 Could not get it; staying with Madrid'); },
       { maximumAge: 600000, timeout: 10000 });
   });
   // Ciudad elegida en la lista: el value es "lat,lon".

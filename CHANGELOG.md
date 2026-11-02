@@ -2,6 +2,19 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Cada versión corresponde a una pull request fusionada en `main`.
 
+## [2.4.0] · 1 de noviembre de 2026 · En inglés
+
+### Añadido
+- **Versión en inglés** de toda la web en `/radio/en/` (`en/listen/`, `en/understand/`, `en/practice/`, `en/exam/`, `en/start/`), con los mismos módulos, secciones y progreso guardado.
+- **Selector ES/EN** en la cabecera de cada página, que lleva a la misma página y sección en el otro idioma.
+- **Examen en inglés:** las 169 preguntas traducidas, con los mismos ids, opciones y respuestas.
+- Contactos simulados en inglés con voces en inglés; lecciones, glosario, calendario y textos de todos los módulos en los dos idiomas (`Radio.t`).
+- `hreflang` en todas las páginas y en `sitemap.xml`; páginas de error y sin conexión bilingües.
+- `tools/check.mjs` §12: cada página tiene su versión en inglés con las mismas secciones, y el examen en inglés coincide con el castellano.
+- `docs/IDIOMAS.md`: cómo está hecha la versión en inglés y cómo traducir algo nuevo.
+- **Grabaciones reales en la cascada:** al reproducir una grabación de Wikimedia Commons, se dibuja en la cascada de "¿Qué es este sonido?" para compararla con la imitación.
+- **La radio en clase** (Empezar): plan de una sesión de 50 minutos para 10 a 16 años y ficha A4 imprimible (alfabeto fonético, Morse, guion de contacto y libro de guardia), en los dos idiomas.
+
 ## [2.3.0] · 1 de noviembre de 2026 · Instalable en Android e iPhone, buenas prácticas y documentación completa
 
 ### Añadido
@@ -11,6 +24,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). C
 - **Comprobación semanal de enlaces externos** (`tools/enlaces.mjs`) que abre un aviso si alguno se rompe.
 - **Documentación completa:** README renovado con capturas; índice de la documentación; cómo se construyó; arquitectura con diagramas; tutorial; guía de recetas; solución de problemas; estilos; glosario; guía de contribución y plantilla de pull request. Todo el código comentado función a función.
 - `tools/check.mjs`: comprobaciones de seguridad (CSP, integridad, `noopener`, tipografías).
+- **Ramas protegidas en GitHub:** `main` solo con pull request y comprobaciones en verde; ni `main` ni `development` se pueden forzar ni borrar.
 
 ### Cambiado
 - **Buenas prácticas:** auditoría de accesibilidad con axe y sus arreglos; tipografías alojadas en la web (sin Google Fonts); Content-Security-Policy; integridad (SRI) de las librerías; aviso para quien navega sin JavaScript.

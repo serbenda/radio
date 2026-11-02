@@ -10,6 +10,8 @@
  * HTML (un enlace, una negrita) en las respuestas si hace falta. Por eso FAQ solo debe contener texto escrito en el repositorio,
  * nunca datos que vengan de fuera.
  *
+ * Textos: FAQ ya llega en el idioma de la página (cada pregunta y respuesta va con t() en data.js).
+ *
  * Cómo modificarlo: para añadir o cambiar preguntas edita FAQ en js/data.js; este archivo no cambia.
  */
 (() => {

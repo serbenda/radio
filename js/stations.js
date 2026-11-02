@@ -4,7 +4,7 @@
  * Página: Escuchar (#emisoras). Necesita: #map, #country, #stationSearch, #randomStation, #stationList,
  *   #stationStatus, #player, #playBtn, #nowName, #nowMeta, #volume. Depende de: Leaflet.
  *   Leaflet (global L, 1.9.4 desde cdnjs) se carga antes que este archivo; si no ha cargado, la lista y el
- *   reproductor funcionan igual y en #map sale un aviso. No usa Radio salvo Radio.emit.
+ *   reproductor funcionan igual y en #map sale un aviso. Usa Radio.emit y Radio.t (textos en los dos idiomas).
  *
  * Datos: API abierta de Radio Browser (https://www.radio-browser.info). Prueba varios servidores espejo
  * (de1, de2, fi1, at1) y se queda con el primero que responde. Solo pide emisoras HTTPS (is_https=true)
@@ -39,6 +39,7 @@
   let server = null;
 
   const $ = id => document.getElementById(id);
+  const { t } = Radio;
   // Un único reproductor para toda la sección: reproducir otra emisora sustituye a la anterior.
   // preload='none': no se descarga nada hasta pulsar una emisora. Volumen inicial 0,8 (de 0 a 1).
   const audio = new Audio();
@@ -78,13 +79,13 @@
    * Si Leaflet no ha cargado, escribe un aviso en #map y no hace nada más (map queda sin definir).
    */
   function initMap() {
-    if (typeof L === 'undefined') { $('map').textContent = 'No se pudo cargar el mapa.'; return; }
+    if (typeof L === 'undefined') { $('map').textContent = t('No se pudo cargar el mapa.', 'The map could not be loaded.'); return; }
     map = L.map('map', { worldCopyJump: true, scrollWheelZoom: false }).setView([40.2, -3.7], 5);
     // Mapa base gris oscuro de Esri (sin API key) + capa de nombres
     // Ojo: el orden en la URL de Esri es {z}/{y}/{x} (fila antes que columna), al revés que OpenStreetMap.
     const esri = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/';
     L.tileLayer(esri + 'World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Mapa &copy; Esri, HERE, Garmin, &copy; OpenStreetMap', maxZoom: 16,
+      attribution: t('Mapa', 'Map') + ' &copy; Esri, HERE, Garmin, &copy; OpenStreetMap', maxZoom: 16,
     }).addTo(map);
     L.tileLayer(esri + 'World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', { maxZoom: 16 }).addTo(map);
     layer = L.layerGroup().addTo(map);
@@ -183,7 +184,7 @@
   async function load() {
     const country = $('country').value;
     const q = $('stationSearch').value.trim();
-    $('stationStatus').textContent = 'Sintonizando…';
+    $('stationStatus').textContent = t('Sintonizando…', 'Tuning in…');
     const p = new URLSearchParams({
       hidebroken: 'true', is_https: 'true', order: 'clickcount', reverse: 'true', limit: '250',
     });
@@ -197,7 +198,7 @@
       stations = data.filter(s => s.url_resolved);
       render();
     } catch (e) {
-      $('stationStatus').textContent = 'No hay señal del directorio de emisoras. Inténtalo en un rato.';
+      $('stationStatus').textContent = t('No hay señal del directorio de emisoras. Inténtalo en un rato.', 'No signal from the station directory. Try again in a little while.');
       $('stationList').innerHTML = '';
     }
   }
@@ -216,8 +217,8 @@
     // != null deja pasar el 0 (una latitud o longitud de 0 es válida) y descarta null y undefined.
     const withGeo = stations.filter(s => s.geo_lat != null && s.geo_long != null);
     $('stationStatus').textContent = stations.length
-      ? `${stations.length} emisoras · ${withGeo.length} en el mapa`
-      : 'Nada en esta frecuencia. Prueba otra búsqueda.';
+      ? t(`${stations.length} emisoras · ${withGeo.length} en el mapa`, `${stations.length} stations · ${withGeo.length} on the map`)
+      : t('Nada en esta frecuencia. Prueba otra búsqueda.', 'Nothing on this frequency. Try another search.');
 
     stations.slice(0, 80).forEach(s => {
       const li = document.createElement('li');
@@ -254,7 +255,7 @@
     current = s;
     audio.src = s.url_resolved;
     audio.play().catch(() => {
-      $('nowMeta').textContent = 'Esta emisora no deja reproducirse desde aquí. Prueba otra.';
+      $('nowMeta').textContent = t('Esta emisora no deja reproducirse desde aquí. Prueba otra.', 'This station cannot be played from here. Try another one.');
     });
     $('player').hidden = false;
     $('nowName').textContent = s.name.trim();
@@ -270,7 +271,7 @@
   audio.addEventListener('pause', () => { $('player').classList.remove('playing'); $('playBtn').textContent = '▶'; });
   // Error de red o de formato mientras suena (la emisora se cae o el enlace no vale).
   audio.addEventListener('error', () => {
-    if (current) $('nowMeta').textContent = 'Sin señal en esta emisora. Prueba otra.';
+    if (current) $('nowMeta').textContent = t('Sin señal en esta emisora. Prueba otra.', 'No signal from this station. Try another one.');
     $('player').classList.remove('playing');
   });
 
@@ -281,8 +282,8 @@
   $('country').addEventListener('change', load);
   // Buscador con espera (debounce): solo busca cuando se deja de escribir 450 ms, para no lanzar una
   // petición por cada letra.
-  let t;
-  $('stationSearch').addEventListener('input', () => { clearTimeout(t); t = setTimeout(load, 450); });
+  let wait;
+  $('stationSearch').addEventListener('input', () => { clearTimeout(wait); wait = setTimeout(load, 450); });
   // "Sorpréndeme": una emisora al azar de los resultados actuales (no hace petición nueva de búsqueda).
   $('randomStation').addEventListener('click', () => {
     if (stations.length) play(stations[Math.floor(Math.random() * stations.length)]);

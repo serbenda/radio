@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self'; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https://*.api.radio-browser.info https://www.hamqth.com https://celestrak.org https://serbenda.goatcounter.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Get started · Radio</title>
+  <meta name="description" content="How to get your amateur radio licence in Spain, radio clubs by province, a calendar of events, a guide for families and frequently asked questions.">
+  <meta name="radio-root" content="../../">
+  <meta name="theme-color" content="#111214">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="radio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="canonical" href="https://bendi.dev/radio/en/start/">
+  <link rel="alternate" hreflang="es" href="https://bendi.dev/radio/empezar/">
+  <link rel="alternate" hreflang="en" href="https://bendi.dev/radio/en/start/">
+  <link rel="alternate" hreflang="x-default" href="https://bendi.dev/radio/empezar/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="radio · bendi.dev">
+  <meta property="og:title" content="Get started · Radio">
+  <meta property="og:description" content="How to get your amateur radio licence in Spain, radio clubs by province, a calendar of events, a guide for families and frequently asked questions.">
+  <meta property="og:url" content="https://bendi.dev/radio/en/start/">
+  <meta property="og:image" content="https://bendi.dev/radio/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A radio dial with a signal and the text: There are thousands of voices in the air. Listen to them.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Get started · Radio">
+  <meta name="twitter:description" content="How to get your amateur radio licence in Spain, radio clubs by province, a calendar of events, a guide for families and frequently asked questions.">
+  <meta name="twitter:image" content="https://bendi.dev/radio/og.png">
+  <link rel="icon" href="../../img/favicon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="preload" href="../../fonts/ibm-plex-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body data-page="empezar">
+  <a class="skip" href="#contenido">Skip to content</a>
+  <header class="top">
+    <a class="brand" href="../" aria-label="radio, go to the home page">📻 <span>radio</span></a>
+    <nav aria-label="Main">
+      <a href="../" data-page="inicio">Home</a>
+      <a href="../listen/" data-page="escuchar">Listen</a>
+      <a href="../understand/" data-page="entender">Understand</a>
+      <a href="../practice/" data-page="practicar">Practice</a>
+      <a href="../exam/" data-page="examen">Exam</a>
+      <a href="../start/" data-page="empezar">Get started</a>
+    </nav>
+    <a class="lang-switch" id="langSwitch" href="../../empezar/" hreflang="es" lang="es" title="Leer esta página en castellano" aria-label="Versión en castellano de esta página">ES</a>
+    <div class="utc" title="Radio amateurs always use UTC time"><small>UTC</small> <span id="utc">--:--</span></div>
+  </header>
+
+  <main id="contenido">
+    <noscript><p class="noscript">You can read the text without JavaScript, but the dial, maps, sounds, Morse, contacts and exam need it. Turn it on to use them.</p></noscript>
+    <header class="page-head">
+      <p class="kicker">Step 5</p>
+      <h1>Take the plunge</h1>
+      <p class="lead">The paperwork in Spain, your nearest radio club, the year’s key dates and everything you need to know before you start.</p>
+      <nav class="toc" aria-label="On this page"><a href="#empezar">How to get started in Spain</a> · <a href="#cb27">What about CB-27 and walkie-talkies?</a> · <a href="#equipo">Which radio to buy (and what’s legal)</a> · <a href="#clubes">Find your radio club</a> · <a href="#familias">Is it for me?</a> · <a href="#docentes">Radio in the classroom</a> · <a href="#hispanoamerica">If you’re not in Spain</a> · <a href="#emergencias">The radio that doesn’t depend on anything</a> · <a href="#faq">Frequently asked questions</a></nav>
+    </header>
+
+    <!-- EMPEZAR -->
+    <section id="empezar">
+      <div class="section-head">
+        <p class="kicker">If you’ve caught the bug</p>
+        <h2>How to get started in Spain</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Listen (it’s free and needs no licence)</h3>
+          <p>Use the <a href="../listen/#directo">web receivers on the Listen page</a>. If you’d like your own, a USB SDR receiver costing around €30-40 and some free software turn your computer into a radio that can hear almost anything.</p>
+        </li>
+        <li>
+          <h3>Find a radio club</h3>
+          <p>It’s the quickest way to learn. The <a href="https://www.ure.es" target="_blank" rel="noopener">URE (Unión de Radioaficionados Españoles, the Spanish national society; website in Spanish)</a> has sections all over Spain, and many clubs run courses for the exam.</p>
+        </li>
+        <li>
+          <h3>Pass the exam</h3>
+          <p>There are questions on basic electricity and radio, regulations and operating practice. When you pass you get the HAREC certificate, which is valid in much of Europe.</p>
+        </li>
+        <li>
+          <h3>Apply for your authorisation and call sign</h3>
+          <p>With the certificate, you apply to the Ministry for your amateur radio authorisation, which assigns you your call sign (something like EA4XYZ). That’s your “name” on the air.</p>
+        </li>
+        <li>
+          <h3>Set up your station and make your first contact</h3>
+          <p>To have your own equipment at home, you apply for a station licence with a description of your antennas and equipment. And then: “CQ, CQ…”.</p>
+        </li>
+      </ol>
+      <h3 class="sub">The paperwork in numbers</h3>
+      <div class="facts">
+        <div class="fact"><b>2</b><span>exam parts: electricity and radio, and regulations</span></div>
+        <div class="fact"><b>50 %</b><span>correct answers needed in each part to pass</span></div>
+        <div class="fact"><b>90 min</b><span>computer-based exam at the Provincial Telecommunications Inspectorate (Jefatura Provincial de Telecomunicaciones)</span></div>
+        <div class="fact"><b>€23.67</b><span>exam fee</span></div>
+        <div class="fact"><b>€114.36</b><span>for the authorisation (over-65s, pensioners and people with disabilities are exempt)</span></div>
+        <div class="fact"><b>For life</b><span>the authorisation doesn’t expire unless you give it up</span></div>
+      </div>
+      <p class="note">Amounts and conditions according to the <a href="https://www.ure.es/obtener-autorizacion/" target="_blank" rel="noopener">URE guide (in Spanish)</a> and <a href="https://boe.es/boe/dias/2013/07/12/pdfs/BOE-A-2013-7624.pdf" target="_blank" rel="noopener">Order IET/1311/2013 (in Spanish)</a>. Check them before paying: fees can change.</p>
+
+      <h3 class="sub">Your checklist</h3>
+      <ul class="checklist" id="checklist">
+        <li><label><input type="checkbox" data-k="escuchar"> I’ve listened to radio amateurs on a web receiver</label></li>
+        <li><label><input type="checkbox" data-k="club"> I’ve got in touch with a radio club or a URE section</label></li>
+        <li><label><input type="checkbox" data-k="estudio"> My simulator thermometer is above 80 % in both parts</label></li>
+        <li><label><input type="checkbox" data-k="solicitud"> I’ve paid the fee (form 790, “modelo 790”) and submitted my exam application</label></li>
+        <li><label><input type="checkbox" data-k="aprobado"> I’ve passed and have my HAREC certificate</label></li>
+        <li><label><input type="checkbox" data-k="autorizacion"> I’ve applied for the authorisation and have my call sign</label></li>
+        <li><label><input type="checkbox" data-k="seguro"> I have public liability insurance for the antenna (included if you’re a URE member)</label></li>
+        <li><label><input type="checkbox" data-k="estacion"> I’ve applied for a station licence for home (if I want a fixed station)</label></li>
+        <li><label><input type="checkbox" data-k="qso"> I’ve made my first real contact!</label></li>
+      </ul>
+      <p class="note" id="checkNote"></p>
+
+      <div class="cards three gear">
+        <article class="card">
+          <span class="tag">Listening only · ~€35</span>
+          <h3>USB SDR receiver</h3>
+          <p>A “dongle” that plugs into your computer. With a simple antenna you can hear aircraft, ships, weather satellites and radio amateurs. No paperwork at all.</p>
+        </article>
+        <article class="card">
+          <span class="tag">First radio · ~€40-100</span>
+          <h3>Dual-band handheld (2 m / 70 cm)</h3>
+          <p>The classic first radio once you’re licensed: you talk to people in your area and, through repeaters, across your whole region. Ideal for the clubs’ weekly nets.</p>
+        </article>
+        <article class="card">
+          <span class="tag">Reach around the world</span>
+          <h3>HF radio + wire antenna</h3>
+          <p>For the shortwave bands. Many people start by buying second-hand at radio rallies and putting up a wire dipole on the balcony or roof terrace.</p>
+        </article>
+      </div>
+      <p class="note">Prices are approximate. Ask at a club before buying: there’s nearly always someone who’ll let you try theirs.</p>
+      <p class="note">The official procedures are on the <a href="https://digital.gob.es/telecomunicaciones-infraestructuras-digitales/areas-interes/espectro-radioelectrico/radioaficionados-cb27/autorizaciones/autorizacion-administrativa-radioaficionado" target="_blank" rel="noopener">Ministry for Digital Transformation website (in Spanish)</a>. Always check the current requirements there.</p>
+    </section>
+    <!-- CB-27 -->
+    <section id="cb27">
+      <div class="section-head">
+        <p class="kicker">Radio with no exam</p>
+        <h2>What about CB-27 and walkie-talkies?</h2>
+        <p>Before amateur radio, or instead of it, there are two ways to talk on the radio <strong>with no exam or licence</strong>: Citizens Band (CB-27) and PMR446 walkie-talkies. Lots of radio amateurs started out this way.</p>
+      </div>
+      <div class="cards two">
+        <div class="card">
+          <span class="tag">Common use · no licence</span>
+          <h3>CB-27, Citizens Band</h3>
+          <p>A band set aside so that anyone can talk on the radio for fun, around 27 MHz. In Spain it has been <b>common use</b> (uso común) since 2015: you don’t need an exam, a licence or a call sign. An approved radio is all it takes.</p>
+          <ul class="cb-facts">
+            <li><b>40 channels</b> of 10 kHz, from 26.960 to 27.410 MHz.</li>
+            <li><b>Channel 9 (27.065 MHz)</b>: distress and emergencies. If an emergency is in progress, it must be kept clear.</li>
+            <li><b>Maximum power</b>: 4 W on FM and AM, 12 W peak on single sideband (SSB).</li>
+            <li><b>Antenna</b>: up to 6 dB gain, radiating equally in all directions.</li>
+            <li><b>Direct communication only</b> between radios (no repeaters), and not for profit.</li>
+          </ul>
+          <p class="note">Amplifiers or anything exceeding that power are not allowed, nor are repeaters, satellite links, connecting it to the telephone network or transmitting a continuous carrier.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Common use · no licence</span>
+          <h3>PMR446 walkie-talkies</h3>
+          <p>The walkie-talkies sold in shops and supermarkets. They work on <b>446 MHz</b>, with <b>0.5 W</b> and a fixed antenna, also with no licence. Their range is short: from a few hundred metres in town to a few kilometres in open country.</p>
+          <h3 class="sub-small">CB, PMR or amateur radio</h3>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Comparison: PMR446, CB-27 or amateur radio">
+            <table class="countries cmp">
+              <thead><tr><th scope="col"><span class="sr-only">Feature</span></th><th>PMR446</th><th>CB-27</th><th>Amateur radio</th></tr></thead>
+              <tbody>
+                <tr><td>Exam and licence</td><td>No</td><td>No</td><td>Yes</td></tr>
+                <tr><td>Frequencies</td><td>446 MHz</td><td>40 channels on 27 MHz</td><td>Dozens of bands, from long wave to microwaves</td></tr>
+                <tr><td>Power</td><td>0.5 W</td><td>4 W (12 W on SSB)</td><td>Much higher, depending on the band</td></tr>
+                <tr><td>Typical range</td><td>Your neighbourhood</td><td>Your local area; sometimes other countries</td><td>The world and space</td></tr>
+                <tr><td>Call sign</td><td>No</td><td>No</td><td>Yes, official</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <p>CB sits right next to the 10-metre amateur band, so it behaves the same way: it’s nearly always local, but in the good years of the solar cycle you can hear stations from other countries. <a href="http://websdr.ewi.utwente.nl:8901/?tune=27185am" target="_blank" rel="noopener">Listen to CB now on the Twente receiver</a>.</p>
+      <p class="note">Sources: <a href="https://digital.gob.es/telecomunicaciones-infraestructuras-digitales/areas-interes/espectro-radioelectrico/informacion-general/uso-espectro-radioelectrico/comun" target="_blank" rel="noopener">common use of the spectrum (Ministry for Digital Transformation) (in Spanish)</a> and <a href="https://www.boe.es/buscar/doc.php?id=BOE-A-2015-3864" target="_blank" rel="noopener">Order IET/614/2015 (in Spanish)</a> (note UN-3 of the National Frequency Allocation Table, Cuadro Nacional de Atribución de Frecuencias), which repealed the old CB-27 rules that required a licence and call sign. Checked on 1 November 2026.</p>
+    </section>
+
+    <!-- QUÉ RADIO COMPRAR -->
+    <section id="equipo">
+      <div class="section-head">
+        <p class="kicker">Before you buy anything</p>
+        <h2>Which radio to buy (and what’s legal)</h2>
+        <p>The golden rule: <strong>listening is free; to transmit you need the right equipment and, outside CB and PMR446, your licence</strong>. A cheap walkie-talkie doesn’t give you permission to talk on any frequency you like.</p>
+      </div>
+
+      <div class="table-wrap" tabindex="0" role="region" aria-label="What you can do with and without a licence">
+        <table class="countries legal">
+          <thead><tr><th>I want to…</th><th>Licence?</th><th>With what</th></tr></thead>
+          <tbody>
+            <tr><td>Listen to radio amateurs, CB, broadcast stations</td><td class="yes">No</td><td>A web receiver, a USB SDR receiver or any receiver</td></tr>
+            <tr><td>Talk to my family or on a day out</td><td class="yes">No</td><td>Approved <b>PMR446</b> walkie-talkies (0.5 W, fixed antenna)</td></tr>
+            <tr><td>Talk on Citizens Band</td><td class="yes">No</td><td>An approved <b>CB-27</b> radio (max. 4 W, 12 W on SSB)</td></tr>
+            <tr><td>Transmit on 2 m and 70 cm, repeaters, satellites</td><td class="no">Yes</td><td>An amateur radio (Baofeng, Quansheng, Yaesu…) and <b>your call sign</b></td></tr>
+            <tr><td>Talk on police, marine, aviation or business frequencies</td><td class="no">Never</td><td>Not allowed with any amateur equipment</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Any equipment that transmits must have its conformity assessment (CE marking). And even if a receiver picks up everything, communications not intended for the public (emergency services, private conversations) are protected by the secrecy of communications (Article 18.3 of the Spanish Constitution): you don’t listen to them on purpose, and you never pass on or use what you hear.</p>
+
+      <div class="card baofeng">
+        <h3>Baofengs: what you should know</h3>
+        <p>The <b>Baofeng UV-5R</b> and its siblings are the best-selling amateur handhelds in the world thanks to their price (around €20-30). They cover the 2 m and 70 cm bands and quite a lot more. That has a good side and a bad side:</p>
+        <div class="parents-grid">
+          <div><b>✅ Legal</b><p>Listening with it. And, with your amateur licence, transmitting on the amateur bands (144-146 MHz and 430-440 MHz).</p></div>
+          <div><b>❌ Not legal</b><p>Using it without a licence “like a walkie-talkie”: <b>it isn’t a PMR446</b> (more power and a removable antenna). Nor transmitting outside the amateur bands, even if it technically can.</p></div>
+          <div><b>⚠️ Watch the quality</b><p>Reviews agree that its receiver gets overloaded near powerful antennas and that its transmitter produces spurious emissions. Germany banned its sale in 2021.</p></div>
+          <div><b>👍 What it’s good for</b><p>As a cheap first radio for learning to program channels, listening to repeaters and making your first contacts once you’re licensed.</p></div>
+        </div>
+      </div>
+
+      <h3 class="sub">Radios to start with</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Radio models to start with">
+        <table class="countries models">
+          <thead><tr><th>Radio</th><th>For</th><th>Licence</th><th>Approx. price</th><th>Pros / cons</th></tr></thead>
+          <tbody>
+            <tr><td><b>USB SDR receiver</b> (RTL-SDR type)</td><td>Listening to almost everything from your computer</td><td>No</td><td>~€35-45</td><td>The cheapest way to hear radio amateurs, aircraft, ships and satellites. Receive only.</td></tr>
+            <tr><td><b>PMR446 walkie-talkies</b> (Motorola Talkabout, Midland…)</td><td>Family, days out</td><td>No</td><td>~€30-80 a pair</td><td>Legal with no paperwork and very easy to use. Short range.</td></tr>
+            <tr><td><b>CB-27 radio</b> (President, Midland Alan…)</td><td>Citizens Band</td><td>No</td><td>~€70-150</td><td>Talk further than with a PMR without a licence, with an outdoor antenna or in the car.</td></tr>
+            <tr><td><b>Baofeng UV-5R</b></td><td>2 m and 70 cm</td><td>Yes</td><td>~€20-30</td><td>Cheap, with loads of accessories and tutorials. Weak receiver and spurious emissions.</td></tr>
+            <tr><td><b>Quansheng UV-K5</b></td><td>2 m and 70 cm, listening to aviation</td><td>Yes</td><td>~€25-40</td><td>USB-C charging, receives the airband and supports open-source firmware. Filtering could be better.</td></tr>
+            <tr><td><b>TIDRADIO TD-H3</b></td><td>2 m and 70 cm</td><td>Yes</td><td>~€40-55</td><td>The best receiver of the cheap ones, a big battery, and you can program it from your phone.</td></tr>
+            <tr><td><b>Yaesu FT-65E</b> (or equivalents from Icom and Kenwood)</td><td>2 m and 70 cm</td><td>Yes</td><td>~€100-130</td><td>A benchmark brand, tough and splash-resistant. More expensive, with fewer features.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Approximate market prices in November 2026; they vary a lot between shops. Comparisons consulted: <a href="https://www.electronics-notes.com/store-shop/ham-radio-reviews/baofeng-uv5r-vs-quansheng-uvk5-vs-tidradio-tdh3.php" target="_blank" rel="noopener">Electronics Notes</a> and <a href="https://www.onesdr.com/the-worlds-most-popular-cheap-radio-is-illegal/" target="_blank" rel="noopener">OneSDR</a>.</p>
+
+      <div class="card tips">
+        <h3>Our recommendation</h3>
+        <ol>
+          <li><b>Not licensed yet:</b> listen for free on the web receivers and, if you get hooked, buy a <b>USB SDR receiver</b>. To talk to your family and friends, get some <b>PMR446</b> radios. Don’t buy a Baofeng to talk without a licence.</li>
+          <li><b>Freshly licensed:</b> an inexpensive dual-band to start with; if you can stretch a little, the <b>TD-H3</b> receives quite a bit better than the UV-5R.</li>
+          <li><b>In it for the long haul:</b> a brand-name radio (Yaesu, Icom, Kenwood) and, later on, a shortwave radio, new or second-hand.</li>
+          <li><b>Before buying, ask at your radio club:</b> there’s nearly always someone who’ll let you try their radio and help you program it.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- RADIOCLUBES Y CALENDARIO -->
+    <section id="clubes">
+      <div class="section-head">
+        <p class="kicker">From the screen to the radio</p>
+        <h2>Find your radio club</h2>
+        <p>The quickest way to learn is with other people: at a radio club they’ll teach you how to put up an antenna, prepare for the exam with you and, at their outreach events, you can try transmitting under supervision even if you don’t have a licence yet. <span id="clubCount"></span>.</p>
+      </div>
+      <div class="clubs">
+        <div id="clubMap" role="region" aria-label="Map of URE sections by province"></div>
+        <div class="card club-side">
+          <div class="row">
+            <select id="clubProv" aria-label="Province"></select>
+            <button class="btn small ghost" id="clubNear">📍 The nearest one</button>
+          </div>
+          <div id="clubList"><p class="note">Choose your province or tap a number on the map. There are also many independent radio clubs: ask at your nearest section.</p></div>
+        </div>
+      </div>
+
+      <h3 class="sub">Dates for the diary</h3>
+      <ol class="cal" id="calList"></ol>
+      <p class="note">Dates are worked out using each event’s usual rules. Confirm them on each organiser’s website before planning anything.</p>
+    </section>
+    <!-- FAMILIAS Y JÓVENES -->
+    <section id="familias">
+      <div class="section-head">
+        <p class="kicker">For families, the curious and young people</p>
+        <h2>Is it for me?</h2>
+        <p>Five quick questions and we’ll tell you where to start.</p>
+      </div>
+      <div class="cards two">
+        <div class="card fit">
+          <div id="fitQs"></div>
+          <div id="fitResult"></div>
+        </div>
+        <div class="card">
+          <h3>How much does it cost?</h3>
+          <ol class="costs">
+            <li><b>€0</b><span>Listening on web receivers and practising on this site.</span></li>
+            <li><b>~€35</b><span>A USB SDR receiver to listen from your computer.</span></li>
+            <li><b>~€40-100</b><span>A dual-band handheld, the classic first radio once you’re licensed.</span></li>
+            <li><b>from ~€100</b><span>A second-hand shortwave radio.</span></li>
+            <li><b>~€300</b><span>A complete station with antenna.</span></li>
+          </ol>
+          <p class="note">Approximate prices; those for used equipment and a complete station come from the URE’s beginner’s leaflet. On top of this come the exam and authorisation fees.</p>
+        </div>
+      </div>
+      <div class="card parents">
+        <h3>For parents</h3>
+        <div class="parents-grid">
+          <div><b>Can a child get a licence?</b><p>Yes, and the regulations set no minimum age. For their station licence, the child provides a written authorisation from their parents or guardians, who take on the responsibility (Article 19).</p></div>
+          <div><b>Is it safe?</b><p>Everything said on the radio is public: anyone can listen. That’s why you give your town, never your address, and don’t talk about personal matters.</p></div>
+          <div><b>What about antennas and electricity?</b><p>Putting up outdoor antennas or handling power supplies should be done with an adult or at the radio club. It’s part of the exam.</p></div>
+          <div><b>Are there activities for young people?</b><p>Yes: the <a href="https://www.ham-yota.com/" target="_blank" rel="noopener">YOTA</a> programme runs camps and the December YOTA Month for under-26s, and there’s the Jamboree on the Air with the Scouts.</p></div>
+        </div>
+      </div>
+    </section>
+    <!-- DOCENTES -->
+    <section id="docentes">
+      <div class="section-head">
+        <p class="kicker">For teachers and group leaders</p>
+        <h2>Radio in the classroom</h2>
+        <p>A 50-minute session for young people aged 10 to 16, using this site and a printable worksheet. No radio knowledge or equipment needed: a projector or a few phones is enough.</p>
+      </div>
+      <div class="cards two">
+        <article class="card">
+          <h3>🕐 Session plan</h3>
+          <ol class="lesson-plan">
+            <li><b>5 min · Hook:</b> move the dial on the home page and play a station from another continent.</li>
+            <li><b>10 min · What is that sound?:</b> play sounds without saying which; in groups, they guess by looking at the waterfall. Then a real recording.</li>
+            <li><b>10 min · Morse:</b> everyone writes their name in Morse on the worksheet and “sends” it to a partner by clapping.</li>
+            <li><b>10 min · Spell it like on the radio:</b> in pairs, they spell a word with the phonetic alphabet; the other writes it down.</li>
+            <li><b>10 min · First contact:</b> in pairs, they fill in the script on the worksheet and read it aloud; then the simulated contact on the site.</li>
+            <li><b>5 min · Wrap-up:</b> what is radio for when everything else fails? Link to “Emergencies”.</li>
+          </ol>
+          <p class="note">To go further: invite a nearby radio club (see “Find your radio club”). Many give demonstrations in schools, and some help schools contact the ISS.</p>
+        </article>
+        <article class="card">
+          <h3>🖨️ Printable worksheet</h3>
+          <p>One A4 sheet with the phonetic alphabet, the Morse table, a fill-in contact script and a log to note down what they hear.</p>
+          <button class="btn" id="printSheet" type="button">🖨️ Print the worksheet</button>
+          <p class="note">Only the worksheet is printed, in black and white. CC BY-SA 4.0 licence: you can copy and adapt it.</p>
+        </article>
+      </div>
+      <div class="worksheet" id="worksheet" data-noglossary aria-label="Printable worksheet">
+        <h2>📻 Radio in the classroom · worksheet</h2>
+        <p>Name: ______________________ &nbsp; Date: __________</p>
+        <div class="ws-grid">
+          <table class="ws-table">
+            <thead><tr><th>Letter</th><th>Phonetic</th><th>Morse</th></tr></thead>
+            <tbody><tr><td><b>A</b></td><td>Alfa</td><td class="mono">·—</td></tr><tr><td><b>B</b></td><td>Bravo</td><td class="mono">—···</td></tr><tr><td><b>C</b></td><td>Charlie</td><td class="mono">—·—·</td></tr><tr><td><b>D</b></td><td>Delta</td><td class="mono">—··</td></tr><tr><td><b>E</b></td><td>Echo</td><td class="mono">·</td></tr><tr><td><b>F</b></td><td>Foxtrot</td><td class="mono">··—·</td></tr><tr><td><b>G</b></td><td>Golf</td><td class="mono">——·</td></tr><tr><td><b>H</b></td><td>Hotel</td><td class="mono">····</td></tr><tr><td><b>I</b></td><td>India</td><td class="mono">··</td></tr><tr><td><b>J</b></td><td>Juliett</td><td class="mono">·———</td></tr><tr><td><b>K</b></td><td>Kilo</td><td class="mono">—·—</td></tr><tr><td><b>L</b></td><td>Lima</td><td class="mono">·—··</td></tr><tr><td><b>M</b></td><td>Mike</td><td class="mono">——</td></tr><tr><td><b>N</b></td><td>November</td><td class="mono">—·</td></tr><tr><td><b>O</b></td><td>Oscar</td><td class="mono">———</td></tr><tr><td><b>P</b></td><td>Papa</td><td class="mono">·——·</td></tr><tr><td><b>Q</b></td><td>Quebec</td><td class="mono">——·—</td></tr><tr><td><b>R</b></td><td>Romeo</td><td class="mono">·—·</td></tr><tr><td><b>S</b></td><td>Sierra</td><td class="mono">···</td></tr><tr><td><b>T</b></td><td>Tango</td><td class="mono">—</td></tr><tr><td><b>U</b></td><td>Uniform</td><td class="mono">··—</td></tr><tr><td><b>V</b></td><td>Victor</td><td class="mono">···—</td></tr><tr><td><b>W</b></td><td>Whiskey</td><td class="mono">·——</td></tr><tr><td><b>X</b></td><td>X-ray</td><td class="mono">—··—</td></tr><tr><td><b>Y</b></td><td>Yankee</td><td class="mono">—·——</td></tr><tr><td><b>Z</b></td><td>Zulu</td><td class="mono">——··</td></tr></tbody>
+          </table>
+          <div>
+            <p class="ws-nums"><span><b>1</b> <span class="mono">·————</span></span><span><b>2</b> <span class="mono">··———</span></span><span><b>3</b> <span class="mono">···——</span></span><span><b>4</b> <span class="mono">····—</span></span><span><b>5</b> <span class="mono">·····</span></span><span><b>6</b> <span class="mono">—····</span></span><span><b>7</b> <span class="mono">——···</span></span><span><b>8</b> <span class="mono">———··</span></span><span><b>9</b> <span class="mono">————·</span></span><span><b>0</b> <span class="mono">—————</span></span></p>
+            <h3>1. My name in Morse</h3>
+            <p class="ws-lines">__________________________________________<br>__________________________________________</p>
+            <h3>2. Spell your word</h3>
+            <p class="ws-lines">__________________________________________<br>__________________________________________</p>
+            <h3>3. My first contact</h3>
+            <p class="ws-script">“CQ, CQ, this is ________ (callsign), ________, ________.”<br>“________, this is ________. You are 5 and 9. My name is ________ and I am in ________. How do you copy?”<br>“Received. Thanks for the contact. 73.”</p>
+            <h3>4. Log: what did I hear?</h3>
+            <table class="ws-log"><thead><tr><th>UTC time</th><th>Frequency</th><th>What it was</th><th>Country</th></tr></thead>
+              <tbody><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></tbody></table>
+          </div>
+        </div>
+        <p class="ws-foot">radio · bendi.dev/radio/en · CC BY-SA 4.0</p>
+      </div>
+    </section>
+    <!-- HISPANOAMÉRICA -->
+    <section id="hispanoamerica">
+      <div class="section-head">
+        <p class="kicker">Amateur radio in Spanish-speaking countries</p>
+        <h2>If you’re not in Spain</h2>
+        <p>Nearly everything on this site works in any country: listening, understanding, Morse and contacts. What changes is the paperwork. Here are the references for Spain and Latin America.</p>
+      </div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="References by country in Latin America">
+        <table class="countries">
+          <thead><tr><th>Country</th><th>Prefix</th><th>Who issues the licence</th><th>National society (IARU)</th></tr></thead>
+          <tbody>
+            <tr><td>🇪🇸 Spain</td><td>EA</td><td><a href="https://digital.gob.es/telecomunicaciones-infraestructuras-digitales/areas-interes/espectro-radioelectrico/radioaficionados-cb27" target="_blank" rel="noopener">Ministry for Digital Transformation</a></td><td>URE</td></tr>
+            <tr><td>🇲🇽 Mexico</td><td>XE</td><td><a href="https://www.ift.org.mx/" target="_blank" rel="noopener">IFT</a></td><td>FMRE</td></tr>
+            <tr><td>🇦🇷 Argentina</td><td>LU</td><td><a href="https://www.enacom.gob.ar/" target="_blank" rel="noopener">ENACOM</a></td><td>Radio Club Argentino</td></tr>
+            <tr><td>🇨🇴 Colombia</td><td>HK</td><td><a href="https://www.mintic.gov.co/" target="_blank" rel="noopener">MinTIC</a></td><td>Liga Colombiana de Radioaficionados</td></tr>
+            <tr><td>🇨🇱 Chile</td><td>CE</td><td><a href="https://www.subtel.gob.cl/" target="_blank" rel="noopener">SUBTEL</a></td><td>Radio Club de Chile</td></tr>
+            <tr><td>🇵🇪 Peru</td><td>OA</td><td><a href="https://www.gob.pe/mtc" target="_blank" rel="noopener">MTC</a></td><td>Radio Club Peruano</td></tr>
+            <tr><td>🇻🇪 Venezuela</td><td>YV</td><td><a href="https://www.conatel.gob.ve/" target="_blank" rel="noopener">CONATEL</a></td><td>Radio Club Venezolano</td></tr>
+            <tr><td>🇪🇨 Ecuador</td><td>HC</td><td><a href="https://www.arcotel.gob.ec/" target="_blank" rel="noopener">ARCOTEL</a></td><td>Guayaquil Radio Club</td></tr>
+            <tr><td>🇺🇾 Uruguay</td><td>CX</td><td><a href="https://www.gub.uy/unidad-reguladora-servicios-comunicaciones/" target="_blank" rel="noopener">URSEC</a></td><td>Radio Club del Uruguay</td></tr>
+            <tr><td>🇨🇺 Cuba</td><td>CO / CM</td><td>Ministry of Communications (Ministerio de Comunicaciones)</td><td>Federación de Radioaficionados de Cuba</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">The exam and the simulator on this site follow the Spanish syllabus. Electricity, radio and operating are the same everywhere; regulations differ from country to country. To transmit from another country, first check licence reciprocity with its regulator. The regulators’ websites are in Spanish.</p>
+    </section>
+    <!-- EMERGENCIAS -->
+    <section id="emergencias" class="band-strip">
+      <div class="section-head">
+        <p class="kicker">When everything goes down</p>
+        <h2>The radio that doesn’t depend on anything</h2>
+        <p>With no mobile signal, no power and no internet, a radio with a battery and a length of wire keeps working. In Spain, volunteers from <strong>REMER</strong> (Red Radio de Emergencia, Civil Protection’s emergency radio network) and from radio clubs support communications during disasters. Many people come to amateur radio this way: wanting to be useful.</p>
+      </div>
+    </section>
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="section-head">
+        <p class="kicker">Common questions</p>
+        <h2>Frequently asked questions</h2>
+      </div>
+      <div class="faq" id="faqList"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="footer-actions"><button class="btn ghost small" id="shareSite" type="button">📤 Share this site</button> <button class="btn small" id="installApp" type="button" hidden>📲 Install the app</button></p>
+    <p>📻 radio · a project by <a href="https://bendi.dev">Bendi</a> · <a href="https://github.com/serbenda/radio">code and data sources</a> · 73! <small>(“best regards” in radio slang)</small></p>
+    <p class="sponsor"><a class="sponsor-pill" id="sponsorLink" href="https://github.com/sponsors/serbenda" target="_blank" rel="noopener"><span class="beat" aria-hidden="true">💚</span> Find it useful? <b>Support the project</b> on GitHub Sponsors</a></p>
+    <p class="report"><a id="reportLink" href="https://github.com/serbenda/radio/issues/new/choose" target="_blank" rel="noopener">Spotted a mistake or something out of date? Let us know</a></p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="../../js/core.js"></script>
+  <script src="../../js/data.js"></script>
+  <script src="../../js/journey.js"></script>
+  <script src="../../js/clubs-data.js"></script>
+  <script src="../../js/clubs.js"></script>
+  <script src="../../js/family.js"></script>
+  <script src="../../js/checklist.js"></script>
+  <script src="../../js/faq.js"></script>
+  <script src="../../js/classroom.js"></script>
+  <script src="../../js/install.js"></script>
+  <script src="../../js/glossary.js"></script>
+  <script data-goatcounter="https://serbenda.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
