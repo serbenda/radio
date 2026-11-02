@@ -68,6 +68,7 @@ Si solo cambias comentarios, `tools/solo-comentarios.sh` confirma que no has toc
 | Flujos de Actions, ramas, protecciones o el proceso de publicación | [docs/CICD.md](docs/CICD.md) |
 | CSP, librerías externas o cualquier cosa que afecte a la seguridad | [docs/SEGURIDAD.md](docs/SEGURIDAD.md) |
 | Algo con fecha de caducidad (autorizaciones, tasas) | Calendario de [docs/OPERACIONES.md](docs/OPERACIONES.md#calendario-de-mantenimiento) |
+| El README | También [README.en.md](README.en.md) si cambia algo que diga la versión en inglés |
 | Cualquier cosa publicada | [CHANGELOG.md](CHANGELOG.md) |
 
 ## Licencia de las contribuciones

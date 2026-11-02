@@ -1,3 +1,5 @@
+<p align="right"><b>Español</b> · <a href="README.en.md">English</a></p>
+
 <p align="center">
   <a href="https://radio.bendi.dev"><img src="docs/img/banner.png" alt="radio. Para quien nunca ha tocado una radio: de «¿qué es esto?» a tu indicativo de radioaficionado. Dial de onda corta sintonizado en 7.105 MHz." width="100%"></a>
 </p>
